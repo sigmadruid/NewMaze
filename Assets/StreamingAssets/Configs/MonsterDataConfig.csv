@@ -1,0 +1,10 @@
+Kid,Name,Res3D,HP,Attack,Defense,Critical,Dodge,DetectRange,AttackType,AttackDelay,AttackRange,DodgeDelay,DodgeRange,BulletKid,AppearWeight,DropKidList
+40001,0,Monster_1,300,20,5,20,10,12,Melee,1.5,1.5,0,0,0,500,100001
+40002,0,Monster_2,200,30,0,40,30,12,Range,2,6,2,2,80001,300,100002
+40003,0,Monster_3,800,50,10,80,0,10,Melee,2,3,0,0,0,100,100003
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,

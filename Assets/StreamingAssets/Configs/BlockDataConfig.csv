@@ -1,0 +1,9 @@
+Kid,BlockType,PassageType,Cols,Rows,LeftOffset,Res3D
+20001,Passage,One,1,1,0,PassageOne
+21001,Passage,TwoLine,1,1,0,PassageTwoLine
+22001,Passage,TwoTurn,1,1,0,PassageTwoTurn
+23001,Passage,Three,1,1,0,PassageThree
+24001,Passage,Four,1,1,0,PassageFour
+25001,Room,One,3,3,2,Room_1
+25002,Room,One,5,5,3,Room_2
+25003,Room,One,3,3,2,Room_3

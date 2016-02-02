@@ -1,0 +1,6 @@
+Kid,AppearScene,Type,FirstTalkList,InTaskTalkList,FinishTalkList,EndTalkList
+60001,HomeTown,Normal,10002#10003,,,
+60002,Maze,Normal,10005,,,
+60003,Maze,Normal,10007,,,
+60004,Maze,Normal,10009#10010,,,
+,,,,,,
