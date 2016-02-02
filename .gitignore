@@ -24,3 +24,6 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Mac auto generated files
+*.DS_Store
