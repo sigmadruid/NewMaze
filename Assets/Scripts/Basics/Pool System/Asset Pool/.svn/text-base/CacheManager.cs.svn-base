@@ -1,0 +1,122 @@
+using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class CacheManager
+{
+	public float tickInterval = 1f;
+
+	private Dictionary<ObjectType, CachePool> cachePoolDic;
+
+	public CacheManager ()
+	{
+		cachePoolDic = new Dictionary<ObjectType, CachePool>();
+	}
+
+	public void Dispose ()
+	{
+		foreach (CachePool pool in cachePoolDic.Values)
+		{
+			pool.Dispose();
+		}
+		cachePoolDic.Clear();
+	}
+
+	public void SaveCache (UnityEngine.Object obj, float remainLife)
+	{
+		ObjectType assetType = getAssetType(obj);
+
+		if (assetType != ObjectType.None)
+		{
+			CachePool pool = null;
+			cachePoolDic.TryGetValue(assetType, out pool);
+
+			if (pool == null)
+			{
+				pool = new CachePool();
+				cachePoolDic[assetType] = pool;
+			}
+			pool.Cache(obj, remainLife);
+		}
+		else
+		{
+			Debug.LogError("Unknown cache type: " + obj.ToString());
+		}
+	}
+
+	public UnityEngine.Object RetrieveCache (ObjectType type, string cacheName)
+	{
+		CachePool pool = null;
+		cachePoolDic.TryGetValue(type, out pool);
+		
+		if (pool != null)
+		{
+			UnityEngine.Object obj = pool.Retrieve(cacheName);
+			return obj;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public void ReleaseCache (UnityEngine.Object obj, CacheObject.DestroyDelegate destroyCallback)
+	{
+		if (obj == null)
+		{
+			Debug.LogError("Object you want to release is null!");
+			return;
+		}
+
+		ObjectType assetType = getAssetType(obj);
+
+		if (assetType != ObjectType.None)
+		{
+			CachePool pool = null;
+			cachePoolDic.TryGetValue(assetType, out pool);
+			
+			if (pool != null)
+			{
+				pool.Release(obj, destroyCallback);
+			}
+			else
+			{
+				Debug.LogError("Cache pool doesn't exist: " + assetType.ToString());
+			}
+		}
+		else
+		{
+			Debug.LogError("Unknown cache type: " + obj.ToString());
+		}
+	}
+
+	public IEnumerator Tick ()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(tickInterval);
+			
+			foreach (CachePool pool in cachePoolDic.Values)
+			{
+				pool.Tick(tickInterval);
+			}
+		}
+	}
+
+	private readonly Dictionary<Type, ObjectType> typeDic = new Dictionary<Type, ObjectType>
+	{
+		{typeof(Material), ObjectType.Materal},
+		{typeof(Texture2D), ObjectType.Texture},
+		{typeof(GameObject), ObjectType.GameObject},
+		{typeof(Mesh), ObjectType.Mesh},
+		{typeof(TextAsset), ObjectType.Config}
+	};
+
+	private ObjectType getAssetType(UnityEngine.Object obj)
+	{
+		Type type = obj.GetType();
+		return typeDic.ContainsKey(type) ? typeDic[type] : ObjectType.None;
+	}
+}
+

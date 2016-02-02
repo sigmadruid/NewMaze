@@ -1,0 +1,47 @@
+using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public interface IPopupManagerDelegate
+{
+	/// <summary>
+	/// 创建并展示一个面板。面板会被缓存，因此该方法可重复调用。
+	/// </summary>
+	/// <param name="path">弹窗路径.</param>
+	/// <param name="popupMode">模式标识.</param>
+	/// <param name="queueMode">队列标识.</param>
+	/// <param name="paramDic">参数字典.</param>
+	BasePopupView CreatePopupCanvas(
+		string path, 
+		uint popupMode = PopupMode.DEFAULT,
+		PopupQueueMode queueMode = PopupQueueMode.QueueBack, 
+		Dictionary<uint, object> paramDic = null
+		);
+
+	/// <summary>
+	/// 创建并展示一个面板。面板会被缓存，因此该方法可重复调用。
+	/// </summary>
+	/// <param name="path">弹窗路径.</param>
+	/// <param name="popupMode">模式标识.</param>
+	/// <param name="queueMode">队列标识.</param>
+	/// <param name="paramDic">参数字典.</param>
+	BasePopupView CreateAndAddPopup(
+		string path, 
+		uint popupMode = PopupMode.DEFAULT,
+		PopupQueueMode queueMode = PopupQueueMode.QueueBack, 
+		Dictionary<uint, object> paramDic = null
+		);
+
+	/// <summary>
+	/// 移除一个已知面板。
+	/// </summary>
+	/// <param name="view">面板.</param>
+	/// <param name="cleanup">是否析构该面板。</param>
+	void RemovePopup(
+		BasePopupView view, 
+		bool cleanup = false
+		);
+
+}
+

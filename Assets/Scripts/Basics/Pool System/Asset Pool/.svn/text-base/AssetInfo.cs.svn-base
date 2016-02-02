@@ -1,0 +1,11 @@
+using UnityEngine;
+using System;
+
+public class AssetInfo : MonoBehaviour
+{
+	public string assetName;
+
+	public ObjectType type;
+
+}
+

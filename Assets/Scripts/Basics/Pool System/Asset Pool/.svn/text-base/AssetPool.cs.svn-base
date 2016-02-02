@@ -1,0 +1,76 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+public class AssetPool
+{
+	private ObjectType type;
+
+	private Dictionary<string, AssetList> assetListDic;
+
+	public AssetPool ()
+	{
+		assetListDic = new Dictionary<string, AssetList>();
+	}
+
+	public void Dispose ()
+	{
+		foreach (AssetList list in assetListDic.Values)
+		{
+			list.Dispose();
+		}
+		assetListDic.Clear();
+	}
+
+	public void Preload (GameObject asset, ObjectType type, float maxLife, int maxPreloadCount, int growth)
+	{
+		if (!assetListDic.ContainsKey(asset.name))
+		{
+			AssetList assetList = new AssetList(asset, type, maxLife, maxPreloadCount, growth);
+			assetListDic[asset.name] = assetList;
+		}
+		else
+		{
+			Debug.LogError("Asset already cached: " + asset.ToString());
+		}
+	}
+
+	public GameObject Shift (string assetName)
+	{
+		AssetList assetList = null;
+		assetListDic.TryGetValue(assetName, out assetList);
+
+		if (assetList != null)
+		{
+			GameObject asset = assetList.Shift();
+			return asset;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public void Add (AssetInfo assetInfo)
+	{
+		AssetList assetList = null;
+		assetListDic.TryGetValue(assetInfo.assetName, out assetList);
+
+		if (assetList != null)
+		{
+			assetList.Add(assetInfo.gameObject);
+		}
+		else
+		{
+			Debug.LogError("Asset can't find the list: " + assetInfo.gameObject.ToString());
+		}
+	}
+
+	public void Tick (float deltaTime)
+	{
+		foreach (AssetList assetList in assetListDic.Values)
+		{
+			assetList.Tick(deltaTime);
+		}
+	}
+}
+

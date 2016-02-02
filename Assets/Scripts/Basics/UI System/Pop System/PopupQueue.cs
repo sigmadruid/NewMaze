@@ -1,0 +1,59 @@
+using UnityEngine;
+using System;
+using System.Collections.Generic;
+
+namespace Base
+{
+	public class PopupQueue
+	{
+		private List<BasePopupView> list;
+
+		private object mutex;
+
+		public PopupQueue ()
+		{
+			mutex = new object();
+
+			list = new List<BasePopupView>();
+		}
+
+		public int Count
+		{
+			get
+			{
+				return list.Count;
+			}
+		}
+
+		public void AddToFront (BasePopupView popup)
+		{
+			lock (mutex)
+			{
+				list.Insert(0, popup);
+			}
+		}
+
+		public void AddToBack (BasePopupView popup)
+		{
+			lock (mutex)
+			{
+				list.Add(popup);
+			}
+		}
+
+		public BasePopupView Unshift ()
+		{
+			lock (mutex)
+			{
+				BasePopupView popup = null;
+				if (list.Count > 0)
+				{
+					popup = list[0];
+					list.RemoveAt(0);
+				}
+				return popup;
+			}
+		}
+	}
+}
+

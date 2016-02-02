@@ -1,0 +1,21 @@
+﻿using UnityEngine;
+using System.Collections;
+
+using PureMVC.Patterns;
+using PureMVC.Interfaces;
+
+public class UIRelativeCamera : MonoBehaviour {
+
+	public GameObject[] relativeObjects;
+
+	void Start () 
+	{
+		Camera camera = GetComponent<Camera>();
+		ApplicationFacade.Instance.RegisterMediator(new UIRelativeCameraMediator(camera, ref relativeObjects));
+	}
+
+	void OnDestroy() 
+	{
+		ApplicationFacade.Instance.RemoveMediator(UIRelativeCameraMediator.NAME);
+	}
+}

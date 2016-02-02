@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+
+namespace StaticData
+{
+    public class NPCEventDataParser : BaseParser
+    {
+		public void Parse(string name, out Dictionary<NPCAppearScene, List<NPCEventData>> typeDic, out Dictionary<int, NPCEventData> kvDic)
+		{
+			LoadFile(name);
+
+			typeDic = new Dictionary<NPCAppearScene, List<NPCEventData>>();
+			typeDic.Add(NPCAppearScene.HomeTown, new List<NPCEventData>());
+			typeDic.Add(NPCAppearScene.Maze, new List<NPCEventData>());
+
+			kvDic = new Dictionary<int, NPCEventData>();
+
+			while (!EndOfRow)
+			{
+				int col = 0;
+
+				NPCEventData data = new NPCEventData();
+				data.Kid = ReadInt(col++);
+				data.AppearScene = ReadEnum<NPCAppearScene>(col++);
+				data.Type = ReadEnum<NPCEventType>(col++);
+				data.FirstTalkList = ReadIntList(col++);
+				data.InTaskTalkList = ReadIntList(col++);
+				data.FinishTalkList = ReadIntList(col++);
+				data.EndTalkList = ReadIntList(col++);
+
+				typeDic[data.AppearScene].Add(data);
+				kvDic.Add(data.Kid, data);
+
+				NextLine();
+			}
+		}
+    }
+}
+

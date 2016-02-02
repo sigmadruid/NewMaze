@@ -1,0 +1,33 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class UIManager
+{
+    private static UIManager instance;
+
+    public static UIManager Instance()
+    {
+        if (instance == null)
+        {
+            instance = new UIManager();
+        }
+        return instance;
+    }
+
+    protected UIManager()
+    {
+    }
+
+    public void ShowBuildingPanel(GameObject mapElement)
+    {
+//        SceneObjectRenderer sceneObject = mapElement.GetComponent<SceneObjectRenderer>();
+//        switch (sceneObject.objectName)
+//        {
+//            case SceneObjectRenderer.SceneObjectName.YIZHENGTING:
+//                PopManager.Instance.CreateAndAddPopup("Prefabs/UI/BasePanelView", true);
+//                break;
+//            default:
+//                break;
+//        }
+    }
+}

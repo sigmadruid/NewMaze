@@ -1,0 +1,58 @@
+﻿using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using PureMVC.Interfaces;
+using PureMVC.Patterns;
+
+public class UIRelativeCameraMediator : Mediator {
+
+	new public const String NAME = "UIRelativeCameraMediator";
+
+	private Camera camera;
+
+	private GameObject[] relativeObjects;
+
+	public UIRelativeCameraMediator (Camera camera, ref GameObject[] relativeObjects) : base (NAME)
+	{
+		this.camera = camera;
+		this.relativeObjects = relativeObjects;
+	}
+	
+	public override IList<string> ListNotificationInterests()
+	{
+		List<string> notifications = new List<string>();
+		notifications.Add(NotificationConst.SHOW_MAIN_CAMERA);
+		notifications.Add(NotificationConst.HIDE_MAIN_CAMERA);
+		
+		return notifications;
+	}
+	
+	public override void HandleNotification(INotification notification)
+	{
+		switch(notification.Name)
+		{
+		case NotificationConst.SHOW_MAIN_CAMERA:
+			ChangeAvtivity(true);
+			break;
+		case NotificationConst.HIDE_MAIN_CAMERA:
+			ChangeAvtivity(false);
+			break;
+		}
+	}
+
+	private void ChangeAvtivity (bool activity)
+	{
+		if (relativeObjects != null)
+		{
+			foreach (GameObject gameObject in relativeObjects)
+			{
+				if (gameObject != null)
+				{
+					gameObject.SetActive(activity);
+				}
+			}
+		}
+	}
+}

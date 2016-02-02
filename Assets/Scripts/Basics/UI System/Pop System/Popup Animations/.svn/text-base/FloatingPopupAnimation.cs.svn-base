@@ -1,0 +1,38 @@
+using UnityEngine;
+using System;
+
+public class FloatingPopupAnimation : BasePopupAnimation
+{
+	private const float DURATION = 0.2f;
+
+	private const float ORIGIN_Y = -30f;
+	private const float ORIGIN_ALPHA = 0f;
+
+	public FloatingPopupAnimation () : base(PopupAnimationType.Floating, DURATION)
+	{
+	}
+
+	public override void StartAnimation (BasePopupView popupView, float duration, bool reverse = false)
+	{
+		base.StartAnimation (popupView, duration, reverse);
+
+		if (!reverse)
+		{
+//			popupView.transform.localPosition = new Vector3(0, ORIGIN_Y, 0);
+//			TweenPosition.Begin(popupView.gameObject, duration, Vector3.zero);
+
+			popupView.Panel.alpha = ORIGIN_ALPHA;
+			TweenAlpha.Begin(popupView.gameObject, duration, 1f);
+		}
+		else
+		{
+//			popupView.transform.localPosition = Vector3.zero;
+//			TweenPosition.Begin(popupView.gameObject, duration, new Vector3(0, ORIGIN_Y, 0));
+
+			popupView.Panel.alpha = 1f;
+			TweenAlpha.Begin(popupView.gameObject, duration, ORIGIN_ALPHA);
+		}
+
+	}
+}
+

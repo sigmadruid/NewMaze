@@ -1,0 +1,47 @@
+using UnityEngine;
+using System.Collections;
+
+using PureMVC.Patterns;
+using PureMVC.Interfaces;
+
+public abstract class AbstractPopupMediator : Mediator 
+{
+	private string prefabPath;
+
+	private BasePopupView popupView;
+	
+	private IPopupManagerDelegate popupManagerDelegate;
+	
+	public AbstractPopupMediator(IPopupManagerDelegate popupManagerDelegate, string mediatorName, string prefabPath): base(mediatorName, null)
+	{
+		this.popupManagerDelegate = popupManagerDelegate;
+		this.prefabPath = prefabPath;
+	}
+
+	protected BasePopupView CreatePopupView ()
+	{
+//		this.popupView = popupManagerDelegate.CreatePopupCanvas(this.prefabPath);
+		this.popupView = popupManagerDelegate.CreateAndAddPopup(this.prefabPath);
+		popupView.UpdateShowDelegate = updateViewShow;
+		popupView.UpdateHideDelegate = updateViewHide;
+
+		return this.popupView;
+	}
+	
+	protected void ClosePopupView ()
+	{
+		popupManagerDelegate.RemovePopup(this.popupView);
+		popupView.UpdateShowDelegate = null;
+		popupView.UpdateHideDelegate = null;
+
+		this.popupView = null;
+	}
+	
+	protected virtual void updateViewShow ()
+	{
+	}
+	
+	protected virtual void updateViewHide ()
+	{
+	}
+}
