@@ -118,18 +118,12 @@ namespace GameLogic
 		private void OnInitBlock(Block block)
 		{
 			block.Script.gameObject.isStatic = true;
-			DispatchNotification(NotificationEnum.MONSTER_SPAWN, block);
-			DispatchNotification(NotificationEnum.NPC_SPAWN, block);
-			DispatchNotification(NotificationEnum.EXPLORATION_SPAWN, block);
-			DispatchNotification(NotificationEnum.DROP_SPAWN, block);
+            DispatchNotification(NotificationEnum.BLOCK_SPAWN, block);
 		}
 		private void OnDisposeBlock(Block block)
 		{
 			block.Script.gameObject.isStatic = false;
-			DispatchNotification(NotificationEnum.MONSTER_DESPAWN, block);
-			DispatchNotification(NotificationEnum.NPC_DESPAWN, block);
-			DispatchNotification(NotificationEnum.EXPLORATION_DESPAWN, block);
-			DispatchNotification(NotificationEnum.DROP_DESPAWN, block);
+            DispatchNotification(NotificationEnum.BLOCK_DESPAWN, block);
 		}
 	}
 }

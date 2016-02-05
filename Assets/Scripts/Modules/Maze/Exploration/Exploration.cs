@@ -11,6 +11,8 @@ namespace GameLogic
 {
     public class Exploration : Entity
     {
+        protected ExplorationProxy proxy;
+
 		public new ExplorationData Data
 		{
 			get { return data as ExplorationData; }
@@ -33,18 +35,29 @@ namespace GameLogic
 			return false;
 		}
 
-		protected virtual void OnFunction()
-		{
-		}
+        public virtual void OnFunction() {}
 
-        public static Exploration Create(ExplorationType type = ExplorationType.Common)
+        protected virtual void OnEnter()
+        {
+            Script.HighlightOn(Color.red);
+            proxy.AddEnteredExploration(this);
+        }
+
+        protected virtual void OnExit()
+        {
+            Script.HighlightOff();
+            proxy.RemoveEnteredExploration(this);
+        }
+
+        public static void Init(Exploration exploration, ExplorationType type)
 		{
-			Exploration exploration = new Exploration();
 			exploration.Uid = Guid.NewGuid().ToString();
-			exploration.Data = ExplorationDataManager.Instance.GetRandomData(type); 
+            exploration.Data = ExplorationDataManager.Instance.GetRandomData(type); 
 			exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
 			exploration.Script.CachedTransform.parent = RootTransform.Instance.ExplorationRoot;
-			return exploration;
+            exploration.Script.CallbackEnter = exploration.OnEnter;
+            exploration.Script.CallbackExit = exploration.OnExit;
+            exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 		}
 
 		public static void Recycle(Exploration exploration)

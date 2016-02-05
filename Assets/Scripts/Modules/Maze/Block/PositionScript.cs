@@ -15,6 +15,8 @@ public class PositionScript : MonoBehaviour
 {
 	public PositionType positionType = PositionType.Monster;
 
+    public int Kid;
+
 	[HideInInspector]
 	public bool Available = true;
 

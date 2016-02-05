@@ -32,7 +32,7 @@ namespace StaticData
 		public readonly Vector3 HallPosition = new Vector3(10000, 0, 10000);
 	}
 
-	public class DropConfig
+	public class InputConfig
 	{
 		public readonly float NearSqrDistance = 4f;
 	}
@@ -45,8 +45,8 @@ namespace StaticData
 	public class EnvironmentConfig
 	{
 		public readonly float ConvertingDuration = 5f;
-		public readonly float NightDuration = 60f;
-		public readonly float DayDuration = 60f;
+		public readonly float NightDuration = 1000f;
+		public readonly float DayDuration = 5f;
 		public readonly Color DayLightColor = new Color(165f/255f, 165f/255f, 165f/255f, 1f);
 		public readonly Color NightLightColor = new Color(20f/255f, 20f/255f, 20f/255f, 1f);
 	}
@@ -55,7 +55,7 @@ namespace StaticData
     {
         public static BlockConfig BlockConfig = new BlockConfig();
 		public static BattleConfig BattleConfig = new BattleConfig();
-		public static DropConfig DropConfig = new DropConfig();
+		public static InputConfig InputConfig = new InputConfig();
 		public static CameraConfig CameraConfig = new CameraConfig();
 		public static EnvironmentConfig EnvironmentConfig = new EnvironmentConfig();
 		public static HallConfig HallConfig = new HallConfig();

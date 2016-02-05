@@ -25,7 +25,7 @@ namespace GameLogic
 			return new Enum[]
 			{
 				NotificationEnum.HALL_INIT,
-				NotificationEnum.HALL_DISPOSE
+				NotificationEnum.HALL_DISPOSE,
 			};
 		}
 		
@@ -50,10 +50,12 @@ namespace GameLogic
 		{
 			if (currentHall == null)
 				currentHall = Hall.Create(110001);
+            DispatchNotification(NotificationEnum.HALL_SPAWN, currentHall);
 		}
 		
 		private void HandleHallDispose()
 		{
+            DispatchNotification(NotificationEnum.HALL_DESPAWN, currentHall);
 			Hall.Recycle(currentHall);
 		}
     }

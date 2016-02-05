@@ -30,8 +30,8 @@ namespace GameLogic
 				NotificationEnum.NPC_INIT,
 				NotificationEnum.NPC_DISPOSE,
 				NotificationEnum.TOWN_NPC_SPAWN,
-				NotificationEnum.NPC_SPAWN,
-				NotificationEnum.NPC_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
 				NotificationEnum.NPC_DIALOG_SHOW,
 			};
 		}
@@ -49,13 +49,13 @@ namespace GameLogic
 				case NotificationEnum.TOWN_NPC_SPAWN:
 					HandleTownNPCSpawn();
 					break;
-				case NotificationEnum.NPC_SPAWN:
+                case NotificationEnum.BLOCK_SPAWN:
 				{
 					Block block = notification.Body as Block;
 					HandleNPCSpawn(block);
 					break;
 				}
-				case NotificationEnum.NPC_DESPAWN:
+                case NotificationEnum.BLOCK_DESPAWN:
 				{
 					Block block = notification.Body as Block;
 					HandleNPCDespawn(block);
@@ -90,7 +90,7 @@ namespace GameLogic
 			
 			for (int i = 0; i < npcCount; ++i)
 			{
-				PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionType.NPCPositions);
+				PositionScript birth = block.Script.GetRandomPosition(PositionType.NPC);
 
 				if (birth != null)
 				{

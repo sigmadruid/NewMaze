@@ -24,8 +24,10 @@ namespace GameLogic
 		{
 			return new Enum[]
 			{
-				NotificationEnum.MONSTER_SPAWN,
-				NotificationEnum.MONSTER_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -34,18 +36,30 @@ namespace GameLogic
 		{
             switch((NotificationEnum)notification.NotifyEnum)
 			{
-				case NotificationEnum.MONSTER_SPAWN:
+                case NotificationEnum.BLOCK_SPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleSpawnMonster(block);
+					HandleBlockSpawn(block);
 					break;
 				}
-				case NotificationEnum.MONSTER_DESPAWN:
+                case NotificationEnum.BLOCK_DESPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleDespawnMonster(block);
+					HandleBlockDespawn(block);
 					break;
 				}
+                case NotificationEnum.HALL_SPAWN:
+                {
+                    Hall hall = notification.Body as Hall;
+                    HandleHallSpawn(hall);
+                    break;
+                }
+                case NotificationEnum.HALL_DESPAWN:
+                {
+                    Hall hall = notification.Body as Hall;
+                    HandleHallDespawn(hall);
+                    break;
+                }
 				case NotificationEnum.BATTLE_PAUSE:
 				{
 					bool isPause = (bool)notification.Body;
@@ -56,7 +70,7 @@ namespace GameLogic
 		}
 
 		//When spawn a block, check if any monster already stores on this pos.
-		private void HandleSpawnMonster(Block block)
+		private void HandleBlockSpawn(Block block)
 		{
 			//Room??
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
@@ -78,7 +92,7 @@ namespace GameLogic
 				
 				for (int i = 0; i < monsterCount; ++i)
 				{
-                    PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionType.MonsterPositions);
+                    PositionScript birth = block.Script.GetRandomPosition(PositionType.Monster);
 					
 					if (birth != null)
 					{
@@ -93,7 +107,7 @@ namespace GameLogic
 		}
 
 		//When a block despawns, remove all monsters on it from the monsterDic, and store them in the recordDic
-		private void HandleDespawnMonster(Block block)
+		private void HandleBlockDespawn(Block block)
 		{
 			List<Monster> toDeleteMonsterList = new List<Monster>();
 			monsterProxy.IterateMonsters((Monster monster) => 
@@ -124,6 +138,15 @@ namespace GameLogic
 				Monster.Recycle(monster);
 			}
 		}
+
+        private void HandleHallSpawn(Hall hall)
+        {
+            PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Monster);
+        }
+        private void HandleHallDespawn(Hall hall)
+        {
+        }
+
 		private void HandleBattlePause(bool isPause)
 		{
 			monsterProxy.IterateMonsters((Monster monster) => 

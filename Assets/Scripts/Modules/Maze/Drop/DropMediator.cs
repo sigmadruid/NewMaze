@@ -22,8 +22,8 @@ namespace GameLogic
         {
             return new Enum[]
             {
-                NotificationEnum.DROP_SPAWN,
-                NotificationEnum.DROP_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
 				NotificationEnum.DROP_CREATED,
                 NotificationEnum.DROP_PICKED_UP,
             };
@@ -33,13 +33,13 @@ namespace GameLogic
         {
             switch((NotificationEnum)notification.NotifyEnum)
             {
-				case NotificationEnum.DROP_SPAWN:
+                case NotificationEnum.BLOCK_SPAWN:
                 {
 //					Block block = notification.Body as Block;
 //					HandleDropSpawn(block);
                     break;
                 }
-				case NotificationEnum.DROP_DESPAWN:
+                case NotificationEnum.BLOCK_DESPAWN:
 				{
 //					Block block = notification.Body as Block;
 //					HandleDropDespawn(block);

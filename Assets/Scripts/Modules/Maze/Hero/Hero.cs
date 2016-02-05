@@ -108,7 +108,6 @@ namespace GameLogic
 
 		public void Function()
 		{
-			Debug.Log("Hero function!");
 		}
 
 		public void Hit()

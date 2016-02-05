@@ -11,19 +11,20 @@ namespace GameLogic
 {
     public class ExplorationMediator : Mediator
     {
-		private ExplorationProxy exploreProxy;
+        private ExplorationProxy explorationProxy;
 		
 		public override void OnRegister ()
 		{
-			exploreProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
+			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 		}
 
 		public override IList<Enum> ListNotificationInterests ()
 		{
 			return new Enum[]
 			{
-				NotificationEnum.EXPLORATION_SPAWN,
-				NotificationEnum.EXPLORATION_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.EXPLORATION_FUNCTION,
 			};
 		}
 
@@ -31,18 +32,23 @@ namespace GameLogic
 		{
             switch((NotificationEnum)notification.NotifyEnum)
 			{
-				case NotificationEnum.EXPLORATION_SPAWN:
-				{
-					Block block = notification.Body as Block;
-					HandleSpawn(block);
-					break;
-				}
-				case NotificationEnum.EXPLORATION_DESPAWN:
-				{
-					Block block = notification.Body as Block;
-					HandleDespawn(block);
-					break;
-				}
+                case NotificationEnum.BLOCK_SPAWN:
+    				{
+    					Block block = notification.Body as Block;
+    					HandleSpawn(block);
+    					break;
+    				}
+                case NotificationEnum.BLOCK_DESPAWN:
+    				{
+    					Block block = notification.Body as Block;
+    					HandleDespawn(block);
+    					break;
+    				}
+                case NotificationEnum.EXPLORATION_FUNCTION:
+                    {
+                        HandleFunction();
+                        break;
+                    }
 			}
 		}
 
@@ -53,20 +59,22 @@ namespace GameLogic
 
             if (block.ExplorationType != ExplorationType.Common)
             {
-                birth = block.Script.GetGlobalPosition(BlockScript.PositionType.ExplorationPositions);
-                CreateExploration(block.ExplorationType, birth);
+                birth = block.Script.GetGlobalPosition(PositionType.Exploration);
+                List<object> paramList = new List<object>();
+                paramList.Add(TransporterDirectionType.Forward);
+                CreateExploration(block.ExplorationType, birth, paramList);
                 explorationCount--;
             }
 
 			for (int i = 0; i < explorationCount; ++i)
 			{
-				birth = block.Script.GetRandomPosition(BlockScript.PositionType.ExplorationPositions);
+				birth = block.Script.GetRandomPosition(PositionType.Exploration);
                 CreateExploration(ExplorationType.Common, birth);
 			}
 		}
 		private void HandleDespawn(Block block)
 		{
-			List<Exploration> explorationList = exploreProxy.GetAll();
+			List<Exploration> explorationList = explorationProxy.GetAll();
 			float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
 			int count = explorationList.Count;
 			for (int i = 0; i < count; ++i)
@@ -76,20 +84,28 @@ namespace GameLogic
 				MazeUtil.GetMazePosition(exploratioin.WorldPosition, blockSize, out col, out row);
 				if (block.Contains(col, row))
 				{
-					exploreProxy.Remove(exploratioin.Uid);
+					explorationProxy.Remove(exploratioin.Uid);
 					Exploration.Recycle(exploratioin);
 				}
 			}
 		}
-
-        private void CreateExploration(ExplorationType type, PositionScript birth)
+        private void CreateExploration(ExplorationType type, PositionScript birth, List<object> paramList = null)
         {
             if (birth != null)
             {
-                Exploration exploration = Exploration.Create(type);
-                exploration.SetPosition(birth.transform.position);
-                exploration.SetRotation(birth.transform.eulerAngles.y);
-                exploreProxy.Add(exploration);
+                Exploration expl = explorationProxy.CreateExploration(type, paramList);
+                expl.SetPosition(birth.transform.position);
+                expl.SetRotation(birth.transform.eulerAngles.y);
+                explorationProxy.Add(expl);
+            }
+        }
+
+        private void HandleFunction()
+        {
+            Exploration enteredExpl = explorationProxy.FindNearbyExploration(Hero.Instance.WorldPosition);
+            if (enteredExpl != null)
+            {
+                enteredExpl.OnFunction();
             }
         }
     }

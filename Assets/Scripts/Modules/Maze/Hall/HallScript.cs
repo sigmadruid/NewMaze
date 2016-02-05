@@ -6,6 +6,36 @@ using Base;
 
 public class HallScript : EntityScript 
 {
+    private const string POSITION_ROOT_NAME = "{0}Positions";
+
 	public Transform EntryPos;
-	//TODO: Add some configurable public variables. Such as MonsterList, NPCList, TrapList, ...
+
+    private Dictionary<PositionType, PositionScript[]> positionListDic;
+
+    void Awake () 
+    {
+        positionListDic = new Dictionary<PositionType, PositionScript[]>();
+        InitPositionList(PositionType.Monster);
+        InitPositionList(PositionType.NPC);
+        InitPositionList(PositionType.Exploration);
+    }
+
+    private void InitPositionList(PositionType type)
+    {
+        Transform posRoot = CachedTransform.FindChild(string.Format(POSITION_ROOT_NAME, type));
+        if (posRoot != null)
+        {
+            PositionScript[] positionArray = posRoot.GetComponentsInChildren<PositionScript>();
+            positionListDic[type] = positionArray;
+        }
+    }
+
+    public PositionScript[] GetPositionList(PositionType type)
+    {
+        if(positionListDic.ContainsKey(type))
+        {
+            return positionListDic[type];
+        }
+        return null;
+    }
 }

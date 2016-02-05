@@ -145,7 +145,8 @@ namespace GameLogic
 			if (hero != null)
 			{
 				hero.Function();
-				DispatchNotification(NotificationEnum.DROP_PICKED_UP);
+                DispatchNotification(NotificationEnum.DROP_PICKED_UP);
+                DispatchNotification(NotificationEnum.EXPLORATION_FUNCTION);
 			}
 		}
 

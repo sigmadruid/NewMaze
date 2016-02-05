@@ -17,7 +17,7 @@ namespace GameUI
         public UIButton ButtonConfirm;
         public UIButton ButtonCancel;
         
-		public static void Show(string title, string content, Action callbackConfirm, Action callbackCancel)
+		public static void Show(string title, string content, Action callbackConfirm, Action callbackCancel = null)
         {
 			ConfirmPanel panel = PopupManager.Instance.CreateAndAddPopup<ConfirmPanel>(PopupMode.DEFAULT, PopupQueueMode.NoQueue);
 			panel.LabelTitle.text = title;
@@ -29,14 +29,17 @@ namespace GameUI
         void Awake()
         {
             UIEventListener.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
+            UIEventListener.Get(ButtonCancel.gameObject).onClick = OnCancel;
         }
         
         private void OnConfirm(GameObject go)
         {
+            PopupManager.Instance.RemovePopup(this);
             CallbackConfirm();
         }
 		private void OnCancel(GameObject go)
 		{
+            PopupManager.Instance.RemovePopup(this);
 			CallbackCancel();
 		}
     }

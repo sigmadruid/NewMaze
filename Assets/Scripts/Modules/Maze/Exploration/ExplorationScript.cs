@@ -10,6 +10,9 @@ namespace GameLogic
 {
     public class ExplorationScript : EntityScript
     {
+        public Action CallbackEnter;
+        public Action CallbackExit;
+
 		private Highlighter highlighter;
 
 		void Awake()
@@ -19,19 +22,27 @@ namespace GameLogic
 
 		void OnTriggerEnter(Collider other)
 		{
-			if (other.CompareTag(Tags.Hero) && !Hero.Instance.InBattle)
+            if (other.CompareTag(Tags.Hero))
 			{
-				highlighter.ConstantOn(Color.red);
+                if (CallbackEnter != null) CallbackEnter();
 			}
 		}
 		void OnTriggerExit(Collider other)
 		{
-			if (other.CompareTag(Tags.Hero) && !Hero.Instance.InBattle)
+            if (other.CompareTag(Tags.Hero))
 			{
-				highlighter.ConstantOff();
+                if (CallbackExit != null) CallbackExit();
 			}
 		}
 
+        public void HighlightOn(Color color)
+        {
+            highlighter.ConstantOn(Color.red);
+        }
+        public void HighlightOff()
+        {
+            highlighter.ConstantOff();
+        }
     }
 }
 

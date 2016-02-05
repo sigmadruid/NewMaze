@@ -6,32 +6,27 @@ using Base;
 
 public class BlockScript : EntityScript 
 {
-	public enum PositionType
-	{
-		MonsterPositions,
-		NPCPositions,
-		ExplorationPositions,
-	}
+    private const string POSITION_ROOT_NAME = "{0}Positions";
 
 	private Dictionary<PositionType, PositionScript[]> positionListDic;
 
 	void Awake () 
 	{
 		positionListDic = new Dictionary<PositionType, PositionScript[]>();
-		InitPositionList(PositionType.MonsterPositions);
-		InitPositionList(PositionType.NPCPositions);
-		InitPositionList(PositionType.ExplorationPositions);
+		InitPositionList(PositionType.Monster);
+		InitPositionList(PositionType.NPC);
+		InitPositionList(PositionType.Exploration);
 
 		InitRandomDecorations();
 	}
 
 	private void InitPositionList(PositionType type)
 	{
-		Transform posRoot = CachedTransform.FindChild(type.ToString());
+        Transform posRoot = CachedTransform.FindChild(string.Format(POSITION_ROOT_NAME, type));
 		if (posRoot != null)
 		{
 			PositionScript[] positionArray = posRoot.GetComponentsInChildren<PositionScript>();
-            int start = type == PositionType.ExplorationPositions ? 1 : 0;
+            int start = type == PositionType.Exploration ? 1 : 0;
             Utils.Shift<PositionScript>(positionArray, start);
 			positionListDic[type] = positionArray;
 		}
@@ -39,7 +34,7 @@ public class BlockScript : EntityScript
 
     public PositionScript GetGlobalPosition(PositionType type)
     {
-        if (type == PositionType.ExplorationPositions)
+        if (type == PositionType.Exploration)
         {
             PositionScript[] positionArray = positionListDic[type];
             PositionScript position = positionArray[0];
@@ -96,17 +91,4 @@ public class BlockScript : EntityScript
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

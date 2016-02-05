@@ -139,48 +139,7 @@ public class InputManager
 
 	void Test()
 	{
-		if (Input.GetKeyDown(KeyCode.F1))
-		{
-			BeforeTransport();
-			TransitionPanel panel = PopupManager.Instance.CreateAndAddPopup<TransitionPanel>() ;
-			panel.CallbackTransition = OnTransportIn;
-			panel.StartTransition();
-		}
-		else if (Input.GetKeyDown(KeyCode.F2))
-		{
-			BeforeTransport();
-			TransitionPanel panel = PopupManager.Instance.CreateAndAddPopup<TransitionPanel>();
-			panel.CallbackTransition = OnTransportOut;
-			panel.StartTransition();
-		}
 
 	}
 
-	private void OnTransportIn()
-	{
-		Hero.Instance.IsSlowUpdating = false;
-		ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition = Hero.Instance.WorldPosition;
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT);
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
-		AfterTransport();
-	}
-	private void OnTransportOut()
-	{
-		Hero.Instance.IsSlowUpdating = true;
-		Vector3 leavePosition = ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition;
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, leavePosition);
-		AfterTransport();
-	}
-
-	private void BeforeTransport()
-	{
-		InputManager.Instance.Enable = false;
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, true);
-	}
-	private void AfterTransport()
-	{
-		InputManager.Instance.Enable = true;
-		ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, false);
-	}
 }
