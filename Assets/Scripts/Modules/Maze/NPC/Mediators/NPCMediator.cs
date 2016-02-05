@@ -90,7 +90,7 @@ namespace GameLogic
 			
 			for (int i = 0; i < npcCount; ++i)
 			{
-				PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionListType.NPCPositions);
+				PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionType.NPCPositions);
 
 				if (birth != null)
 				{

@@ -59,19 +59,21 @@ namespace Base
 			}
 		}
 
-        public static void Shift<T>(IList<T> list)
+        public static void Shift<T>(IList<T> list, int start = 0, int count = 0)
 		{
-			int count = list.Count;
-			for (int i = 0; i < count; ++i)
+            if (count == 0)
+                count = list.Count;
+            
+			for (int i = start; i < count; ++i)
 			{
-                int index = RandomUtils.Range(0, count);
+                int index = RandomUtils.Range(start, count);
                 T node = list[i];
 				list[i] = list[index];
                 list[index] = node;
 			}
 		}
 
-        public static List<int> GetRandomIndexList(int length, int count)
+        public static List<int> GetRandomIndexList(int count, int length)
         {
             const int MAX_CONFLICT_TIMES = 10;
             int conflictTimes = 0;

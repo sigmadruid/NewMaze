@@ -78,7 +78,7 @@ namespace GameLogic
 				
 				for (int i = 0; i < monsterCount; ++i)
 				{
-					PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionListType.MonsterPositions);
+                    PositionScript birth = block.Script.GetRandomPosition(BlockScript.PositionType.MonsterPositions);
 					
 					if (birth != null)
 					{

@@ -112,63 +112,8 @@ namespace GameLogic
 
 			blockProxy.UpdateSearchIndex(col, row);
 
-//			Block block = blockProxy.GetBlockAtPosition(position);
-//			if (block != currentBlock)
-//			{
-//				if (currentBlock != null && currentBlock.Script != null)
-//				{
-//					ConjunctionScript[] currentConjunctionList = currentBlock.Script.ConjunctionList;
-//					for (int i = 0; i < currentConjunctionList.Length; ++i)
-//					{
-//						ConjunctionScript currentConjunction = currentConjunctionList[i];
-//						if (currentConjunction.NeighborBlock != block)
-//						{
-//							OnDisposeBlock(currentConjunction.NeighborBlock);
-//
-//							Block.RecycleBlock(currentConjunction.NeighborBlock);
-//							blockProxy.RemoveBlock(currentConjunction.NeighborBlock.Uid);
-//
-//							currentConjunction.NeighborBlock = null;
-//						}
-//					}
-//				}
-//				//TODO: Check this. Why?
-//				if (block != null)
-//				{
-//					ConjunctionScript[] conjunctionList = block.Script.ConjunctionList;
-//					for (int i = 0; i < conjunctionList.Length; ++i)
-//					{
-//						ConjunctionScript conjunction = conjunctionList[i];
-//						if (conjunction.NeighborBlock == null)
-//						{
-//							Block newBlock = CreateBlock(block.Data.Type);
-//							ConnectBlocks(newBlock, block, conjunction);
-//							blockProxy.AddBlock(newBlock);
-//
-//							OnInitBlock(newBlock);
-//						}
-//					}
-//				}
-//
-//				mazeProxy.CurrentMaze.CurrentBlockCount++;
-//				currentBlock = block;
-//			}
-
+//            StaticBatchingUtility.Combine(RootTransform.Instance.BlockRoot.gameObject);
 		}
-
-//		private void ConnectBlocks(Block newBlock, Block block, ConjunctionScript conjunction)
-//		{
-//			ConjunctionScript newConjunction = newBlock.Script.GetAvailableConjunction();
-//
-//			newBlock.SetPosition(conjunction.Position - newConjunction.LocalPosition);
-//
-//			float newAngle = Quaternion.LookRotation(newConjunction.Direction).eulerAngles.y;
-//			float angle = Quaternion.LookRotation(conjunction.Direction).eulerAngles.y;
-//			newBlock.SetRotation(180 - (newAngle - angle), conjunction.Position);
-//
-//			newConjunction.NeighborBlock = block;
-//			conjunction.NeighborBlock = newBlock;
-//		}
 
 		private void OnInitBlock(Block block)
 		{

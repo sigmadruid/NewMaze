@@ -17,7 +17,7 @@ namespace StaticData
         public readonly int PassagePreloadCount = 10;
 		public readonly int RoomPreloadCount = 10;
 
-		public readonly int RefreshScope = 10;
+		public readonly int RefreshScope = 2;
 
 		public readonly string MockPassagePath = "MazeBlocks/Mock/MockPassage";
 		public readonly string MockLinkPath = "MazeBlocks/Mock/MockLink";

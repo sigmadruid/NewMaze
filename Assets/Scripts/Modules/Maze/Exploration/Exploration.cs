@@ -44,7 +44,6 @@ namespace GameLogic
 			exploration.Data = ExplorationDataManager.Instance.GetRandomData(type); 
 			exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
 			exploration.Script.CachedTransform.parent = RootTransform.Instance.ExplorationRoot;
-
 			return exploration;
 		}
 

@@ -53,14 +53,14 @@ namespace GameLogic
 
             if (block.ExplorationType != ExplorationType.Common)
             {
-                birth = block.Script.GetGlobalPosition(BlockScript.PositionListType.ExplorationPositions);
+                birth = block.Script.GetGlobalPosition(BlockScript.PositionType.ExplorationPositions);
                 CreateExploration(block.ExplorationType, birth);
                 explorationCount--;
             }
 
 			for (int i = 0; i < explorationCount; ++i)
 			{
-				birth = block.Script.GetRandomPosition(BlockScript.PositionListType.ExplorationPositions);
+				birth = block.Script.GetRandomPosition(BlockScript.PositionType.ExplorationPositions);
                 CreateExploration(ExplorationType.Common, birth);
 			}
 		}

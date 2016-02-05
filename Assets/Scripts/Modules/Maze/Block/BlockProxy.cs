@@ -256,16 +256,23 @@ namespace GameLogic
 
         public void InitGlobalExplorationPositions()
         {
-            Debug.Log(mazeTable.NodeCount);
+            int positionTotalCount = 0;
             foreach(ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
             {
-                int globalExplorationCount = mazeData.GlobalExplorationCountDic[type];
-                List<int> indexList = Utils.GetRandomIndexList(mazeTable.NodeCount, globalExplorationCount);
-                for (int i = 0; i < indexList.Count; ++i)
+                int count = mazeData.GlobalExplorationCountDic[type];
+                positionTotalCount += count;
+            }
+
+            int index = 0;
+            List<int> indexList = Utils.GetRandomIndexList(positionTotalCount, mazeTable.NodeCount);
+            foreach (ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
+            {
+                int count = mazeData.GlobalExplorationCountDic[type];
+                for (int i = 0; i < count; ++i)
                 {
-                    int index = indexList[i];
-                    MazeNode node = mazeTable.GetNode(index);
+                    MazeNode node = mazeTable.GetNode(indexList[index]);
                     node.ExplorationType = type;
+                    index++;
                 }
             }
         }

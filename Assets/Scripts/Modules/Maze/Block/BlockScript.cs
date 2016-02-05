@@ -6,59 +6,62 @@ using Base;
 
 public class BlockScript : EntityScript 
 {
-	public enum PositionListType
+	public enum PositionType
 	{
 		MonsterPositions,
 		NPCPositions,
 		ExplorationPositions,
 	}
 
-	private Dictionary<PositionListType, PositionScript[]> positionListDic;
+	private Dictionary<PositionType, PositionScript[]> positionListDic;
 
 	void Awake () 
 	{
-		positionListDic = new Dictionary<PositionListType, PositionScript[]>();
-		InitPositionList(PositionListType.MonsterPositions);
-		InitPositionList(PositionListType.NPCPositions);
-		InitPositionList(PositionListType.ExplorationPositions);
+		positionListDic = new Dictionary<PositionType, PositionScript[]>();
+		InitPositionList(PositionType.MonsterPositions);
+		InitPositionList(PositionType.NPCPositions);
+		InitPositionList(PositionType.ExplorationPositions);
 
 		InitRandomDecorations();
 	}
 
-	private void InitPositionList(PositionListType type)
+	private void InitPositionList(PositionType type)
 	{
 		Transform posRoot = CachedTransform.FindChild(type.ToString());
 		if (posRoot != null)
 		{
 			PositionScript[] positionArray = posRoot.GetComponentsInChildren<PositionScript>();
-            Utils.Shift<PositionScript>(positionArray);
+            int start = type == PositionType.ExplorationPositions ? 1 : 0;
+            Utils.Shift<PositionScript>(positionArray, start);
 			positionListDic[type] = positionArray;
 		}
 	}
 
-    public PositionScript GetGlobalPosition(PositionListType type)
+    public PositionScript GetGlobalPosition(PositionType type)
     {
-        if (type == PositionListType.ExplorationPositions)
+        if (type == PositionType.ExplorationPositions)
         {
             PositionScript[] positionArray = positionListDic[type];
-            return positionArray[0];
+            PositionScript position = positionArray[0];
+            position.Available = false;
+            return position;
         }
         else
         {
             return null;
         }
     }
-	public PositionScript GetRandomPosition(PositionListType type)
+	public PositionScript GetRandomPosition(PositionType type)
 	{
 		if (positionListDic.ContainsKey(type))
 		{
 			PositionScript[] positionArray = positionListDic[type];
-            int start = type == PositionListType.ExplorationPositions ? 1 : 0;
-            for (int i = start; i < positionArray.Length; ++i)
+            for (int i = 0; i < positionArray.Length; ++i)
 			{
 				PositionScript position = positionArray[i];
 				if (position.Available)
 				{
+                    position.Available = false;
 					return position;
 				}
 			}
@@ -68,7 +71,7 @@ public class BlockScript : EntityScript
 
 	public void Reset()
 	{
-		Dictionary<PositionListType, PositionScript[]>.Enumerator enumerator = positionListDic.GetEnumerator();
+		Dictionary<PositionType, PositionScript[]>.Enumerator enumerator = positionListDic.GetEnumerator();
 		while (enumerator.MoveNext())
 		{
 			PositionScript[] positionList = enumerator.Current.Value;
