@@ -61,7 +61,7 @@ namespace AI
 			}
 		}
 
-		protected void SearchForHero(Vector3 offset)
+		protected void SearchForHeroByNode()
 		{
 			Vector2 pos = Maze.Instance.GetMazePosition(currentMonster.WorldPosition);
 			int col = (int)pos.x;
@@ -73,7 +73,7 @@ namespace AI
 			{
 				if (nextNode == currentNode)
 				{
-					currentMonster.Move(Hero.Instance.WorldPosition - currentMonster.WorldPosition);
+                    SearchForHeroDirectly();
 				}
 				else
 				{
@@ -87,6 +87,11 @@ namespace AI
 				currentMonster.Move(Vector3.zero);
 			}
 		}
+
+        protected void SearchForHeroDirectly()
+        {
+            currentMonster.Move(Hero.Instance.WorldPosition - currentMonster.WorldPosition);
+        }
 
 	}
 }

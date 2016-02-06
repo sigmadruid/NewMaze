@@ -53,8 +53,10 @@ namespace AI
 			{
 				if (hero.Script != null)
 				{
-					Vector3 offset = MathUtils.RandomOffset(currentData.AttackRange);
-					SearchForHero(offset);
+                    if(currentMonster.InHall)
+                        SearchForHeroDirectly();
+                    else
+					    SearchForHeroByNode();
 				}
 				else
 				{

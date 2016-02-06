@@ -24,6 +24,8 @@ namespace GameLogic
 			{
                 NotificationEnum.BLOCK_SPAWN,
                 NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
                 NotificationEnum.EXPLORATION_FUNCTION,
 			};
 		}
@@ -34,25 +36,37 @@ namespace GameLogic
 			{
                 case NotificationEnum.BLOCK_SPAWN:
     				{
-    					Block block = notification.Body as Block;
-    					HandleSpawn(block);
-    					break;
-    				}
+					Block block = notification.Body as Block;
+					HandleBlockSpawn(block);
+					break;
+				}
                 case NotificationEnum.BLOCK_DESPAWN:
-    				{
-    					Block block = notification.Body as Block;
-    					HandleDespawn(block);
-    					break;
-    				}
+				{
+					Block block = notification.Body as Block;
+					HandleBlockDespawn(block);
+					break;
+				}
+                case NotificationEnum.HALL_SPAWN:
+                {
+                    Hall hall = notification.Body as Hall;
+                    HandleHallSpawn(hall);
+                    break;
+                }
+                case NotificationEnum.HALL_DESPAWN:
+                {
+                    Hall hall = notification.Body as Hall;
+                    HandleHallDespawn(hall);
+                    break;
+                }
                 case NotificationEnum.EXPLORATION_FUNCTION:
-                    {
-                        HandleFunction();
-                        break;
-                    }
+                {
+                    HandleFunction();
+                    break;
+                }
 			}
 		}
 
-		private void HandleSpawn(Block block)
+		private void HandleBlockSpawn(Block block)
 		{
 			int explorationCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.ExplorationMaxCount);
             PositionScript birth = null;
@@ -72,7 +86,7 @@ namespace GameLogic
                 CreateExploration(ExplorationType.Common, birth);
 			}
 		}
-		private void HandleDespawn(Block block)
+		private void HandleBlockDespawn(Block block)
 		{
 			List<Exploration> explorationList = explorationProxy.GetAll();
 			float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
@@ -98,6 +112,13 @@ namespace GameLogic
                 expl.SetRotation(birth.transform.eulerAngles.y);
                 explorationProxy.Add(expl);
             }
+        }
+
+        private void HandleHallSpawn(Hall hall)
+        {
+        }
+        private void HandleHallDespawn(Hall hall)
+        {
         }
 
         private void HandleFunction()

@@ -26,8 +26,8 @@ namespace GameLogic
 			{
                 NotificationEnum.BLOCK_SPAWN,
                 NotificationEnum.BLOCK_DESPAWN,
-                NotificationEnum.HALL_SPAWN,
-                NotificationEnum.HALL_DESPAWN,
+//                NotificationEnum.HALL_SPAWN,
+//                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -74,32 +74,26 @@ namespace GameLogic
 		{
 			//Room??
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			List<MonsterRecord> recordList = monsterProxy.GetRecordList(blockKey);
+			List<MonsterRecord> recordList = monsterProxy.GetRecordBlockList(blockKey);
 			if (recordList != null)
 			{
 				for (int i = 0; i < recordList.Count; ++i)
 				{
 					MonsterRecord record = recordList[i];
 					Monster monster = Monster.Create(record);
-					monster.SetPosition(record.WorldPosition);
-					monsterProxy.AddMonster(monster);
-					battleProxy.AddMonster(monster);
+                    InitMonster(monster, record.WorldPosition);
 				}
 			}
 			else
 			{
 				int monsterCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.MonsterMaxCount);
-				
 				for (int i = 0; i < monsterCount; ++i)
 				{
                     PositionScript birth = block.Script.GetRandomPosition(PositionType.Monster);
-					
 					if (birth != null)
 					{
 						Monster monster = Monster.Create(null);
-						monster.SetPosition(birth.transform.position);
-						monsterProxy.AddMonster(monster);
-						battleProxy.AddMonster(monster);
+                        InitMonster(monster, birth.transform.position);
 					}
 				}
 			}
@@ -110,7 +104,7 @@ namespace GameLogic
 		private void HandleBlockDespawn(Block block)
 		{
 			List<Monster> toDeleteMonsterList = new List<Monster>();
-			monsterProxy.IterateMonsters((Monster monster) => 
+			monsterProxy.IterateMonstersInBlocks((Monster monster) => 
 	         {
 				Vector2 monsterPos = Maze.Instance.GetMazePosition(monster.WorldPosition);
 				if (block.Contains((int)monsterPos.x, (int)monsterPos.y))
@@ -120,7 +114,7 @@ namespace GameLogic
 			});
 
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			monsterProxy.InitRecordList(blockKey);
+			monsterProxy.InitRecordBlockList(blockKey);
 
 			for (int i = 0; i < toDeleteMonsterList.Count; ++i)
 			{
@@ -129,11 +123,11 @@ namespace GameLogic
 
 				if (monster.Info.IsAlive)
 				{
-					monsterProxy.HideMonster(monster.Uid);
+					monsterProxy.HideMonsterInBlock(monster.Uid);
 				}
 				else
 				{
-					monsterProxy.RemoveMonster(monster.Uid);
+					monsterProxy.RemoveMonsterInBlock(monster.Uid);
 				}
 				Monster.Recycle(monster);
 			}
@@ -141,15 +135,57 @@ namespace GameLogic
 
         private void HandleHallSpawn(Hall hall)
         {
-            PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Monster);
+            List<MonsterRecord> recordList = monsterProxy.GetRecordHallList(hall.Data.Kid);
+            if(recordList != null)
+            {
+                for(int i = 0; i < recordList.Count; ++i)
+                {
+                    MonsterRecord record = recordList[i];
+                    Monster monster = Monster.Create(record);
+                    InitMonster(monster, record.WorldPosition);
+                }
+            }
+            else
+            {
+                PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Monster);
+                for (int i = 0; i < positionList.Length; ++i)
+                {
+                    PositionScript birth = positionList[i];
+                    Monster monster = Monster.Create(birth.Kid);
+                    InitMonster(monster, birth.transform.position);
+                }
+            }
         }
         private void HandleHallDespawn(Hall hall)
         {
+            monsterProxy.IterateMonstersInBlocks((Monster monster) => 
+                {
+                    battleProxy.RemoveMonster(monster.Uid);
+
+                    if (monster.Info.IsAlive)
+                    {
+                        monsterProxy.HideMonsterInBlock(monster.Uid);
+                    }
+                    else
+                    {
+                        monsterProxy.RemoveMonsterInBlock(monster.Uid);
+                    }
+                    Monster.Recycle(monster);
+                });
+
+            monsterProxy.InitRecordHallList(hall.Data.Kid);
+        }
+
+        private void InitMonster(Monster monster, Vector3 position)
+        {
+            monster.SetPosition(position);
+            monsterProxy.AddMonsterInBlock(monster);
+            battleProxy.AddMonster(monster);
         }
 
 		private void HandleBattlePause(bool isPause)
 		{
-			monsterProxy.IterateMonsters((Monster monster) => 
+			monsterProxy.IterateMonstersInBlocks((Monster monster) => 
 			{
 				monster.Pause(isPause);
 			});

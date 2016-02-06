@@ -139,7 +139,6 @@ public class InputManager
 
 	void Test()
 	{
-
 	}
 
 }

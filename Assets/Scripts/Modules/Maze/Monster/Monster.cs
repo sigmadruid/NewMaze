@@ -11,6 +11,8 @@ namespace GameLogic
 {
 	public class Monster : Entity
 	{
+        public bool InHall;
+
 		public new MonsterData Data
 		{
 			get { return data as MonsterData; }
@@ -87,8 +89,6 @@ namespace GameLogic
 
 		public static Monster Create(MonsterRecord record)
 		{
-			ResourceManager resManager = ResourceManager.Instance;
-
 			Monster monster = new Monster();
 			if (record != null)
 			{
@@ -102,18 +102,33 @@ namespace GameLogic
 				monster.Data = MonsterDataManager.Instance.GetRandomMonsterData();
 				monster.Info = new MonsterInfo(monster.Data);
 			}
-			monster.Script = resManager.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
-			monster.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(monster.Data.Kid);
-			monster.Script.CachedTransform.parent = RootTransform.Instance.MonsterRoot;	
-			monster.Script.CallbackUpdate = monster.Update;
-			monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
 
-			monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            Init(monster);
 
-			Game.Instance.AICore.AddAI(monster);
-
+            monster.InHall = false;
 			return monster;
 		}
+        public static Monster Create(int kid)
+        {
+            Monster monster = new Monster();
+            monster.Uid = Guid.NewGuid().ToString();
+            monster.Data = MonsterDataManager.Instance.GetData(kid) as MonsterData;
+            monster.Info = new MonsterInfo(monster.Data);
+            Init(monster);
+            monster.InHall = true;
+            return monster;
+        }
+        public static void Init(Monster monster)
+        {
+            monster.Script = ResourceManager.Instance.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
+            monster.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(monster.Data.Kid);
+            monster.Script.CachedTransform.parent = RootTransform.Instance.MonsterRoot; 
+            monster.Script.CallbackUpdate = monster.Update;
+            monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
+            monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+
+            Game.Instance.AICore.AddAI(monster);
+        }
 
 		public static void Recycle(Monster monster)
 		{
