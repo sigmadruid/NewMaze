@@ -31,8 +31,8 @@ namespace GameLogic
 
 		public void Start(Transform trans)
 		{
-			Script.CachedTransform.position = trans.position;
-			Script.CachedTransform.localRotation = Quaternion.LookRotation(trans.forward);
+			Script.transform.position = trans.position;
+			Script.transform.localRotation = Quaternion.LookRotation(trans.forward);
 			Script.SetState(BulletState.Before);
 			timeCounter = 0f;
 		}
@@ -42,7 +42,7 @@ namespace GameLogic
 			Script.SetState(BulletState.Normal);
 
 			Vector3 velocity = Vector3.forward * Data.Speed;
-			Script.CachedTransform.Translate(velocity * Time.deltaTime, Space.Self);
+			Script.transform.Translate(velocity * Time.deltaTime, Space.Self);
 
 			timeCounter += Time.deltaTime;
 			if (timeCounter > LIFE_TIME)
@@ -78,7 +78,7 @@ namespace GameLogic
 			bullet.Uid = Guid.NewGuid().ToString();
 			bullet.Data = BulletDataManager.Instance.GetData(kid) as BulletData;
 			bullet.Script = ResourceManager.Instance.LoadAsset<BulletScript>(ObjectType.GameObject, bullet.Data.GetResPath());
-			bullet.Script.CachedTransform.parent = RootTransform.Instance.BulletRoot;	
+			bullet.Script.transform.parent = RootTransform.Instance.BulletRoot;	
 			bullet.Script.CallbackUpdate = bullet.Update;
 			bullet.Script.CallbackHit = bullet.OnHit;
 			bullet.Script.CallbackDestroy = bullet.OnDestroy;

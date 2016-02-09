@@ -92,7 +92,7 @@ namespace GameLogic
 			}
 
 			block.Script = resManager.LoadAsset<BlockScript>(ObjectType.GameObject, block.Data.GetResPath());
-			block.Script.CachedTransform.parent = RootTransform.Instance.BlockRoot;
+			block.Script.transform.parent = RootTransform.Instance.BlockRoot;
 
 			if (node is MazeRoom)
 			{

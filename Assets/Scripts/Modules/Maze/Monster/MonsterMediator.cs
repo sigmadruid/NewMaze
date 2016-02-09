@@ -26,8 +26,8 @@ namespace GameLogic
 			{
                 NotificationEnum.BLOCK_SPAWN,
                 NotificationEnum.BLOCK_DESPAWN,
-//                NotificationEnum.HALL_SPAWN,
-//                NotificationEnum.HALL_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -81,7 +81,7 @@ namespace GameLogic
 				{
 					MonsterRecord record = recordList[i];
 					Monster monster = Monster.Create(record);
-                    InitMonster(monster, record.WorldPosition);
+                    InitMonsterInBlock(monster, record.WorldPosition);
 				}
 			}
 			else
@@ -93,12 +93,17 @@ namespace GameLogic
 					if (birth != null)
 					{
 						Monster monster = Monster.Create(null);
-                        InitMonster(monster, birth.transform.position);
+                        InitMonsterInBlock(monster, birth.transform.position);
 					}
 				}
 			}
-
 		}
+        private void InitMonsterInBlock(Monster monster, Vector3 position)
+        {
+            monster.SetPosition(position);
+            monsterProxy.AddMonsterInBlock(monster);
+            battleProxy.AddMonster(monster);
+        }
 
 		//When a block despawns, remove all monsters on it from the monsterDic, and store them in the recordDic
 		private void HandleBlockDespawn(Block block)
@@ -135,6 +140,8 @@ namespace GameLogic
 
         private void HandleHallSpawn(Hall hall)
         {
+            Debug.Log(hall);
+            Debug.Log(hall.Data);
             List<MonsterRecord> recordList = monsterProxy.GetRecordHallList(hall.Data.Kid);
             if(recordList != null)
             {
@@ -142,7 +149,7 @@ namespace GameLogic
                 {
                     MonsterRecord record = recordList[i];
                     Monster monster = Monster.Create(record);
-                    InitMonster(monster, record.WorldPosition);
+                    InitMonsterInHall(monster, record.WorldPosition);
                 }
             }
             else
@@ -152,34 +159,32 @@ namespace GameLogic
                 {
                     PositionScript birth = positionList[i];
                     Monster monster = Monster.Create(birth.Kid);
-                    InitMonster(monster, birth.transform.position);
+                    InitMonsterInHall(monster, birth.transform.position);
                 }
             }
         }
         private void HandleHallDespawn(Hall hall)
         {
-            monsterProxy.IterateMonstersInBlocks((Monster monster) => 
+            monsterProxy.InitRecordHallList(hall.Data.Kid);
+            monsterProxy.IterateMonstersInHall((Monster monster) => 
                 {
                     battleProxy.RemoveMonster(monster.Uid);
-
                     if (monster.Info.IsAlive)
                     {
-                        monsterProxy.HideMonsterInBlock(monster.Uid);
+                        monsterProxy.HideMonsterInHall(monster.Uid, hall.Data.Kid);
                     }
                     else
                     {
-                        monsterProxy.RemoveMonsterInBlock(monster.Uid);
+                        monsterProxy.RemoveMonsterInHall(monster.Uid, hall.Data.Kid);
                     }
-                    Monster.Recycle(monster);
                 });
 
-            monsterProxy.InitRecordHallList(hall.Data.Kid);
+            monsterProxy.ClearMonstersInHall();
         }
-
-        private void InitMonster(Monster monster, Vector3 position)
+        private void InitMonsterInHall(Monster monster, Vector3 position)
         {
             monster.SetPosition(position);
-            monsterProxy.AddMonsterInBlock(monster);
+            monsterProxy.AddMonsterInHall(monster);
             battleProxy.AddMonster(monster);
         }
 

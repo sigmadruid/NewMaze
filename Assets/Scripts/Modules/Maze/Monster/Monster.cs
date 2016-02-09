@@ -122,7 +122,7 @@ namespace GameLogic
         {
             monster.Script = ResourceManager.Instance.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
             monster.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(monster.Data.Kid);
-            monster.Script.CachedTransform.parent = RootTransform.Instance.MonsterRoot; 
+            monster.Script.transform.parent = RootTransform.Instance.MonsterRoot; 
             monster.Script.CallbackUpdate = monster.Update;
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();

@@ -11,8 +11,6 @@ namespace GameLogic
 {
     public class HallMediator : Mediator
     {
-		private Hall currentHall;
-
 		private HallProxy hallProxy;
 
 		public override void OnRegister ()
@@ -48,15 +46,17 @@ namespace GameLogic
 
 		private void HandleHallInit()
 		{
-			if (currentHall == null)
-				currentHall = Hall.Create(110001);
-            DispatchNotification(NotificationEnum.HALL_SPAWN, currentHall);
+            if(hallProxy.CurrentHall == null)
+            {
+                hallProxy.CurrentHall = Hall.Create(110001);
+            }
+            DispatchNotification(NotificationEnum.HALL_SPAWN, hallProxy.CurrentHall);
 		}
 		
 		private void HandleHallDispose()
 		{
-            DispatchNotification(NotificationEnum.HALL_DESPAWN, currentHall);
-			Hall.Recycle(currentHall);
+            DispatchNotification(NotificationEnum.HALL_DESPAWN, hallProxy.CurrentHall);
+            Hall.Recycle(hallProxy.CurrentHall);
 		}
     }
 }

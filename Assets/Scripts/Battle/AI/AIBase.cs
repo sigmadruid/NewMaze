@@ -61,13 +61,27 @@ namespace AI
 			}
 		}
 
-		protected void SearchForHeroByNode()
+        protected void SearchForHero()
+        {
+            bool monsterInMaze = blockProxy.CheckInRange(currentMonster.WorldPosition);
+            bool heroInMaze = blockProxy.CheckInRange(Hero.Instance.WorldPosition);
+            if (heroInMaze && monsterInMaze)
+            {
+                SearchForHeroByNode();
+            }
+            else if (!heroInMaze && !monsterInMaze)
+            {
+                SearchForHeroDirectly();
+            }
+        }
+
+        private void SearchForHeroByNode()
 		{
-			Vector2 pos = Maze.Instance.GetMazePosition(currentMonster.WorldPosition);
-			int col = (int)pos.x;
-			int row = (int)pos.y;
-			MazeNode currentNode = blockProxy.GetNode(col, row);
-			MazeNode nextNode = blockProxy.FindNextSearchNode(col, row);
+            Vector2 pos = Maze.Instance.GetMazePosition(currentMonster.WorldPosition);
+            int monsterCol = (int)pos.x;
+            int monsterRow = (int)pos.y;
+			MazeNode currentNode = blockProxy.GetNode(monsterCol, monsterRow);
+			MazeNode nextNode = blockProxy.FindNextSearchNode(monsterCol, monsterRow);
 
 			if (nextNode != null)
 			{
@@ -88,7 +102,7 @@ namespace AI
 			}
 		}
 
-        protected void SearchForHeroDirectly()
+        private void SearchForHeroDirectly()
         {
             currentMonster.Move(Hero.Instance.WorldPosition - currentMonster.WorldPosition);
         }

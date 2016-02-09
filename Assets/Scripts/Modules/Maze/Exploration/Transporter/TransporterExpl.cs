@@ -23,13 +23,13 @@ namespace GameLogic
 
             if(DirectionState == TransporterDirectionType.Forward)
             {
-                ConfirmPanel.Show("Transporter", "Do you want to transport to somwhere unknown?", DoTransportForward);
+                ConfirmPanel.Show("Transporter", "Do you want to transport to somwhere unknown?", DoTransportForward, OnCancel);
             }
             else
             {
-                ConfirmPanel.Show("Transporter", "Do you want to transport back to maze?", DoTransportBack);
-
+                ConfirmPanel.Show("Transporter", "Do you want to transport back to maze?", DoTransportBack, OnCancel);
             }
+            Game.Instance.SetPause(true);
         }
 
         private void DoTransportForward()
@@ -46,6 +46,10 @@ namespace GameLogic
             panel.CallbackTransition = OnTransportBack;
             panel.StartTransition();
         }
+        private void OnCancel()
+        {
+            Game.Instance.SetPause(false);
+        }
 
         private void OnTransportForward()
         {
@@ -53,12 +57,14 @@ namespace GameLogic
             ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition = Hero.Instance.WorldPosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
+//            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
             AfterTransport();
         }
         private void OnTransportBack()
         {
             Hero.Instance.IsSlowUpdating = true;
             Vector3 leavePosition = ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition;
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, leavePosition);
             AfterTransport();
@@ -66,18 +72,15 @@ namespace GameLogic
 
         private void BeforeTransport()
         {
-            InputManager.Instance.Enable = false;
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, true);
         }
         private void AfterTransport()
         {
-            InputManager.Instance.Enable = true;
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, false);
+            Game.Instance.SetPause(false);
         }
 
-        public static void Init(TransporterExpl expl, ExplorationType type, TransporterDirectionType directionType)
+        public static void Init(TransporterExpl expl, TransporterDirectionType directionType)
         {
-            Exploration.Init(expl, type);
+            Exploration.Init(expl);
             expl.DirectionState = directionType;
         }
     }

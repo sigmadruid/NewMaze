@@ -10,6 +10,7 @@ namespace GameLogic
 	public class StageMaze : BaseStage
 	{
 		private BlockProxy blockProxy;
+        private HallProxy hallProxy;
 		private MonsterProxy monsterProxy;
 		private BulletProxy bulletProxy;
 		private NPCProxy npcProxy;
@@ -25,6 +26,7 @@ namespace GameLogic
 			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 			blockProxy.Init();
 
+            hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
 			monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
 			bulletProxy = ApplicationFacade.Instance.RetrieveProxy<BulletProxy>();
 			npcProxy = ApplicationFacade.Instance.RetrieveProxy<NPCProxy>();
@@ -52,6 +54,7 @@ namespace GameLogic
 			monsterProxy.Dispose();
 			bulletProxy.Dispose();
 			blockProxy.Dispose();
+            hallProxy.Dispose();
 			npcProxy.Dispose();
 			explorationProxy.Dispose();
 			battleProxy.Dispose();
@@ -75,7 +78,6 @@ namespace GameLogic
 				EntityManager manager = GlobalConfig.Instance.GetManager(idType);
 				EntityData data = manager.GetData(resourceData.EntityKid);
 				resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
-				
 			}
 
 			//UI

@@ -128,7 +128,7 @@ public class CharacterScript : EntityScript
 
 	public void LookAt(Vector3 destPos)
 	{
-		Vector3 lookDirection = destPos - CachedTransform.position;
+		Vector3 lookDirection = destPos - transform.position;
 		moveScript.LookAt(lookDirection);
 	}
 

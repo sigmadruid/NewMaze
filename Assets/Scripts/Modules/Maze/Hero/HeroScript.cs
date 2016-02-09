@@ -22,7 +22,7 @@ public class HeroScript : CharacterScript
 		{
 			cameraController = mainCamera.gameObject.AddComponent<CameraScript>();
 		}
-		cameraController.playerTransofrm = CachedTransform;
+		cameraController.playerTransofrm = transform;
 
 		MeleeTrail.Emit = false;
 	}

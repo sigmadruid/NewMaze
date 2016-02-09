@@ -24,7 +24,7 @@ namespace GameLogic
 		public void SetPosition(Vector3 position)
 		{
 			WorldPosition = position;
-			Script.CachedTransform.position = position;
+			Script.transform.position = position;
 		}
 
 		public static Hall Create(int kid)

@@ -11,6 +11,8 @@ namespace GameLogic
 {
 	public class BlockProxy : Proxy
 	{
+        public delegate void IterateFunc(Block block);
+
 		public MazeNode StartNode { get; private set; }
 
 		public List<MazeNode> ToDeleteNodeList;
@@ -61,32 +63,16 @@ namespace GameLogic
 
 		#region Creating and Remove Blocks
 
-		public void UpdateAroundMazeNode(int col, int row, int scope)
-		{
-			List<MazeNode> aroundList = mazeTable.GetAroundNode(col, row, scope);
+        public void Iterate(IterateFunc func)
+        {
+            if (func == null) { return; }
 
-			ToDeleteNodeList.Clear();
-			ToCreateNodeList.Clear();
-
-			for (int i = 0; i < prevAroundList.Count; ++i)
-			{
-				MazeNode node = prevAroundList[i];
-				if (aroundList.IndexOf(node) == -1)
-				{
-					ToDeleteNodeList.Add(node);
-				}
-			}
-			for (int i = 0; i < aroundList.Count; ++i)
-			{
-				MazeNode node = aroundList[i];
-				if (prevAroundList.IndexOf(node) == -1)
-				{
-					ToCreateNodeList.Add(node);
-				}
-			}
-
-			prevAroundList = aroundList;
-		}
+            Dictionary<int, Block>.Enumerator enumerator = blockDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                func(enumerator.Current.Value);
+            }
+        }
 
 		public Block AddBlock(MazeNode node)
 		{
@@ -142,13 +128,49 @@ namespace GameLogic
 
 			Block.Recycle(block);
 		}
+        public void ClearBlocks()
+        {
+            Dictionary<int, Block>.Enumerator blockEnum = blockDic.GetEnumerator();
+            while(blockEnum.MoveNext())
+            {
+                Block.Recycle(blockEnum.Current.Value);
+            }
+            blockDic.Clear();
+        }
+
+        public void UpdateAroundMazeNode(int col, int row, int scope)
+        {
+            List<MazeNode> aroundList = mazeTable.GetAroundNode(col, row, scope);
+
+            ToDeleteNodeList.Clear();
+            ToCreateNodeList.Clear();
+
+            for (int i = 0; i < prevAroundList.Count; ++i)
+            {
+                MazeNode node = prevAroundList[i];
+                if (aroundList.IndexOf(node) == -1)
+                {
+                    ToDeleteNodeList.Add(node);
+                }
+            }
+            for (int i = 0; i < aroundList.Count; ++i)
+            {
+                MazeNode node = aroundList[i];
+                if (prevAroundList.IndexOf(node) == -1)
+                {
+                    ToCreateNodeList.Add(node);
+                }
+            }
+
+            prevAroundList = aroundList;
+        }
 
 		//Room??
 		public Block GetBlockAtPosition(int col, int row)
 		{
 			if (mazeTable.CheckOccupied(col, row))
 			{
-				MazeNode node = GetNode(col, row);
+                MazeNode node = mazeTable.GetNode(col, row);
 				return node.AboveBlock;
 			}
 			else
@@ -156,10 +178,23 @@ namespace GameLogic
 				return null;
 			}
 		}
+
 		public MazeNode GetNode(int col, int row)
 		{
 			return mazeTable.GetNode(col, row);
 		}
+
+        public bool CheckInRange(int col, int row)
+        {
+            return mazeTable.CheckRange(col, row);
+        }
+        public bool CheckInRange(Vector3 position)
+        {
+            Vector2 pos = Maze.Instance.GetMazePosition(position);
+            int col = (int)pos.x;
+            int row = (int)pos.y;
+            return mazeTable.CheckRange(col, row);
+        }
 
 		#endregion
 

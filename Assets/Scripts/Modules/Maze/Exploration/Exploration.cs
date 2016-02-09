@@ -16,7 +16,7 @@ namespace GameLogic
 		public new ExplorationData Data
 		{
 			get { return data as ExplorationData; }
-			protected set { data = value; }
+			set { data = value; }
 		}
 		
 		public new ExplorationScript Script
@@ -27,7 +27,7 @@ namespace GameLogic
 
 		public override void SetRotation(float angle)
 		{
-			Script.CachedTransform.localEulerAngles += Vector3.up * angle;
+			Script.transform.localEulerAngles += Vector3.up * angle;
 		}
 
 		public virtual bool CheckAppearCondition()
@@ -49,16 +49,15 @@ namespace GameLogic
             proxy.RemoveEnteredExploration(this);
         }
 
-        public static void Init(Exploration exploration, ExplorationType type)
-		{
-			exploration.Uid = Guid.NewGuid().ToString();
-            exploration.Data = ExplorationDataManager.Instance.GetRandomData(type); 
-			exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
-			exploration.Script.CachedTransform.parent = RootTransform.Instance.ExplorationRoot;
+        public static void Init(Exploration exploration)
+        {
+            exploration.Uid = Guid.NewGuid().ToString();
+            exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
+            exploration.Script.transform.parent = RootTransform.Instance.ExplorationRoot;
             exploration.Script.CallbackEnter = exploration.OnEnter;
             exploration.Script.CallbackExit = exploration.OnExit;
             exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
-		}
+        }
 
 		public static void Recycle(Exploration exploration)
 		{

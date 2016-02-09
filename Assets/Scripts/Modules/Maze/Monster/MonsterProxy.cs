@@ -24,12 +24,22 @@ namespace GameLogic
 
 		public void Dispose()
 		{
-			Dictionary<string, Monster>.Enumerator enumerator = monsterBlockDic.GetEnumerator();
-			while (enumerator.MoveNext())
-			{
-				Monster.Recycle(enumerator.Current.Value);
-			}
-			monsterBlockDic.Clear();
+            ClearMonstersInBlock();
+            ClearMonstersInHall();
+
+            Dictionary<int, List<MonsterRecord>>.Enumerator recordEnum;
+            recordEnum = recordBlockDic.GetEnumerator();
+            while (recordEnum.MoveNext())
+            {
+                recordEnum.Current.Value.Clear();
+            }
+            recordBlockDic.Clear();
+            recordEnum = recordHallDic.GetEnumerator();
+            while (recordEnum.MoveNext())
+            {
+                recordEnum.Current.Value.Clear();
+            }
+            recordHallDic.Clear();
 		}
 
 		public void IterateMonstersInBlocks(IterateFunc func)
@@ -85,8 +95,16 @@ namespace GameLogic
 
 				monsterBlockDic.Remove(uid);
 			}
-
 		}
+        public void ClearMonstersInBlock()
+        {
+            Dictionary<string, Monster>.Enumerator monsterEnum = monsterBlockDic.GetEnumerator();
+            while (monsterEnum.MoveNext())
+            {
+                Monster.Recycle(monsterEnum.Current.Value);
+            }
+            monsterBlockDic.Clear();
+        }
 
 		public void InitRecordBlockList(int blockKey)
 		{
@@ -115,7 +133,6 @@ namespace GameLogic
                 func(enumerator.Current.Value);
             }
         }
-
         public void AddMonsterInHall(Monster monster)
         {
             if(!monsterHallDic.ContainsKey(monster.Uid))
@@ -123,23 +140,21 @@ namespace GameLogic
                 monsterHallDic.Add(monster.Uid, monster);
             }
         }
-
         public void HideMonsterInHall(string uid, int hallKid)
         {
             if (monsterHallDic.ContainsKey(uid))
             {
-                Monster monster = monsterBlockDic[uid];
-                List<MonsterRecord> recordList = GetRecordBlockList(hallKid);
+                Monster monster = monsterHallDic[uid];
+                List<MonsterRecord> recordList = GetRecordHallList(hallKid);
                 recordList.Add(monster.ToRecord());
-                monsterBlockDic.Remove(uid);
+//                monsterHallDic.Remove(uid);
             }
         }
-
         public void RemoveMonsterInHall(string uid, int hallKid)
         {
             if (monsterHallDic.ContainsKey(uid))
             {
-                Monster monster = monsterBlockDic[uid];
+                Monster monster = monsterHallDic[uid];
                 List<MonsterRecord> recordList = GetRecordHallList(hallKid);
                 if (recordList != null)
                 {
@@ -154,8 +169,17 @@ namespace GameLogic
                     }
                 }
 
-                monsterHallDic.Remove(uid);
+//                monsterHallDic.Remove(uid);
             }
+        }
+        public void ClearMonstersInHall()
+        {
+            Dictionary<string, Monster>.Enumerator monsterEnum = monsterHallDic.GetEnumerator();
+            while (monsterEnum.MoveNext())
+            {
+                Monster.Recycle(monsterEnum.Current.Value);
+            }
+            monsterHallDic.Clear();
         }
 
         public void InitRecordHallList(int hallKid)

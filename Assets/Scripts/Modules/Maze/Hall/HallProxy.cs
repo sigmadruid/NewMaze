@@ -12,6 +12,13 @@ namespace GameLogic
     public class HallProxy : Proxy
     {
 		public Vector3 LeavePosition;
+
+        public Hall CurrentHall;
+
+        public void Dispose()
+        {
+            CurrentHall = null;
+        }
     }
 }
 

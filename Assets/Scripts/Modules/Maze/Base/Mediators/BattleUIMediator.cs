@@ -29,6 +29,7 @@ namespace GameLogic
 				NotificationEnum.BATTLE_UI_INIT,
 				NotificationEnum.BATTLE_UI_UPDATE_HP,
 				NotificationEnum.BATTLE_UI_UPDATE_MP,
+                NotificationEnum.BATTLE_PAUSE,
 			};
 		}
 
@@ -53,6 +54,11 @@ namespace GameLogic
 					HandleUpdateMP(value);
 					break;
 				}
+                case NotificationEnum.BATTLE_PAUSE:
+                {
+                    HandlePause();
+                    break;
+                }
 			}
 		}
 
@@ -75,6 +81,10 @@ namespace GameLogic
 		{
 			panel.UpdateMPNumber(value);
 		}
+        private void HandlePause()
+        {
+            panel.ShowHeroItems(!Game.Instance.IsPause);
+        }
 
 		private void OnItemClick()
 		{
@@ -93,10 +103,7 @@ namespace GameLogic
 		}
 		private void OnPauseGame(GameObject go)
 		{
-			Game.Instance.SetPause();
-			DispatchNotification(NotificationEnum.BATTLE_PAUSE, Game.Instance.IsPause);
-
-			panel.ShowHeroItems(!Game.Instance.IsPause);
+            Game.Instance.SetPause(!Game.Instance.IsPause);
 		}
     }
 }

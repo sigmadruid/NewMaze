@@ -53,7 +53,7 @@ namespace GameLogic
 			drop.Count = RandomUtils.Range(drop.Data.MinCount, drop.Data.MaxCount);
 			//TODO: Switch Types
 			drop.Script = ResourceManager.Instance.LoadAsset<DropScript>(ObjectType.GameObject, drop.Data.GetResPath());
-			drop.Script.CachedTransform.parent = RootTransform.Instance.DropRoot;	
+			drop.Script.transform.parent = RootTransform.Instance.DropRoot;	
 			
 			drop.SetPosition(record.WorldPosition);
 			
@@ -67,7 +67,7 @@ namespace GameLogic
 			drop.Count = RandomUtils.Range(drop.Data.MinCount, drop.Data.MaxCount);
 			//TODO: Switch Types
 			drop.Script = ResourceManager.Instance.LoadAsset<DropScript>(ObjectType.GameObject, drop.Data.GetResPath());
-			drop.Script.CachedTransform.parent = RootTransform.Instance.DropRoot;	
+			drop.Script.transform.parent = RootTransform.Instance.DropRoot;	
 			
 			drop.SetPosition(position);
 			

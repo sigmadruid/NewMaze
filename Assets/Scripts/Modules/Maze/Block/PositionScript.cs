@@ -4,6 +4,7 @@ using UnityEditor;
 #endif
 
 using System;
+using System.Collections.Generic;
 
 public enum PositionType
 {
@@ -16,6 +17,8 @@ public class PositionScript : MonoBehaviour
 	public PositionType positionType = PositionType.Monster;
 
     public int Kid;
+
+    public List<string> ParamList;
 
 	[HideInInspector]
 	public bool Available = true;

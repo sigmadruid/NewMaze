@@ -55,10 +55,10 @@ namespace GameLogic
 			InputManager.Instance.Init();
 
 			Looper = new GameLooper();
-			Looper.AddTask(TaskEnum.AIUpdate, 0, AICore.Update);
+			Looper.AddTask(TaskEnum.AIUpdate, -1f, AICore.Update);
 			Looper.AddTask(TaskEnum.AISlowUpdate, 0.2f, AICore.SlowUpdate);
 			Looper.AddTask(TaskEnum.ResourceUpdate, 1f, ResourceManager.Tick);
-			Looper.AddTask(TaskEnum.InputUpdate, 0, InputManager.Update);
+			Looper.AddTask(TaskEnum.InputUpdate, -1f, InputManager.Update);
 
 			ApplicationFacade.Instance.Startup();
 
@@ -100,9 +100,10 @@ namespace GameLogic
 			currentStage.Start();
 		}
 
-		public void SetPause()
+		public void SetPause(bool state)
 		{
-			IsPause = !IsPause;
+            IsPause = state;
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, IsPause);
 		}
 
 		#endregion

@@ -65,7 +65,7 @@ namespace GameLogic
 			while (enumerator.MoveNext())
 			{
 				Monster monster = enumerator.Current.Value;
-				bool inArea = JudgeInArea(hero.Script.CachedTransform, monster.Script.CachedTransform, paramDic);
+				bool inArea = JudgeInArea(hero.Script.transform, monster.Script.transform, paramDic);
 				if (inArea)
 				{
 					if (!monster.Info.IsAlive)
@@ -107,7 +107,7 @@ namespace GameLogic
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
-				bool inArea = JudgeInArea(hero.Script.CachedTransform, monster.Script.CachedTransform, paramDic);
+				bool inArea = JudgeInArea(hero.Script.transform, monster.Script.transform, paramDic);
 				if (inArea)
 				{
 					DoAttackHero(ac);

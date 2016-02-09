@@ -30,17 +30,17 @@ namespace GameLogic
 		
 		public Vector3 WorldPosition 
 		{ 
-			get { return Script.CachedTransform.position; }
+            get { return Script.transform.position; }
 		}
 
 		public virtual void SetPosition(Vector3 position)
 		{
-			Script.CachedTransform.position = position;
+			Script.transform.position = position;
 		}
 		
 		public virtual void SetRotation(float angle)
 		{
-			Script.CachedTransform.localRotation = Quaternion.Euler(Vector3.up * angle);
+			Script.transform.localRotation = Quaternion.Euler(Vector3.up * angle);
 		}
 
 		public virtual void Pause(bool isPause)

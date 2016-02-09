@@ -65,14 +65,18 @@ namespace GameLogic
 		}
 		private void HandleBlockDispose()
 		{
-
+            blockProxy.Iterate((Block block) =>
+                {
+                    OnDisposeBlock(block);
+                });
+            blockProxy.ClearBlocks();
 		}
 
 		private void HandleRefreshBlocks(Vector3 position)
 		{
-			int col, row;
-			float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
-			MazeUtil.GetMazePosition(position, blockSize, out col, out row);
+            Vector2 pos = Maze.Instance.GetMazePosition(position);
+            int col = (int)pos.x;
+            int row = (int)pos.y;
 
 			if (col == prevCol && row == prevRow)
 			{

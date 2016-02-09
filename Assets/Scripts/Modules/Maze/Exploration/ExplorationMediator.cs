@@ -88,37 +88,64 @@ namespace GameLogic
 		}
 		private void HandleBlockDespawn(Block block)
 		{
-			List<Exploration> explorationList = explorationProxy.GetAll();
-			float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
-			int count = explorationList.Count;
-			for (int i = 0; i < count; ++i)
-			{
-				Exploration exploratioin = explorationList[i];
-				int col, row;
-				MazeUtil.GetMazePosition(exploratioin.WorldPosition, blockSize, out col, out row);
-				if (block.Contains(col, row))
-				{
-					explorationProxy.Remove(exploratioin.Uid);
-					Exploration.Recycle(exploratioin);
-				}
-			}
+            List<Exploration> toDeleteList = new List<Exploration>();
+            explorationProxy.IterateInBlocks((Exploration expl) => 
+                {
+                    Vector2 pos = Maze.Instance.GetMazePosition(expl.WorldPosition);
+                    if (block.Contains((int)pos.x, (int)pos.y))
+                    {
+                        toDeleteList.Add(expl);
+                    }
+                });
+
+            int blockKey = Block.GetBlockKey(block.Col, block.Row);
+
+            for (int i = 0; i < toDeleteList.Count; ++i)
+            {
+                Exploration expl = toDeleteList[i];
+                explorationProxy.RemoveInBlock(expl.Uid);
+                Exploration.Recycle(expl);
+            }
 		}
         private void CreateExploration(ExplorationType type, PositionScript birth, List<object> paramList = null)
         {
             if (birth != null)
             {
-                Exploration expl = explorationProxy.CreateExploration(type, paramList);
+                Exploration expl = ExplorationFactory.Create(type, paramList);
                 expl.SetPosition(birth.transform.position);
                 expl.SetRotation(birth.transform.eulerAngles.y);
-                explorationProxy.Add(expl);
+                explorationProxy.AddInBlock(expl);
             }
         }
 
         private void HandleHallSpawn(Hall hall)
         {
+            PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Exploration);
+            for(int i = 0; i < positionList.Length; ++i)
+            {
+                PositionScript birth = positionList[i];
+                List<object> paramList = new List<object>();//TODO: How to change this hard code?
+                paramList.Add(TransporterDirectionType.Back);
+                CreateExploration(birth.Kid, birth, paramList);
+            }
         }
         private void HandleHallDespawn(Hall hall)
         {
+            explorationProxy.IterateInHall((Exploration expl) =>
+                {
+                    explorationProxy.RemoveInHall(expl.Uid);
+                });
+            explorationProxy.ClearInHall();
+        }
+        private void CreateExploration(int kid, PositionScript birth, List<object> paramList = null)
+        {
+            if (birth != null)
+            {
+                Exploration expl = ExplorationFactory.Create(kid, paramList);
+                expl.SetPosition(birth.transform.position);
+                expl.SetRotation(birth.transform.eulerAngles.y);
+                explorationProxy.AddInHall(expl);
+            }
         }
 
         private void HandleFunction()

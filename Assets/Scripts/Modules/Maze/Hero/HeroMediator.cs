@@ -99,6 +99,8 @@ namespace GameLogic
 			//Input
 			InputManager.Instance.CallbackFire = OnHeroAttack;
 			InputManager.Instance.CallbackFunction = OnHeroFunction;
+
+            hero.Info.AddHP(-950);
 		}
 
 		private void HandleHeroConvert(int heroKid)
@@ -160,7 +162,7 @@ namespace GameLogic
 			int heroKid = (int)param;
 			
 			Vector3 position = hero.WorldPosition;
-			float angle = hero.Script.CachedTransform.localEulerAngles.y;
+			float angle = hero.Script.transform.localEulerAngles.y;
 			
 			Hero.Recycle();
 			Hero newHero = Hero.Create(heroKid, hero.Info);

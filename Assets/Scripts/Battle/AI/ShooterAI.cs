@@ -51,10 +51,7 @@ namespace AI
 			{
 				if (hero.Script != null)
 				{
-                    if(currentMonster.InHall)
-                        SearchForHeroDirectly();
-                    else
-                        SearchForHeroByNode();
+                    SearchForHero();
 				}
 				else
 				{
