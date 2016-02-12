@@ -62,7 +62,8 @@ public class NPCScript : EntityScript
 
 	private bool CheckNPC()
 	{
-		return Game.Instance.CurrentStageType == StageEnum.HomeTown || !Hero.Instance.InBattle;
+//		return Game.Instance.CurrentStageType == StageEnum.HomeTown || !Hero.Instance.InBattle;
+        return true;
 	}
 }
 

@@ -57,6 +57,7 @@ namespace GameLogic
 		{
             DispatchNotification(NotificationEnum.HALL_DESPAWN, hallProxy.CurrentHall);
             Hall.Recycle(hallProxy.CurrentHall);
+            hallProxy.CurrentHall = null;
 		}
     }
 }

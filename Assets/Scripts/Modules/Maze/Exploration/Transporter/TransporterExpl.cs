@@ -54,9 +54,10 @@ namespace GameLogic
         private void OnTransportForward()
         {
             Hero.Instance.IsSlowUpdating = false;
-            ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition = Hero.Instance.WorldPosition;
+            HallProxy hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
+            hallProxy.LeavePosition = Hero.Instance.WorldPosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, hallProxy.CurrentHall.Script.EntryPos.position);
 //            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
             AfterTransport();
         }

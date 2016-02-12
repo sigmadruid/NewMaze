@@ -39,7 +39,7 @@ namespace GameLogic
 
         protected virtual void OnEnter()
         {
-            Script.HighlightOn(Color.red);
+            Script.HighlightOn(Color.white);
             proxy.AddEnteredExploration(this);
         }
 

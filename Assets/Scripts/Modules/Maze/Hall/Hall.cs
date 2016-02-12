@@ -45,6 +45,7 @@ namespace GameLogic
 		{
 			if (hall != null)
 			{
+                instance = null;
 				hall.Data = null;
 				ResourceManager.Instance.RecycleAsset(hall.Script.gameObject);
 				hall.Script = null;

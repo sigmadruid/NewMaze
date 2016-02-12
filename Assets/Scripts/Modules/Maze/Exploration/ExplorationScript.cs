@@ -37,7 +37,7 @@ namespace GameLogic
 
         public void HighlightOn(Color color)
         {
-            highlighter.ConstantOn(Color.red);
+            highlighter.ConstantOn(color);
         }
         public void HighlightOff()
         {

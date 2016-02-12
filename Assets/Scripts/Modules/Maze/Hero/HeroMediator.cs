@@ -100,7 +100,7 @@ namespace GameLogic
 			InputManager.Instance.CallbackFire = OnHeroAttack;
 			InputManager.Instance.CallbackFunction = OnHeroFunction;
 
-            hero.Info.AddHP(-950);
+//            hero.Info.AddHP(-950);
 		}
 
 		private void HandleHeroConvert(int heroKid)
