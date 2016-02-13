@@ -109,7 +109,7 @@ namespace GameLogic
 				}
 			}
 
-			blockProxy.AddMockNode(col, row);
+//			blockProxy.AddMockNode(col, row);
 
 			prevCol = col;
 			prevRow = row;

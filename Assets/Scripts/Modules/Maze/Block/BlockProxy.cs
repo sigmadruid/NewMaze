@@ -90,7 +90,6 @@ namespace GameLogic
 			}
 
 			Block block = Block.Create(node);
-
 			int key = Block.GetBlockKey(node.Col, node.Row);
 			if (blockDic.ContainsKey(key))
 			{
@@ -98,6 +97,7 @@ namespace GameLogic
 			}
 			blockDic.Add(key, block);
 			node.AboveBlock = block;
+            AddMockNode(node.Col, node.Row);
 
 			return block;
 		}
