@@ -32,6 +32,10 @@ namespace GameLogic
 		{ 
             get { return Script.transform.position; }
 		}
+        public float WorldAngle
+        {
+            get { return Script.transform.localEulerAngles.y; }
+        }
 
 		public virtual void SetPosition(Vector3 position)
 		{
@@ -45,7 +49,7 @@ namespace GameLogic
 
 		public virtual void Pause(bool isPause)
 		{
-			script.Pause(isPause);
+            Script.Pause(isPause);
 		}
 
 		protected virtual void Update()

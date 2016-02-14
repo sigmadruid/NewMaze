@@ -34,7 +34,7 @@ public class MazeMapPanel : BasePopupView
     }
 
 
-	public void Show(bool show, Vector3 heroPosition)
+	public void Show(bool show, Vector3 heroPosition, float angle)
 	{
 		innerWindow.Display(show);
 		innerWindow.Camera.enabled = show;
@@ -45,6 +45,7 @@ public class MazeMapPanel : BasePopupView
 			innerWindow.CameraTransform.position = heroPosition + Vector3.forward * (-Distance) + Vector3.up * Height + Vector3.right * Distance;;
 			innerWindow.CameraTransform.LookAt(heroPosition);
             mazeMapHero.transform.position = heroPosition;
+            mazeMapHero.transform.localEulerAngles = Vector3.up * angle;
         }
 
 	}

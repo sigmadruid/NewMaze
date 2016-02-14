@@ -62,16 +62,17 @@ namespace GameLogic
 				panel = PopupManager.Instance.CreateAndAddPopup<MazeMapPanel>();
 
 				BuildMockBlock();
-				Vector2 heroPos = Maze.Instance.GetMazePosition(Hero.Instance.WorldPosition);
+                Hero hero = Hero.Instance;
+                Vector2 heroPos = Maze.Instance.GetMazePosition(hero.WorldPosition);
 				float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
 				float posY = GlobalConfig.BlockConfig.MockBlockPosY;
 				Vector3 position = new Vector3(heroPos.x * cubeSize, posY, heroPos.y * cubeSize);
-				panel.Show(true, position);		
+                panel.Show(true, position, hero.WorldAngle);		
 			}
 			else
 			{
 				PopupManager.Instance.RemovePopup(panel);
-				panel.Show(false, Vector3.zero);
+				panel.Show(false, Vector3.zero, 0f);
 			}
 		}
 		private void HandleMazeMapReset()

@@ -140,8 +140,6 @@ namespace GameLogic
 
         private void HandleHallSpawn(Hall hall)
         {
-            Debug.Log(hall);
-            Debug.Log(hall.Data);
             List<MonsterRecord> recordList = monsterProxy.GetRecordHallList(hall.Data.Kid);
             if(recordList != null)
             {
