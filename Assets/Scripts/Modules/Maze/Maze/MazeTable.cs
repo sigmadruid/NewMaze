@@ -34,6 +34,9 @@ namespace GameLogic
         /// </summary>
 		public Block AboveBlock;
 
+        /// <summary>
+        /// The type of the exploration in this block.
+        /// </summary>
         public ExplorationType ExplorationType = ExplorationType.Common;
 
 		public string Format()
@@ -45,8 +48,16 @@ namespace GameLogic
 
 	public class MazeRoom : MazeNode
 	{
+        /// <summary>
+        /// A digit to indicate whether the room has created/deleted.
+        /// </summary>
 		public bool HasCreated;
+
+        /// <summary>
+        /// The room's entry direction.
+        /// </summary>
 		public int Direction;
+
 		public BlockData Data;
 	}
 

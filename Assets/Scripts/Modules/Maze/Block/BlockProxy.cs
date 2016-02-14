@@ -97,7 +97,7 @@ namespace GameLogic
 			}
 			blockDic.Add(key, block);
 			node.AboveBlock = block;
-            AddMockNode(node.Col, node.Row);
+            AddMockNode(node);
 
 			return block;
 		}
@@ -106,7 +106,7 @@ namespace GameLogic
 			if (node is MazeRoom)
 			{
 				MazeRoom room = node as MazeRoom;
-				//Here HasCreated means "HasDeleted" in fact...
+				//Prevent deleting same block twice.
 				if (room.HasCreated)
 				{
 					room.HasCreated = false;
@@ -258,26 +258,10 @@ namespace GameLogic
 		
 		#region Mock Block
 
-		public List<MazeNode> MockNodeList
-		{
-			get
-			{
-				int count = mockNodeList.Count;
-				for (int i = 0; i < count; ++i)
-				{
-					MazeRoom room = mockNodeList[i] as MazeRoom;
-					if (room != null)
-					{
-						room.HasCreated = false;
-					}
-				}
-				return mockNodeList;
-			}
-		}
+        public List<MazeNode> MockNodeList { get{ return mockNodeList; } }
 
-		public void AddMockNode(int col, int row)
+        private void AddMockNode(MazeNode node)
 		{
-			MazeNode node = mazeTable.GetNode(col, row);
 			if (!node.HasExplored)
 			{
 				mockNodeList.Add(node);

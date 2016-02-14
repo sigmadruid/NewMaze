@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using GameUI;
 using Base;
 using StaticData;
 
@@ -70,7 +71,6 @@ namespace GameLogic
 			panel.Init(dataList);
 			panel.CallbackItemClick = OnItemClick;
 			panel.CallbackUpdate = OnUpdate;
-			UIEventListener.Get(panel.ButtonShowMap.gameObject).onClick = OnShowMap;
 			UIEventListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
 		}
 		private void HandleUpdateHP(AttackResult ar)
@@ -97,13 +97,10 @@ namespace GameLogic
 			float mpVal = 1f;
 			panel.UpdateSliderBar(hpVal, mpVal);
 		}
-		private void OnShowMap(GameObject go)
-		{
-			DispatchNotification(NotificationEnum.MAZE_MAP_SHOW, true);
-		}
 		private void OnPauseGame(GameObject go)
 		{
-            Game.Instance.SetPause(!Game.Instance.IsPause);
+            PopupManager.Instance.CreateAndAddPopup<PausePanel>();
+            Game.Instance.SetPause(true);
 		}
     }
 }

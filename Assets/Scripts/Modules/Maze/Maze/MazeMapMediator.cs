@@ -55,6 +55,7 @@ namespace GameLogic
 		private void HandleMockBlockShow()
 		{
 			show = !show;
+            Game.Instance.SetPause(show);
 
 			if (show)
 			{
@@ -85,86 +86,74 @@ namespace GameLogic
 			for (int i = 0; i < count; ++i)
 			{
 				MazeNode node = nodeList[i];
+                int key = Block.GetBlockKey(node.Col, node.Row);
+                if (posHashSet.Contains(key))
+                {
+                    continue;
+                }
 				if (node is MazeRoom)
 				{
 					MazeRoom room = node as MazeRoom;
-					if (!room.HasCreated)
-					{
-						BuildRoomCube(node as MazeRoom);
-						room.HasCreated = true;
-					}
+					BuildRoomCube(node as MazeRoom);
 				}
 				else
 				{
 					BuildPassageCube(node);
 				}
+                posHashSet.Add(key);
 			}
 			nodeList.Clear();
 		}
 
 		private void BuildRoomCube(MazeRoom room)
 		{
-			int key = Block.GetBlockKey(room.Col, room.Row);
-			if (posHashSet.Contains(key))
-		    {
-				return;
-			}
 			float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
 
 			GameObject cube = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockRoomPath);
-			BlockData data = BlockDataManager.Instance.GetRandomRoomData();
-			cube.transform.localScale = new Vector3(data.Cols, 1, data.Rows);
+            cube.transform.localScale = new Vector3(room.Data.Cols * cubeSize, 0.1f, room.Data.Rows * cubeSize);
 			cube.transform.localEulerAngles = Vector3.up * 90f * room.Direction;
 			cube.transform.position = new Vector3(room.Col * cubeSize , GlobalConfig.BlockConfig.MockBlockPosY, room.Row * cubeSize);
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
-
-			posHashSet.Add(key);
+            cube.transform.position = cube.transform.position - cube.transform.forward * GlobalConfig.BlockConfig.MockLinkSize * 0.5f;
+            cube.GetComponentInChildren<MeshRenderer>().material.mainTextureScale = new Vector2(room.Data.Cols, room.Data.Rows);
 		}
 		private void BuildPassageCube(MazeNode node)
 		{
-			int key = Block.GetBlockKey(node.Col, node.Row);
-			if (posHashSet.Contains(key))
-			{
-				return;
-			}
-
 			float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
-			float linkSize = GlobalConfig.BlockConfig.MockLinkSize;
 			float posY = GlobalConfig.BlockConfig.MockBlockPosY;
 
 			GameObject cube = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockPassagePath);
 			cube.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize);
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
-			
+
 			GameObject link = null;
+            float offsetSize = cubeSize * 0.5f;
 			if (node.LinkList[0] != null)
 			{
 				link = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath);
 				link.transform.localEulerAngles = Vector3.up * 90;
-				link.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize + linkSize);
+                link.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize + offsetSize);
 				link.transform.parent = RootTransform.Instance.MockBlockRoot;
 			}
 			if (node.LinkList[1] != null)
 			{
 				link = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath);
-				link.transform.position = new Vector3(node.Col * cubeSize + linkSize, posY, node.Row * cubeSize);
+                link.transform.position = new Vector3(node.Col * cubeSize + offsetSize, posY, node.Row * cubeSize);
 				link.transform.parent = RootTransform.Instance.MockBlockRoot;
 			}
 			if (node.LinkList[2] != null)
 			{
 				link = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath);
 				link.transform.localEulerAngles = Vector3.up * 90;
-				link.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize - linkSize);
+                link.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize - offsetSize);
 				link.transform.parent = RootTransform.Instance.MockBlockRoot;
 			}
 			if (node.LinkList[3] != null)
 			{
 				link = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath);
-				link.transform.position = new Vector3(node.Col * cubeSize - linkSize, posY, node.Row * cubeSize);
+                link.transform.position = new Vector3(node.Col * cubeSize - offsetSize, posY, node.Row * cubeSize);
 				link.transform.parent = RootTransform.Instance.MockBlockRoot;
 			}
-
-			posHashSet.Add(key);
 		}
 
     }

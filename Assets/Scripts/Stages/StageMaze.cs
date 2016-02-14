@@ -42,9 +42,16 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
 
 			Game.Instance.Looper.SetAllActive(true);
+
+            InputManager.Instance.CallbackMazeMap = () =>
+            {
+                    ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
+            };
 		}
 		public override void End ()
 		{
+            InputManager.Instance.CallbackMazeMap = null;
+
 			Game.Instance.Looper.SetAllActive(false);
 
             PopupManager.Instance.Clear();
@@ -66,7 +73,6 @@ namespace GameLogic
 
 		private void PreloadAssets()
 		{
-//			MazeProxy mazeProxy = ApplicationFacade.Instance.RetrieveProxy<MazeProxy>();
 			int mazeKid = IDManager.Instance.GetID(IDType.Maze, 1);
 			List<ResourceData> resourceDataList = ResourceDataManager.Instance.GetResourceDataList(mazeKid);
 

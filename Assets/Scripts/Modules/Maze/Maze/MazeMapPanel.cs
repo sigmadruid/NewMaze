@@ -14,20 +14,39 @@ public class MazeMapPanel : BasePopupView
 
 	public InnerWindow innerWindow;
 
+    private GameObject mazeMapHero;
+
+    void Awake()
+    {
+        mazeMapHero = ResourceManager.Instance.CreateGameObject("Heroes/MazeMapHero");
+        mazeMapHero.SetActive(false);
+    }
+
 	void Start()
 	{
 		UIEventListener.Get(innerWindow.gameObject).onDrag = OnDrag;
 	}
 
+    void OnDestroy()
+    {
+        Destroy(mazeMapHero);
+        mazeMapHero = null;
+    }
+
+
 	public void Show(bool show, Vector3 heroPosition)
 	{
 		innerWindow.Display(show);
 		innerWindow.Camera.enabled = show;
+        mazeMapHero.SetActive(show);
+
 		if (show)
 		{
 			innerWindow.CameraTransform.position = heroPosition + Vector3.forward * (-Distance) + Vector3.up * Height + Vector3.right * Distance;;
 			innerWindow.CameraTransform.LookAt(heroPosition);
-		}
+            mazeMapHero.transform.position = heroPosition;
+        }
+
 	}
 
 	private void OnDrag(GameObject go, Vector2 delta)

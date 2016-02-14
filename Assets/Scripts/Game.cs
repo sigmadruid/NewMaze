@@ -20,7 +20,6 @@ namespace GameLogic
 
 		public InputManager InputManager;
 		public ResourceManager ResourceManager;
-		public TextManager TextManager;
 		public AICore AICore;
 		public GameLooper Looper;
 
@@ -58,7 +57,6 @@ namespace GameLogic
 			Looper.AddTask(TaskEnum.AIUpdate, -1f, AICore.Update);
 			Looper.AddTask(TaskEnum.AISlowUpdate, 0.2f, AICore.SlowUpdate);
 			Looper.AddTask(TaskEnum.ResourceUpdate, 1f, ResourceManager.Tick);
-			Looper.AddTask(TaskEnum.InputUpdate, -1f, InputManager.Update);
 
 			ApplicationFacade.Instance.Startup();
 
@@ -67,7 +65,9 @@ namespace GameLogic
 
 		public void Update(float deltaTime)
 		{
-			if (IsPause) { return; }
+            InputManager.Instance.Update();
+
+			if (IsPause)  return; 
 			Looper.Update(deltaTime);
 		}
 
@@ -103,6 +103,7 @@ namespace GameLogic
 		public void SetPause(bool state)
 		{
             IsPause = state;
+            InputManager.Instance.IsPause = IsPause;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, IsPause);
 		}
 

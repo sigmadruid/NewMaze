@@ -14,11 +14,13 @@ namespace Base
 		/// 面板Prefab路径
 		/// </summary>
 		/// <value>The prefab path.</value>
+        [HideInInspector]
 		public string PrefabPath { get; set; } //TODO: Considering different panels instantiated by same prefab. Then they share the same prefab path.
 
 		/// <summary>
 		/// 弹窗的模式标识。各种面板特殊行为的开关。
 		/// </summary>
+        [HideInInspector]
 		public uint popupMode;
 
 		/// <summary>

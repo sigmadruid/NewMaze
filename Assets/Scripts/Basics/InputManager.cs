@@ -8,12 +8,14 @@ using StaticData;
 
 public class InputManager 
 {
-	private const KeyCode KeyAttack = KeyCode.J;
-	private const KeyCode KeyFunction = KeyCode.U;
+    private const KeyCode KeyAttack = KeyCode.J;
+    private const KeyCode KeyFunction = KeyCode.U;
+    private const KeyCode KeyMazeMap= KeyCode.Tab;
 
 	public Utils.CallbackVector3 CallbackUpdatePosition;
 	public Utils.CallbackVoid CallbackFire;
-	public Utils.CallbackVoid CallbackFunction;
+    public Utils.CallbackVoid CallbackFunction;
+	public Utils.CallbackVoid CallbackMazeMap;
 
 	private static InputManager instance;
 	public static InputManager Instance
@@ -37,32 +39,40 @@ public class InputManager
 	{
 		if (!Enable) return;
 
-		float xOffset = Input.GetAxisRaw("Horizontal");
-		float zOffset = Input.GetAxisRaw("Vertical");
-		DirectionVector = Quaternion.Euler(Vector3.up * (-45f)) * new Vector3(xOffset, 0, zOffset);
-		DirectionVector.Normalize();
+        if(!IsPause)
+        {
+            float xOffset = Input.GetAxisRaw("Horizontal");
+            float zOffset = Input.GetAxisRaw("Vertical");
+            DirectionVector = Quaternion.Euler(Vector3.up * (-45f)) * new Vector3(xOffset, 0, zOffset);
+            DirectionVector.Normalize();
+            if (CallbackUpdatePosition != null)
+            {
+                CallbackUpdatePosition(DirectionVector);
+            }
+            if(Input.GetKeyDown(KeyAttack))
+            {
+                if(CallbackFire != null)
+                {
+                    CallbackFire();
+                }
+            }
 
-		if (CallbackUpdatePosition != null)
-		{
-			CallbackUpdatePosition(DirectionVector);
-		}
+            if(Input.GetKeyDown(KeyFunction))
+            {
+                if(CallbackFunction != null)
+                {
+                    CallbackFunction();
+                }
+            }
+        }
 
-		if (Input.GetKeyDown(KeyAttack))
-		{
-			if (CallbackFire != null)
-			{
-				CallbackFire();
-			}
-		}
-
-		if (Input.GetKeyDown(KeyFunction))
-		{
-			if (CallbackFunction != null)
-			{
-				CallbackFunction();
-			}
-		}
-
+        if(Input.GetKeyDown(KeyMazeMap))
+        {
+            if(CallbackMazeMap != null)
+            {
+                CallbackMazeMap();
+            }
+        }
 		Test();
 	}
 
@@ -81,6 +91,8 @@ public class InputManager
 			}
 		}
 	}
+
+    public bool IsPause { get; set; }
 
 //	private bool isMoving;
 //	private Vector3 directionVector;
