@@ -94,7 +94,6 @@ namespace GameLogic
                 }
 				if (node is MazeRoom)
 				{
-					MazeRoom room = node as MazeRoom;
 					BuildRoomCube(node as MazeRoom);
 				}
 				else

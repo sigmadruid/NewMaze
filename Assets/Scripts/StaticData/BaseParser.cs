@@ -39,7 +39,7 @@ namespace StaticData
 						continue;
 					}
 					char firstChar = line[0];
-					if (firstChar == ',' || char.IsLetter(firstChar))
+					if (firstChar == ',')
 					{
 						continue;
 					}

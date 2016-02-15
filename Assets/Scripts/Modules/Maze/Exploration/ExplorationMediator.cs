@@ -98,8 +98,6 @@ namespace GameLogic
                     }
                 });
 
-            int blockKey = Block.GetBlockKey(block.Col, block.Row);
-
             for (int i = 0; i < toDeleteList.Count; ++i)
             {
                 Exploration expl = toDeleteList[i];

@@ -20,6 +20,7 @@ namespace StaticData
 		{
 			Utils.GetStartTime();
 
+            KeyboardDataManager.Instance.Init();
 			AnimatorDataManager.Instance.Init();
 			HeroDataManager.Instance.Init();
 			ExplorationDataManager.Instance.Init();

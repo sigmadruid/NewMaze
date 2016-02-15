@@ -97,10 +97,10 @@ namespace GameLogic
 			convertEffect.Deactive();
 
 			//Input
-			InputManager.Instance.CallbackFire = OnHeroAttack;
-			InputManager.Instance.CallbackFunction = OnHeroFunction;
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Attack, OnHeroAttack);
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, OnHeroFunction);
 
-//            hero.Info.AddHP(-950);
+            hero.Info.AddHP(-950);
 		}
 
 		private void HandleHeroConvert(int heroKid)

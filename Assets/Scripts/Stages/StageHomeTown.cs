@@ -8,9 +8,7 @@ namespace GameLogic
 {
 	public class StageHomeTown : BaseStage
 	{
-		public StageHomeTown () : base(StageEnum.HomeTown)
-		{
-		}
+        public StageHomeTown () : base(StageEnum.HomeTown) {}
 
 		public override void Start ()
 		{
@@ -22,6 +20,10 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
 
 			Game.Instance.Looper.SetActive(TaskEnum.InputUpdate, true);
+
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
+
 		}
 		public override void End ()
 		{

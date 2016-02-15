@@ -68,9 +68,9 @@ public class CharacterScript : EntityScript
 		if (Game.Instance.IsPause) { return; }
 
 		AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-		if (currentNameHash != currentStateInfo.nameHash)
+		if (currentNameHash != currentStateInfo.fullPathHash)
 		{
-			currentNameHash = currentStateInfo.nameHash;
+			currentNameHash = currentStateInfo.fullPathHash;
 			currentAnimatorData = AnimatorDataDic[currentNameHash];
 			transitionEnds = true;
 		}

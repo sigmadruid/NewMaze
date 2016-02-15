@@ -1,0 +1,4 @@
+Type,Key,Name,ActiveWhenPause
+Attack,J,,FALSE
+Function,U,,FALSE
+MazeMap,Tab,,TRUE

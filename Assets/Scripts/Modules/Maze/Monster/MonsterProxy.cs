@@ -154,7 +154,6 @@ namespace GameLogic
         {
             if (monsterHallDic.ContainsKey(uid))
             {
-                Monster monster = monsterHallDic[uid];
                 List<MonsterRecord> recordList = GetRecordHallList(hallKid);
                 if (recordList != null)
                 {
@@ -168,8 +167,6 @@ namespace GameLogic
                         }
                     }
                 }
-
-//                monsterHallDic.Remove(uid);
             }
         }
         public void ClearMonstersInHall()

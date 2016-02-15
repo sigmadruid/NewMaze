@@ -123,14 +123,15 @@ namespace Base
 		}
 
 		private static long t;
-		public static void GetStartTime()
+        public static void GetStartTime(string log = "")
 		{
+            BaseLogger.LogFormat("{0} starts...", log);
 			t = DateTime.Now.Ticks;
 		}
-		public static void GetEndTime()
+        public static void GetEndTime(string log = "")
 		{
 			DateTime dt = new DateTime(DateTime.Now.Ticks - t);
-			Debug.Log(dt.Millisecond.ToString() + "ms");
+            BaseLogger.LogFormat("{0} costs {1}ms", log, dt.Millisecond);
 		}
 	}
 }
