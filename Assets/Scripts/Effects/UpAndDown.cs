@@ -6,6 +6,8 @@ namespace Effects
 {
     public class UpAndDown : MonoBehaviour
     {
+        public bool IsEnabled = true;
+
         public float MaxHeight = 1f;
 
         public float Duration = 1f;
@@ -26,6 +28,8 @@ namespace Effects
 
         void Update()
         {
+            if(!IsEnabled) return;
+            
             if(timer <= Duration * 0.5f)
                 transform.position = originPosition + Vector3.up * timer * speed;
             else
