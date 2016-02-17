@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using Base;
 using StaticData;
+using Effects;
 
 namespace GameLogic
 {
@@ -19,11 +20,8 @@ namespace GameLogic
 
 		private BlockProxy blockProxy;
 
-		private HashSet<int> posHashSet;
-
         public MazeMapMediator() : base()
         {
-			posHashSet = new HashSet<int>();
 			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
         }
 
@@ -62,12 +60,9 @@ namespace GameLogic
 				panel = PopupManager.Instance.CreateAndAddPopup<MazeMapPanel>();
 
 				BuildMockBlock();
-                Hero hero = Hero.Instance;
-                Vector2 heroPos = Maze.Instance.GetMazePosition(hero.WorldPosition);
-				float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
-				float posY = GlobalConfig.BlockConfig.MockBlockPosY;
-				Vector3 position = new Vector3(heroPos.x * cubeSize, posY, heroPos.y * cubeSize);
-                panel.Show(true, position, hero.WorldAngle);		
+
+                Vector3 position = GetHeroMazeMapPosition(Hero.Instance.WorldPosition);
+                panel.Show(true, position, Hero.Instance.WorldAngle);		
 			}
 			else
 			{
@@ -77,21 +72,24 @@ namespace GameLogic
 		}
 		private void HandleMazeMapReset()
 		{
-			posHashSet.Clear();
 		}
+
+        private Vector3 GetHeroMazeMapPosition(Vector3 heroPosition)
+        {
+            Vector2 heroPos = Maze.Instance.GetMazePosition(heroPosition);
+            float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
+            float posY = GlobalConfig.BlockConfig.MockBlockPosY;
+            Vector3 position = new Vector3(heroPos.x * cubeSize, posY, heroPos.y * cubeSize);
+            return position;
+        }
 
 		private void BuildMockBlock()
 		{
-			List<MazeNode> nodeList = blockProxy.MockNodeList;
-			int count = nodeList.Count;
-			for (int i = 0; i < count; ++i)
+            HashSet<MazeNode> nodeSet = blockProxy.MockNodeSet;
+			int count = nodeSet.Count;
+            foreach(MazeNode node in nodeSet)
 			{
-				MazeNode node = nodeList[i];
                 int key = Block.GetBlockKey(node.Col, node.Row);
-                if (posHashSet.Contains(key))
-                {
-                    continue;
-                }
 				if (node is MazeRoom)
 				{
 					BuildRoomCube(node as MazeRoom);
@@ -100,9 +98,12 @@ namespace GameLogic
 				{
 					BuildPassageCube(node);
 				}
-                posHashSet.Add(key);
+
+                if(node.ExplorationType != ExplorationType.Common)
+                {
+                    BuildIndicator(node);
+                }
 			}
-			nodeList.Clear();
 		}
 
 		private void BuildRoomCube(MazeRoom room)
@@ -116,6 +117,7 @@ namespace GameLogic
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
             cube.transform.position = cube.transform.position - cube.transform.forward * GlobalConfig.BlockConfig.MockLinkSize * 0.5f;
             cube.GetComponentInChildren<MeshRenderer>().material.mainTextureScale = new Vector2(room.Data.Cols, room.Data.Rows);
+            cube.GetComponent<Sparking>().IsEnabled = room.ExplorationType != ExplorationType.Common;
 		}
 		private void BuildPassageCube(MazeNode node)
 		{
@@ -125,6 +127,7 @@ namespace GameLogic
 			GameObject cube = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockPassagePath);
 			cube.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize);
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
+            cube.GetComponent<Sparking>().IsEnabled = node.ExplorationType != ExplorationType.Common;
 
 			GameObject link = null;
             float offsetSize = cubeSize * 0.5f;
@@ -155,6 +158,16 @@ namespace GameLogic
 				link.transform.parent = RootTransform.Instance.MockBlockRoot;
 			}
 		}
+
+        private void BuildIndicator(MazeNode node)
+        {
+            float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
+            float posY = GlobalConfig.BlockConfig.MockBlockPosY;
+
+            GameObject indicator = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.IndicatorPath);
+            indicator.transform.position = new Vector3(node.Col * cubeSize, posY + 2f, node.Row * cubeSize);
+            indicator.transform.parent = RootTransform.Instance.MockBlockRoot;
+        }
 
     }
 }

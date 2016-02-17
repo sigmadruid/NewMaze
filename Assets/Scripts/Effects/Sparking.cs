@@ -22,6 +22,7 @@ namespace Effects
         void Start()
         {
             material = GetComponentInChildren<Renderer>().material;
+            material.EnableKeyword("_EMISSION");
 
             timer = 0f;
             t = 0f;

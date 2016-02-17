@@ -19,11 +19,6 @@ namespace GameLogic
         /// </summary>
         public MazeNode[] LinkList = new MazeNode[4]{null, null, null, null};
 
-        /// <summary>
-        /// Whether the node has been explored.
-        /// </summary>
-        public bool HasExplored;
-
 		/// <summary>
 		/// The index is for monster path finding. Monster will always walk to the lower index.
 		/// </summary>

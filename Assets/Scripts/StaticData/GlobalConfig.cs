@@ -21,7 +21,8 @@ namespace StaticData
 
 		public readonly string MockPassagePath = "MazeBlocks/Mock/MockPassage";
 		public readonly string MockLinkPath = "MazeBlocks/Mock/MockLink";
-		public readonly string MockRoomPath = "MazeBlocks/Mock/MockRoom";
+        public readonly string MockRoomPath = "MazeBlocks/Mock/MockRoom";
+        public readonly string IndicatorPath = "MazeBlocks/Indicator/Indicator_3";
 		public readonly float MockCubeSize = 3f;
 		public readonly float MockLinkSize = 2f;
 		public readonly float MockBlockPosY = -10000f;

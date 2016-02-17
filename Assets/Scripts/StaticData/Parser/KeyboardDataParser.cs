@@ -25,7 +25,6 @@ namespace StaticData
                 data.Name = ReadString(col++);
                 data.ActiveWhenPause = ReadBool(col++);
 
-                Debug.Log((int)data.Type);
                 kvDic.Add((int)data.Type, data);
                 NextLine();
             }

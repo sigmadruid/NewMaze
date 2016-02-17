@@ -92,7 +92,8 @@ namespace GameLogic
 
 			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockPassagePath, -1, 20);
 			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath, -1, 20);
-			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockRoomPath, -1, 10);
+            ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockRoomPath, -1, 10);
+            ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.IndicatorPath, -1, 10);
 		}
 
 	}

@@ -30,7 +30,6 @@ namespace StaticData
         public KeyboardData GetData(KeyboardActionType type)
         {
             int typeID = (int)type;
-            Debug.Log(typeID);
             if (!kvDic.ContainsKey(typeID))
             {
                 BaseLogger.LogFormat("No such keyboard type: {0}", type);

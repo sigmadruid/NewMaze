@@ -15,23 +15,15 @@ namespace GameLogic
 
 		public MazeNode StartNode { get; private set; }
 
-		public List<MazeNode> ToDeleteNodeList;
-		public List<MazeNode> ToCreateNodeList;
+        public List<MazeNode> ToDeleteNodeList = new List<MazeNode>();
+        public List<MazeNode> ToCreateNodeList = new List<MazeNode>();
 
-		private List<MazeNode> prevAroundList;
+        private List<MazeNode> prevAroundList = new List<MazeNode>();
 
 		private MazeData mazeData;
 		private MazeTable mazeTable;
 
-		private Dictionary<int, Block> blockDic;
-
-		private List<MazeNode> mockNodeList;
-
-		public BlockProxy() : base()
-		{
-			blockDic = new Dictionary<int, Block>();
-			mockNodeList = new List<MazeNode>();
-		}
+        private Dictionary<int, Block> blockDic = new Dictionary<int, Block>();
 
 		public void Init()
 		{
@@ -42,16 +34,13 @@ namespace GameLogic
 
             InitGlobalExplorationPositions();
             TestGlobalExplorationPositions();
-
-			ToDeleteNodeList = new List<MazeNode>();
-			ToCreateNodeList = new List<MazeNode>();
-			prevAroundList = new List<MazeNode>();
 		}
 
 		public void Dispose()
 		{
 			blockDic.Clear();
-			mockNodeList.Clear();
+			mockNodeSet.Clear();
+            globalExplorationNodeList.Clear();
 
 			ToDeleteNodeList.Clear();
 			ToCreateNodeList.Clear();
@@ -258,23 +247,25 @@ namespace GameLogic
 		
 		#region Mock Block
 
-        public List<MazeNode> MockNodeList { get{ return mockNodeList; } }
+        private HashSet<MazeNode> mockNodeSet = new HashSet<MazeNode>();
+        public HashSet<MazeNode> MockNodeSet { get{ return mockNodeSet; } }
 
         private void AddMockNode(MazeNode node)
 		{
-			if (!node.HasExplored)
-			{
-				mockNodeList.Add(node);
-				node.HasExplored = true;
-			}
+            if (!mockNodeSet.Contains(node))
+				mockNodeSet.Add(node);
 		}
 
 		#endregion
 
         #region Global Exploration Position Init
 
+        private List<MazeNode> globalExplorationNodeList = new List<MazeNode>();
+        public List<MazeNode> GlobalExplorationNodeList { get { return globalExplorationNodeList; } }
+
         public void InitGlobalExplorationPositions()
         {
+            //Calculate how many nodes you need to add global explorations.
             int positionTotalCount = 0;
             foreach(ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
             {
@@ -282,8 +273,11 @@ namespace GameLogic
                 positionTotalCount += count;
             }
 
-            int index = 0;
+            //Get the random indexes in node table.
             List<int> indexList = Utils.GetRandomIndexList(positionTotalCount, mazeTable.NodeCount);
+
+            //Arrange the explorations to the nodes I have created.
+            int index = 0;
             foreach (ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
             {
                 int count = mazeData.GlobalExplorationCountDic[type];
@@ -291,6 +285,7 @@ namespace GameLogic
                 {
                     MazeNode node = mazeTable.GetNode(indexList[index]);
                     node.ExplorationType = type;
+                    AddMockNode(node);
                     index++;
                 }
             }
