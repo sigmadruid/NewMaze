@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Base;
 using StaticData;
-using AI;
+using Battle;
 
 namespace GameLogic
 {

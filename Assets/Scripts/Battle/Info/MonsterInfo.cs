@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 
+using GameLogic;
 using StaticData;
 
-namespace GameLogic
+namespace Battle
 {
 	public class MonsterInfo : CharacterInfo
 	{

@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 
 using Base;
+using Battle;
 using StaticData;
 
 namespace GameLogic

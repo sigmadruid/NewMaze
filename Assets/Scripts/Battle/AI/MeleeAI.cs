@@ -4,7 +4,7 @@ using UnityEngine;
 using Base;
 using GameLogic;
 
-namespace AI
+namespace Battle
 {
 	public class MeleeAI : AIBase
 	{

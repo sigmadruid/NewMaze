@@ -163,6 +163,14 @@ namespace Base
 
 		void Test()
 		{
+            if(Input.GetKeyDown(KeyCode.F1))
+            {
+                Hero.Instance.Script.SetTransparent(true);
+            }
+            if(Input.GetKeyDown(KeyCode.F2))
+            {
+                Hero.Instance.Script.SetTransparent(false);
+            }
 		}
 
 	}

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Base;
 using StaticData;
 using GameLogic;
-using AI;
+using Battle;
 
 namespace GameLogic
 {

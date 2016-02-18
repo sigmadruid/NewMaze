@@ -9,7 +9,7 @@ using GameLogic;
 using StaticData;
 
 
-namespace AI
+namespace Battle
 {
 	public class AICore
 	{

@@ -6,62 +6,74 @@ using System.Collections.Generic;
 using Base;
 using StaticData;
 
-namespace GameLogic
+namespace Battle
 {
+    public struct AttackContext
+    {
+        public Side Side;
+        public int Attack;
+        public int Critical;
+    }
+
+    public struct AttackResult
+    {
+        public int Damage;
+        public bool IsCritical;
+        public bool IsDodge;
+    }
+
 	public class CharacterInfo
 	{
-		protected Dictionary<int, int> attributeDic;
-		protected Dictionary<int, int> buffDic;
+        protected Dictionary<int, int> attrDic = new Dictionary<int, int>();
+        protected Dictionary<int, int> buffAttrDic = new Dictionary<int, int>();
 		
 		public CharacterData Data;
 		
 		public CharacterInfo (CharacterData data)
 		{
 			Data = data;
-			attributeDic = new Dictionary<int, int>();
-			buffDic = new Dictionary<int, int>();
 			
 			Init();
 		}
 		
 		public void Init()
 		{
-			attributeDic.Clear();
+			attrDic.Clear();
 
 			hp = Data.HP;
 
-			attributeDic.Add((int)BattleAttribute.HP, Data.HP);
-			attributeDic.Add((int)BattleAttribute.Attack, Data.Attack);
-			attributeDic.Add((int)BattleAttribute.Defense, Data.Defense);
-			attributeDic.Add((int)BattleAttribute.Critical, Data.Critical);
-			attributeDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
+			attrDic.Add((int)BattleAttribute.HP, Data.HP);
+			attrDic.Add((int)BattleAttribute.Attack, Data.Attack);
+			attrDic.Add((int)BattleAttribute.Defense, Data.Defense);
+			attrDic.Add((int)BattleAttribute.Critical, Data.Critical);
+			attrDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
 			
-			buffDic.Add((int)BattleAttribute.HP, 0);
-			buffDic.Add((int)BattleAttribute.Attack, 0);
-			buffDic.Add((int)BattleAttribute.Defense, 0);
-			buffDic.Add((int)BattleAttribute.Critical, 0);
-			buffDic.Add((int)BattleAttribute.Dodge, 0);
+			buffAttrDic.Add((int)BattleAttribute.HP, 0);
+			buffAttrDic.Add((int)BattleAttribute.Attack, 0);
+			buffAttrDic.Add((int)BattleAttribute.Defense, 0);
+			buffAttrDic.Add((int)BattleAttribute.Critical, 0);
+			buffAttrDic.Add((int)BattleAttribute.Dodge, 0);
 		}
 		public void Dispose()
 		{
-			attributeDic.Clear();
+			attrDic.Clear();
 			Data = null;
 		}
 
-		//TO OPTIMIZE: 288B garbage per frame. Do not use hash to retrive. Try to cache the values.
 		public int GetAttribute(BattleAttribute attribute)
 		{
-			if (!attributeDic.ContainsKey((int)attribute))
+            int attrID = (int)attribute;
+            if (!attrDic.ContainsKey(attrID))
 			{
 				BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
 				return -1;
 			}
-			if (!buffDic.ContainsKey((int)attribute))
+            if (!buffAttrDic.ContainsKey(attrID))
 			{
 				BaseLogger.LogFormat("buffDic has no attribute: {0}", attribute);
 				return -1;
 			}
-			return attributeDic[(int)attribute] + buffDic[(int)attribute];
+            return attrDic[attrID] + buffAttrDic[attrID];
 		}
 
 		protected int hp;
@@ -84,39 +96,26 @@ namespace GameLogic
 			float dodge = GetAttribute(BattleAttribute.Dodge) / RandomUtils.RANDOM_BASE;
 			if (randomValue <= dodge)
 			{
-				result.damage = 0;
-				result.isCritical = false;
-				result.isDodge = true;
+				result.Damage = 0;
+				result.IsCritical = false;
+				result.IsDodge = true;
 //				Debug.Log(string.Format("{0} dodged...", Data.Kid));
 				return result;
 			}
 
 			float critical = attackContext.Critical / RandomUtils.RANDOM_BASE;
-			result.isCritical = randomValue <= critical;
+			result.IsCritical = randomValue <= critical;
 
 			int attack = attackContext.Attack;
 			int defense = GetAttribute(BattleAttribute.Defense);
-			int criticalRatio = result.isCritical ? 2 : 1;
-			result.damage = -(attack - defense) * criticalRatio;
-			AddHP(result.damage);
+			int criticalRatio = result.IsCritical ? 2 : 1;
+			result.Damage = -(attack - defense) * criticalRatio;
+			AddHP(result.Damage);
 //			Debug.Log(string.Format("{0} was attacked. Damage = {1}", Data.Kid, result.damage));
 //			Debug.Log(string.Format("{0}'s HP: {1}", Data.Kid, hp));
 			return result;
 		}
 	}
 
-	public struct AttackContext
-	{
-		public Side Side;
-		public int Attack;
-		public int Critical;
-	}
-
-	public struct AttackResult
-	{
-		public int damage;
-		public bool isCritical;
-		public bool isDodge;
-	}
 }
 

@@ -3,8 +3,9 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-using StaticData;
 using Base;
+using Battle;
+using StaticData;
 
 
 namespace GameLogic

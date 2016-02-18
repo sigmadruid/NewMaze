@@ -5,7 +5,7 @@ using System;
 using Base;
 using GameLogic;
 
-namespace AI
+namespace Battle
 {
 	public class ShooterAI : AIBase
 	{

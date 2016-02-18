@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 
 using Base;
+using Battle;
 using GameLogic;
 
 public class NumberItem : ScreenItem
@@ -29,13 +30,13 @@ public class NumberItem : ScreenItem
 	{
 		gameObject.SetActive(true);
 
-		labelNumber.color = result.isCritical ? Color.red : Color.white;
-		tweenScale.from = Vector3.one * (result.isCritical ? 5 : 3);
-		tweenScale.to = Vector3.one * (result.isCritical ? 2 : 1);
+		labelNumber.color = result.IsCritical ? Color.red : Color.white;
+		tweenScale.from = Vector3.one * (result.IsCritical ? 5 : 3);
+		tweenScale.to = Vector3.one * (result.IsCritical ? 2 : 1);
 
-		if (!result.isDodge)
+		if (!result.IsDodge)
 		{
-			Show(result.damage.ToString());
+			Show(result.Damage.ToString());
 		}
 		else
 		{

@@ -6,7 +6,7 @@ using Base;
 using StaticData;
 using GameLogic;
 
-namespace AI
+namespace Battle
 {
 	public class AIBase
 	{

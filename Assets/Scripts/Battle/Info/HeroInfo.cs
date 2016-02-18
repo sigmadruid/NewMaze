@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using StaticData;
 
-namespace GameLogic
+namespace Battle
 {
 	public class HeroInfo : CharacterInfo
 	{
@@ -11,11 +11,7 @@ namespace GameLogic
 
 		public bool IsConverting;
 
-		public bool IsTransporting;
-
-		public bool InHall;
-
-		public float LastHitTime = -1000;
+		public float LastHitTime = -1000f;
 
 		public HeroInfo (HeroData data) : base(data)
 		{

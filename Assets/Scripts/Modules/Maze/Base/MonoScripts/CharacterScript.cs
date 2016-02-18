@@ -32,6 +32,8 @@ public class CharacterScript : EntityScript
 	protected int currentNameHash;
 	protected AnimatorData currentAnimatorData;
 
+    protected Material material;
+
 	private WaitForSeconds SLOW_UPDATE_DELAY;
 	
 	protected virtual void Awake()
@@ -109,7 +111,7 @@ public class CharacterScript : EntityScript
 		}
 	}
 
-	#region Controlling
+	#region Behavior
 
 	public void Move(Vector3 direction)
 	{
@@ -201,11 +203,41 @@ public class CharacterScript : EntityScript
 
 	#endregion
 
-	#region Others
+    #region Renderering 
+
+    public void SetTransparent(bool isTransparent, float alpha = 0.2f)
+    {
+        if(material == null)
+        {
+            material = GetComponentInChildren<Renderer>().material;
+        }
+        if(isTransparent)
+        {
+            material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.SetFloat("_Mode", 3);
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
+        }
+        else
+        {
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.SetFloat("_Mode", 0);
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetInt("_ZWrite", 1);
+            material.SetFloat("_Mode", 1);
+        }
+    }
+
+    #endregion
+
+	#region Helper Methods
 
 	protected bool JudgeHit()
 	{
-		return UnityEngine.Random.value > 0.8f;
+        return RandomUtils.Value() > 0.8f;
 	}
 	
 	protected bool CanPlay(AnimatorPriorityEnum priority)

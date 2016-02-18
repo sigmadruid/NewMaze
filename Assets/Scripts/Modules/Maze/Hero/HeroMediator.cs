@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using Battle;
 using StaticData;
 
 namespace GameLogic

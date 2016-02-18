@@ -5,9 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using GameLogic;
 using StaticData;
 
-namespace GameLogic
+namespace Battle
 {
 	public enum BattleAttribute
 	{
