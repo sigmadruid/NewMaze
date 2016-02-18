@@ -30,21 +30,13 @@ namespace AI
 			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 		}
 
-		public virtual void Start()
-		{
-		}
+        public virtual void Start() {}
 
-		public virtual void Update()
-		{
-		}
+        public virtual void Update() {}
 
-		public virtual void SlowUpdate()
-		{
-		}
+        public virtual void SlowUpdate() {}
 
-		public virtual void End()
-		{
-		}
+        public virtual void End() {}
 
 		private float delayTimer = 0f;
 		protected bool Delay(float delay)

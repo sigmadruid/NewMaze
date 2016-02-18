@@ -55,8 +55,8 @@ namespace GameLogic
 
 			Looper = new GameLooper();
 			Looper.AddTask(TaskEnum.AIUpdate, -1f, AICore.Update);
-			Looper.AddTask(TaskEnum.AISlowUpdate, 0.2f, AICore.SlowUpdate);
-			Looper.AddTask(TaskEnum.ResourceUpdate, 1f, ResourceManager.Tick);
+            Looper.AddTask(TaskEnum.AISlowUpdate, AICore.AI_UPDATE_INTERVAL, AICore.SlowUpdate);
+            Looper.AddTask(TaskEnum.ResourceUpdate, ResourceManager.RESOURCE_UPDATE_INTERVAL, ResourceManager.Tick);
 
 			ApplicationFacade.Instance.Startup();
 

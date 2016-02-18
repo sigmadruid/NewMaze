@@ -7,6 +7,7 @@ namespace StaticData
 	{
 		public int MazeKid;
 		public int EntityKid;
+        public string Path;
 		public int Life;
 		public int PreloadCount;
 	}

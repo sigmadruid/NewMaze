@@ -33,7 +33,7 @@ namespace GameLogic
 			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
 
-			PreloadAssets();
+            PreloadAssets(IDManager.Instance.GetID(IDType.Maze, 1));
 
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT);
@@ -78,22 +78,19 @@ namespace GameLogic
 			for (int i = 0; i < resourceDataList.Count; ++i)
 			{
 				ResourceData resourceData = resourceDataList[i];
-				IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
-				EntityManager manager = GlobalConfig.Instance.GetManager(idType);
-				EntityData data = manager.GetData(resourceData.EntityKid);
-				resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
+                if(resourceData.EntityKid != 0)
+                {
+                    IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
+                    EntityManager manager = GlobalConfig.Instance.GetManager(idType);
+                    EntityData data = manager.GetData(resourceData.EntityKid);
+                    resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
+                }
+                else
+                {
+                    resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.Life, resourceData.PreloadCount);
+                }
 			}
 
-			//UI
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/BarItem", -1, 20);
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/NumberItem", -1, 20);
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/NPCIcon", -1, 5);
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/ExplorationIcon", -1, 5);
-
-			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockPassagePath, -1, 20);
-			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockLinkPath, -1, 20);
-            ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.MockRoomPath, -1, 10);
-            ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, GlobalConfig.BlockConfig.IndicatorPath, -1, 10);
 		}
 
 	}

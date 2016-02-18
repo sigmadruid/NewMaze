@@ -9,6 +9,8 @@ namespace Base
 {
 	public class ResourceManager
 	{
+        public const float RESOURCE_UPDATE_INTERVAL = 1f;
+
 		private AssetManager assetManager;
 		private CacheManager cacheManager;
 		private ObjectPool objectPool;

@@ -12,11 +12,10 @@ namespace GameLogic
 
 		public override void Start ()
 		{
-			PreloadAssets();
+            PreloadAssets(IDManager.Instance.GetID(IDType.Maze, 0));
 
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
-
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
 
 			Game.Instance.Looper.SetActive(TaskEnum.InputUpdate, true);
@@ -39,25 +38,6 @@ namespace GameLogic
 			GC.Collect();
 		}
 
-		private void PreloadAssets()
-		{
-			int mazeKid = IDManager.Instance.GetID(IDType.Maze, 0);
-			List<ResourceData> resourceDataList = ResourceDataManager.Instance.GetResourceDataList(mazeKid);
-			
-			ResourceManager resManager = ResourceManager.Instance;
-			for (int i = 0; i < resourceDataList.Count; ++i)
-			{
-				ResourceData resourceData = resourceDataList[i];
-				IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
-				EntityManager manager = GlobalConfig.Instance.GetManager(idType);
-				EntityData data = manager.GetData(resourceData.EntityKid);
-				resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
-				
-			}
-
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/HPBar", -1, 1);
-			resManager.PreloadAsset(ObjectType.GameObject, "UI/Items/NPCIcon", -1, 1);
-		}
 	}
 }
 

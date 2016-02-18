@@ -20,6 +20,8 @@ namespace GameLogic
 
 		private BlockProxy blockProxy;
 
+        private HashSet<MazeNode> mockBlockSet = new HashSet<MazeNode>();
+
         public MazeMapMediator() : base()
         {
 			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
@@ -72,6 +74,7 @@ namespace GameLogic
 		}
 		private void HandleMazeMapReset()
 		{
+            mockBlockSet.Clear();
 		}
 
         private Vector3 GetHeroMazeMapPosition(Vector3 heroPosition)
@@ -89,24 +92,26 @@ namespace GameLogic
 			int count = nodeSet.Count;
             foreach(MazeNode node in nodeSet)
 			{
-                int key = Block.GetBlockKey(node.Col, node.Row);
+                if(mockBlockSet.Contains(node)) continue;
+
 				if (node is MazeRoom)
 				{
-					BuildRoomCube(node as MazeRoom);
+					CreateMockRoom(node as MazeRoom);
 				}
 				else
 				{
-					BuildPassageCube(node);
+					CreateMockPassage(node);
 				}
 
                 if(node.ExplorationType != ExplorationType.Common)
                 {
-                    BuildIndicator(node);
+                    CreateIndicator(node);
                 }
+                mockBlockSet.Add(node);
 			}
 		}
 
-		private void BuildRoomCube(MazeRoom room)
+		private void CreateMockRoom(MazeRoom room)
 		{
 			float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
 
@@ -119,7 +124,7 @@ namespace GameLogic
             cube.GetComponentInChildren<MeshRenderer>().material.mainTextureScale = new Vector2(room.Data.Cols, room.Data.Rows);
             cube.GetComponent<Sparking>().IsEnabled = room.ExplorationType != ExplorationType.Common;
 		}
-		private void BuildPassageCube(MazeNode node)
+		private void CreateMockPassage(MazeNode node)
 		{
 			float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
 			float posY = GlobalConfig.BlockConfig.MockBlockPosY;
@@ -159,7 +164,7 @@ namespace GameLogic
 			}
 		}
 
-        private void BuildIndicator(MazeNode node)
+        private void CreateIndicator(MazeNode node)
         {
             float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
             float posY = GlobalConfig.BlockConfig.MockBlockPosY;

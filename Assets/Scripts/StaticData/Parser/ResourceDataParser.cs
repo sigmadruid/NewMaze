@@ -17,7 +17,8 @@ namespace StaticData
 
 				ResourceData data = new ResourceData();
 				data.MazeKid = ReadInt(col++);
-				data.EntityKid = ReadInt(col++);
+                data.EntityKid = ReadInt(col++);
+                data.Path = ReadString(col++);
 				data.Life = ReadInt(col++);
 				data.PreloadCount = ReadInt(col++);
 

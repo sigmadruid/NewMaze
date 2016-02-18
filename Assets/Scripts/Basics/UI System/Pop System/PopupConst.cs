@@ -53,7 +53,7 @@ namespace Base
 		/// </summary>
 		public const uint ANIMATED = 1 << 10;
 
-		public const uint DEFAULT = SHOW | ANIMATED;
+		public const uint DEFAULT = SHOW;
 	}
 
 	public class PopupConst
