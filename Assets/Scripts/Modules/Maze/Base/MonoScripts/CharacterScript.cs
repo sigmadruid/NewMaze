@@ -214,7 +214,7 @@ public class CharacterScript : EntityScript
         if(isTransparent)
         {
             material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.SetFloat("_Mode", 3);
+            material.SetInt("_Mode", 3);
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
             material.SetInt("_ZWrite", 0);
@@ -223,7 +223,7 @@ public class CharacterScript : EntityScript
         else
         {
             material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.SetFloat("_Mode", 0);
+            material.SetInt("_Mode", 0);
             material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
             material.SetInt("_ZWrite", 1);
