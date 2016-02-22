@@ -43,13 +43,25 @@ namespace GameLogic
 			}
 		}
 
-		public bool InBattle 
-		{ 
-			get 
-			{ 
-				return Time.time - Info.LastHitTime <= GlobalConfig.BattleConfig.OutBattleDelay; 
-			}
-		}
+        protected override void Update()
+        {
+            if (!IsUpdating)
+            {
+                return;
+            }
+            Move(inputManager.DirectionVector);
+        }
+        protected override void SlowUpdate()
+        {
+            if (!IsSlowUpdating)
+            {
+                return;
+            }
+
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
+        }
+
+        #region States
 
 		public Vector2 MazePosition
 		{
@@ -62,23 +74,39 @@ namespace GameLogic
 			}
 		}
 
-		protected override void Update()
-		{
-			if (!IsUpdating)
-			{
-				return;
-			}
-			Move(inputManager.DirectionVector);
-		}
-		protected override void SlowUpdate()
-		{
-			if (!IsSlowUpdating)
-			{
-				return;
-			}
-			
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
-		}
+        public bool InBattle 
+        { 
+            get 
+            { 
+                return Time.time - Info.LastHitTime <= GlobalConfig.BattleConfig.OutBattleDelay; 
+            }
+        }
+
+        private bool isVisible = true;
+        public bool IsVisible
+        {
+            get
+            {
+                return isVisible;
+            }
+            set
+            {
+                isVisible = value;
+                Script.SetTransparent(!isVisible);
+            }
+        }
+
+        public bool CanBeAttacked
+        {
+            get
+            {
+                return Info.IsAlive && !Info.IsConverting && IsVisible;
+            }
+        }
+
+        #endregion
+
+        #region Animations
 
 		public void Move(Vector3 direction)
 		{
@@ -91,11 +119,6 @@ namespace GameLogic
 			{
 				return;
 			}
-//			Monster monster = battleProxy.GetNearMonsters();
-//			if (monster != null)
-//			{
-//				Script.LookAt(monster.WorldPosition);
-//			}
 			Script.Attack(OnAttack);
 		}
 		private void OnAttack(object param)
@@ -121,11 +144,12 @@ namespace GameLogic
 		{
 			Script.Die();
 		}
-
 		private void OnDie()
 		{
 			CallbackDie();
 		}
+
+        #endregion
 
 		public static Hero Create(int heroKid, HeroInfo info)
 		{
@@ -145,7 +169,6 @@ namespace GameLogic
 
 			return hero;
 		}
-
 		public static void Recycle()
 		{
 			Hero hero = instance;

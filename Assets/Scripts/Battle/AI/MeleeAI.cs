@@ -29,6 +29,12 @@ namespace Battle
 			Hero hero = Hero.Instance;
 			float heroSqrDistance = MathUtils.XZSqrDistance(hero.WorldPosition, currentMonster.WorldPosition);
 
+            if(!hero.CanBeAttacked)
+            {
+                currentMonster.Idle();
+                return;
+            }
+
 			if (heroSqrDistance > sqrDetectDistance)
 			{
 				currentMonster.Idle();
