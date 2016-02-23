@@ -7,14 +7,14 @@ using Base;
 using Battle;
 using GameLogic;
 
-public class NumberItem : ScreenItem
+public class NumberItem : BaseScreenItem
 {
 	public bool AutoDestroy = true;
 
     private Text labelNumber;
 
 //	private TweenScale tweenScale;
-//	private TweenAlpha tweenAlpha;
+	private TweenAlpha tweenAlpha;
 
 	protected override void Awake()
 	{
@@ -23,8 +23,8 @@ public class NumberItem : ScreenItem
         labelNumber = GetComponent<Text>();
 
 //		tweenScale = GetComponent<TweenScale>();
-//		tweenAlpha = GetComponent<TweenAlpha>();
-//        tweenScale.AddOnFinished(OnFinished);
+		tweenAlpha = GetComponent<TweenAlpha>();
+        tweenAlpha.AddOnFinished(OnFinished);
 	}
 	
 	public void Show(AttackResult result)
@@ -50,8 +50,8 @@ public class NumberItem : ScreenItem
 		
 //		tweenScale.tweenFactor = 0;
 //		tweenScale.enabled = true;
-//		tweenAlpha.tweenFactor = 0;
-//		tweenAlpha.enabled = true;
+		tweenAlpha.tweenFactor = 0;
+		tweenAlpha.enabled = true;
 	}
 
 	private void OnFinished()
@@ -80,8 +80,8 @@ public class NumberItem : ScreenItem
     }
 	private static NumberItem Create(Vector3 worldPosition)
 	{
-		NumberItem numberItem = ResourceManager.Instance.LoadAsset<NumberItem>(ObjectType.GameObject, "NewUI/Items/NumberItem");
-        numberItem.CachedTransform.SetParent(RootTransform.Instance.UIIconRoot);
+        NumberItem numberItem = PopupManager.Instance.CreateItem<NumberItem>();
+        numberItem.RectTransform.SetParent(RootTransform.Instance.UIIconRoot);
 		numberItem.UpdatePosition(worldPosition + Vector3.up * 2.5f);
 		return numberItem;
     }
@@ -90,7 +90,7 @@ public class NumberItem : ScreenItem
 	{
 		if (number != null)
 		{
-			ResourceManager.Instance.RecycleAsset(number.gameObject);
+            PopupManager.Instance.RemoveItem(number.gameObject);
 		}
 		else
 		{

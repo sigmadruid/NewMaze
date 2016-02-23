@@ -5,7 +5,7 @@ using System;
 using Base;
 using GameLogic;
 
-public class NPCIcon : ScreenItem 
+public class NPCIcon : BaseScreenItem 
 {
 	public Utils.CallbackVoid CallbackClick;
 
@@ -13,7 +13,7 @@ public class NPCIcon : ScreenItem
 	{
 		base.Awake();
 
-		UIEventListener.Get(gameObject).onClick = OnIconClick;
+        EventTriggerListener.Get(gameObject).onClick = OnIconClick;
 	}
 
 	private void OnIconClick(GameObject go)
@@ -26,9 +26,9 @@ public class NPCIcon : ScreenItem
 
 	public static NPCIcon CreateNPCIcon()
 	{
-		NPCIcon icon = ResourceManager.Instance.LoadAsset<NPCIcon>(ObjectType.GameObject, "UI/Items/NPCIcon");
-		icon.CachedTransform.parent = RootTransform.Instance.UIIconRoot;
-		icon.CachedTransform.localScale = Vector3.one;
+        NPCIcon icon = PopupManager.Instance.CreateItem<NPCIcon>();
+        icon.RectTransform.SetParent(RootTransform.Instance.UIIconRoot);
+		icon.RectTransform.localScale = Vector3.one;
 		return icon;
 	}
 	
@@ -37,7 +37,7 @@ public class NPCIcon : ScreenItem
 		if (icon != null)
 		{
 			icon.CallbackClick = null;
-			ResourceManager.Instance.RecycleAsset(icon.gameObject);
+            PopupManager.Instance.RemoveItem(icon.gameObject);
 		}
 		else
 		{

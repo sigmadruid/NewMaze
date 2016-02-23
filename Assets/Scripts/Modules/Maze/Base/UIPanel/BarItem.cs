@@ -6,7 +6,7 @@ using System.Collections;
 using Base;
 using GameLogic;
 
-public class BarItem : ScreenItem 
+public class BarItem : BaseScreenItem 
 {
     private Slider slider;
 
@@ -25,9 +25,9 @@ public class BarItem : ScreenItem
 
 	public static BarItem CreateHPBar()
 	{
-		BarItem bar = ResourceManager.Instance.LoadAsset<BarItem>(ObjectType.GameObject, "NewUI/Items/BarItem");
-        bar.CachedTransform.SetParent(RootTransform.Instance.UIIconRoot);
-		bar.CachedTransform.localScale = Vector3.one;
+        BarItem bar = PopupManager.Instance.CreateItem<BarItem>();
+        bar.RectTransform.SetParent(RootTransform.Instance.UIIconRoot);
+		bar.RectTransform.localScale = Vector3.one;
 		return bar;
 	}
 
@@ -35,7 +35,7 @@ public class BarItem : ScreenItem
 	{
 		if (bar != null)
 		{
-			ResourceManager.Instance.RecycleAsset(bar.gameObject);
+            PopupManager.Instance.RemoveItem(bar.gameObject);
 		}
 		else
 		{

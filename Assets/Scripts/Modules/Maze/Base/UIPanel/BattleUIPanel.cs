@@ -44,7 +44,7 @@ namespace GameUI
 
     		for (int i = 0; i < dataList.Count; ++i)
     		{
-    			HeroItem item = ResourceManager.Instance.LoadAsset<HeroItem>(ObjectType.GameObject, "NewUI/Items/HeroItem");
+                HeroItem item = PopupManager.Instance.CreateItem<HeroItem>();
                 item.transform.SetParent(GridHero.transform);
 
     			HeroData data = dataList[i];

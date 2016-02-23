@@ -62,6 +62,9 @@ namespace Base
 		/// 遮罩的prefab路径
 		/// </summary>
 		public const string MASK_PATH = "UI/Common/BlackMask";
+
+        public const string UI_ITEM_PATH = "NewUI/Items/{0}";
+        public const string UI_PANEL_PATH = "NewUI/{0}";
 	}
 }
 

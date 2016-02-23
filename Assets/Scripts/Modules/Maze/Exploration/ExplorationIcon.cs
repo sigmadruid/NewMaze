@@ -3,7 +3,7 @@ using System;
 
 using Base;
 
-public class ExplorationIcon : ScreenItem
+public class ExplorationIcon : BaseScreenItem
 {
 	public Utils.CallbackVoid CallbackClick;
 
@@ -25,8 +25,8 @@ public class ExplorationIcon : ScreenItem
 	public static ExplorationIcon Create()
 	{
 		ExplorationIcon icon = ResourceManager.Instance.LoadAsset<ExplorationIcon>(ObjectType.GameObject, "UI/Items/ExplorationIcon");
-		icon.CachedTransform.parent = RootTransform.Instance.UIIconRoot;
-		icon.CachedTransform.localScale = Vector3.one;
+		icon.RectTransform.parent = RootTransform.Instance.UIIconRoot;
+		icon.RectTransform.localScale = Vector3.one;
 		return icon;
 	}
 	

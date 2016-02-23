@@ -4,6 +4,7 @@
 //----------------------------------------------
 
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Tween the object's alpha.
@@ -20,18 +21,18 @@ public class TweenAlpha : UITweener
 	[Range(0f, 1f)] public float to = 1f;
 #endif
 
-	UIRect mRect;
+    Graphic mGraphic;
 
-	public UIRect cachedRect
+    public Graphic graphic
 	{
 		get
 		{
-			if (mRect == null)
+			if (mGraphic == null)
 			{
-				mRect = GetComponent<UIRect>();
-				if (mRect == null) mRect = GetComponentInChildren<UIRect>();
+                mGraphic = GetComponent<Graphic>();
+                if (mGraphic == null) mGraphic = GetComponentInChildren<Graphic>();
 			}
-			return mRect;
+			return mGraphic;
 		}
 	}
 
@@ -42,7 +43,7 @@ public class TweenAlpha : UITweener
 	/// Tween's current value.
 	/// </summary>
 
-	public float value { get { return cachedRect.alpha; } set { cachedRect.alpha = value; } }
+    public float value { get { return graphic.color.a; } set { graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, value); } }
 
 	/// <summary>
 	/// Tween the value.

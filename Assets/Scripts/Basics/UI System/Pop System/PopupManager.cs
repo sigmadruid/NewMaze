@@ -80,6 +80,18 @@ namespace Base
 			popupQueue = new PopupQueue();
 		}
 
+        public T CreateItem<T>() where T : MonoBehaviour
+        {
+            string path = string.Format(PopupConst.UI_ITEM_PATH, typeof(T).Name);
+            T item = ResourceManager.Instance.LoadAsset<T>(ObjectType.GameObject, path);
+            return item;
+        }
+
+        public void RemoveItem(GameObject item)
+        {
+            ResourceManager.Instance.RecycleAsset(item);
+        }
+
 		/// <summary>
 		/// 创建并展示一个面板。面板会被缓存，因此该方法可重复调用。
 		/// </summary>
@@ -93,7 +105,7 @@ namespace Base
 		                              Dictionary<uint, object> paramDic = null) where T : BasePopupView
 	    {
 			bool show = checkMode(popupMode, PopupMode.SHOW);
-			string path = string.Format("NewUI/{0}", typeof(T).Name);
+            string path = string.Format(PopupConst.UI_PANEL_PATH, typeof(T).Name);
 
 			T view = null;
 			if (!popupDic.ContainsKey(path))
