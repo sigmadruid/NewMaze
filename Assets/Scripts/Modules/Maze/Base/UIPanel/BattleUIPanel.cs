@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,10 +16,10 @@ namespace GameUI
     	public Utils.CallbackVoid CallbackUpdate;
     	public Utils.CallbackVoid CallbackItemClick;
 
-    	public UIButton ButtonPause;
-    	public UIGrid GridHero;
-    	public UISlider HPBar;
-    	public UISlider MPBar;
+        public Button ButtonPause;
+        public GridLayoutGroup GridHero;
+        public Slider HPBar;
+        public Slider MPBar;
     	public NumberItem HPNumber;
     	public NumberItem MPNumber;
 
@@ -29,8 +31,6 @@ namespace GameUI
     	void Awake () 
     	{
     		heroItemList = new List<HeroItem>();
-
-    		ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, "UI/Items/HeroItem", -1, 3);
     	}
 
     	void Update()
@@ -44,14 +44,13 @@ namespace GameUI
 
     		for (int i = 0; i < dataList.Count; ++i)
     		{
-    			HeroItem item = ResourceManager.Instance.LoadAsset<HeroItem>(ObjectType.GameObject, "UI/Items/HeroItem");
-    			item.transform.parent = GridHero.transform;
-    			item.transform.localScale = Vector3.one;
+    			HeroItem item = ResourceManager.Instance.LoadAsset<HeroItem>(ObjectType.GameObject, "NewUI/Items/HeroItem");
+                item.transform.SetParent(GridHero.transform);
 
     			HeroData data = dataList[i];
     			item.Data = data;
     			item.Label.text = TextDataManager.Instance.GetData(data.Name);
-    			UIEventListener.Get(item.gameObject).onClick = OnItemClick;
+                EventTriggerListener.Get(item.gameObject).onClick = OnItemClick;
 
     			heroItemList.Add(item);
     		}

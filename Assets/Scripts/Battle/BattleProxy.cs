@@ -80,7 +80,7 @@ namespace Battle
 					context.Critical = hero.Info.GetAttribute(BattleAttribute.Critical);
 
 					AttackResult result = monster.Info.HurtBy(context);
-					NumberItem.CreateDamageNumber(monster.WorldPosition, result);
+					NumberItem.Create(monster.WorldPosition, result);
 					if (monster.Info.HP > 0)
 					{
 						monster.Hit();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 using Base;
@@ -7,14 +8,9 @@ using GameLogic;
 
 public class HeroItem : MonoBehaviour
 {
-	public UILabel Label;
+    public Text Label;
 
 	public HeroData Data;
-
-	void Awake()
-	{
-
-	}
 
 }
 

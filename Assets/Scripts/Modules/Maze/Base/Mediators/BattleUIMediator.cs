@@ -13,8 +13,6 @@ namespace GameLogic
 {
     public class BattleUIMediator : Mediator
     {
-		private const string PANEL_PATH = "UI/BattleUIPanel";
-
 		private BattleUIPanel panel;
 
 		private HeroProxy heroProxy;
@@ -72,7 +70,7 @@ namespace GameLogic
 			panel.Init(dataList);
 			panel.CallbackItemClick = OnItemClick;
 			panel.CallbackUpdate = OnUpdate;
-			UIEventListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
+            EventTriggerListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
 		}
 		private void HandleUpdateHP(AttackResult ar)
 		{
@@ -98,7 +96,7 @@ namespace GameLogic
 			float mpVal = 1f;
 			panel.UpdateSliderBar(hpVal, mpVal);
 		}
-		private void OnPauseGame(GameObject go)
+        private void OnPauseGame(GameObject go)
 		{
             PopupManager.Instance.CreateAndAddPopup<PausePanel>();
             Game.Instance.SetPause(true);

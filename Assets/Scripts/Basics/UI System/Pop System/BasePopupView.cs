@@ -10,6 +10,7 @@ namespace Base
 
 //		public int id;
 
+
 		/// <summary>
 		/// 面板Prefab路径
 		/// </summary>
@@ -28,16 +29,27 @@ namespace Base
 		/// </summary>
 		public Dictionary<uint, object> paramDic;
 
-		private UIPanel panel;
-		public UIPanel Panel
+        private CanvasGroup group;
+        public CanvasGroup Group
 		{
 			get
 			{
-				if (panel == null)
-					panel = GetComponent<UIPanel>();
-				return panel;
+				if (group == null)
+                    group = GetComponent<CanvasGroup>();
+				return group;
 			}
 		}
+
+        private RectTransform rectTransform;
+        public RectTransform RectTransform
+        {
+            get
+            {
+                if(rectTransform == null)
+                    rectTransform = GetComponent<RectTransform>();
+                return rectTransform;
+            }
+        }
 
 		#endregion
 

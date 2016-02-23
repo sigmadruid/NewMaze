@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 
@@ -10,20 +11,20 @@ public class NumberItem : ScreenItem
 {
 	public bool AutoDestroy = true;
 
-	private UILabel labelNumber;
+    private Text labelNumber;
 
-	private TweenScale tweenScale;
-	private TweenAlpha tweenAlpha;
+//	private TweenScale tweenScale;
+//	private TweenAlpha tweenAlpha;
 
 	protected override void Awake()
 	{
 		base.Awake();
 
-		labelNumber = GetComponent<UILabel>();
+        labelNumber = GetComponent<Text>();
 
-		tweenScale = GetComponent<TweenScale>();
-		tweenAlpha = GetComponent<TweenAlpha>();
-		tweenAlpha.AddOnFinished(OnFinished);
+//		tweenScale = GetComponent<TweenScale>();
+//		tweenAlpha = GetComponent<TweenAlpha>();
+//        tweenScale.AddOnFinished(OnFinished);
 	}
 	
 	public void Show(AttackResult result)
@@ -31,8 +32,8 @@ public class NumberItem : ScreenItem
 		gameObject.SetActive(true);
 
 		labelNumber.color = result.IsCritical ? Color.red : Color.white;
-		tweenScale.from = Vector3.one * (result.IsCritical ? 5 : 3);
-		tweenScale.to = Vector3.one * (result.IsCritical ? 2 : 1);
+//		tweenScale.from = Vector3.one * (result.IsCritical ? 5 : 3);
+//		tweenScale.to = Vector3.one * (result.IsCritical ? 2 : 1);
 
 		if (!result.IsDodge)
 		{
@@ -47,17 +48,17 @@ public class NumberItem : ScreenItem
 	{
 		labelNumber.text = text;
 		
-		tweenScale.tweenFactor = 0;
-		tweenScale.enabled = true;
-		tweenAlpha.tweenFactor = 0;
-		tweenAlpha.enabled = true;
+//		tweenScale.tweenFactor = 0;
+//		tweenScale.enabled = true;
+//		tweenAlpha.tweenFactor = 0;
+//		tweenAlpha.enabled = true;
 	}
 
 	private void OnFinished()
 	{
 		if (AutoDestroy)
 		{
-			NumberItem.RecycleDamageNumber(this);
+			NumberItem.Recycle(this);
 		}
 		else
 		{
@@ -65,13 +66,13 @@ public class NumberItem : ScreenItem
 		}
 	}
 
-	public static NumberItem CreateDamageNumber(Vector3 worldPosition, AttackResult result)
+	public static NumberItem Create(Vector3 worldPosition, AttackResult result)
 	{
 		NumberItem numberItem = Create(worldPosition);
 		numberItem.Show(result);
 		return numberItem;
 	}
-	public static NumberItem CreateDamageNumber(Vector3 worldPosition, string text)
+	public static NumberItem Create(Vector3 worldPosition, string text)
 	{
 		NumberItem numberItem = Create(worldPosition);
 		numberItem.Show(text);
@@ -79,15 +80,13 @@ public class NumberItem : ScreenItem
     }
 	private static NumberItem Create(Vector3 worldPosition)
 	{
-		NumberItem numberItem = ResourceManager.Instance.LoadAsset<NumberItem>(ObjectType.GameObject, "UI/Items/NumberItem");
-		numberItem.CachedTransform.parent = RootTransform.Instance.UIIconRoot;
-		numberItem.CachedTransform.localScale = Vector3.one;
-		numberItem.GetComponent<UIWidget>().depth = 20;
+		NumberItem numberItem = ResourceManager.Instance.LoadAsset<NumberItem>(ObjectType.GameObject, "NewUI/Items/NumberItem");
+        numberItem.CachedTransform.SetParent(RootTransform.Instance.UIIconRoot);
 		numberItem.UpdatePosition(worldPosition + Vector3.up * 2.5f);
 		return numberItem;
     }
 	
-	public static void RecycleDamageNumber(NumberItem number)
+	public static void Recycle(NumberItem number)
 	{
 		if (number != null)
 		{

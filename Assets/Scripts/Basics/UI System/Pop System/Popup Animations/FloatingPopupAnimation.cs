@@ -23,16 +23,16 @@ namespace Base
 	//			popupView.transform.localPosition = new Vector3(0, ORIGIN_Y, 0);
 	//			TweenPosition.Begin(popupView.gameObject, duration, Vector3.zero);
 
-				popupView.Panel.alpha = ORIGIN_ALPHA;
-				TweenAlpha.Begin(popupView.gameObject, duration, 1f);
+                popupView.Group.alpha = ORIGIN_ALPHA;
+//				TweenAlpha.Begin(popupView.gameObject, duration, 1f);
 			}
 			else
 			{
 	//			popupView.transform.localPosition = Vector3.zero;
 	//			TweenPosition.Begin(popupView.gameObject, duration, new Vector3(0, ORIGIN_Y, 0));
 
-				popupView.Panel.alpha = 1f;
-				TweenAlpha.Begin(popupView.gameObject, duration, ORIGIN_ALPHA);
+                popupView.Group.alpha = 1f;
+//				TweenAlpha.Begin(popupView.gameObject, duration, ORIGIN_ALPHA);
 			}
 
 		}

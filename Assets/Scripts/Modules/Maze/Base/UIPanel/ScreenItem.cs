@@ -21,7 +21,7 @@ public class ScreenItem : MonoBehaviour
 	{
 		Vector3 screenPos = mainCamera.WorldToScreenPoint(position);
 		screenPos.z = 0f;
-		screenPos = UICamera.currentCamera.ScreenToWorldPoint(screenPos);
+//		screenPos = UICamera.currentCamera.ScreenToWorldPoint(screenPos);
 		CachedTransform.position = screenPos;
 	}
 }

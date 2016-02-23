@@ -93,15 +93,15 @@ namespace Base
 		                              Dictionary<uint, object> paramDic = null) where T : BasePopupView
 	    {
 			bool show = checkMode(popupMode, PopupMode.SHOW);
-			string path = string.Format("UI/{0}", typeof(T).Name);
+			string path = string.Format("NewUI/{0}", typeof(T).Name);
 
 			T view = null;
 			if (!popupDic.ContainsKey(path))
 			{
 				view = ResourceManager.Instance.CreateAsset<T>(path);
-				view.transform.parent = RootTransform.Instance.UIPanelRoot;
-				view.transform.localScale = Vector3.one;
-				view.transform.localPosition = Vector3.zero;
+                view.transform.SetParent(RootTransform.Instance.UIPanelRoot);
+                view.RectTransform.offsetMin = Vector2.zero;
+                view.RectTransform.offsetMax = Vector2.zero;
 				view.PrefabPath = path;
 				view.onInitialize();
 				popupDic[path] = view;
@@ -298,7 +298,7 @@ namespace Base
 
 		private void setPanelDepths(BasePopupView view, int depth)
 		{
-			view.GetComponent<UIPanel>().depth += depth;
+//			view.GetComponent<UIPanel>().depth += depth;
 		}
 
 		private bool checkMode (uint popupMode, uint mode)

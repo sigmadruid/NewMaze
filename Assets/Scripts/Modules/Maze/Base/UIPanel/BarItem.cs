@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections;
 
 using Base;
@@ -6,13 +8,13 @@ using GameLogic;
 
 public class BarItem : ScreenItem 
 {
-	private UISlider slider;
+    private Slider slider;
 
 	protected override void Awake()
 	{
 		base.Awake();
 
-		slider = GetComponent<UISlider>();
+        slider = GetComponent<Slider>();
 		slider.value = 1f;
 	}
 
@@ -23,10 +25,9 @@ public class BarItem : ScreenItem
 
 	public static BarItem CreateHPBar()
 	{
-		BarItem bar = ResourceManager.Instance.LoadAsset<BarItem>(ObjectType.GameObject, "UI/Items/BarItem");
-		bar.CachedTransform.parent = RootTransform.Instance.UIIconRoot;
+		BarItem bar = ResourceManager.Instance.LoadAsset<BarItem>(ObjectType.GameObject, "NewUI/Items/BarItem");
+        bar.CachedTransform.SetParent(RootTransform.Instance.UIIconRoot);
 		bar.CachedTransform.localScale = Vector3.one;
-		bar.GetComponent<UIWidget>().depth = 10;
 		return bar;
 	}
 

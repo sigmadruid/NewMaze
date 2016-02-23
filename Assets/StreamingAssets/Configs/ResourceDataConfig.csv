@@ -36,8 +36,9 @@ MazeKid,EntityKid,Path,Life,PreloadCount
 10001,1,,-1,5
 10001,1,,-1,5
 10001,110001,,-1,1
-10001,0,UI/Items/BarItem,-1,20
-10001,0,UI/Items/NumberItem,-1,20
+10001,0,NewUI/Items/HeroItem,-1,5
+10001,0,NewUI/Items/BarItem,-1,20
+10001,0,NewUI/Items/NumberItem,-1,20
 10001,0,UI/Items/NPCIcon,-1,5
 10001,0,UI/Items/ExplorationIcon,-1,5
 10001,0,MazeBlocks/Mock/MockPassage,-1,20
