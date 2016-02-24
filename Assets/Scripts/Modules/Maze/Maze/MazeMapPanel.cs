@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using GameLogic;
 using StaticData;
 
 public class MazeMapPanel : BasePopupView
@@ -24,7 +25,7 @@ public class MazeMapPanel : BasePopupView
 
 	void Start()
 	{
-		UIEventListener.Get(innerWindow.gameObject).onDrag = OnDrag;
+        EventTriggerListener.Get(innerWindow.gameObject).onDrag = OnDrag;
 	}
 
     void OnDestroy()
@@ -37,7 +38,7 @@ public class MazeMapPanel : BasePopupView
 	public void Show(bool show, Vector3 heroPosition, float angle)
 	{
 		innerWindow.Display(show);
-		innerWindow.Camera.enabled = show;
+        innerWindow.Camera.enabled = show;
         mazeMapHero.SetActive(show);
 
 		if (show)

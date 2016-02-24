@@ -80,10 +80,12 @@ namespace Base
 			popupQueue = new PopupQueue();
 		}
 
-        public T CreateItem<T>() where T : MonoBehaviour
+        public T CreateItem<T>(Transform parentTrans) where T : MonoBehaviour
         {
             string path = string.Format(PopupConst.UI_ITEM_PATH, typeof(T).Name);
             T item = ResourceManager.Instance.LoadAsset<T>(ObjectType.GameObject, path);
+            item.transform.SetParent(parentTrans);
+            item.transform.localScale = Vector3.one;
             return item;
         }
 
@@ -111,6 +113,7 @@ namespace Base
 			if (!popupDic.ContainsKey(path))
 			{
 				view = ResourceManager.Instance.CreateAsset<T>(path);
+                view.GetComponent<Canvas>().worldCamera = GameObject.Find("UI Camera").GetComponent<Camera>();
                 view.transform.SetParent(RootTransform.Instance.UIPanelRoot);
                 view.RectTransform.offsetMin = Vector2.zero;
                 view.RectTransform.offsetMax = Vector2.zero;

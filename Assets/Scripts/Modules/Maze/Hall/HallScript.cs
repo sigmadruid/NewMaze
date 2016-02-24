@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using GameLogic;
 
 public class HallScript : EntityScript 
 {

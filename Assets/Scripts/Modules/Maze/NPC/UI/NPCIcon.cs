@@ -26,9 +26,7 @@ public class NPCIcon : BaseScreenItem
 
 	public static NPCIcon CreateNPCIcon()
 	{
-        NPCIcon icon = PopupManager.Instance.CreateItem<NPCIcon>();
-        icon.RectTransform.SetParent(RootTransform.Instance.UIIconRoot);
-		icon.RectTransform.localScale = Vector3.one;
+        NPCIcon icon = PopupManager.Instance.CreateItem<NPCIcon>(RootTransform.Instance.UIIconRoot);
 		return icon;
 	}
 	

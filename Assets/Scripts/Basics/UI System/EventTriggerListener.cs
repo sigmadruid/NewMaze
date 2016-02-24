@@ -8,13 +8,16 @@ namespace Base
     public class EventTriggerListener : EventTrigger
     {
         public delegate void VoidDelegate (GameObject go);
+        public delegate void VectorDelegate (GameObject go, Vector2 delta);
+
         public VoidDelegate onClick;
         public VoidDelegate onDown;
+        public VoidDelegate onUp;
         public VoidDelegate onEnter;
         public VoidDelegate onExit;
-        public VoidDelegate onUp;
         public VoidDelegate onSelect;
         public VoidDelegate onUpdateSelect;
+        public VectorDelegate onDrag;
 
         static public EventTriggerListener Get (GameObject go)
         {
@@ -30,6 +33,10 @@ namespace Base
         {
             if(onDown != null) onDown(gameObject);
         }
+        public override void OnPointerUp (PointerEventData eventData)
+        {
+            if(onUp != null) onUp(gameObject);
+        }
         public override void OnPointerEnter (PointerEventData eventData)
         {
             if(onEnter != null) onEnter(gameObject);
@@ -38,10 +45,6 @@ namespace Base
         {
             if(onExit != null) onExit(gameObject);
         }
-        public override void OnPointerUp (PointerEventData eventData)
-        {
-            if(onUp != null) onUp(gameObject);
-        }
         public override void OnSelect (BaseEventData eventData)
         {
             if(onSelect != null) onSelect(gameObject);
@@ -49,6 +52,10 @@ namespace Base
         public override void OnUpdateSelected (BaseEventData eventData)
         {
             if(onUpdateSelect != null) onUpdateSelect(gameObject);
+        }
+        public override void OnDrag(PointerEventData eventData)
+        {
+            if(onDrag != null) onDrag(gameObject, eventData.delta);
         }
     }
 }

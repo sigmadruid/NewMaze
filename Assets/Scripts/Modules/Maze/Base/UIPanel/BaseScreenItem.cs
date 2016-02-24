@@ -6,22 +6,21 @@ using GameLogic;
 
 public class BaseScreenItem : MonoBehaviour
 {
-	[HideInInspector]
+    [HideInInspector]
     public RectTransform RectTransform;
 
-	protected Camera mainCamera;
+    protected Camera mainCamera;
 
-	protected virtual void Awake()
-	{
+    protected virtual void Awake()
+    {
         RectTransform = transform as RectTransform;
-		mainCamera = Camera.main;
-	}
+        mainCamera = Camera3DScript.Instance.Camera;
+    }
 
 	public void UpdatePosition(Vector3 position)
 	{
 		Vector3 screenPos = mainCamera.WorldToScreenPoint(position);
-		screenPos.z = 0f;
-		RectTransform.position = screenPos;
+        RectTransform.anchoredPosition = screenPos;
 	}
 }
 

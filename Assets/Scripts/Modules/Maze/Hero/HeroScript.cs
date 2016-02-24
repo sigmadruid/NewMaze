@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 using Base;
+using GameLogic;
 
 public class HeroScript : CharacterScript 
 {
@@ -17,10 +18,10 @@ public class HeroScript : CharacterScript
 		base.OnEnable();
 
 		Camera mainCamera = Camera.allCameras[0];
-		CameraScript cameraController = mainCamera.GetComponent<CameraScript>();
+		Camera3DScript cameraController = mainCamera.GetComponent<Camera3DScript>();
 		if (cameraController == null)
 		{
-			cameraController = mainCamera.gameObject.AddComponent<CameraScript>();
+			cameraController = mainCamera.gameObject.AddComponent<Camera3DScript>();
 		}
 		cameraController.playerTransofrm = transform;
 

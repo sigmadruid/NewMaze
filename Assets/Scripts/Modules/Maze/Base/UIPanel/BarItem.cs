@@ -25,9 +25,7 @@ public class BarItem : BaseScreenItem
 
 	public static BarItem CreateHPBar()
 	{
-        BarItem bar = PopupManager.Instance.CreateItem<BarItem>();
-        bar.RectTransform.SetParent(RootTransform.Instance.UIIconRoot);
-		bar.RectTransform.localScale = Vector3.one;
+        BarItem bar = PopupManager.Instance.CreateItem<BarItem>(RootTransform.Instance.UIIconRoot);
 		return bar;
 	}
 

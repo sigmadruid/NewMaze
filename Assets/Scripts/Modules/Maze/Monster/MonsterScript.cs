@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 using Base;
+using GameLogic;
 
 public class MonsterScript : CharacterScript 
 {

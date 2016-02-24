@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 
@@ -9,11 +10,11 @@ namespace GameUI
 {
     public class PausePanel : BasePopupView
     {
-        public UISprite spriteBackground;
+        public Image imageBackground;
 
         void Awake()
         {
-            UIEventListener.Get(spriteBackground.gameObject).onClick = OnBackgroundClick;
+            EventTriggerListener.Get(imageBackground.gameObject).onClick = OnBackgroundClick;
         }
 
         private void OnBackgroundClick(GameObject go)

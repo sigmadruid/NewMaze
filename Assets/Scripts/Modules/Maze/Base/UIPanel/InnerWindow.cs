@@ -1,64 +1,75 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InnerWindow : MonoBehaviour 
+namespace GameLogic
 {
-	public Transform BottomLeft;
-	public Transform TopRight;
-
-	private Camera innerCamera;
-	private Transform innerCameraTransform;
-
-	private bool initialized = false;
-
-	private void Initialize ()
+    public class InnerWindow : MonoBehaviour 
     {
-        innerCamera = GameObject.Find("InnerCamera").GetComponent<Camera>();
-		innerCameraTransform = innerCamera.transform;
-        initialized = true;
+    	public Transform BottomLeft;
+    	public Transform TopRight;
+
+        private CameraInnerScript innerCamera;
+
+        private Vector3[] cornerArray = new Vector3[4];
+
+    	private bool initialized = false;
+
+        void Start()
+        {
+            Display(true);
+        }
+
+    	private void Initialize ()
+        {
+            innerCamera = CameraInnerScript.Instance;
+            initialized = true;
+        }
+
+    	public void Display(bool state)
+    	{
+            if (!initialized)
+            {
+                Initialize();
+            }
+
+            if (!state)
+    		{
+                innerCamera.Camera.pixelRect = new Rect();
+    		}
+            else
+            {
+
+                RectTransform rectTransform = transform as RectTransform;
+
+                Vector2 startPosition = new Vector2(rectTransform.anchorMin.x * rectTransform.rect.width, 
+                                                    rectTransform.anchorMin.y * rectTransform.rect.height);
+                Vector2 endPosition   = new Vector2(rectTransform.anchorMax.x * rectTransform.rect.width, 
+                                                    rectTransform.anchorMax.y * rectTransform.rect.height);
+                Debug.Log(startPosition);
+                Debug.Log(endPosition);
+                Rect viewRect = new Rect(
+    				startPosition.x, 
+    				startPosition.y, 
+                    endPosition.x - startPosition.x,
+                    endPosition.y - startPosition.y
+                    );
+                innerCamera.Camera.pixelRect = viewRect;
+            }
+    	}
+
+    	public Camera Camera
+    	{
+    		get
+    		{
+                return innerCamera.Camera;
+    		}
+    	}
+    	public Transform CameraTransform
+    	{
+    		get
+    		{
+                return innerCamera.transform;
+    		}
+    	}
     }
-
-	public void Display(bool state)
-	{
-        if (!initialized)
-        {
-            Initialize();
-        }
-
-        if (!state)
-		{
-			innerCamera.pixelRect = new Rect();
-		}
-        else
-        {
-			UIWidget widget = GetComponent<UIWidget>();
-
-			TopRight.localPosition = widget.cachedTransform.localPosition + new Vector3(widget.width, widget.height, 0);
-
-			Vector3 startPosition = UICamera.mainCamera.WorldToScreenPoint(BottomLeft.position);
-			Vector3 endPosition = UICamera.mainCamera.WorldToScreenPoint(TopRight.position);
-            Rect viewRect = new Rect(
-				startPosition.x, 
-				startPosition.y, 
-				(endPosition.x - startPosition.x) * 2,
-				(endPosition.y - startPosition.y) * 2
-                );
-            innerCamera.pixelRect = viewRect;
-        }
-	}
-
-	public Camera Camera
-	{
-		get
-		{
-			return innerCamera;
-		}
-	}
-	public Transform CameraTransform
-	{
-		get
-		{
-			return innerCameraTransform;
-		}
-	}
 }

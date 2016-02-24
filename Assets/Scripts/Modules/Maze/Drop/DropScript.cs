@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 
 using Base;
+using GameLogic;
 
 public class DropScript : EntityScript
 {
