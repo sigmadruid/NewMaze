@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 
@@ -11,11 +12,11 @@ namespace GameUI
         public Action CallbackConfirm;
         public Action CallbackCancel;
         
-        public UILabel LabelTitle;
-        public UILabel LabelContent;
+        public Text LabelTitle;
+        public Text LabelContent;
         
-        public UIButton ButtonConfirm;
-        public UIButton ButtonCancel;
+        public Button ButtonConfirm;
+        public Button ButtonCancel;
         
 		public static void Show(string title, string content, Action callbackConfirm, Action callbackCancel = null)
         {
@@ -28,8 +29,8 @@ namespace GameUI
         
         void Awake()
         {
-            UIEventListener.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
-            UIEventListener.Get(ButtonCancel.gameObject).onClick = OnCancel;
+            EventTriggerListener.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
+            EventTriggerListener.Get(ButtonCancel.gameObject).onClick = OnCancel;
         }
         
         private void OnConfirm(GameObject go)

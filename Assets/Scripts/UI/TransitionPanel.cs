@@ -13,26 +13,35 @@ namespace GameUI
 
 		private TweenAlpha tween;
 
-		private EventDelegate callback;
+        private EventDelegate transitionCallback;
+        private EventDelegate finishCallback;
 
 	    void Awake()
 	    {
-			callback = new EventDelegate(OnTransition);
+            transitionCallback = new EventDelegate(OnTransition);
+            finishCallback = new EventDelegate(OnReverseFinished);
 			tween = GetComponentInChildren<TweenAlpha>();
 	    }
 
 		public void StartTransition()
 		{
-			tween.PlayForward();
-			tween.AddOnFinished(callback);
+            tween.AddOnFinished(transitionCallback);
+            tween.PlayForward();
 		}
 
 		private void OnTransition()
 		{
 			CallbackTransition();
-			tween.PlayReverse();
-			tween.RemoveOnFinished(callback);
+            tween.RemoveOnFinished(transitionCallback);
+            tween.AddOnFinished(finishCallback);
+            tween.PlayReverse();
 		}
+
+        private void OnReverseFinished()
+        {
+            tween.RemoveOnFinished(finishCallback);
+            PopupManager.Instance.RemovePopup(this);
+        }
 	}	
 }
 

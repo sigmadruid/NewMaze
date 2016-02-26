@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 
@@ -6,9 +7,9 @@ using Base;
 
 public class TitlePanel : BasePopupView
 {
-	public UILabel LabelTitle;
+    public Text LabelTitle;
 
-	public UISprite SpriteDeco;
+    public Image ImageDeco;
 
 	private float duration;
 	private TweenAlpha tween;
@@ -23,7 +24,7 @@ public class TitlePanel : BasePopupView
 	{
 		this.duration = duration;
 		LabelTitle.text = title;
-		SpriteDeco.width = LabelTitle.width + 130;
+        ImageDeco.SetWidth(LabelTitle.GetWidth() + 140f);
 		tween.delay = 0;
 		tween.PlayForward();
 	}
