@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Base;
 using StaticData;
+using DG.Tweening;
 
 namespace GameUI
 {
@@ -11,37 +12,33 @@ namespace GameUI
 	{
 		public Utils.CallbackVoid CallbackTransition;
 
-		private TweenAlpha tween;
+        private CanvasGroup group;
 
-        private EventDelegate transitionCallback;
-        private EventDelegate finishCallback;
+        private bool hasCompleted;
 
 	    void Awake()
 	    {
-            transitionCallback = new EventDelegate(OnTransition);
-            finishCallback = new EventDelegate(OnReverseFinished);
-			tween = GetComponentInChildren<TweenAlpha>();
+            group = GetComponent<CanvasGroup>();
 	    }
 
 		public void StartTransition()
 		{
-            tween.AddOnFinished(transitionCallback);
-            tween.PlayForward();
+            hasCompleted = false;
+            group.alpha = 0f;
+            Tweener tweener =  group.DOFade(1f, 1f).SetLoops(2, LoopType.Yoyo);
+            tweener.OnStepComplete(OnStep);
 		}
 
-		private void OnTransition()
+		private void OnStep()
 		{
-			CallbackTransition();
-            tween.RemoveOnFinished(transitionCallback);
-            tween.AddOnFinished(finishCallback);
-            tween.PlayReverse();
+            if (!hasCompleted)
+			    CallbackTransition();
+            else
+                PopupManager.Instance.RemovePopup(this);
+            
+            hasCompleted = true;
 		}
 
-        private void OnReverseFinished()
-        {
-            tween.RemoveOnFinished(finishCallback);
-            PopupManager.Instance.RemovePopup(this);
-        }
 	}	
 }
 

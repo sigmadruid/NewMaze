@@ -4,35 +4,33 @@ using UnityEngine.UI;
 using System;
 
 using Base;
+using DG.Tweening;
 
 public class TitlePanel : BasePopupView
 {
     public Text LabelTitle;
-
     public Image ImageDeco;
 
-	private float duration;
-	private TweenAlpha tween;
+    private CanvasGroup group;
 
-	void Awake()
-	{
-		tween = GetComponent<TweenAlpha>();
-		tween.AddOnFinished(OnFinished);
-	}
+    void Awake()
+    {
+        group = GetComponent<CanvasGroup>();
+    }
 
 	public void Init(string title, float duration)
 	{
-		this.duration = duration;
+        group.alpha = 0f;
 		LabelTitle.text = title;
         ImageDeco.SetWidth(LabelTitle.GetWidth() + 140f);
-		tween.delay = 0;
-		tween.PlayForward();
+
+        Tweener tweener =  GetComponent<CanvasGroup>().DOFade(1f, duration).SetLoops(2, LoopType.Yoyo);
+        tweener.OnComplete(OnFinished);
 	}
 
 	private void OnFinished()
 	{
-		tween.delay = duration;
-		tween.PlayReverse();
+        PopupManager.Instance.RemovePopup(this);
 	}
 
 	public static void Show(string title, float duration = 3f)
