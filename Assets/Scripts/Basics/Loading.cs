@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using System.Collections;
@@ -7,7 +8,7 @@ using GameLogic;
 
 public class Loading : MonoBehaviour
 {
-	public UISlider SliderProgress;
+    public Slider SliderProgress;
 	private AsyncOperation operation;
 
 	void Start()

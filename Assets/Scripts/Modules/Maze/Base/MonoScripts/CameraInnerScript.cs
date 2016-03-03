@@ -11,6 +11,7 @@ namespace GameLogic
     {
         public static CameraInnerScript Instance { get; private set; }
 
+        [HideInInspector]
         public Camera Camera;
 
         void Awake()

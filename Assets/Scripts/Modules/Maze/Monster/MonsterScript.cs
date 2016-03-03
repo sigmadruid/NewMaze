@@ -31,11 +31,6 @@ public class MonsterScript : CharacterScript
 		}
 	}
 
-	protected override void Update ()
-	{
-		base.Update ();
-	}
-
 	protected override void OnDieStarts ()
 	{
 		base.OnDieStarts ();

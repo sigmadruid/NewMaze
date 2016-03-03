@@ -28,11 +28,11 @@ namespace GameLogic
 		public MazeTable Build()
 		{
 			//For test
-			Random.seed = 7928;
+//			Random.seed = 7928;
 
-//			int seed = Random.Range(0, 10000);
-//			Random.seed = seed;
-//            BaseLogger.LogFormat("Maze seed is: {0}", seed);
+			int seed = Random.Range(0, 10000);
+			Random.seed = seed;
+            BaseLogger.LogFormat("Maze seed is: {0}", seed);
 			
 			mazeTable = new MazeTable();
 			mazeTable.Init(mazeData.Cols, mazeData.Rows);

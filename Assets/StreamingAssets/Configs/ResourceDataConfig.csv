@@ -1,8 +1,7 @@
 MazeKid,EntityKid,Path,Life,PreloadCount
 ,π œÁ≥°æ∞,,,
 10000,50001,,-1,1
-10000,0,UI/Items/HPBar,-1,1
-10000,0,UI/Items/NPCIcon,-1,1
+10000,0,NewUI/Items/NPCIcon,-1,1
 ,√‘π¨≥°æ∞,,,
 10001,20001,,-1,10
 10001,21001,,-1,10

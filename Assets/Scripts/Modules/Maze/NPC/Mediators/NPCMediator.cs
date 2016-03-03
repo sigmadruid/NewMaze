@@ -126,7 +126,7 @@ namespace GameLogic
 			currentNPC = npc;
 
 			panel = PopupManager.Instance.CreateAndAddPopup<DialogPanel>();
-			panel.CallbackClick = OnDialogClick;
+			panel.CallbackDialogFinish = OnDialogClick;
 
 			string npcName = TextDataManager.Instance.GetData(npc.Data.Name);
 			panel.LabelTitle.text = npcName;
@@ -135,12 +135,12 @@ namespace GameLogic
 			NPCEventData eventData = npc.EventData;
 			if (eventData.Type == NPCEventType.Normal)
 			{
-				panel.InitData(data.Name, eventData.FirstTalkList);
+				panel.Init(data.Name, eventData.FirstTalkList);
 			}
 			else if (eventData.Type == NPCEventType.Result)
 			{
 				List<int> talkList = npc.State == NPCState.Normal ? eventData.FirstTalkList : eventData.EndTalkList;
-				panel.InitData(data.Name, talkList);
+				panel.Init(data.Name, talkList);
 			}
 			else if (eventData.Type == NPCEventType.Task)
 			{

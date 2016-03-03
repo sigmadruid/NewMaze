@@ -13,6 +13,8 @@ namespace GameLogic
     	public float distance = 6f;
 
     	public Transform playerTransofrm;
+
+        [HideInInspector]
         public Camera Camera;
 
     	private Transform cachedTransform;

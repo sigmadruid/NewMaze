@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,21 +12,21 @@ namespace GameUI
 {
 	public class DialogPanel : BasePopupView 
 	{
-		public Utils.CallbackVoid CallbackClick;
+        public Action CallbackDialogFinish;
 
-		public UISprite SpriteBackground;
-		public UILabel LabelTitle;
-		public UILabel LabelPassage;
+        public Image ImageBackground;
+		public Text LabelTitle;
+        public Text LabelPassage;
 
 		private int index;
 		private List<int> talkList;
 
 		void Awake () 
 		{
-			UIEventListener.Get(SpriteBackground.gameObject).onClick = OnDialogClick;
+            EventTriggerListener.Get(ImageBackground.gameObject).onClick = OnDialogClick;
 		}
 
-		public void InitData(int nameCode, List<int> talkList)
+		public void Init(int nameCode, List<int> talkList)
 		{
 			LabelTitle.text = TextDataManager.Instance.GetData(nameCode);
 
@@ -39,10 +42,10 @@ namespace GameUI
 			{
 				LabelPassage.text = TextDataManager.Instance.GetData(talkList[index++]);
 			}
-			else if (CallbackClick != null)
+			else if (CallbackDialogFinish != null)
 			{
 				index = 0;
-				CallbackClick();
+				CallbackDialogFinish();
 			}
 		}
 	}
