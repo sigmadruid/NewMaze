@@ -33,7 +33,8 @@ namespace GameLogic
 			{
 				case NotificationEnum.HALL_INIT:
 				{
-					HandleHallInit();
+                    int hallKid = (int)notification.Body;
+                    HandleHallInit(hallKid);
 					break;
 				}
 				case NotificationEnum.HALL_DISPOSE:
@@ -44,11 +45,11 @@ namespace GameLogic
 			}
 		}
 
-		private void HandleHallInit()
+        private void HandleHallInit(int hallKid)
 		{
             if(hallProxy.CurrentHall == null)
             {
-                hallProxy.CurrentHall = Hall.Create(110002);
+                hallProxy.CurrentHall = Hall.Create(hallKid);
             }
             DispatchNotification(NotificationEnum.HALL_SPAWN, hallProxy.CurrentHall);
 		}

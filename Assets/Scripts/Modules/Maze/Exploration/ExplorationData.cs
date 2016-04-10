@@ -23,6 +23,10 @@ namespace StaticData
 
 		public bool IsGlobal;
 
+        public string Param1;
+        public string Param2;
+        public string Param3;
+
 		public override string GetResPath ()
 		{
 			if (resPath == null)

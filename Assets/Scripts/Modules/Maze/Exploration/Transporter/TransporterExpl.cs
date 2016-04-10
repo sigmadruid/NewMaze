@@ -56,7 +56,8 @@ namespace GameLogic
             Hero.Instance.IsSlowUpdating = false;
             HallProxy hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
             hallProxy.LeavePosition = Hero.Instance.WorldPosition;
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT);
+            int hallKid = int.Parse(Data.Param1);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, hallProxy.CurrentHall.Script.EntryPos.position);
 //            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
             AfterTransport();

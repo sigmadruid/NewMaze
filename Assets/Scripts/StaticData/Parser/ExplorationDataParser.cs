@@ -26,6 +26,9 @@ namespace StaticData
 				data.Res3D = ReadString(col++);
 				data.MazeKid = ReadInt(col++);
                 data.IsGlobal = ReadBool(col++);
+                data.Param1 = ReadString(col++);
+                data.Param2 = ReadString(col++);
+                data.Param3 = ReadString(col++);
 				kvDic.Add(data.Kid, data);
 				typeDic[data.Type].Add(data);
 				NextLine();
