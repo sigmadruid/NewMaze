@@ -48,7 +48,7 @@ namespace GameLogic
 		{
             if(hallProxy.CurrentHall == null)
             {
-                hallProxy.CurrentHall = Hall.Create(110001);
+                hallProxy.CurrentHall = Hall.Create(110002);
             }
             DispatchNotification(NotificationEnum.HALL_SPAWN, hallProxy.CurrentHall);
 		}

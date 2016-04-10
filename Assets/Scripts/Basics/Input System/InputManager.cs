@@ -105,62 +105,6 @@ namespace Base
             }
         }
 
-
-	//	private bool isMoving;
-	//	private Vector3 directionVector;
-	//	private Vector3 originMousePos;
-	//	private Vector3 currentMousePos;
-	//	private float pressDelayCounter;
-	//	private void DragMoveAndAttack()
-	//	{
-	//		if (UICamera.hoveredObject != null)
-	//		{
-	//			return;
-	//		}
-	//		
-	//		bool mouseDown = Input.GetMouseButton(0);
-	//		Vector3 mousePosition = Input.mousePosition;
-	//		
-	//		if (Input.GetMouseButtonUp(0) && !isMoving)
-	//		{
-	//			if (CallbackUpdateFire != null)
-	//			{
-	//				CallbackUpdateFire();
-	//			}
-	//		}
-	//		
-	//		if (mouseDown)
-	//		{
-	//			if (originMousePos == Vector3.zero)
-	//			{
-	//				originMousePos = mousePosition;
-	//			}
-	//			directionVector = mousePosition - originMousePos;
-	//			directionVector = Vector3.Normalize(directionVector);
-	//			pressDelayCounter += Time.deltaTime;
-	//		}
-	//		else
-	//		{
-	//			originMousePos = Vector3.zero;
-	//			directionVector = Vector3.zero;
-	//			pressDelayCounter = 0f;
-	//			isMoving = false;
-	//			if (CallbackUpdatePosition != null)
-	//			{
-	//				CallbackUpdatePosition(directionVector);
-	//			}
-	//		}
-	//		
-	//		if (pressDelayCounter > 0.15f)
-	//		{
-	//			isMoving = true;
-	//			if (CallbackUpdatePosition != null)
-	//			{
-	//				CallbackUpdatePosition(directionVector);
-	//			}
-	//		}
-	//	}
-
 		void Test()
 		{
             if(Input.GetKeyDown(KeyCode.F1))

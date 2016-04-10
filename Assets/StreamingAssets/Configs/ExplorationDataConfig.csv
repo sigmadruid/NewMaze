@@ -15,3 +15,4 @@ ID,Type,Res3D,MazeKid,IsGlobal
 70209,Corpse,Corpse_9,10001,FALSE
 ,Transporter,,,,
 70301,Transporter,Transporter_1,10001,TRUE
+70302,Transporter,Transporter_2,10001,TRUE
