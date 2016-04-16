@@ -1,31 +1,44 @@
 using System;
 using System.Collections.Generic;
 
+using Battle;
+using StaticData;
+
 namespace Battle
 {
-    public enum BuffType
+    public class Buff
     {
-        Attribute,
-        Gradual,
-        Special,
-    }
-    public enum BuffSpecialType
-    {
-        None,
-        Invisible,
-    }
-	public class Buff
-	{
-        public BuffType Type;
+        public BuffData Data;
 
-        public BuffSpecialType SpecialType;
+        private float t;
 
-		private Dictionary<BattleAttribute, int> attributeDic;
+        public virtual void Start()
+        {
+            t = 0;
+        }
 
-		public Buff ()
-		{
-			attributeDic = new Dictionary<BattleAttribute, int>();
-		}
+        public virtual void End()
+        {
+        }
+
+        public virtual void Update(float deltaTime)
+        {
+            if(Data.Type == BuffType.Gradual)
+            {
+                t += deltaTime;
+            }
+        }
+
+        public float GetAttribute(BattleAttribute attribute)
+        {
+            int attr = (int)attribute;
+            if(Data.AttributeDic.ContainsKey(attr))
+            {
+                return Data.AttributeDic[attr];
+            }
+            return 0;
+        }
+
 	}
 }
 

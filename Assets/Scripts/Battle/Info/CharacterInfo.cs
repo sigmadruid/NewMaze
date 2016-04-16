@@ -25,7 +25,7 @@ namespace Battle
 	public class CharacterInfo
 	{
         protected Dictionary<int, int> attrDic = new Dictionary<int, int>();
-        protected Dictionary<int, int> buffAttrDic = new Dictionary<int, int>();
+        protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
 		
 		public CharacterData Data;
 		
@@ -47,33 +47,11 @@ namespace Battle
 			attrDic.Add((int)BattleAttribute.Defense, Data.Defense);
 			attrDic.Add((int)BattleAttribute.Critical, Data.Critical);
 			attrDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
-			
-			buffAttrDic.Add((int)BattleAttribute.HP, 0);
-			buffAttrDic.Add((int)BattleAttribute.Attack, 0);
-			buffAttrDic.Add((int)BattleAttribute.Defense, 0);
-			buffAttrDic.Add((int)BattleAttribute.Critical, 0);
-			buffAttrDic.Add((int)BattleAttribute.Dodge, 0);
 		}
 		public void Dispose()
 		{
 			attrDic.Clear();
 			Data = null;
-		}
-
-		public int GetAttribute(BattleAttribute attribute)
-		{
-            int attrID = (int)attribute;
-            if (!attrDic.ContainsKey(attrID))
-			{
-				BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
-				return -1;
-			}
-            if (!buffAttrDic.ContainsKey(attrID))
-			{
-				BaseLogger.LogFormat("buffDic has no attribute: {0}", attribute);
-				return -1;
-			}
-            return attrDic[attrID] + buffAttrDic[attrID];
 		}
 
 		protected int hp;
@@ -82,9 +60,20 @@ namespace Battle
 
 		public bool IsAlive { get{ return hp > 0; } }
 
+        public float GetAttribute(BattleAttribute attribute)
+        {
+            int attrID = (int)attribute;
+            if (!attrDic.ContainsKey(attrID))
+            {
+                BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
+                return -1;
+            }
+            return attrDic[attrID] + GetBuffAttribute(attribute);
+        }
+
 		public void AddHP(int value)
 		{
-			int maxHP = GetAttribute(BattleAttribute.HP);
+            int maxHP = (int)GetAttribute(BattleAttribute.HP);
 			hp = Mathf.Clamp(hp + value, 0, maxHP);
 		}
 
@@ -107,7 +96,7 @@ namespace Battle
 			result.IsCritical = randomValue <= critical;
 
 			int attack = attackContext.Attack;
-			int defense = GetAttribute(BattleAttribute.Defense);
+            int defense = (int)GetAttribute(BattleAttribute.Defense);
 			int criticalRatio = result.IsCritical ? 2 : 1;
 			result.Damage = -(attack - defense) * criticalRatio;
 			AddHP(result.Damage);
@@ -115,6 +104,17 @@ namespace Battle
 //			Debug.Log(string.Format("{0}'s HP: {1}", Data.Kid, hp));
 			return result;
 		}
+
+        private float GetBuffAttribute(BattleAttribute attribute)
+        {
+            Dictionary<int, Buff>.Enumerator attrEnum = buffDic.GetEnumerator();
+            float resultVal = 0;
+            while(attrEnum.MoveNext())
+            {
+                resultVal += attrEnum.Current.Value.GetAttribute(attribute);
+            }
+            return resultVal;
+        }
 	}
 
 }

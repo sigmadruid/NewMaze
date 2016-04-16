@@ -72,7 +72,7 @@ namespace GameLogic
 				return;
 			}
 
-			Script.UpdateHPBar(Info.HP, Info.GetAttribute(BattleAttribute.HP));
+            Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP));
 		}
 
 		public new MonsterRecord ToRecord()

@@ -12,12 +12,19 @@ namespace Battle
 {
 	public enum BattleAttribute
 	{
-		HP,
+		HP = 1,
 		Attack,
 		Defense,
 		Critical,
 		Dodge,
+        Velocity,
 	}
+
+    public enum BattleRaiseAttribute
+    {
+        ByValue,
+        ByRatio,
+    }
 
 	public enum Side
 	{
@@ -76,8 +83,8 @@ namespace Battle
 
 					AttackContext context = new AttackContext();
 					context.Side = Side.Hero;
-					context.Attack = hero.Info.GetAttribute(BattleAttribute.Attack);
-					context.Critical = hero.Info.GetAttribute(BattleAttribute.Critical);
+                    context.Attack = (int)hero.Info.GetAttribute(BattleAttribute.Attack);
+                    context.Critical = (int)hero.Info.GetAttribute(BattleAttribute.Critical);
 
 					AttackResult result = monster.Info.HurtBy(context);
 					NumberItem.Create(monster.WorldPosition, result);
@@ -97,8 +104,8 @@ namespace Battle
 		{
 			AttackContext ac = new AttackContext();
 			ac.Side = Side.Monster;
-			ac.Attack = monster.Info.GetAttribute(BattleAttribute.Attack);
-			ac.Critical = monster.Info.GetAttribute(BattleAttribute.Critical);
+            ac.Attack = (int)monster.Info.GetAttribute(BattleAttribute.Attack);
+            ac.Critical = (int)monster.Info.GetAttribute(BattleAttribute.Critical);
 
 			if (monster.Data.AttackType == AttackType.Range)
 			{

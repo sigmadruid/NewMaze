@@ -10,8 +10,6 @@ namespace StaticData
 {
     public class BaseParser
     {
-		public const int BUFFER_MAX_SIZE = 1024 * 1024;
-
 		public static string CONFIG_PATH = Application.streamingAssetsPath + "/Configs/";
 
 		private int rowIndex;
@@ -187,6 +185,7 @@ namespace StaticData
             object resultKey = null;
             if (typeof(T) == typeof(int))
             {
+                resultKey = Convert.ToInt32(str);
             }
             else
             {
@@ -198,10 +197,15 @@ namespace StaticData
 		{
 			object resultVal = null;
 
-			if (typeof(T) == typeof(int))
-			{
-				resultVal = Convert.ToInt32(str);
-			}
+            if(typeof(T) == typeof(int))
+            {
+                resultVal = Convert.ToInt32(str);
+            }
+            else if(typeof(T) == typeof(float))
+            {
+                resultVal = Convert.ToSingle(str);
+            }
+
 			return (T)resultVal;
 		}
     }

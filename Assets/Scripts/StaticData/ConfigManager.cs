@@ -34,6 +34,7 @@ namespace StaticData
 			CurrencyDataManager.Instance.Init();
 			TextDataManager.Instance.Init();
 			HallDataManager.Instance.Init();
+            BuffDataManager.Instance.Init();
 
 			Utils.GetEndTime();
 

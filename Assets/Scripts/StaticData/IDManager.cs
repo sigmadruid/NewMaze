@@ -16,6 +16,7 @@ namespace StaticData
 		Animator,
 		Drop,
 		Hall,
+        Buff,
 	}
 
     public class IDManager
