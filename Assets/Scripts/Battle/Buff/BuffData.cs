@@ -1,4 +1,6 @@
-﻿using System;
+﻿using UnityEngine;
+
+using System;
 using System.Collections.Generic;
 
 namespace StaticData
@@ -23,9 +25,13 @@ namespace StaticData
 
         public BuffSpecialType SpecialType;
 
-        public Dictionary<int, float> AttributeDic = new Dictionary<int, float>();
-
         public float Duration;
+
+        public Dictionary<int, float> AttributeRatioDic = new Dictionary<int, float>();
+        public Dictionary<int, int> AttributeRaiseDic = new Dictionary<int, int>();
+
+        public Color EmissionColor;
+
     }
 }
 

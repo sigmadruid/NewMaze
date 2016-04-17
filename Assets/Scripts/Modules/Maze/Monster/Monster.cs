@@ -75,6 +75,20 @@ namespace GameLogic
             Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP));
 		}
 
+        public void AddBuff(int kid)
+        {
+            Buff buff = Buff.Create(kid);
+            Info.AddBuff(buff);
+            buff.Start(Script);
+        }
+
+        public void RemoveBuff(int kid)
+        {
+            Buff buff = Info.GetBuff(kid);
+            Info.RemoveBuff(kid);
+            buff.End();
+        }
+
 		public new MonsterRecord ToRecord()
 		{
 			MonsterRecord record = new MonsterRecord();

@@ -68,7 +68,9 @@ namespace Battle
                 BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
                 return -1;
             }
-            return attrDic[attrID] + GetBuffAttribute(attribute);
+            float ratio = GetBuffRatioAttribute(attribute);
+            int raise = GetBuffRaiseAttribute(attribute);
+            return attrDic[attrID] * ratio + raise;
         }
 
 		public void AddHP(int value)
@@ -105,15 +107,51 @@ namespace Battle
 			return result;
 		}
 
-        private float GetBuffAttribute(BattleAttribute attribute)
+        private float GetBuffRatioAttribute(BattleAttribute attribute)
         {
             Dictionary<int, Buff>.Enumerator attrEnum = buffDic.GetEnumerator();
-            float resultVal = 0;
+            float resultVal = 1f;
             while(attrEnum.MoveNext())
             {
-                resultVal += attrEnum.Current.Value.GetAttribute(attribute);
+                float attrVal = attrEnum.Current.Value.GetAttributeRatio(attribute);
+                resultVal *= attrVal;
             }
             return resultVal;
+        }
+        private int GetBuffRaiseAttribute(BattleAttribute attribute)
+        {
+            Dictionary<int, Buff>.Enumerator attrEnum = buffDic.GetEnumerator();
+            int resultVal = 0;
+            while(attrEnum.MoveNext())
+            {
+                int attrVal = attrEnum.Current.Value.GetAttributeRaise(attribute);
+                resultVal += attrVal;
+            }
+            return resultVal;
+        }
+
+        public Buff GetBuff(int kid)
+        {
+            if(buffDic.ContainsKey(kid))
+            {
+                return buffDic[kid];
+            }
+            return null;
+        }
+        public void AddBuff(Buff buff)
+        {
+            if(!buffDic.ContainsKey(buff.Data.Kid))
+            {
+                buffDic.Add(buff.Data.Kid, buff);
+            }
+        }
+
+        public void RemoveBuff(int kid)
+        {
+            if(buffDic.ContainsKey(kid))
+            {
+                buffDic.Remove(kid);
+            }
         }
 	}
 

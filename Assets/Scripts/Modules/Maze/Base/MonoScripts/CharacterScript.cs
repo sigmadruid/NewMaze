@@ -34,8 +34,6 @@ namespace GameLogic
     	protected int currentNameHash;
     	protected AnimatorData currentAnimatorData;
 
-        protected Material material;
-
     	private WaitForSeconds SLOW_UPDATE_DELAY;
     	
     	protected virtual void Awake()
@@ -207,12 +205,11 @@ namespace GameLogic
 
         #region Renderering 
 
+        protected Material material;
+
         public void SetTransparent(bool isTransparent, float alpha = 0.2f)
         {
-            if(material == null)
-            {
-                material = GetComponentInChildren<Renderer>().material;
-            }
+            InitMaterial();
             if(isTransparent)
             {
                 material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
@@ -230,6 +227,20 @@ namespace GameLogic
                 material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
                 material.SetInt("_ZWrite", 1);
                 material.SetFloat("_Mode", 1);
+            }
+        }
+
+        public void SetEmissionColor(Color color)
+        {
+            InitMaterial();
+            material.SetColor("_EmissionColor", color);
+        }
+
+        private void InitMaterial()
+        {
+            if(material == null)
+            {
+                material = GetComponentInChildren<Renderer>().material;
             }
         }
 

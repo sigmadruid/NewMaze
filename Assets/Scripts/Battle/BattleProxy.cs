@@ -22,7 +22,7 @@ namespace Battle
 
     public enum BattleRaiseAttribute
     {
-        ByValue,
+        ByValue = 1,
         ByRatio,
     }
 

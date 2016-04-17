@@ -1,2 +1,2 @@
-Kid,Type,SpecialType,Duration,AttributeKeyList,AttributeValueList
-120001,Attribute,None,-1,2#3#4#6,2#2#2#1.5
+Kid,Type,SpecialType,Duration,AttributeRatioDic,AttributeRaiseDic,EmissionColor
+120001,Attribute,None,-1,2:2#3:2#4:2#6:1.5,,0.4666667#0.01568628#0.01568628

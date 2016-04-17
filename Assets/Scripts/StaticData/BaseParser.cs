@@ -106,7 +106,7 @@ namespace StaticData
 			{
 				BaseLogger.LogFormat("Parse error. CSV: {0}, Col:{1}, Row:{2}", this.ToString(), col, rowIndex);
 			}
-			return ParseEnum<T>(value);
+			return ParseKey<T>(value);
 		}
 		protected List<string> ReadStringList(int col)
 		{
@@ -148,7 +148,7 @@ namespace StaticData
 				for (int i = 0; i < strList.Length; ++i)
 				{
 					string str = strList[i];
-					T enumVal = ParseEnum<T>(str);
+					T enumVal = ParseKey<T>(str);
 					list.Add(enumVal);
 				}
 			}
@@ -172,14 +172,34 @@ namespace StaticData
 			{
 				string key = keyStrList[i];
 				string val = valStrList[i];
-				K k = ParseEnum<K>(key);
+				K k = ParseKey<K>(key);
 				V v = ParseValue<V>(val);
 				dic.Add(k, v);
 			}
 			return dic;
 		}
+        protected Dictionary<K, V> ReadDictionary<K, V>(int col)
+        {
+            string value = ReadString(col);
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
 
-		private T ParseEnum<T>(string str)
+            string[] valList = value.Split('#');
+            Dictionary<K,V> dic = new Dictionary<K, V>();
+            for(int i = 0; i < valList.Length; ++i)
+            {
+                string[] pairList = valList[i].Split(':');
+                K k = ParseKey<K>(pairList[0].Trim());
+                V v = ParseValue<V>(pairList[1].Trim());
+                dic.Add(k, v);
+            }
+            return dic;
+        }
+
+
+		private T ParseKey<T>(string str)
 		{
 //            T enumKey = (T)Enum.Parse(typeof(T), str);
             object resultKey = null;
@@ -205,9 +225,37 @@ namespace StaticData
             {
                 resultVal = Convert.ToSingle(str);
             }
+            else
+            {
+                resultVal = Enum.Parse(typeof(T), str);
+            }
 
 			return (T)resultVal;
 		}
+
+        protected Color ReadColor(int col)
+        {
+            string value = ReadString(col);
+            if (string.IsNullOrEmpty(value))
+            {
+                return Color.white;
+            }
+
+            string[] colorList = value.Split('#');
+            Color color = new Color();
+            color.r = Convert.ToSingle(colorList[0]);
+            color.g = Convert.ToSingle(colorList[1]);
+            color.b = Convert.ToSingle(colorList[2]);
+            if(colorList.Length == 4)
+            {
+                color.a = Convert.ToSingle(colorList[3]);
+            }
+            else
+            {
+                color.a = 1f;
+            }
+            return color;
+        }
     }
 }
 

@@ -22,7 +22,9 @@ namespace StaticData
                 data.Type = ReadEnum<BuffType>(col++);
                 data.SpecialType = ReadEnum<BuffSpecialType>(col++);
                 data.Duration = ReadFloat(col++);
-                data.AttributeDic = ReadDictionary<int, float>(col, col + 1);
+                data.AttributeRatioDic = ReadDictionary<int, float>(col++);
+                data.AttributeRaiseDic = ReadDictionary<int, int>(col++);
+                data.EmissionColor = ReadColor(col++);
 
                 kvDic.Add(data.Kid, data);
                 NextLine();
