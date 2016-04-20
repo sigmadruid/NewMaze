@@ -157,7 +157,7 @@ namespace Battle
 
 		private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, Dictionary<AnimatorParamKey, int> paramDic)
 		{
-			if (paramDic == null)
+            if (paramDic == null || paramDic.Count == 0)
 			{
 				return false;
 			}

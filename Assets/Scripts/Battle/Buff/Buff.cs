@@ -27,7 +27,7 @@ namespace Battle
 
         public virtual void End()
         {
-            script.SetEmissionColor(Color.white);
+            script.SetEmissionColor(Color.black);
             this.script = null;
         }
 

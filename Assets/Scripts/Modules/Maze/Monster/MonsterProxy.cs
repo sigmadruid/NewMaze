@@ -15,7 +15,7 @@ namespace GameLogic
 
 		//Active monsters in blocks.
         private Dictionary<string, Monster> monsterBlockDic = new Dictionary<string, Monster>();
-        //Active monsters in blocks.
+        //Active monsters in hall.
         private Dictionary<string, Monster> monsterHallDic = new Dictionary<string, Monster>();
 		//Inactive monsters in blocks. Record them.
         private Dictionary<int, List<MonsterRecord>> recordBlockDic = new Dictionary<int, List<MonsterRecord>>();

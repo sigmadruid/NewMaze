@@ -29,6 +29,7 @@ namespace GameLogic
                 NotificationEnum.BLOCK_DESPAWN,
                 NotificationEnum.HALL_SPAWN,
                 NotificationEnum.HALL_DESPAWN,
+                NotificationEnum.ENVIRONMENT_CHANGE,
 				NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -59,6 +60,12 @@ namespace GameLogic
                 {
                     Hall hall = notification.Body as Hall;
                     HandleHallDespawn(hall);
+                    break;
+                }
+                case NotificationEnum.ENVIRONMENT_CHANGE:
+                {
+                    bool isNight = (bool)notification.Body;
+                    HandleEnvironmentChange(isNight);
                     break;
                 }
 				case NotificationEnum.BATTLE_PAUSE:
@@ -185,6 +192,18 @@ namespace GameLogic
             monster.SetPosition(position);
             monsterProxy.AddMonsterInHall(monster);
             battleProxy.AddMonster(monster);
+        }
+
+        private void HandleEnvironmentChange(bool isNight)
+        {
+            monsterProxy.IterateMonstersInBlocks((Monster monster) => 
+                {
+                    monster.SetAtNight(isNight);
+                });
+            monsterProxy.IterateMonstersInHall((Monster monster) => 
+                {
+                    monster.SetAtNight(isNight);
+                });
         }
 
 		private void HandleBattlePause(bool isPause)

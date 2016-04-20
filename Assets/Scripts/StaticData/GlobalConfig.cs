@@ -46,10 +46,11 @@ namespace StaticData
 	public class EnvironmentConfig
 	{
 		public readonly float ConvertingDuration = 5f;
-		public readonly float NightDuration = 60;
-		public readonly float DayDuration = 60f;
+		public readonly float NightDuration = 10;
+		public readonly float DayDuration = 10f;
 		public readonly Color DayLightColor = new Color(165f/255f, 165f/255f, 165f/255f, 1f);
 		public readonly Color NightLightColor = new Color(20f/255f, 20f/255f, 20f/255f, 1f);
+        public readonly int NightFuryBuffID = 120001;
 	}
 
     public class GlobalConfig

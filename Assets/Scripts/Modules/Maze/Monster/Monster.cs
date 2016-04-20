@@ -89,6 +89,19 @@ namespace GameLogic
             buff.End();
         }
 
+        public void SetAtNight(bool isNight)
+        {
+            int nightFuryBuffID = GlobalConfig.EnvironmentConfig.NightFuryBuffID;
+            if(isNight)
+            {
+                AddBuff(nightFuryBuffID);
+            }
+            else
+            {
+                RemoveBuff(nightFuryBuffID);
+            }
+        }
+
 		public new MonsterRecord ToRecord()
 		{
 			MonsterRecord record = new MonsterRecord();

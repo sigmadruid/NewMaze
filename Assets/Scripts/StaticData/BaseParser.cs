@@ -161,7 +161,7 @@ namespace StaticData
 
 			if (string.IsNullOrEmpty(keyStr) || string.IsNullOrEmpty(valStr))
 			{
-				return null;
+                return new Dictionary<K, V>();
 			}
 
 			string[] keyStrList = keyStr.Split('#');
@@ -183,7 +183,7 @@ namespace StaticData
             string value = ReadString(col);
             if (string.IsNullOrEmpty(value))
             {
-                return null;
+                return new Dictionary<K, V>();
             }
 
             string[] valList = value.Split('#');

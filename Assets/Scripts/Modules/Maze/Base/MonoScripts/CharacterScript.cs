@@ -233,6 +233,7 @@ namespace GameLogic
         public void SetEmissionColor(Color color)
         {
             InitMaterial();
+            material.EnableKeyword("_EMISSION");
             material.SetColor("_EmissionColor", color);
         }
 

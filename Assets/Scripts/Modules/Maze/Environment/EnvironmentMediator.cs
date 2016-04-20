@@ -68,6 +68,7 @@ namespace GameLogic
 		private void OnConvertingEnds()
 		{
 			proxy.IsNight = !proxy.IsNight;
+            DispatchNotification(NotificationEnum.ENVIRONMENT_CHANGE, proxy.IsNight);
 		}
     }
 }

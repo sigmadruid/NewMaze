@@ -40,6 +40,7 @@ namespace GameLogic
 		DROP_PICKED_UP,
 
 		ENVIRONMENT_INIT,
+        ENVIRONMENT_CHANGE,
 
 		NPC_INIT,
 		NPC_DISPOSE,
