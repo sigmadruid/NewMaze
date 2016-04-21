@@ -201,6 +201,15 @@ namespace GameLogic
     		moveScript.IsControllable = !isPause;
     	}
 
+        protected bool JudgeHit()
+        {
+            return RandomUtils.Value() > 0.8f;
+        }
+        protected bool CanPlay(AnimatorPriorityEnum priority)
+        {
+            return priority == currentAnimatorData.Priority && currentAnimatorData.IsLoop || (int)priority > (int)currentAnimatorData.Priority;
+        }
+
     	#endregion
 
         #region Renderering 
@@ -247,19 +256,6 @@ namespace GameLogic
 
         #endregion
 
-    	#region Helper Methods
-
-    	protected bool JudgeHit()
-    	{
-            return RandomUtils.Value() > 0.8f;
-    	}
-    	
-    	protected bool CanPlay(AnimatorPriorityEnum priority)
-    	{
-    		return priority == currentAnimatorData.Priority && currentAnimatorData.IsLoop || (int)priority > (int)currentAnimatorData.Priority;
-    	}
-
-    	#endregion
     }
 
 }

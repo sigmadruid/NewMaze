@@ -54,6 +54,8 @@ namespace Battle
 			Data = null;
 		}
 
+        #region Attribute
+
 		protected int hp;
 		public int HP { get{ return hp; }}
 		public float HPRatio { get { return hp * 1f / Data.HP; } }
@@ -130,6 +132,10 @@ namespace Battle
             return resultVal;
         }
 
+        #endregion
+
+        #region Buff
+
         public Buff GetBuff(int kid)
         {
             if(buffDic.ContainsKey(kid))
@@ -138,6 +144,15 @@ namespace Battle
             }
             return null;
         }
+        public void UpdateBuff(float deltaTime)
+        {
+            Dictionary<int, Buff>.Enumerator enumerator = buffDic.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Buff buff = enumerator.Current.Value;
+                buff.Update(deltaTime);
+            }
+        }
         public void AddBuff(Buff buff)
         {
             if(!buffDic.ContainsKey(buff.Data.Kid))
@@ -145,7 +160,6 @@ namespace Battle
                 buffDic.Add(buff.Data.Kid, buff);
             }
         }
-
         public void RemoveBuff(int kid)
         {
             if(buffDic.ContainsKey(kid))
@@ -153,6 +167,20 @@ namespace Battle
                 buffDic.Remove(kid);
             }
         }
+
+        public Dictionary<int, float> RecordBuff()
+        {
+            Dictionary<int, float> recordDic = new Dictionary<int, float>();
+            Dictionary<int, Buff>.Enumerator enumerator = buffDic.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Buff buff = enumerator.Current.Value;
+                recordDic.Add(buff.Data.Kid, buff.RemainTime);
+            }
+            return recordDic;
+        }
+
+        #endregion
 	}
 
 }

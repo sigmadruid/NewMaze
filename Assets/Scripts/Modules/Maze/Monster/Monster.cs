@@ -75,9 +75,9 @@ namespace GameLogic
             Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP));
 		}
 
-        public void AddBuff(int kid)
+        public void AddBuff(int kid, float remainTime = 0f)
         {
-            Buff buff = Buff.Create(kid);
+            Buff buff = Buff.Create(kid, remainTime);
             Info.AddBuff(buff);
             buff.Start(Script);
         }
@@ -85,8 +85,11 @@ namespace GameLogic
         public void RemoveBuff(int kid)
         {
             Buff buff = Info.GetBuff(kid);
-            Info.RemoveBuff(kid);
-            buff.End();
+            if(buff != null)
+            {
+                Info.RemoveBuff(kid);
+                buff.End();
+            }
         }
 
         public void SetAtNight(bool isNight)
@@ -109,6 +112,7 @@ namespace GameLogic
 			record.Kid = Data.Kid;
 			record.WorldPosition = WorldPosition;
 			record.HP = Info.HP;
+            record.buffRemainTimeDic = Info.RecordBuff();
 			return record;
 		}
 
@@ -122,15 +126,20 @@ namespace GameLogic
 				monster.Uid = record.Uid;
 				monster.Data = MonsterDataManager.Instance.GetData(record.Kid) as MonsterData;
 				monster.Info = new MonsterInfo(monster.Data, record);
+                Init(monster);
+                Dictionary<int, float>.Enumerator enumertor = record.buffRemainTimeDic.GetEnumerator();
+                while (enumertor.MoveNext())
+                {
+                    monster.AddBuff(enumertor.Current.Key, enumertor.Current.Value);
+                }
 			}
 			else
 			{
 				monster.Uid = Guid.NewGuid().ToString();
 				monster.Data = MonsterDataManager.Instance.GetRandomMonsterData();
 				monster.Info = new MonsterInfo(monster.Data);
+                Init(monster);
 			}
-
-            Init(monster);
 
             monster.InHall = false;
 			return monster;

@@ -108,6 +108,8 @@ namespace GameLogic
 		}
         private void InitMonsterInBlock(Monster monster, Vector3 position)
         {
+            bool isNight = ApplicationFacade.Instance.RetrieveProxy<EnvironmentProxy>().IsNight;
+            monster.SetAtNight(isNight);
             monster.SetPosition(position);
             monsterProxy.AddMonsterInBlock(monster);
             battleProxy.AddMonster(monster);
@@ -189,6 +191,8 @@ namespace GameLogic
         }
         private void InitMonsterInHall(Monster monster, Vector3 position)
         {
+            bool isNight = ApplicationFacade.Instance.RetrieveProxy<EnvironmentProxy>().IsNight;
+            monster.SetAtNight(isNight);
             monster.SetPosition(position);
             monsterProxy.AddMonsterInHall(monster);
             battleProxy.AddMonster(monster);

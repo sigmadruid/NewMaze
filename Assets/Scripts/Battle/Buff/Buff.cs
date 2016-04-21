@@ -15,12 +15,13 @@ namespace Battle
 
         public BuffData Data;
 
+        public float RemainTime { get; protected set; }
+
         protected CharacterScript script;
-        protected float t;
 
         public virtual void Start(CharacterScript script)
         {
-            t = 0;
+            RemainTime = 0;
             this.script = script;
             script.SetEmissionColor(Data.EmissionColor);
         }
@@ -36,8 +37,8 @@ namespace Battle
             if(Data.Duration < 0)
                 return;
 
-            t += deltaTime;
-            if(t > Data.Duration)
+            RemainTime += deltaTime;
+            if(RemainTime > Data.Duration)
             {
                 End();
             }
@@ -62,11 +63,12 @@ namespace Battle
             return 0;
         }
 
-        public static Buff Create(int kid)
+        public static Buff Create(int kid, float remainTime)
         {
             Buff buff = new Buff();
             buff.Uid = Guid.NewGuid().ToString();
             buff.Data = BuffDataManager.Instance.GetData(kid);
+            buff.RemainTime = remainTime;
             return buff;
         }
 
