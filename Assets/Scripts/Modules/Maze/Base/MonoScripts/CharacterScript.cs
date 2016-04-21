@@ -7,6 +7,8 @@ using Base;
 using GameLogic;
 using StaticData;
 
+using DG.Tweening;
+
 namespace GameLogic
 {
     [RequireComponent(typeof(Rigidbody))]
@@ -239,11 +241,12 @@ namespace GameLogic
             }
         }
 
-        public void SetEmissionColor(Color color)
+        public void SetEmissionColor(Color color, float duration)
         {
             InitMaterial();
             material.EnableKeyword("_EMISSION");
-            material.SetColor("_EmissionColor", color);
+//            material.SetColor("_EmissionColor", color);
+            material.DOColor(color, "_EmissionColor", duration);
         }
 
         private void InitMaterial()

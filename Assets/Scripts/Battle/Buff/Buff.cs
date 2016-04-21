@@ -23,12 +23,12 @@ namespace Battle
         {
             RemainTime = 0;
             this.script = script;
-            script.SetEmissionColor(Data.EmissionColor);
+            script.SetEmissionColor(Data.EmissionColor, 1f);
         }
 
         public virtual void End()
         {
-            script.SetEmissionColor(Color.black);
+            script.SetEmissionColor(Color.black, 1f);
             this.script = null;
         }
 
