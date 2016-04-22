@@ -154,30 +154,6 @@ namespace StaticData
 			}
 			return list;
 		}
-		protected Dictionary<K, V> ReadDictionary<K, V>(int keyCol, int valCol)
-		{
-			string keyStr = ReadString(keyCol);
-			string valStr = ReadString(valCol);
-
-			if (string.IsNullOrEmpty(keyStr) || string.IsNullOrEmpty(valStr))
-			{
-                return new Dictionary<K, V>();
-			}
-
-			string[] keyStrList = keyStr.Split('#');
-			string[] valStrList = valStr.Split('#');
-
-			Dictionary<K,V> dic = new Dictionary<K, V>();
-			for (int i = 0; i < keyStrList.Length; ++i)
-			{
-				string key = keyStrList[i];
-				string val = valStrList[i];
-				K k = ParseKey<K>(key);
-				V v = ParseValue<V>(val);
-				dic.Add(k, v);
-			}
-			return dic;
-		}
         protected Dictionary<K, V> ReadDictionary<K, V>(int col)
         {
             string value = ReadString(col);

@@ -27,7 +27,7 @@ namespace StaticData
 				data.MonsterMaxCount = ReadInt(col++);
 				data.NPCMaxCount = ReadInt(col++);
 				data.ExplorationMaxCount = ReadInt(col++);
-                data.GlobalExplorationCountDic = ReadDictionary<ExplorationType, int>(col, col + 1);
+                data.GlobalExplorationCountDic = ReadDictionary<ExplorationType, int>(col++);
 				
 				kvDic.Add(data.Kid, data);
 				NextLine();

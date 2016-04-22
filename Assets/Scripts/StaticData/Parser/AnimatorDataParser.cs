@@ -22,7 +22,7 @@ namespace StaticData
 				data.IsLoop = ReadBool(col++);
 				data.Priority = ReadEnum<AnimatorPriorityEnum>(col++);
 				data.NormalTime = ReadFloat(col++);
-				data.ParamDic = ReadDictionary<AnimatorParamKey, int>(col, col + 1);
+				data.ParamDic = ReadDictionary<AnimatorParamKey, int>(col++);
 
 				if (!kvDic.ContainsKey(data.Kid))
 				{
