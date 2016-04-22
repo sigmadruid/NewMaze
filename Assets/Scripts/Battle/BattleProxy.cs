@@ -10,28 +10,6 @@ using StaticData;
 
 namespace Battle
 {
-	public enum BattleAttribute
-	{
-		HP = 1,
-		Attack,
-		Defense,
-		Critical,
-		Dodge,
-        Velocity,
-	}
-
-    public enum BattleRaiseAttribute
-    {
-        ByValue = 1,
-        ByRatio,
-    }
-
-	public enum Side
-	{
-		Hero,
-		Monster,
-	}
-
 	public class BattleProxy : Proxy
 	{
 		private Hero hero;

@@ -54,7 +54,7 @@ namespace GameLogic
 
 		private void OnUpdate()
 		{
-			heroScript.Move(inputManager.DirectionVector);
+			heroScript.Move(inputManager.DirectionVector, 3f);
 		}
 	}
 }

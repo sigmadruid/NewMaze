@@ -23,12 +23,12 @@ namespace Battle
         {
             RemainTime = 0;
             this.script = script;
-            script.SetEmissionColor(Data.EmissionColor, 1f);
+            script.SetEmissionColor(Data.EmissionColor, GlobalConfig.BattleConfig.BuffTransitionDuration);
         }
 
         public virtual void End()
         {
-            script.SetEmissionColor(Color.black, 1f);
+            script.SetEmissionColor(Color.black, GlobalConfig.BattleConfig.BuffTransitionDuration);
             this.script = null;
         }
 

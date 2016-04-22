@@ -19,6 +19,7 @@ namespace StaticData
 		public int Defense;
 		public int Critical;
 		public int Dodge;
+		public float MoveSpeed;
 
 		//A range within which the monster will start acting.
 		public float DetectRange;

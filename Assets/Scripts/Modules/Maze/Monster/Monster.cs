@@ -33,11 +33,11 @@ namespace GameLogic
 
 		public void Idle()
 		{
-			Script.Move(Vector3.zero);
+			Script.Move(Vector3.zero, 0f);
 		}
 		public void Move(Vector3 direction)
 		{
-			Script.Move(direction);
+			Script.Move(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 		public void LookAt(Vector3 destPos)
 		{

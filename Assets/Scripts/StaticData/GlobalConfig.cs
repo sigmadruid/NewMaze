@@ -7,9 +7,25 @@ using Base;
 
 namespace StaticData
 {
+    public enum BattleAttribute
+    {
+        HP = 1,
+        Attack,
+        Defense,
+        Critical,
+        Dodge,
+        MoveSpeed,
+    }
+    public enum Side
+    {
+        Hero,
+        Monster,
+    }
+
 	public class BattleConfig
 	{
 		public readonly float OutBattleDelay = 5f;
+        public readonly float BuffTransitionDuration = 3f;
 	}
 
     public class BlockConfig

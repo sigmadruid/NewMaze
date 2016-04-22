@@ -10,8 +10,6 @@ namespace GameLogic
 
         private CameraInnerScript innerCamera;
 
-        private Vector3[] cornerArray = new Vector3[4];
-
     	private bool initialized = false;
 
         void Start()

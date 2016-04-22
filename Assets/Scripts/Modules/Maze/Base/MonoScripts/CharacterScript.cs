@@ -36,12 +36,10 @@ namespace GameLogic
     	protected int currentNameHash;
     	protected AnimatorData currentAnimatorData;
 
-    	private WaitForSeconds SLOW_UPDATE_DELAY;
+		private readonly WaitForSeconds SLOW_UPDATE_DELAY = new WaitForSeconds(1f);
     	
     	protected virtual void Awake()
     	{
-    		SLOW_UPDATE_DELAY = new WaitForSeconds(1f);
-
     		moveScript = GetComponent<MoveScript>();
 
     		animator = GetComponent<Animator>();
@@ -115,18 +113,18 @@ namespace GameLogic
 
     	#region Behavior
 
-    	public void Move(Vector3 direction)
+    	public void Move(Vector3 direction, float velocity)
     	{
     		if (Game.Instance.IsPause) { return; }
 
     		if (CanPlay(AnimatorPriorityEnum.Run))
     		{
-    			moveScript.Move(direction);
+				moveScript.Move(direction, velocity);
     			animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, moveScript.IsMoving);
     		}
     		else
     		{
-    			moveScript.Move(Vector3.zero);
+    			moveScript.Move(Vector3.zero, 0f);
     		}
     	}
 
@@ -176,7 +174,7 @@ namespace GameLogic
 
     		if (CanPlay(AnimatorPriorityEnum.Die))
     		{
-    			moveScript.Move(Vector3.zero);
+    			moveScript.Move(Vector3.zero, 0f);
     			GetComponent<Collider>().enabled = false;
 
     			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);

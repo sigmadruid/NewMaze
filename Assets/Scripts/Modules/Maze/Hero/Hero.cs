@@ -110,7 +110,7 @@ namespace GameLogic
 
 		public void Move(Vector3 direction)
 		{
-			Script.Move(direction);
+			Script.Move(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 
 		public void Attack()

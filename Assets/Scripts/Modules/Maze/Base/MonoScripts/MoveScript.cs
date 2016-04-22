@@ -6,16 +6,6 @@ namespace GameLogic
     [RequireComponent(typeof(CharacterController))]
     public class MoveScript : MonoBehaviour 
     {
-    	public enum CharacterState {
-    		Idle = 0,
-    		Walking = 1,
-    		Trotting = 2,
-    		Running = 3,
-    		Jumping = 4,
-    	}
-    	
-    	private CharacterState _characterState;
-
     	public bool IsControllable = true;
 
     	public float MoveThreshold = 1f;
@@ -28,7 +18,7 @@ namespace GameLogic
 
     	public bool LerpRotation = true;
 
-    	private Vector3 moveDirection = Vector3.zero;
+    	private Vector3 moveVector = Vector3.zero;
     	
     	private CollisionFlags collisionFlags; 
     	
@@ -52,31 +42,28 @@ namespace GameLogic
     		
     		if (IsMoving)
     		{
-    			Vector3 movement = (moveDirection * MoveSpeed + Vector3.down * gravity) * Time.deltaTime;
+    			Vector3 movement = (moveVector + Vector3.down * gravity) * Time.deltaTime;
     			collisionFlags = characterController.Move(movement);
 
-    			if (trans.forward != moveDirection)
+    			if (trans.forward != moveVector.normalized)
     			{
     				if (LerpRotation)
     				{
-    					Vector3 direction = Vector3.Lerp(trans.forward, moveDirection, Time.deltaTime * angularSpeed);
+    					Vector3 direction = Vector3.Lerp(trans.forward, moveVector, Time.deltaTime * angularSpeed);
     					trans.localRotation = Quaternion.LookRotation(direction);
     				}
     				else
     				{
-    					trans.localRotation = Quaternion.LookRotation(moveDirection);
+    					trans.localRotation = Quaternion.LookRotation(moveVector);
     				}
     			}
-
-
     		}
-
     	}
     	
-    	public void Move(Vector3 moveVector)
+    	public void Move(Vector3 moveDirection, float moveSpeed)
     	{
-    		moveDirection = moveVector.normalized;
-    		IsMoving = IsControllable && moveVector.sqrMagnitude > MoveThreshold;
+			moveVector = moveDirection.normalized * moveSpeed;
+    		IsMoving = IsControllable && moveDirection.sqrMagnitude > MoveThreshold;
     	}
 
     	public void LookAt(Vector3 direction)
@@ -88,10 +75,5 @@ namespace GameLogic
     	{
     		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
     	}
-    	public Vector3 GetDirection () 
-    	{
-    		return moveDirection;
-    	}
-    	
     }
 }

@@ -24,7 +24,7 @@ namespace Battle
 
 	public class CharacterInfo
 	{
-        protected Dictionary<int, int> attrDic = new Dictionary<int, int>();
+        protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
         protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
 		
 		public CharacterData Data;
@@ -47,6 +47,7 @@ namespace Battle
 			attrDic.Add((int)BattleAttribute.Defense, Data.Defense);
 			attrDic.Add((int)BattleAttribute.Critical, Data.Critical);
 			attrDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
+			attrDic.Add((int)BattleAttribute.MoveSpeed, Data.MoveSpeed);
 		}
 		public void Dispose()
 		{
