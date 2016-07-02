@@ -46,6 +46,11 @@ namespace GameLogic
 		{
 			Script.transform.localRotation = Quaternion.Euler(Vector3.up * angle);
 		}
+        public virtual void SetRotation(Vector3 direction)
+        {
+            direction = new Vector3(direction.x, 0, direction.z);
+            Script.transform.localRotation = Quaternion.LookRotation(direction);
+        }
 
 		public virtual void Pause(bool isPause)
 		{

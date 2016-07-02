@@ -42,6 +42,27 @@ namespace GameLogic
             recordHallDic.Clear();
 		}
 
+        public Monster GetNearestMonster(Vector3 position, float maxSqrDistance = 4f)
+        {
+            Dictionary<string, Monster> monsterDic = Hero.Instance.IsInHall ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
+            float sqrDistance = float.MaxValue;
+            Monster result = null;
+            while(enumerator.MoveNext())
+            {
+                Monster monster = enumerator.Current.Value;
+                float newSqrDistance = (monster.WorldPosition - position).sqrMagnitude;
+                if(newSqrDistance < sqrDistance && newSqrDistance < maxSqrDistance && monster.Info.IsAlive)
+                {
+                    sqrDistance = newSqrDistance;
+                    result = monster;
+                }
+            }
+            return result;
+        }
+
+        #region Block
+
 		public void IterateMonstersInBlocks(IterateFunc func)
 		{
 			if (func == null) { return; }
@@ -123,6 +144,10 @@ namespace GameLogic
 			return GetRecordBlockList(blockKey);
 		}
 
+        #endregion
+
+        #region Hall
+
         public void IterateMonstersInHall(IterateFunc func)
         {
             if (func == null) { return; }
@@ -189,6 +214,10 @@ namespace GameLogic
             recordHallDic.TryGetValue(hallKid, out recordList);
             return recordList;
         }
+
+        #endregion
+
+
 	}
 }
 

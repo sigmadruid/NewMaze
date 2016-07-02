@@ -7,24 +7,24 @@ using Base;
 using Battle;
 using GameLogic;
 
+using DG.Tweening;
+
 public class NumberItem : BaseScreenItem
 {
 	public bool AutoDestroy = true;
+    public float DestroyDelay = 1f;
 
+    private bool startDestroy;
+    private float timer;
     private Text labelNumber;
-
-//	private TweenScale tweenScale;
-	private TweenAlpha tweenAlpha;
+    private DOTweenAnimation tween;
 
 	protected override void Awake()
 	{
 		base.Awake();
 
         labelNumber = GetComponent<Text>();
-
-//		tweenScale = GetComponent<TweenScale>();
-		tweenAlpha = GetComponent<TweenAlpha>();
-        tweenAlpha.AddOnFinished(OnFinished);
+        tween = GetComponent<DOTweenAnimation>();
 	}
 	
 	public void Show(AttackResult result)
@@ -32,8 +32,9 @@ public class NumberItem : BaseScreenItem
 		gameObject.SetActive(true);
 
 		labelNumber.color = result.IsCritical ? Color.red : Color.white;
-//		tweenScale.from = Vector3.one * (result.IsCritical ? 5 : 3);
-//		tweenScale.to = Vector3.one * (result.IsCritical ? 2 : 1);
+        transform.localScale = Vector3.one * 4;
+        tween.DORewind();
+        tween.DOPlayForward();
 
 		if (!result.IsDodge)
 		{
@@ -47,41 +48,50 @@ public class NumberItem : BaseScreenItem
 	public void Show(string text)
 	{
 		labelNumber.text = text;
-		
-//		tweenScale.tweenFactor = 0;
-//		tweenScale.enabled = true;
-		tweenAlpha.tweenFactor = 0;
-		tweenAlpha.enabled = true;
 	}
 
-	private void OnFinished()
+    public void OnFinished()
 	{
-		if (AutoDestroy)
-		{
-			NumberItem.Recycle(this);
-		}
-		else
-		{
-			gameObject.SetActive(false);
-		}
+        startDestroy = true;
+        timer = 0f;
 	}
+
+    void Update()
+    {
+        if(startDestroy)
+        {
+            timer += Time.deltaTime;
+            if(timer > DestroyDelay)
+            {
+                startDestroy = false;
+                if(AutoDestroy)
+                {
+                    NumberItem.Recycle(this);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+    }
 
 	public static NumberItem Create(Vector3 worldPosition, AttackResult result)
 	{
-		NumberItem numberItem = Create(worldPosition);
+        NumberItem numberItem = DoCreate(worldPosition);
 		numberItem.Show(result);
 		return numberItem;
 	}
 	public static NumberItem Create(Vector3 worldPosition, string text)
 	{
-		NumberItem numberItem = Create(worldPosition);
+        NumberItem numberItem = DoCreate(worldPosition);
 		numberItem.Show(text);
 		return numberItem;
     }
-	private static NumberItem Create(Vector3 worldPosition)
+	private static NumberItem DoCreate(Vector3 worldPosition)
 	{
         NumberItem numberItem = PopupManager.Instance.CreateItem<NumberItem>(RootTransform.Instance.UIIconRoot);
-		numberItem.UpdatePosition(worldPosition + Vector3.up * 2.5f);
+        numberItem.UpdatePosition(worldPosition + Vector3.up * 2.5f);
 		return numberItem;
     }
 	

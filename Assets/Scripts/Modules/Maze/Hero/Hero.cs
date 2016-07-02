@@ -104,6 +104,8 @@ namespace GameLogic
             }
         }
 
+        public bool IsInHall { get; set; }
+
         #endregion
 
         #region Animations
@@ -119,6 +121,12 @@ namespace GameLogic
 			{
 				return;
 			}
+            Monster targetMonster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetNearestMonster(WorldPosition);
+            if(targetMonster != null)
+            {
+                Vector3 direction = MathUtils.XZDirection(WorldPosition, targetMonster.WorldPosition);
+                SetRotation(direction);
+            }
 			Script.Attack(OnAttack);
 		}
 		private void OnAttack(object param)

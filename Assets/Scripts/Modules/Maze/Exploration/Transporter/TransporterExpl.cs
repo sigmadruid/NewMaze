@@ -54,6 +54,7 @@ namespace GameLogic
         private void OnTransportForward()
         {
             Hero.Instance.IsSlowUpdating = false;
+            Hero.Instance.IsInHall = true;
             HallProxy hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
             hallProxy.LeavePosition = Hero.Instance.WorldPosition;
             int hallKid = int.Parse(Data.Param1);
@@ -65,6 +66,7 @@ namespace GameLogic
         private void OnTransportBack()
         {
             Hero.Instance.IsSlowUpdating = true;
+            Hero.Instance.IsInHall = false;
             Vector3 leavePosition = ApplicationFacade.Instance.RetrieveProxy<HallProxy>().LeavePosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
