@@ -42,7 +42,8 @@ namespace GameLogic
 			{
 				case NotificationEnum.HERO_INIT:
 				{
-					HandleHeroInit();
+                    HeroRecord record = notification.Body as HeroRecord;
+                    HandleHeroInit(record);
 					break;
 				}
 				case NotificationEnum.HERO_CONVERT:
@@ -68,7 +69,7 @@ namespace GameLogic
 
 		#region Notification Handlers
 
-		private void HandleHeroInit()
+        private void HandleHeroInit(HeroRecord record)
 		{
 			//Preload resources
 			List<HeroData> dataList = heroProxy.GetAllHeroDataList();
@@ -80,14 +81,23 @@ namespace GameLogic
 			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, "Effects/ConversionEffect");
 
 			//Init
-			int heroID = IDManager.Instance.GetID(IDType.Hero, 1);
-			hero = Hero.Create(heroID, null);
-			hero.CallbackDie = OnHeroDie;
+            if(record == null)
+            {
+                int heroKid = IDManager.Instance.GetID(IDType.Hero, 1);
+                hero = Hero.Create(heroKid, null);
 
-			//Position
-			MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-			Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
-			hero.SetPosition(startPosition);
+                MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+                Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
+                hero.SetPosition(startPosition);
+            }
+            else
+            {
+                hero = Hero.Create(record);
+                hero.SetPosition(record.WorldPosition.ToVector3());
+                hero.SetRotation(record.WorldAngle);
+                hero.IsInHall = record.IsInHall;
+            }
+			hero.CallbackDie = OnHeroDie;
 
 			//Battle
 			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();

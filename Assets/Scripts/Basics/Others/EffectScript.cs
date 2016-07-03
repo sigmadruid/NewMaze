@@ -7,7 +7,7 @@ using Base;
 public class EffectTask
 {
 	public float Delay;
-	public Utils.CallbackParam Callback;
+    public System.Action<object> Callback;
 	public object Param;
 
 	public bool HasExecuted;
@@ -88,7 +88,7 @@ public class EffectScript : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	public void AddTask(float delay, Utils.CallbackParam callback, object param = null)
+    public void AddTask(float delay, System.Action<object> callback, object param = null)
 	{
 		EffectTask task = new EffectTask();
 		task.Delay = delay;

@@ -51,6 +51,10 @@ namespace GameLogic
 		BATTLE_UI_UPDATE_MP,
 
 		BATTLE_PAUSE,
+
+        //Others
+        DESERIALIZE_GAME,
+        SERIALIZE_GAME,
 		
 	}
 }

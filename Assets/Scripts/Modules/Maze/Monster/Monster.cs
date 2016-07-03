@@ -29,6 +29,7 @@ namespace GameLogic
 
 		private BattleProxy battleProxy;
 
+
 		#region Animations
 
 		public void Idle()
@@ -47,9 +48,8 @@ namespace GameLogic
 		{
 			Script.Attack(OnAttack);
 		}
-		private void OnAttack(object param)
+        private void OnAttack(Dictionary<AnimatorParamKey, int> paramDic)
 		{
-			Dictionary<AnimatorParamKey, int> paramDic = param as Dictionary<AnimatorParamKey, int>;
 			battleProxy.AttackHero(this, paramDic);
 		}
 		public void Hit()
@@ -110,7 +110,8 @@ namespace GameLogic
 			MonsterRecord record = new MonsterRecord();
 			record.Uid = Uid;
 			record.Kid = Data.Kid;
-			record.WorldPosition = WorldPosition;
+            record.WorldPosition =new Vector3Record(WorldPosition);
+            record.WorldAngle = WorldAngle;
 			record.HP = Info.HP;
             record.buffRemainTimeDic = Info.RecordBuff();
 			return record;

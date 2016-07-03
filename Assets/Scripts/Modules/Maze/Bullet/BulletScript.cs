@@ -13,9 +13,9 @@ public enum BulletState
 
 public class BulletScript : EntityScript 
 {
-	public Utils.CallbackVoid CallbackUpdate;
-	public Utils.CallbackParam CallbackHit;
-	public Utils.CallbackVoid CallbackDestroy;
+    public System.Action CallbackUpdate;
+    public System.Action<Collider> CallbackHit;
+    public System.Action CallbackDestroy;
 
 	public GameObject BeforeEffect;
 	public GameObject NormalEffect;

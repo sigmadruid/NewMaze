@@ -33,8 +33,7 @@ namespace GameLogic
 			{
 				case NotificationEnum.HALL_INIT:
 				{
-                    int hallKid = (int)notification.Body;
-                    HandleHallInit(hallKid);
+                    HandleHallInit(notification.Body);
 					break;
 				}
 				case NotificationEnum.HALL_DISPOSE:
@@ -45,20 +44,26 @@ namespace GameLogic
 			}
 		}
 
-        private void HandleHallInit(int hallKid)
+        private void HandleHallInit(object param)
 		{
-            if(hallProxy.CurrentHall == null)
+            if(param is HallRecord)
             {
-                hallProxy.CurrentHall = Hall.Create(hallKid);
+                HallRecord record = param as HallRecord;
+                Hall.Create(record);
+                Hall.Instance.LeavePosition = record.LeavePosition.ToVector3();
             }
-            DispatchNotification(NotificationEnum.HALL_SPAWN, hallProxy.CurrentHall);
+            else
+            {
+                int hallKid = (int)param;
+                Hall.Create(hallKid);
+            }
+            DispatchNotification(NotificationEnum.HALL_SPAWN, Hall.Instance);
 		}
 		
 		private void HandleHallDispose()
 		{
-            DispatchNotification(NotificationEnum.HALL_DESPAWN, hallProxy.CurrentHall);
-            Hall.Recycle(hallProxy.CurrentHall);
-            hallProxy.CurrentHall = null;
+            DispatchNotification(NotificationEnum.HALL_DESPAWN, Hall.Instance);
+            Hall.Recycle(Hall.Instance);
 		}
     }
 }

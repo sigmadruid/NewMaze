@@ -61,7 +61,6 @@ namespace GameLogic
 			Vector3 position = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
             prevCol = 0;
             prevRow = 0;
-			HandleRefreshBlocks(position);
 		}
 		private void HandleBlockDispose()
 		{

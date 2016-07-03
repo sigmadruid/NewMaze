@@ -45,9 +45,9 @@ namespace GameUI
 			current.AddItem(content);
 		}
 
-		private void OnItemDisappear(object param)
+        private void OnItemDisappear(TopAlertItem item)
 		{
-			itemPool.RemoveItem(param as TopAlertItem);
+            itemPool.RemoveItem(item);
 		}
 	}
 }

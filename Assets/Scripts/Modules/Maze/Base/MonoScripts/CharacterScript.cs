@@ -23,9 +23,9 @@ namespace GameLogic
     	public Utils.CallbackVoid CallbackSlowUpdate;
     	public Utils.CallbackVoid CallbackDie;
     	
-    	private Utils.CallbackVoid CallbackAnimatorTransition;
-    	private Utils.CallbackParam CallbackAnimatorEffect;
-    	private Utils.CallbackVoid CallbackAnimatorEnds;
+        private System.Action CallbackAnimatorTransition;
+        private System.Action<Dictionary<AnimatorParamKey, int>> CallbackAnimatorEffect;
+        private System.Action CallbackAnimatorEnds;
 
     	public Dictionary<int, AnimatorData> AnimatorDataDic;
 
@@ -134,7 +134,7 @@ namespace GameLogic
     		moveScript.LookAt(lookDirection);
     	}
 
-    	public void Attack(Utils.CallbackParam callbackEffect)
+        public void Attack(System.Action<Dictionary<AnimatorParamKey, int>> callbackEffect)
     	{
     		if (Game.Instance.IsPause) { return; }
 

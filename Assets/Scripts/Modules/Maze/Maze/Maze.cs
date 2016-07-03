@@ -29,6 +29,10 @@ namespace GameLogic
 		{
 			startTicks = DateTime.Now.Ticks;
 			Data = MazeDataManager.Instance.CurrentMazeData;
+            if(RandomUtils.Seed == 0)
+            {
+                RandomUtils.Seed = UnityEngine.Random.Range(0, 20140413);
+            }
 		}
 
 		public float ElapsedTime

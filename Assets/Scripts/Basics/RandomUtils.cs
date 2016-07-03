@@ -8,11 +8,14 @@ namespace Base
 	{
 		public const float RANDOM_BASE = 100f;
 
+        private static int seed = 0;
 		public static int Seed
 		{
+            get { return seed; }
 			set
 			{
-				Random.seed = value;
+				seed = value;
+                Random.seed = seed;
 			}
 		}
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace GameLogic
 {
+    [Serializable]
     public class MonsterRecord : EntityRecord
     {
 		public int HP;

@@ -52,9 +52,8 @@ namespace GameLogic
 			}
 		}
 
-		private void OnHit(object param)
+        private void OnHit(Collider other)
 		{
-			Collider other = param as Collider;
 			if (!other.CompareTag(Tags.Monster))
 			{
 				if (other.CompareTag(Tags.Hero))

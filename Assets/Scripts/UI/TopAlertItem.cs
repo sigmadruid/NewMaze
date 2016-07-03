@@ -9,7 +9,7 @@ namespace GameUI
 {
 	public class TopAlertItem : MonoBehaviour
 	{
-		public Utils.CallbackParam CallbackDisappear;
+        public System.Action<TopAlertItem> CallbackDisappear;
 
 		private UILabel label;
 
@@ -27,7 +27,7 @@ namespace GameUI
 			originColor = label.color;
 		}
 
-		public void Init(string content, Utils.CallbackParam callbackDisappear, float delay = 1f)
+        public void Init(string content, System.Action<TopAlertItem> callbackDisappear, float delay = 1f)
 		{
 			hideDelay = delay;
 

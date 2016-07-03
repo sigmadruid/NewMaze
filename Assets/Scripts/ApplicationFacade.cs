@@ -41,9 +41,11 @@ namespace GameLogic
 			RegisterMediator(new ExplorationMediator());
 			RegisterMediator(new BattleUIMediator());
 			RegisterMediator(new DropMediator());
-			RegisterMediator(new EnvironmentMediator());
+            RegisterMediator(new EnvironmentMediator());
 
-			RegisterMediator(new TownHeroMediator());
+            RegisterMediator(new TownHeroMediator());
+
+            RegisterMediator(new RecordMediator());
 		}
 	}
 }

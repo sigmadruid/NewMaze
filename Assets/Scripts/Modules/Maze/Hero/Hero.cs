@@ -28,8 +28,8 @@ namespace GameLogic
 
 		public HeroInfo Info { get; protected set; }
 
-		public bool IsUpdating = true;
-		public bool IsSlowUpdating = true;
+        public bool IsUpdating = true;
+        public bool IsSlowUpdating = true;
 
 		private InputManager inputManager;
 		private BattleProxy battleProxy;
@@ -45,34 +45,21 @@ namespace GameLogic
 
         protected override void Update()
         {
-            if (!IsUpdating)
-            {
+            if(!IsUpdating)
                 return;
-            }
             Move(inputManager.DirectionVector);
         }
         protected override void SlowUpdate()
         {
             if (!IsSlowUpdating)
-            {
                 return;
+            if(!IsInHall)
+            {
+                ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
             }
-
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
         }
 
         #region States
-
-		public Vector2 MazePosition
-		{
-			get
-			{
-				float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
-				int col, row;
-				MazeUtil.GetMazePosition(WorldPosition, blockSize, out col, out row);
-				return new Vector2(col, row);
-			}
-		}
 
         public bool InBattle 
         { 
@@ -129,9 +116,8 @@ namespace GameLogic
             }
 			Script.Attack(OnAttack);
 		}
-		private void OnAttack(object param)
+        private void OnAttack(Dictionary<AnimatorParamKey, int> paramDic)
 		{
-			Dictionary<AnimatorParamKey, int> paramDic = param as Dictionary<AnimatorParamKey, int>;
 			if (paramDic != null && paramDic.Count > 0)
 			{
 				battleProxy.AttackMonster(paramDic);
@@ -177,13 +163,19 @@ namespace GameLogic
 
 			return hero;
 		}
+        public static Hero Create(HeroRecord record)
+        {
+            HeroData data = HeroDataManager.Instance.GetData(record.Kid) as HeroData;
+            HeroInfo info = new HeroInfo(data, record);
+            return Create(record.Kid, info);
+        }
 		public static void Recycle()
 		{
 			Hero hero = instance;
 			if (hero != null)
 			{
 				hero.Data = null;
-				hero.IsUpdating = false;
+                hero.IsUpdating = false;
 				hero.IsSlowUpdating = false;
 				hero.Script.StopAllCoroutines();
 				ResourceManager.Instance.RecycleAsset(hero.Script.gameObject);
@@ -196,6 +188,19 @@ namespace GameLogic
 				BaseLogger.Log("Recyle a null hero!");
 			}
 		}
+            
+        public new HeroRecord ToRecord()
+        {
+            HeroRecord record = new HeroRecord();
+            record.Uid = Uid;
+            record.Kid = Data.Kid;
+            record.WorldPosition = new Vector3Record(WorldPosition);
+            record.WorldAngle = WorldAngle;
+            record.IsVisible = IsVisible;
+            record.IsInHall = IsInHall;
+            record.HP = Info.HP;
+            return record;
+        }
 	}
 }
 

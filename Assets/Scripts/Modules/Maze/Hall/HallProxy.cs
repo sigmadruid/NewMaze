@@ -11,13 +11,17 @@ namespace GameLogic
 {
     public class HallProxy : Proxy
     {
-		public Vector3 LeavePosition;
-
-        public Hall CurrentHall;
+        public HallRecord Record;
 
         public void Dispose()
         {
-            CurrentHall = null;
+            Record = null;
+        }
+
+        public void DoRecord()
+        {
+            if(Hall.Instance != null)
+                Record = Hall.Instance.ToRecord();
         }
     }
 }

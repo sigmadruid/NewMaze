@@ -22,6 +22,17 @@ namespace GameLogic
         //Inactive monsters in halls. Record them.
         private Dictionary<int, List<MonsterRecord>> recordHallDic = new Dictionary<int, List<MonsterRecord>>();
 
+        public Dictionary<int, List<MonsterRecord>> RecordBlockDic
+        {
+            get { return recordBlockDic; }
+            set { recordBlockDic = value; }
+        }
+        public Dictionary<int, List<MonsterRecord>> RecordHallDic
+        {
+            get { return recordHallDic; }
+            set { recordHallDic = value; }
+        }
+
 		public void Dispose()
 		{
             ClearMonstersInBlock();
@@ -127,9 +138,11 @@ namespace GameLogic
             monsterBlockDic.Clear();
         }
 
-		public void InitRecordBlockList(int blockKey)
+        public List<MonsterRecord> InitRecordBlockList(int blockKey)
 		{
-			recordBlockDic[blockKey] = new List<MonsterRecord>();
+            List<MonsterRecord> list = new List<MonsterRecord>();
+            recordBlockDic[blockKey] = list;
+            return list;
 		}
 		public List<MonsterRecord> GetRecordBlockList(int blockKey)
 		{
@@ -143,6 +156,30 @@ namespace GameLogic
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
 			return GetRecordBlockList(blockKey);
 		}
+        /// <summary>
+        /// Record all the active monsters in blocks. Other inactive monsters have already recorded when they hide.
+        /// </summary>
+        public void DoRecordBlock()
+        {
+            var enumerator = monsterBlockDic.GetEnumerator();
+            BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+            blockProxy.Iterate((Block block) =>
+                {
+                    int blockKey = Block.GetBlockKey(block.Col, block.Row);
+                    InitRecordBlockList(blockKey);
+                });
+            enumerator = monsterBlockDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Monster monster = enumerator.Current.Value;
+                if(monster.Info.IsAlive)
+                {
+                    Vector2 pos = monster.MazePosition;
+                    List<MonsterRecord> recordList = GetRecordBlockList((int)pos.x, (int)pos.y);
+                    recordList.Add(monster.ToRecord());
+                }
+            }
+        }
 
         #endregion
 
@@ -172,7 +209,6 @@ namespace GameLogic
                 Monster monster = monsterHallDic[uid];
                 List<MonsterRecord> recordList = GetRecordHallList(hallKid);
                 recordList.Add(monster.ToRecord());
-//                monsterHallDic.Remove(uid);
             }
         }
         public void RemoveMonsterInHall(string uid, int hallKid)
@@ -213,6 +249,10 @@ namespace GameLogic
             List<MonsterRecord> recordList = null;
             recordHallDic.TryGetValue(hallKid, out recordList);
             return recordList;
+        }
+        public void DoRecordInHall()
+        {
+            
         }
 
         #endregion

@@ -39,7 +39,7 @@ namespace GameLogic
         {
 			DropRecord record = new DropRecord();
 			record.Kid = Data.Kid;
-			record.WorldPosition = WorldPosition;
+            record.WorldPosition = new Vector3Record(WorldPosition);
 			record.GoodsKid = Data.Kid;
 			record.Count = Count;
 			return record;
@@ -55,7 +55,7 @@ namespace GameLogic
 			drop.Script = ResourceManager.Instance.LoadAsset<DropScript>(ObjectType.GameObject, drop.Data.GetResPath());
 			drop.Script.transform.parent = RootTransform.Instance.DropRoot;	
 			
-			drop.SetPosition(record.WorldPosition);
+            drop.SetPosition(record.WorldPosition.ToVector3());
 			
 			return drop;
 		}

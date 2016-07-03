@@ -2,11 +2,14 @@ using System;
 
 namespace GameLogic
 {
-    public class HeroRecord
+    [Serializable]
+    public class HeroRecord : EntityRecord
     {
-		public int Kid;
+        public int HP;
 
-		public int Star;
-		public int Fragment;
+        public bool IsVisible;
+
+        public bool IsInHall;
+
     }
 }

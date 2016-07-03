@@ -175,12 +175,12 @@ namespace GameLogic
 			return list;
 		}
 
-		public void IterateNodesInScope(int centerCol, int centerRow, int scope, Utils.CallbackParam callback)
+        public void IterateNodesInScope(int centerCol, int centerRow, int scope, System.Action<MazeNode> callback)
 		{
 			int imin = Mathf.Max(0, centerCol - scope);
 			int jmin = Mathf.Max(0, centerRow - scope);
-			int imax = Mathf.Max(Cols - 1, centerCol + scope);
-			int jmax = Mathf.Max(Rows - 1, centerRow + scope);
+			int imax = Mathf.Min(Cols - 1, centerCol + scope);
+			int jmax = Mathf.Min(Rows - 1, centerRow + scope);
 			for (int i = imin; i <= imax; ++i)
 			{
 				for (int j = jmin; j <= jmax; ++j)

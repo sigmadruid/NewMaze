@@ -50,6 +50,7 @@ public class MazeMain : MonoBehaviour
 		mazeData.LinkRate = 0.5f;
 		mazeData.PassageRate = 0.9f;
 
+        RandomUtils.Seed = UnityEngine.Random.Range(0, 20140413);
 		builder = new MazeBuilder(mazeData);
 		mazeTable = builder.Build();
 	}

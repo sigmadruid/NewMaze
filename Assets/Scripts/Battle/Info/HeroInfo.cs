@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using GameLogic;
 using StaticData;
 
 namespace Battle
@@ -15,10 +16,10 @@ namespace Battle
 
 		public HeroInfo (HeroData data) : base(data)
 		{
-			Data = data as HeroData;
+			Data = data;
 		}
 
-		public HeroInfo (HeroData data, HeroInfo info = null) : base(data)
+		public HeroInfo (HeroData data, HeroInfo info) : base(data)
 		{
 			Data = data;
 			if (info != null)
@@ -28,6 +29,12 @@ namespace Battle
 				LastHitTime = info.LastHitTime;
 			}
 		}
+
+        public HeroInfo (HeroData data, HeroRecord record) : base(data)
+        {
+            Data = data;
+            hp = record.HP;
+        }
 	}
 }
 

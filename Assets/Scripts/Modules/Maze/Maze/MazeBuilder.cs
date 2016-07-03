@@ -27,7 +27,6 @@ namespace GameLogic
 
 		public MazeTable Build()
 		{
-			int seed = Random.Range(0, 10000);
 //			Random.seed = seed;
 //            BaseLogger.LogFormat("Maze seed is: {0}", seed);
 

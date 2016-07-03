@@ -19,7 +19,8 @@ public class EnvironmentScript : MonoBehaviour
 
 	void Update()
 	{
-		CallbackUpdate();
+        if (CallbackUpdate != null)
+		    CallbackUpdate();
 	}
 }
 

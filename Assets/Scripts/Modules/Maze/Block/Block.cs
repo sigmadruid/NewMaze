@@ -63,7 +63,6 @@ namespace GameLogic
 
 		public void InitRandomDecorations()
 		{
-			RandomUtils.Seed = Block.GetBlockKey(Col, Row);
 			Script.InitRandomDecorations();
 		}
 

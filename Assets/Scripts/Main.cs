@@ -37,8 +37,15 @@ public class Main : MonoBehaviour
 
 	}
 
+    void OnApplicationQuit()
+    {
+        Debug.Log("Game ended");
+        game.ApplicationQuit();
+    }
+
 	private void Test()
 	{
+
 	}
 
 }

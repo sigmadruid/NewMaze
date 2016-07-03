@@ -11,18 +11,22 @@ namespace GameLogic
 {
     public class HeroProxy : Proxy
     {
+        public HeroRecord Record;
+
 		private List<HeroData> heroDataList;
-        private Dictionary<int, HeroData> heroDataDic;
+        private Dictionary<int, HeroData> heroDataDic = new Dictionary<int, HeroData>();
 
-        public HeroProxy()
+        public void Init()
         {
-			heroDataDic = new Dictionary<int, HeroData>();
+            int kid;
+            kid = IDManager.Instance.GetID(IDType.Hero, 1);
+            heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
+            kid = IDManager.Instance.GetID(IDType.Hero, 2);
+            heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
+        }
 
-			int kid;
-			kid = IDManager.Instance.GetID(IDType.Hero, 1);
-			heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
-			kid = IDManager.Instance.GetID(IDType.Hero, 2);
-			heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
+        public void Dispose()
+        {
         }
 
 		public List<HeroData> GetAllHeroDataList()

@@ -59,6 +59,7 @@ namespace GameLogic
             Looper.AddTask(TaskEnum.ResourceUpdate, ResourceManager.RESOURCE_UPDATE_INTERVAL, ResourceManager.Tick);
 
 			ApplicationFacade.Instance.Startup();
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
 
 			hasInit = true;
 		}
@@ -76,6 +77,11 @@ namespace GameLogic
 			LoadingStageEnum = stageEnum;
 			SwitchStageComplete();
 		}
+
+        public void ApplicationQuit()
+        {
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.SERIALIZE_GAME);
+        }
 
 		#region Stage Management
 

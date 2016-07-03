@@ -9,24 +9,37 @@ using Base;
 
 namespace GameLogic
 {
-    public class Hall
+    public class Hall : Entity
     {
-		public string Uid;
+        public Vector3 LeavePosition;
 
-		public HallScript Script;
-		public HallData Data;
+        public new HallData Data
+        {
+            get { return data as HallData; }
+            protected set { data = value; }
+        }
 
-		public Vector3 WorldPosition;
+        public new HallScript Script
+        {
+            get { return script as HallScript; }
+            protected set { script = value; }
+        }
 
 		private static Hall instance;
 		public static Hall Instance { get { return instance; } }
 
-		public void SetPosition(Vector3 position)
-		{
-			WorldPosition = position;
-			Script.transform.position = position;
-		}
+        public new HallRecord ToRecord()
+        {
+            HallRecord record = new HallRecord();
+            record.Kid = Data.Kid;
+            record.LeavePosition = new Vector3Record(LeavePosition);
+            return record;
+        }
 
+        public static Hall Create(HallRecord record)
+        {
+            return Create(record.Kid);
+        }
 		public static Hall Create(int kid)
 		{
 			ResourceManager resManager = ResourceManager.Instance;

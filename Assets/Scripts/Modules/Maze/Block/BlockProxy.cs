@@ -33,7 +33,7 @@ namespace GameLogic
 			StartNode = mazeTable.GetNode(mazeData.StartCol, mazeData.StartRow);
 
             InitGlobalExplorationPositions();
-            TestGlobalExplorationPositions();
+//            TestGlobalExplorationPositions();
 		}
 
 		public void Dispose()
@@ -192,9 +192,8 @@ namespace GameLogic
 		public void UpdateSearchIndex(int col, int row)
 		{
 			int scope = GlobalConfig.BlockConfig.RefreshScope;
-			mazeTable.IterateNodesInScope(col, row, scope, (object param) =>
+            mazeTable.IterateNodesInScope(col, row, scope, (MazeNode node) =>
         	{
-				MazeNode node = param as MazeNode;
 				node.SearchIndex = -1;
 			});
 			MazeNode startNode = mazeTable.GetNode(col, row);

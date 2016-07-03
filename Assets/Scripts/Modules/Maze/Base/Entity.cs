@@ -37,6 +37,17 @@ namespace GameLogic
             get { return Script.transform.localEulerAngles.y; }
         }
 
+        public Vector2 MazePosition
+        {
+            get
+            {
+                float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
+                int col, row;
+                MazeUtil.GetMazePosition(WorldPosition, blockSize, out col, out row);
+                return new Vector2(col, row);
+            }
+        }
+
 		public virtual void SetPosition(Vector3 position)
 		{
 			Script.transform.position = position;
