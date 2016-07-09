@@ -53,6 +53,8 @@ namespace GameLogic
             string persistPath = Application.persistentDataPath + "/GameData.bin";
             if(Hero.Instance.Info.IsAlive)
             {
+                if (Hero.Instance.IsInHall)
+                    monsterProxy.DoRecordInHall();
                 monsterProxy.DoRecordBlock();
                 hallProxy.DoRecord();
 

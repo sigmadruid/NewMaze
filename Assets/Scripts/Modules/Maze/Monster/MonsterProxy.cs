@@ -138,11 +138,9 @@ namespace GameLogic
             monsterBlockDic.Clear();
         }
 
-        public List<MonsterRecord> InitRecordBlockList(int blockKey)
+        public void InitRecordBlockList(int blockKey)
 		{
-            List<MonsterRecord> list = new List<MonsterRecord>();
-            recordBlockDic[blockKey] = list;
-            return list;
+            recordBlockDic[blockKey] = new List<MonsterRecord>();
 		}
 		public List<MonsterRecord> GetRecordBlockList(int blockKey)
 		{
@@ -157,18 +155,17 @@ namespace GameLogic
 			return GetRecordBlockList(blockKey);
 		}
         /// <summary>
-        /// Record all the active monsters in blocks. Other inactive monsters have already recorded when they hide.
+        /// Record all the active monsters in blocks. Other inactive monsters have been recorded when they hide.
         /// </summary>
         public void DoRecordBlock()
         {
-            var enumerator = monsterBlockDic.GetEnumerator();
             BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
             blockProxy.Iterate((Block block) =>
                 {
                     int blockKey = Block.GetBlockKey(block.Col, block.Row);
                     InitRecordBlockList(blockKey);
                 });
-            enumerator = monsterBlockDic.GetEnumerator();
+            var enumerator = monsterBlockDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
                 Monster monster = enumerator.Current.Value;
@@ -240,9 +237,11 @@ namespace GameLogic
             monsterHallDic.Clear();
         }
 
-        public void InitRecordHallList(int hallKid)
+        public List<MonsterRecord> InitRecordHallList(int hallKid)
         {
-            recordHallDic[hallKid] = new List<MonsterRecord>();
+            List<MonsterRecord> list = new List<MonsterRecord>();
+            recordHallDic[hallKid] = list;
+            return list;
         }
         public List<MonsterRecord> GetRecordHallList(int hallKid)
         {
@@ -252,7 +251,16 @@ namespace GameLogic
         }
         public void DoRecordInHall()
         {
-            
+            var enumerator = monsterHallDic.GetEnumerator();
+            List<MonsterRecord> recordList = InitRecordHallList(Hall.Instance.Data.Kid);
+            while(enumerator.MoveNext())
+            {
+                Monster monster = enumerator.Current.Value;
+                if(monster.Info.IsAlive)
+                {
+                    recordList.Add(monster.ToRecord());
+                }
+            }
         }
 
         #endregion

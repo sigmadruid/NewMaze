@@ -142,7 +142,6 @@ namespace GameLogic
                 Init(monster);
 			}
 
-            monster.InHall = false;
 			return monster;
 		}
         public static Monster Create(int kid)
@@ -152,7 +151,6 @@ namespace GameLogic
             monster.Data = MonsterDataManager.Instance.GetData(kid) as MonsterData;
             monster.Info = new MonsterInfo(monster.Data);
             Init(monster);
-            monster.InHall = true;
             return monster;
         }
         public static void Init(Monster monster)

@@ -45,7 +45,7 @@ public class Main : MonoBehaviour
 
 	private void Test()
 	{
-
+        Debug.Log(Application.persistentDataPath);
 	}
 
 }

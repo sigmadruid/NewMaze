@@ -157,7 +157,7 @@ namespace GameLogic
                 {
                     MonsterRecord record = recordList[i];
                     Monster monster = Monster.Create(record);
-                    InitMonsterInHall(monster, monster.WorldPosition);
+                    InitMonsterInHall(monster, record.WorldPosition.ToVector3());
                 }
             }
             else
