@@ -52,9 +52,11 @@ namespace GameLogic
 
 		BATTLE_PAUSE,
 
-        //Others
+        //Record
         DESERIALIZE_GAME,
         SERIALIZE_GAME,
-		
+
+        //Input
+        MOUSE_UP,
 	}
 }

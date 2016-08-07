@@ -54,7 +54,15 @@ namespace GameLogic
 
 		private void OnUpdate()
 		{
-			heroScript.Move(inputManager.DirectionVector, 3f);
+            if(inputManager.MouseHitPosition != Vector3.zero)
+            {
+                if(MathUtils.XZSqrDistance(heroScript.transform.position, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                {
+                    Vector3 direction = MathUtils.XZDirection(heroScript.transform.position, inputManager.MouseHitPosition);
+                    heroScript.Move(direction, 3f);
+                }
+            }
+
 		}
 	}
 }

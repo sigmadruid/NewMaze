@@ -51,7 +51,6 @@ namespace GameLogic
 			}
 
 			ConfigManager.Instance.InitAllData();
-			InputManager.Instance.Init();
 
 			Looper = new GameLooper();
 			Looper.AddTask(TaskEnum.AIUpdate, -1f, AICore.Update);

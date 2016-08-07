@@ -113,7 +113,6 @@ namespace Base
 			if (!popupDic.ContainsKey(path))
 			{
 				view = ResourceManager.Instance.CreateAsset<T>(path);
-                view.GetComponent<Canvas>().worldCamera = GameObject.Find("UI Camera").GetComponent<Camera>();
                 view.transform.SetParent(RootTransform.Instance.UIPanelRoot);
                 view.RectTransform.offsetMin = Vector2.zero;
                 view.RectTransform.offsetMax = Vector2.zero;

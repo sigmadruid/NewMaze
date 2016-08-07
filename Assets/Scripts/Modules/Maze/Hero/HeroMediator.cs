@@ -30,7 +30,8 @@ namespace GameLogic
 			return new Enum[]
 			{
 				NotificationEnum.HERO_INIT,
-				NotificationEnum.HERO_CONVERT,
+                NotificationEnum.MOUSE_UP,
+                NotificationEnum.HERO_CONVERT,
 				NotificationEnum.BATTLE_PAUSE,
 				NotificationEnum.HERO_TRANSPORT,
 			};
@@ -46,6 +47,11 @@ namespace GameLogic
                     HandleHeroInit(record);
 					break;
 				}
+                case NotificationEnum.MOUSE_UP:
+                {
+                    HandleHeroAttack();
+                    break;
+                }
 				case NotificationEnum.HERO_CONVERT:
 				{
 					int heroKid = (int)notification.Body;
@@ -108,11 +114,16 @@ namespace GameLogic
 			convertEffect.Deactive();
 
 			//Input
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Attack, OnHeroAttack);
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, OnHeroFunction);
+//            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Attack, OnHeroAttack);
+//            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, OnHeroFunction);
 
 //            hero.Info.AddHP(-950);
 		}
+
+        private void HandleHeroAttack()
+        {
+
+        }
 
 		private void HandleHeroConvert(int heroKid)
 		{
@@ -148,11 +159,6 @@ namespace GameLogic
 		
 		#region Event Handlers
 
-		private void OnHeroAttack()
-		{
-			if (hero != null)
-				hero.Attack();
-		}
 		private void OnHeroFunction()
 		{
 			if (hero != null)

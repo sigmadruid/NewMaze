@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,10 +16,33 @@ namespace Base
 	public class InputManager 
 	{
         private Dictionary<int, KeyboardAction> keyboardActionDic = new Dictionary<int, KeyboardAction>();
+        private EventSystem eventSystem;
+        public EventSystem InputSystem
+        {
+            get 
+            { 
+                if (eventSystem == null) 
+                    eventSystem = GameObject.FindObjectOfType<EventSystem>();
+                return eventSystem;
+            }
+        }
+        private GraphicRaycaster uiRaycaster;
+        public GraphicRaycaster UIRaycaster
+        {
+            get 
+            { 
+                if (uiRaycaster == null) 
+                    uiRaycaster = GameObject.FindObjectOfType<GraphicRaycaster>();
+                return uiRaycaster;
+            }
+        }
+
+        #region Properties
 
         public bool IsPause { get; set; }
-
         public Vector3 DirectionVector { get; private set; }
+        public Vector3 MouseHitPosition { get; private set; }
+        public GameObject MouseHitObject { get; private set; }
 
         private bool enable = true;
         public bool Enable
@@ -28,17 +54,12 @@ namespace Base
                 if (!enable)
                 {
                     DirectionVector = Vector3.zero;
+                    MouseHitPosition = Vector3.zero;
                 }
             }
         }
 
-	    private const KeyCode KeyAttack = KeyCode.J;
-	    private const KeyCode KeyFunction = KeyCode.U;
-	    private const KeyCode KeyMazeMap = KeyCode.Tab;
-
-        public Action CallbackAttack;
-        public Action CallbackFunction;
-        public Action CallbackMazeMap;
+        #endregion
 
 		private static InputManager instance;
 		public static InputManager Instance
@@ -53,6 +74,7 @@ namespace Base
 		public void Init()
 		{
             Array typeArray = Enum.GetValues(typeof(KeyboardActionType));
+            keyboardActionDic.Clear();
             foreach(var obj in typeArray)
             {
                 KeyboardActionType type = (KeyboardActionType)obj;
@@ -68,12 +90,38 @@ namespace Base
 		{
 			if (!Enable) return;
 
+            MouseHitObject = null;
             if(!IsPause)
             {
                 float xOffset = Input.GetAxisRaw("Horizontal");
                 float zOffset = Input.GetAxisRaw("Vertical");
                 DirectionVector = Quaternion.Euler(Vector3.up * (-45f)) * new Vector3(xOffset, 0, zOffset);
                 DirectionVector.Normalize();
+                if(DirectionVector != Vector3.zero)
+                    MouseHitPosition = Vector3.zero;
+
+                if(Input.GetMouseButtonDown(0))
+                {
+                    PointerEventData eventData = new PointerEventData(InputSystem);
+                    eventData.pressPosition = Input.mousePosition;
+                    eventData.position = Input.mousePosition;
+                    List<RaycastResult> raycastList = new List<RaycastResult>();
+                    UIRaycaster.Raycast(eventData, raycastList);
+                    if(raycastList.Count == 0)
+                    {
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit hitinfo;
+                        if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHitMask))
+                        {
+                            MouseHitPosition = hitinfo.point;
+                            if(1 << hitinfo.collider.gameObject.layer != Layers.LayerMouse)
+                            {
+                                MouseHitObject = hitinfo.collider.gameObject;
+                            }
+                        }
+                    }
+                }
+
             }
 
             Dictionary<int, KeyboardAction>.Enumerator enumerator = keyboardActionDic.GetEnumerator();

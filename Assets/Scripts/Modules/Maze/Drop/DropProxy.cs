@@ -85,7 +85,7 @@ namespace GameLogic
 		{
 			foreach(Drop drop in dropDic.Values)
 			{
-				if (Vector3.SqrMagnitude(drop.WorldPosition - position) < GlobalConfig.InputConfig.NearSqrDistance)
+				if (Vector3.SqrMagnitude(drop.WorldPosition - position) < GlobalConfig.DropConfig.NearSqrDistance)
 				{
 					return drop;
 				}

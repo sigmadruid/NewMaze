@@ -31,6 +31,9 @@ namespace GameLogic
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
+        public bool CanMove = true;
+        public bool CanAttack = true;
+
 		private InputManager inputManager;
 		private BattleProxy battleProxy;
 
@@ -47,7 +50,36 @@ namespace GameLogic
         {
             if(!IsUpdating)
                 return;
-            Move(inputManager.DirectionVector);
+
+            Debug.LogError(inputManager.MouseHitPosition);
+            if(CanAttack && inputManager.MouseHitObject != null)
+            {
+                Attack();
+            }
+
+            if(CanMove)
+            {
+                if(inputManager.DirectionVector != Vector3.zero)
+                {
+                    Move(inputManager.DirectionVector);
+                }
+                else if(inputManager.MouseHitPosition != Vector3.zero)
+                {
+                    if(MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                    {
+                        Vector3 direction = MathUtils.XZDirection(WorldPosition, inputManager.MouseHitPosition);
+                        Move(direction);
+                    }
+                }
+                else
+                {
+                    Move(Vector3.zero);
+                }
+            }
+            else
+            {
+                Move(Vector3.zero);
+            }
         }
         protected override void SlowUpdate()
         {
@@ -102,21 +134,27 @@ namespace GameLogic
 			Script.Move(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 
-		public void Attack()
+        public void Attack()
 		{
 			if (!Info.IsAlive)
 			{
 				return;
 			}
-            Monster targetMonster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetNearestMonster(WorldPosition);
-            if(targetMonster != null)
+
+            GameObject target = inputManager.MouseHitObject;
+            if(target != null && target.CompareTag(Tags.Monster) && MathUtils.XZDistance(target.transform.position, WorldPosition) < GlobalConfig.HeroConfig.AttackDistance)
             {
-                Vector3 direction = MathUtils.XZDirection(WorldPosition, targetMonster.WorldPosition);
+                CanMove = false;
+                Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
                 SetRotation(direction);
+                Script.Attack(null, OnAttackEffect, () =>
+                    {
+                        CanMove = true;
+                    });
             }
-			Script.Attack(OnAttack);
+
 		}
-        private void OnAttack(Dictionary<AnimatorParamKey, int> paramDic)
+        private void OnAttackEffect(Dictionary<AnimatorParamKey, int> paramDic)
 		{
 			if (paramDic != null && paramDic.Count > 0)
 			{

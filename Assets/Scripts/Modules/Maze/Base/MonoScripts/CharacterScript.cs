@@ -19,13 +19,17 @@ namespace GameLogic
     	public Transform TopPosTransform;
     	public Transform BottomPosTransform;
 
-    	public Utils.CallbackVoid CallbackUpdate;
-    	public Utils.CallbackVoid CallbackSlowUpdate;
-    	public Utils.CallbackVoid CallbackDie;
+        public Action CallbackUpdate;
+        public Action CallbackSlowUpdate;
+        public Action CallbackDie;
     	
-        private System.Action CallbackAnimatorTransition;
-        private System.Action<Dictionary<AnimatorParamKey, int>> CallbackAnimatorEffect;
-        private System.Action CallbackAnimatorEnds;
+        private Action CallbackAnimatorStarts;
+        private Action<Dictionary<AnimatorParamKey, int>> CallbackAnimatorEffect;
+        private Action CallbackAnimatorEnds;
+
+        private Action CallbackAttackStarts;
+        private Action<Dictionary<AnimatorParamKey, int>> CallbackAttackEffect;
+        private Action CallbackAttackEnds;
 
     	public Dictionary<int, AnimatorData> AnimatorDataDic;
 
@@ -79,6 +83,11 @@ namespace GameLogic
 
     		if (transitionEnds)
     		{
+                if(CallbackAnimatorStarts != null)
+                {
+                    CallbackAnimatorStarts();
+                    CallbackAnimatorStarts = null;
+                }
     			if (CallbackAnimatorEffect != null && currentStateInfo.normalizedTime >= currentAnimatorData.NormalTime)
     			{
     				CallbackAnimatorEffect(currentAnimatorData.ParamDic);
@@ -134,7 +143,7 @@ namespace GameLogic
     		moveScript.LookAt(lookDirection);
     	}
 
-        public void Attack(System.Action<Dictionary<AnimatorParamKey, int>> callbackEffect)
+        public void Attack(Action callbackStarts, Action<Dictionary<AnimatorParamKey, int>> callbackEffect, Action callbackEnds)
     	{
     		if (Game.Instance.IsPause) { return; }
 
@@ -142,19 +151,33 @@ namespace GameLogic
     		{
     			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoAttack);
     			animator.SetFloat(AnimatorDataManager.Instance.ParamAttackRandomValue, UnityEngine.Random.value);
-    			transitionEnds = false;
+                transitionEnds = false;
     			
-    			CallbackAnimatorEffect = callbackEffect;
-    			CallbackAnimatorEnds = OnAttackEnds;
+                CallbackAttackStarts = callbackStarts;
+                CallbackAttackEffect = callbackEffect;
+                CallbackAttackEnds = callbackEnds;
+
+                CallbackAnimatorStarts = OnAttackStarts;
+                CallbackAnimatorEffect = OnAttackEffect;
+                CallbackAnimatorEnds = OnAttackEnds;
 
     			OnAttackStarts();
     		}
     	}
     	protected virtual void OnAttackStarts()
     	{
+            if (CallbackAttackStarts != null)
+                CallbackAttackStarts();
     	}
+        protected virtual void OnAttackEffect(Dictionary<AnimatorParamKey, int> paramDic)
+        {
+            if (CallbackAttackEffect != null)
+                CallbackAttackEffect(paramDic);
+        }
     	protected virtual void OnAttackEnds()
     	{
+            if (CallbackAttackEnds != null)
+                CallbackAttackEnds();
     	}
 
     	public void Hit()
@@ -192,6 +215,8 @@ namespace GameLogic
     	{
     		if (CallbackDie != null)
     		{
+                AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                Debug.LogError(currentStateInfo.normalizedTime);
     			CallbackDie();
     		}
     	}

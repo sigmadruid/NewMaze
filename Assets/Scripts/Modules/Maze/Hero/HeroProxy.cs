@@ -20,9 +20,11 @@ namespace GameLogic
         {
             int kid;
             kid = IDManager.Instance.GetID(IDType.Hero, 1);
-            heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
+            if (!heroDataDic.ContainsKey(kid))
+                heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
             kid = IDManager.Instance.GetID(IDType.Hero, 2);
-            heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
+            if (!heroDataDic.ContainsKey(kid))
+                heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
         }
 
         public void Dispose()

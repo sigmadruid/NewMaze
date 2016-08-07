@@ -53,7 +53,7 @@ namespace GameLogic
             recordHallDic.Clear();
 		}
 
-        public Monster GetNearestMonster(Vector3 position, float maxSqrDistance = 4f)
+        public Monster GetNearestMonster(Vector3 position, float maxSqrDistance)
         {
             Dictionary<string, Monster> monsterDic = Hero.Instance.IsInHall ? monsterHallDic : monsterBlockDic;
             Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();

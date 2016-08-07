@@ -1,14 +1,15 @@
+using UnityEngine;
 using System;
 namespace GameLogic
 {
 	public static class Layers
 	{
-		public const int LayerHero 			= 1 << 10;
-		public const int LayerMonster 		= 1 << 11;
-		public const int LayerBlock 		= 1 << 12;
-		public const int LayerNPC 			= 1 << 13;
-		public const int LayerExploration 	= 1 << 14;
-		public const int LayerBullet	 	= 1 << 15;
+        public static readonly int LayerHero = LayerMask.GetMask("LayerHero");
+        public static readonly int LayerMonster = LayerMask.GetMask("LayerMonster");
+        public static readonly int LayerBlock = LayerMask.GetMask("LayerBlock");
+        public static readonly int LayerExploration = LayerMask.GetMask("LayerExploration");
+        public static readonly int LayerBullet = LayerMask.GetMask("LayerBullet");
+        public static readonly int LayerMouse = LayerMask.GetMask("LayerMouse");
 	}
     public static class Tags
     {

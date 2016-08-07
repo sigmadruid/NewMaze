@@ -46,7 +46,7 @@ namespace GameLogic
 		}
 		public void Attack()
 		{
-			Script.Attack(OnAttack);
+			Script.Attack(null, OnAttack, null);
 		}
         private void OnAttack(Dictionary<AnimatorParamKey, int> paramDic)
 		{

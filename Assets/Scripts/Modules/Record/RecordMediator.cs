@@ -15,6 +15,8 @@ namespace GameLogic
         private MonsterProxy monsterProxy;
         private HallProxy hallProxy;
 
+        private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
+
         public override void OnRegister()
         {
             base.OnRegister();
@@ -50,7 +52,9 @@ namespace GameLogic
 
         private void HandleSerializeGame()
         {
-            string persistPath = Application.persistentDataPath + "/GameData.bin";
+            if(Game.Instance.CurrentStageType != StageEnum.Maze)
+                return;
+            
             if(Hero.Instance.Info.IsAlive)
             {
                 if (Hero.Instance.IsInHall)
@@ -65,7 +69,7 @@ namespace GameLogic
                 gameRecord.MonstersInHall = monsterProxy.RecordHallDic;
                 gameRecord.Hall = hallProxy.Record;
 
-                using(Stream stream = new FileStream(persistPath, FileMode.Create, FileAccess.ReadWrite))
+                using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(stream, gameRecord);
@@ -73,7 +77,7 @@ namespace GameLogic
             }
             else//If dead, delete the record.
             {
-                File.Delete(persistPath);
+                RecordMediator.DeleteRecord();
             }
         }
         private void HandleDeserializeGame()
@@ -97,6 +101,11 @@ namespace GameLogic
                 monsterProxy.RecordHallDic = gameRecord.MonstersInHall;
                 hallProxy.Record = gameRecord.Hall;
             }
+        }
+
+        public static void DeleteRecord()
+        {
+            File.Delete(RECORD_PATH);
         }
     }
 }

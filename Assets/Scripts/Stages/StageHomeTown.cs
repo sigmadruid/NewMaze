@@ -20,6 +20,7 @@ namespace GameLogic
 
 			Game.Instance.Looper.SetActive(TaskEnum.InputUpdate, true);
 
+            InputManager.Instance.Init();
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
 
@@ -33,6 +34,7 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_DISPOSE);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DISPOSE);
 
+            InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();

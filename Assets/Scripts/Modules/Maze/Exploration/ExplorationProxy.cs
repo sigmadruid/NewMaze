@@ -102,7 +102,7 @@ namespace GameLogic
         {
             foreach(Exploration expl in enteredExplorationSet)
             {
-                if (Vector3.SqrMagnitude(expl.WorldPosition - position) < GlobalConfig.InputConfig.NearSqrDistance)
+                if (Vector3.SqrMagnitude(expl.WorldPosition - position) < GlobalConfig.ExplorationConfig.NearSqrDistance)
                 {
                     return expl;
                 }

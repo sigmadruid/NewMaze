@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 
 using Base;
+using GameLogic;
 
 namespace StaticData
 {
@@ -22,6 +23,12 @@ namespace StaticData
         Monster,
     }
 
+    public class HeroConfig
+    {
+        public readonly float MonsterClickSearchDistance = 1f;
+        public readonly float AttackDistance = 2f; //For temp use.
+    }
+
 	public class BattleConfig
 	{
 		public readonly float OutBattleDelay = 5f;
@@ -33,7 +40,7 @@ namespace StaticData
         public readonly int PassagePreloadCount = 10;
 		public readonly int RoomPreloadCount = 10;
 
-		public readonly int RefreshScope = 10;
+		public readonly int RefreshScope = 4;
 
 		public readonly string MockPassagePath = "MazeBlocks/Mock/MockPassage";
 		public readonly string MockLinkPath = "MazeBlocks/Mock/MockLink";
@@ -49,10 +56,22 @@ namespace StaticData
 		public readonly Vector3 HallPosition = new Vector3(10000, 0, 10000);
 	}
 
-	public class InputConfig
+	public class DropConfig
 	{
 		public readonly float NearSqrDistance = 4f;
 	}
+
+    public class ExplorationConfig
+    {
+        public readonly float NearSqrDistance = 4f;
+    }
+
+    public class InputConfig
+    {
+        public readonly float NearSqrDistance = 0.1f;
+        public readonly int MouseHitMask = Layers.LayerMouse | Layers.LayerMonster;
+
+    }
 
 	public class CameraConfig
 	{
@@ -71,9 +90,12 @@ namespace StaticData
 
     public class GlobalConfig
     {
+        public static HeroConfig HeroConfig = new HeroConfig();
         public static BlockConfig BlockConfig = new BlockConfig();
 		public static BattleConfig BattleConfig = new BattleConfig();
-		public static InputConfig InputConfig = new InputConfig();
+        public static DropConfig DropConfig = new DropConfig();
+        public static ExplorationConfig ExplorationConfig = new ExplorationConfig();
+        public static InputConfig InputConfig = new InputConfig();
 		public static CameraConfig CameraConfig = new CameraConfig();
 		public static EnvironmentConfig EnvironmentConfig = new EnvironmentConfig();
 		public static HallConfig HallConfig = new HallConfig();

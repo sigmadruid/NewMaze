@@ -48,6 +48,7 @@ namespace GameLogic
 
 			Game.Instance.Looper.SetAllActive(true);
 
+            InputManager.Instance.Init();
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, () =>
                 {
                     ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
@@ -70,6 +71,7 @@ namespace GameLogic
 			explorationProxy.Dispose();
 			battleProxy.Dispose();
 			
+            InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();

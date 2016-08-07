@@ -35,10 +35,12 @@ public class HeroScript : CharacterScript
 
 	protected override void OnAttackStarts ()
 	{
+        base.OnAttackStarts();
 		MeleeTrail.Emit = true;
 	}
 	protected override void OnAttackEnds ()
 	{
+        base.OnAttackEnds();
 		MeleeTrail.Emit = false;
 	}
 
