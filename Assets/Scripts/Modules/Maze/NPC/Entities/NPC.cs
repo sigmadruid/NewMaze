@@ -72,6 +72,7 @@ namespace GameLogic
 		{
 			if (npc != null)
 			{
+                HUDIcon.Recycle(npc.Script.Icon);
 				npc.Data = null;
 				npc.EventData = null;
 				npc.Script.StopAllCoroutines();

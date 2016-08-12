@@ -27,7 +27,8 @@ namespace GameLogic
 		{
 			return new Enum[]
 			{
-				NotificationEnum.ENVIRONMENT_INIT,
+                NotificationEnum.ENVIRONMENT_INIT,
+                NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP,
 			};
 		}
 		
@@ -38,6 +39,10 @@ namespace GameLogic
 				case NotificationEnum.ENVIRONMENT_INIT:
 					HandleEnvironmentInit();
 					break;
+                case NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP:
+                    bool show = (bool)notification.Body;
+                    HandleEnvironmentShowMazeMap(show);
+                    break;
 			}
 		}
 
@@ -45,12 +50,16 @@ namespace GameLogic
 		{
 			script = GameObject.Find("Environment").GetComponent<EnvironmentScript>();
 			script.CallbackUpdate = OnUpdate;
-			script.LightScript.CallbackConvertingEnds = OnConvertingEnds;
+			script.MainLightScript.CallbackConvertingEnds = OnConvertingEnds;
 
 			proxy.IsNight = false;
 			timer = 0;
 			duration = GlobalConfig.EnvironmentConfig.DayDuration;
 		}
+        private void HandleEnvironmentShowMazeMap(bool show)
+        {
+            script.MazeMapLight.enabled = show;
+        }
 
 		private void OnUpdate()
 		{
@@ -59,7 +68,7 @@ namespace GameLogic
 			{
 				timer = 0;
 				duration = proxy.IsNight ? GlobalConfig.EnvironmentConfig.DayDuration : GlobalConfig.EnvironmentConfig.NightDuration;
-				script.LightScript.DayNightConvert(proxy.IsNight);
+				script.MainLightScript.DayNightConvert(proxy.IsNight);
 				string title = proxy.IsNight ? "Day Time" : "Night Time";
 				TitlePanel.Show(title);
 			}
@@ -68,7 +77,7 @@ namespace GameLogic
 		private void OnConvertingEnds()
 		{
 			proxy.IsNight = !proxy.IsNight;
-            DispatchNotification(NotificationEnum.ENVIRONMENT_CHANGE, proxy.IsNight);
+            DispatchNotification(NotificationEnum.ENVIRONMENT_DAYNIGHT_CHANGE, proxy.IsNight);
 		}
     }
 }

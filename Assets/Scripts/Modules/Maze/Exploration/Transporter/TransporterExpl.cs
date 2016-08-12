@@ -30,6 +30,7 @@ namespace GameLogic
                 ConfirmPanel.Show("Transporter", "Do you want to transport back to maze?", DoTransportBack, OnCancel);
             }
             Game.Instance.SetPause(true);
+            Debug.LogError("derived function");
         }
 
         private void DoTransportForward()

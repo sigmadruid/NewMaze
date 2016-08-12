@@ -14,20 +14,20 @@ public class NPCScript : EntityScript
 	public Transform IconPos;
 
 	[HideInInspector]
-	public NPCIcon NpcIcon;
+	public HUDIcon Icon;
 
 	void Awake()
 	{
-		NpcIcon = NPCIcon.CreateNPCIcon();
-		NpcIcon.CallbackClick = OnIconClick;
-		NpcIcon.gameObject.SetActive(false);
+        Icon = HUDIcon.Create(HUDIconType.NPC);
+		Icon.CallbackClick = OnIconClick;
+		Icon.gameObject.SetActive(false);
 	}
 
 	void Update()
 	{
-		if (NpcIcon.gameObject.activeSelf)
+		if (Icon.gameObject.activeSelf)
 		{
-			NpcIcon.UpdatePosition(IconPos.position);
+			Icon.UpdatePosition(IconPos.position);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class NPCScript : EntityScript
 	{
 		if (!CheckNPC()) return;
 
-		NpcIcon.gameObject.SetActive(true);
+		Icon.gameObject.SetActive(true);
 		if (CallbackEnter != null)
 		{
 			CallbackEnter();
@@ -45,7 +45,7 @@ public class NPCScript : EntityScript
 	{
 		if (!CheckNPC()) return;
 
-		NpcIcon.gameObject.SetActive(false);
+		Icon.gameObject.SetActive(false);
 		if (CallbackExit != null)
 		{
 			CallbackExit();

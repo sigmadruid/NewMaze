@@ -29,7 +29,7 @@ namespace GameLogic
                 NotificationEnum.BLOCK_DESPAWN,
                 NotificationEnum.HALL_SPAWN,
                 NotificationEnum.HALL_DESPAWN,
-                NotificationEnum.ENVIRONMENT_CHANGE,
+                NotificationEnum.ENVIRONMENT_DAYNIGHT_CHANGE,
 				NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -62,7 +62,7 @@ namespace GameLogic
                     HandleHallDespawn(hall);
                     break;
                 }
-                case NotificationEnum.ENVIRONMENT_CHANGE:
+                case NotificationEnum.ENVIRONMENT_DAYNIGHT_CHANGE:
                 {
                     bool isNight = (bool)notification.Body;
                     HandleEnvironmentChange(isNight);

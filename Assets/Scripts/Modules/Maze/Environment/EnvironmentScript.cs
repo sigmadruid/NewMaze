@@ -11,11 +11,8 @@ public class EnvironmentScript : MonoBehaviour
 
 	public Utils.CallbackVoid CallbackUpdate;
 
-	public LightScript LightScript;
-
-	void Awake()
-	{
-	}
+	public LightScript MainLightScript;
+    public Light MazeMapLight;
 
 	void Update()
 	{

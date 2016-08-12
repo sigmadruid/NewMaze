@@ -26,14 +26,14 @@ namespace Base
                 return eventSystem;
             }
         }
-        private GraphicRaycaster uiRaycaster;
-        public GraphicRaycaster UIRaycaster
+        private GraphicRaycaster[] uiRaycasters;
+        public GraphicRaycaster[] UIRaycasters
         {
             get 
             { 
-                if (uiRaycaster == null) 
-                    uiRaycaster = GameObject.FindObjectOfType<GraphicRaycaster>();
-                return uiRaycaster;
+                if (uiRaycasters == null) 
+                    uiRaycasters = GameObject.FindObjectsOfType<GraphicRaycaster>();
+                return uiRaycasters;
             }
         }
 
@@ -106,7 +106,11 @@ namespace Base
                     eventData.pressPosition = Input.mousePosition;
                     eventData.position = Input.mousePosition;
                     List<RaycastResult> raycastList = new List<RaycastResult>();
-                    UIRaycaster.Raycast(eventData, raycastList);
+                    for(int i = 0; i < UIRaycasters.Length; ++i)
+                    {
+                        GraphicRaycaster raycaster = UIRaycasters[i];
+                        raycaster.Raycast(eventData, raycastList);
+                    }
                     if(raycastList.Count == 0)
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

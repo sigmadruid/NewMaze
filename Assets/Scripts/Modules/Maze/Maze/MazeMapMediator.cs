@@ -71,6 +71,7 @@ namespace GameLogic
 				PopupManager.Instance.RemovePopup(panel);
 				panel.Show(false, Vector3.zero, 0f);
 			}
+            DispatchNotification(NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP, show);
 		}
 		private void HandleMazeMapReset()
 		{

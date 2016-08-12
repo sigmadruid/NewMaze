@@ -51,7 +51,6 @@ namespace GameLogic
             if(!IsUpdating)
                 return;
 
-            Debug.LogError(inputManager.MouseHitPosition);
             if(CanAttack && inputManager.MouseHitObject != null)
             {
                 Attack();

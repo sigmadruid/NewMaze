@@ -246,21 +246,23 @@ namespace GameLogic
             InitMaterial();
             if(isTransparent)
             {
-                material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-                material.SetInt("_Mode", 3);
-                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                material.SetInt("_ZWrite", 0);
-                material.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
+                material.shader = Utils.TransparentShader;
+//                material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+//                material.SetInt("_Mode", 3);
+//                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+//                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+//                material.SetInt("_ZWrite", 0);
+//                material.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
             }
             else
             {
-                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                material.SetInt("_Mode", 0);
-                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-                material.SetInt("_ZWrite", 1);
-                material.SetFloat("_Mode", 1);
+                material.shader = Utils.DiffuseShader;
+//                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+//                material.SetInt("_Mode", 0);
+//                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+//                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+//                material.SetInt("_ZWrite", 1);
+//                material.SetFloat("_Mode", 1);
             }
         }
 

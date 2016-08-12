@@ -35,7 +35,7 @@ namespace GameLogic
 			return false;
 		}
 
-        public virtual void OnFunction() {}
+        public virtual void OnFunction() { Debug.LogError("base function");}
 
         protected virtual void OnEnter()
         {
@@ -54,6 +54,7 @@ namespace GameLogic
             exploration.Uid = Guid.NewGuid().ToString();
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
             exploration.Script.transform.parent = RootTransform.Instance.ExplorationRoot;
+            exploration.Script.CallbackClick = exploration.OnFunction;
             exploration.Script.CallbackEnter = exploration.OnEnter;
             exploration.Script.CallbackExit = exploration.OnExit;
             exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
@@ -63,6 +64,8 @@ namespace GameLogic
 		{
 			if (exploration != null)
 			{
+                if (exploration.Script.Icon != null)
+                    HUDIcon.Recycle(exploration.Script.Icon);
 				exploration.Data = null;
 				ResourceManager.Instance.RecycleAsset(exploration.Script.gameObject);
 				exploration.Script = null;
