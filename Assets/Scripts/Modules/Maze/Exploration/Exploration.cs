@@ -35,7 +35,7 @@ namespace GameLogic
 			return false;
 		}
 
-        public virtual void OnFunction() { Debug.LogError("base function");}
+        public virtual void OnFunction() {}
 
         protected virtual void OnEnter()
         {

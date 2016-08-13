@@ -31,8 +31,10 @@ namespace Base
         {
             get 
             { 
-                if (uiRaycasters == null) 
+                if (uiRaycasters == null || uiRaycasters[0] == null)
+                {
                     uiRaycasters = GameObject.FindObjectsOfType<GraphicRaycaster>();
+                }
                 return uiRaycasters;
             }
         }
