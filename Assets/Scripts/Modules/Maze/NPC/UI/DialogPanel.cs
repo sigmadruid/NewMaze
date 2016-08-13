@@ -14,6 +14,7 @@ namespace GameUI
 	{
         public Action CallbackDialogFinish;
 
+        public Image ImageClick;
         public Image ImageBackground;
 		public Text LabelTitle;
         public Text LabelPassage;
@@ -23,7 +24,7 @@ namespace GameUI
 
 		void Awake () 
 		{
-            EventTriggerListener.Get(ImageBackground.gameObject).onClick = OnDialogClick;
+            EventTriggerListener.Get(ImageClick.gameObject).onClick = OnDialogClick;
 		}
 
 		public void Init(int nameCode, List<int> talkList)
