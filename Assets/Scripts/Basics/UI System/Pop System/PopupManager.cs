@@ -114,6 +114,7 @@ namespace Base
 			{
 				view = ResourceManager.Instance.CreateAsset<T>(path);
                 view.transform.SetParent(RootTransform.Instance.UIPanelRoot);
+                view.transform.localPosition = Vector3.zero;
                 view.RectTransform.offsetMin = Vector2.zero;
                 view.RectTransform.offsetMax = Vector2.zero;
 				view.PrefabPath = path;
