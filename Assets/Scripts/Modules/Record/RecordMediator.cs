@@ -55,7 +55,7 @@ namespace GameLogic
             if(Game.Instance.CurrentStageType != StageEnum.Maze)
                 return;
             
-            if(Hero.Instance.Info.IsAlive)
+            if(Hero.Instance != null && Hero.Instance.Info.IsAlive)
             {
                 if (Hero.Instance.IsInHall)
                     monsterProxy.DoRecordInHall();

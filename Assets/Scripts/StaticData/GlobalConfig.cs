@@ -26,7 +26,7 @@ namespace StaticData
     public class HeroConfig
     {
         public readonly float MonsterClickSearchDistance = 1f;
-        public readonly float AttackDistance = 2f; //For temp use.
+        public readonly float AttackDistance = 2.5f; //For temp use.
     }
 
 	public class BattleConfig

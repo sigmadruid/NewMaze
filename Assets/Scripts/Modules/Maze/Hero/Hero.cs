@@ -53,31 +53,41 @@ namespace GameLogic
 
             if(CanAttack && inputManager.MouseHitObject != null)
             {
-                Attack();
-            }
-
-            if(CanMove)
-            {
-                if(inputManager.DirectionVector != Vector3.zero)
+                if(MathUtils.XZDistance(WorldPosition, inputManager.MouseHitPosition) < GlobalConfig.HeroConfig.AttackDistance)
                 {
-                    Move(inputManager.DirectionVector);
+                    Attack();
                 }
-                else if(inputManager.MouseHitPosition != Vector3.zero)
+                else
                 {
-                    if(MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                    if(CanMove)
                     {
                         Vector3 direction = MathUtils.XZDirection(WorldPosition, inputManager.MouseHitPosition);
                         Move(direction);
+                    }
+                    else
+                    {
+                        Move(Vector3.zero);
+                    }
+                }
+            }
+            else
+            {
+                if(inputManager.MouseHitPosition != Vector3.zero)
+                {
+                    if(CanMove && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                    {
+                        Vector3 direction = MathUtils.XZDirection(WorldPosition, inputManager.MouseHitPosition);
+                        Move(direction);
+                    }
+                    else
+                    {
+                        Move(Vector3.zero);
                     }
                 }
                 else
                 {
                     Move(Vector3.zero);
                 }
-            }
-            else
-            {
-                Move(Vector3.zero);
             }
         }
         protected override void SlowUpdate()
@@ -141,15 +151,12 @@ namespace GameLogic
 			}
 
             GameObject target = inputManager.MouseHitObject;
-            if(target != null && target.CompareTag(Tags.Monster) && MathUtils.XZDistance(target.transform.position, WorldPosition) < GlobalConfig.HeroConfig.AttackDistance)
+            if(target != null && target.CompareTag(Tags.Monster))
             {
-                CanMove = false;
                 Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
                 SetRotation(direction);
-                Script.Attack(null, OnAttackEffect, () =>
-                    {
-                        CanMove = true;
-                    });
+                Script.Attack(null, OnAttackEffect, null);
+                inputManager.PreventMouseAction();
             }
 
 		}

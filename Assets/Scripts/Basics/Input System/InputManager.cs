@@ -120,7 +120,7 @@ namespace Base
                         if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHitMask))
                         {
                             MouseHitPosition = hitinfo.point;
-                            if(1 << hitinfo.collider.gameObject.layer != Layers.LayerMouse)
+                            if(1 << hitinfo.collider.gameObject.layer == Layers.LayerMonster)
                             {
                                 MouseHitObject = hitinfo.collider.gameObject;
                             }
@@ -148,6 +148,12 @@ namespace Base
 	           
 			Test();
 		}
+
+        public void PreventMouseAction()
+        {
+            MouseHitObject = null;
+            MouseHitPosition = Vector3.zero;
+        }
 
         public void SetKeyboardAction(KeyboardActionType type, Action callback)
         {
