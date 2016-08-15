@@ -69,7 +69,7 @@ namespace StaticData
     public class InputConfig
     {
         public readonly float NearSqrDistance = 0.1f;
-        public readonly int MouseHitMask = Layers.LayerMouse | Layers.LayerMonster;
+        public readonly int MouseHitMask = Layers.LayerBlock | Layers.LayerMonster;
 
     }
 
