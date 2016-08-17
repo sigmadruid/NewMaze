@@ -37,7 +37,7 @@ namespace StaticData
 		public List<AnimatorParamKey> ParamKeyList = new List<AnimatorParamKey>();
 		public List<int> ParamValueList = new List<int>();
 
-		public Dictionary<AnimatorParamKey, int> ParamDic = new Dictionary<AnimatorParamKey, int>();
+        public Dictionary<AnimatorParamKey, string> ParamDic = new Dictionary<AnimatorParamKey, string>();
 	}
 }
 

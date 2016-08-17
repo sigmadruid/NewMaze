@@ -24,11 +24,11 @@ namespace GameLogic
         public Action CallbackDie;
     	
         private Action CallbackAnimatorStarts;
-        private Action<Dictionary<AnimatorParamKey, int>> CallbackAnimatorEffect;
+        private Action<Dictionary<AnimatorParamKey, string>> CallbackAnimatorEffect;
         private Action CallbackAnimatorEnds;
 
         private Action CallbackAttackStarts;
-        private Action<Dictionary<AnimatorParamKey, int>> CallbackAttackEffect;
+        private Action<Dictionary<AnimatorParamKey, string>> CallbackAttackEffect;
         private Action CallbackAttackEnds;
 
     	public Dictionary<int, AnimatorData> AnimatorDataDic;
@@ -143,7 +143,7 @@ namespace GameLogic
     		moveScript.LookAt(lookDirection);
     	}
 
-        public void Attack(Action callbackStarts, Action<Dictionary<AnimatorParamKey, int>> callbackEffect, Action callbackEnds)
+        public void Attack(Action callbackStarts, Action<Dictionary<AnimatorParamKey, string>> callbackEffect, Action callbackEnds)
     	{
     		if (Game.Instance.IsPause) { return; }
 
@@ -169,7 +169,7 @@ namespace GameLogic
             if (CallbackAttackStarts != null)
                 CallbackAttackStarts();
     	}
-        protected virtual void OnAttackEffect(Dictionary<AnimatorParamKey, int> paramDic)
+        protected virtual void OnAttackEffect(Dictionary<AnimatorParamKey, string> paramDic)
         {
             if (CallbackAttackEffect != null)
                 CallbackAttackEffect(paramDic);

@@ -45,7 +45,7 @@ namespace Battle
 			monsterDic.Clear();
 		}
 
-		public void AttackMonster(Dictionary<AnimatorParamKey, int> paramDic)
+        public void AttackMonster(Dictionary<AnimatorParamKey, string> paramDic)
 		{
 			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
 			while (enumerator.MoveNext())
@@ -78,7 +78,7 @@ namespace Battle
 			}
 		}
 
-		public void AttackHero(Monster monster, Dictionary<AnimatorParamKey, int> paramDic)
+        public void AttackHero(Monster monster, Dictionary<AnimatorParamKey, string> paramDic)
 		{
 			AttackContext ac = new AttackContext();
 			ac.Side = Side.Monster;
@@ -133,7 +133,7 @@ namespace Battle
 			return null;
 		}
 
-		private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, Dictionary<AnimatorParamKey, int> paramDic)
+        private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, Dictionary<AnimatorParamKey, string> paramDic)
 		{
             if (paramDic == null || paramDic.Count == 0)
 			{
@@ -141,17 +141,17 @@ namespace Battle
 			}
 
 			bool inArea = false;
-			AreaType areaType = (AreaType)paramDic[AnimatorParamKey.AreaType];
+            AreaType areaType = (AreaType)Enum.Parse(typeof(AreaType), paramDic[AnimatorParamKey.AreaType]);
 			if (areaType == AreaType.Fan)
 			{
-				int range = paramDic[AnimatorParamKey.Range];
-				int angle = paramDic[AnimatorParamKey.Angle];
+                int range = int.Parse(paramDic[AnimatorParamKey.Range]);
+                int angle = int.Parse(paramDic[AnimatorParamKey.Angle]);
 				inArea = MathUtils.FanContains(attackerTrans.position, attackerTrans.forward, defenderTrans.position, range, angle);
 			}
 			else if (areaType == AreaType.Rectangle)
 			{
-				int length = paramDic[AnimatorParamKey.Range];
-				int width = paramDic[AnimatorParamKey.Width];
+                int length = int.Parse(paramDic[AnimatorParamKey.Range]);
+                int width = int.Parse(paramDic[AnimatorParamKey.Width]);
 				inArea = MathUtils.RectContains(attackerTrans.position, attackerTrans.forward, width, length, defenderTrans.position);
 			}
 			return inArea;

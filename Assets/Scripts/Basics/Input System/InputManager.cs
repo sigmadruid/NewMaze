@@ -117,6 +117,7 @@ namespace Base
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit hitinfo;
+                        Debug.DrawRay(ray.origin, ray.direction, Color.red, 5f);
                         if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHitMask))
                         {
                             MouseHitPosition = hitinfo.point;

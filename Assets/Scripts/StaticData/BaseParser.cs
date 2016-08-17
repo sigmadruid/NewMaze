@@ -203,7 +203,7 @@ namespace StaticData
             }
             else
             {
-                resultVal = Enum.Parse(typeof(T), str);
+                resultVal = str;
             }
 
 			return (T)resultVal;

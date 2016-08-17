@@ -160,7 +160,7 @@ namespace GameLogic
             }
 
 		}
-        private void OnAttackEffect(Dictionary<AnimatorParamKey, int> paramDic)
+        private void OnAttackEffect(Dictionary<AnimatorParamKey, string> paramDic)
 		{
 			if (paramDic != null && paramDic.Count > 0)
 			{
