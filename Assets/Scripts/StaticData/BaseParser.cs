@@ -26,7 +26,7 @@ namespace StaticData
 
 			if (File.Exists(path))
 			{
-				StreamReader sr = new StreamReader(path);
+                StreamReader sr = new StreamReader(path, System.Text.UTF8Encoding.UTF8);
 				bool isFirstLine = true;
 				while (!sr.EndOfStream)
 				{

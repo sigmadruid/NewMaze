@@ -69,7 +69,11 @@ namespace GameLogic
 				timer = 0;
 				duration = proxy.IsNight ? GlobalConfig.EnvironmentConfig.DayDuration : GlobalConfig.EnvironmentConfig.NightDuration;
 				script.MainLightScript.DayNightConvert(proxy.IsNight);
-				string title = proxy.IsNight ? "Day Time" : "Night Time";
+                string title = null;
+                if(proxy.IsNight)
+                    title = TextDataManager.Instance.GetData("common.nighttitle");
+                else
+                    title = TextDataManager.Instance.GetData("common.daytitle");
 				TitlePanel.Show(title);
 			}
 		}

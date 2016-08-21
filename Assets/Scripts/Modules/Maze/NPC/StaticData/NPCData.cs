@@ -11,7 +11,7 @@ namespace StaticData
 
     public class NPCData : EntityData
     {
-        public int Name;
+        public string Name;
 
         public NPCAppearScene AppearScene;
 

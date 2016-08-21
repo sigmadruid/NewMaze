@@ -23,10 +23,10 @@ namespace StaticData
 				data.Kid = ReadInt(col++);
 				data.AppearScene = ReadEnum<NPCAppearScene>(col++);
 				data.Type = ReadEnum<NPCEventType>(col++);
-				data.FirstTalkList = ReadIntList(col++);
-				data.InTaskTalkList = ReadIntList(col++);
-				data.FinishTalkList = ReadIntList(col++);
-				data.EndTalkList = ReadIntList(col++);
+                data.FirstTalkList = ReadStringList(col++);
+                data.InTaskTalkList = ReadStringList(col++);
+                data.FinishTalkList = ReadStringList(col++);
+                data.EndTalkList = ReadStringList(col++);
 
 				typeDic[data.AppearScene].Add(data);
 				kvDic.Add(data.Kid, data);

@@ -21,7 +21,7 @@ namespace StaticData
 
 				NPCData data = new NPCData();
 				data.Kid = ReadInt(col++);
-				data.Name = ReadInt(col++);
+                data.Name = ReadString(col++);
 				data.AppearScene = ReadEnum<NPCAppearScene>(col++);
 				data.Res3D = ReadString(col++);
 				typeDic[data.AppearScene].Add(data);

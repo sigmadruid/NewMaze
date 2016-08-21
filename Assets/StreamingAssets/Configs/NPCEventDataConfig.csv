@@ -1,6 +1,5 @@
 Kid,AppearScene,Type,FirstTalkList,InTaskTalkList,FinishTalkList,EndTalkList
-60001,HomeTown,Normal,10002#10003,,,
-60002,Maze,Normal,10005,,,
-60003,Maze,Normal,10007,,,
-60004,Maze,Normal,10009#10010,,,
-,,,,,,
+60001,HomeTown,Normal,npc.dialog.1#npc.dialog.2,,,
+60002,Maze,Normal,npc.dialog.3,,,
+60003,Maze,Normal,npc.dialog.4,,,
+60004,Maze,Normal,npc.dialog.5#npc.dialog.6,,,

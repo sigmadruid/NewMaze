@@ -10,7 +10,7 @@ namespace StaticData
 
 	public class CharacterData : EntityData
 	{
-		public int Name;
+        public string Name;
 
 		public string Res3D;
 		

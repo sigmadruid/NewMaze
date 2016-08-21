@@ -17,10 +17,10 @@ namespace StaticData
 		public NPCAppearScene AppearScene;
 		public NPCEventType Type;
 
-		public List<int> FirstTalkList;
-		public List<int> InTaskTalkList;
-		public List<int> FinishTalkList;
-		public List<int> EndTalkList;
+        public List<string> FirstTalkList;
+        public List<string> InTaskTalkList;
+        public List<string> FinishTalkList;
+        public List<string> EndTalkList;
 
 		//TODO: Reward Info;
     }

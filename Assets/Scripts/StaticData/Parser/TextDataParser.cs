@@ -5,16 +5,16 @@ namespace StaticData
 {
     public class TextDataParser : BaseParser
     {
-		public void Parse(string name, out Dictionary<int, string> kvDic)
+        public void Parse(string name, out Dictionary<string, string> kvDic)
 		{
 			LoadFile(name);
 			
-			kvDic = new Dictionary<int, string>();
+            kvDic = new Dictionary<string, string>();
 			
 			while(!EndOfRow)
 			{
 				int col = 0;
-				int id = ReadInt(col++);
+                string id = ReadString(col++);
 				string text = ReadString(col++);
 				kvDic.Add(id, text);
 				NextLine();

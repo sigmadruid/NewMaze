@@ -139,7 +139,7 @@ namespace GameLogic
 			}
 			else if (eventData.Type == NPCEventType.Result)
 			{
-				List<int> talkList = npc.State == NPCState.Normal ? eventData.FirstTalkList : eventData.EndTalkList;
+                List<string> talkList = npc.State == NPCState.Normal ? eventData.FirstTalkList : eventData.EndTalkList;
 				panel.Init(data.Name, talkList);
 			}
 			else if (eventData.Type == NPCEventType.Task)

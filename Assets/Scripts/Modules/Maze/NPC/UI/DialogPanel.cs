@@ -20,16 +20,16 @@ namespace GameUI
         public Text LabelPassage;
 
 		private int index;
-		private List<int> talkList;
+        private List<string> talkList;
 
 		void Awake () 
 		{
             EventTriggerListener.Get(ImageClick.gameObject).onClick = OnDialogClick;
 		}
 
-		public void Init(int nameCode, List<int> talkList)
+        public void Init(string nameID, List<string> talkList)
 		{
-			LabelTitle.text = TextDataManager.Instance.GetData(nameCode);
+            LabelTitle.text = TextDataManager.Instance.GetData(nameID);
 
 			index = 0;
 			this.talkList = talkList;

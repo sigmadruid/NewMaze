@@ -7,7 +7,7 @@ namespace StaticData
 {
     public class TextDataManager
     {
-		private Dictionary<int, string> kvDic;
+        private Dictionary<string, string> kvDic;
 
 		private static TextDataManager instance;
 		public static TextDataManager Instance
@@ -25,7 +25,7 @@ namespace StaticData
 			parser.Parse("TextDataConfig.csv", out kvDic);
 		}
 
-		public string GetData(int id)
+        public string GetData(string id)
 		{
 			if (!kvDic.ContainsKey(id))
 			{

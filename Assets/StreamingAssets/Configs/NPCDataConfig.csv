@@ -1,6 +1,5 @@
 Kid,Name,AppearScene,Res3D
-50001,10001,HomeTown,NPC_1
-50002,10004,Maze,NPC_1
-50003,10006,Maze,NPC_2
-50004,10008,Maze,NPC_2
-,,,
+50001,npc.name.sage,HomeTown,NPC_1
+50002,npc.name.wizard,Maze,NPC_1
+50003,npc.name.wierd,Maze,NPC_2
+50004,npc.name.wounded,Maze,NPC_2

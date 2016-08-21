@@ -18,7 +18,7 @@ namespace StaticData
 
 				MonsterData data = new MonsterData();
 				data.Kid = ReadInt(col++);
-				data.Name = ReadInt(col++);
+                data.Name = ReadString(col++);
 				data.Res3D = ReadString(col++);
 				data.HP = ReadInt(col++);
 				data.Attack = ReadInt(col++);
