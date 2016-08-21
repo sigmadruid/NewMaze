@@ -26,11 +26,9 @@ public class MazeMain : MonoBehaviour
 
         blockProxy = new BlockProxy();
         ApplicationFacade.Instance.RegisterProxy(blockProxy);
-        ApplicationFacade.Instance.RegisterProxy(new MonsterProxy());
 
 
         ApplicationFacade.Instance.RegisterMediator(new BlockMediator());
-        ApplicationFacade.Instance.RegisterMediator(new MonsterMediator());
 
         mazeData = MazeDataManager.Instance.CurrentMazeData;
         PreloadAssets(mazeData.Kid);
