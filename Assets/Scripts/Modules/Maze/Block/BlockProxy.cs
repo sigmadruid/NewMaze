@@ -154,6 +154,13 @@ namespace GameLogic
             prevAroundList = aroundList;
         }
 
+        public void UpdateAllMazeNodes()
+        {
+            ToCreateNodeList = mazeTable.GetAllNodes();
+            ToDeleteNodeList.Clear();
+            prevAroundList.Clear();
+        }
+
 		//Room??
 		public Block GetBlockAtPosition(int col, int row)
 		{

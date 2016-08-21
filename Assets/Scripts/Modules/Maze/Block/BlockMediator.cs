@@ -27,7 +27,8 @@ namespace GameLogic
 			{
 				NotificationEnum.BLOCK_INIT,
 				NotificationEnum.BLOCK_REFRESH,
-				NotificationEnum.BLOCK_DISPOSE,
+                NotificationEnum.BLOCK_DISPOSE,
+                NotificationEnum.BLOCK_SHOW_ALL,
 			};
 		}
 
@@ -51,7 +52,11 @@ namespace GameLogic
 					HandleRefreshBlocks(position);
 					break;
 				}
-				
+                case NotificationEnum.BLOCK_SHOW_ALL:
+                {
+                    HandleShowAllBlocks();
+                    break;
+                }
 			}
 		}
 
@@ -117,6 +122,21 @@ namespace GameLogic
 
 //            StaticBatchingUtility.Combine(RootTransform.Instance.BlockRoot.gameObject);
 		}
+
+        private void HandleShowAllBlocks()
+        {
+            blockProxy.UpdateAllMazeNodes();
+            List<MazeNode> toCreateList = blockProxy.ToCreateNodeList;
+            for (int i = 0; i < toCreateList.Count; ++i)
+            {
+                MazeNode node = toCreateList[i];
+                if (node.AboveBlock == null)
+                {
+                    Block block = blockProxy.AddBlock(node);
+                    OnInitBlock(block);
+                }
+            }
+        }
 
 		private void OnInitBlock(Block block)
 		{

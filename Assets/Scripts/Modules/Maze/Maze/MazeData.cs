@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace StaticData
 {
+    [Serializable]
 	public class MazeData
 	{
 		public int Kid;

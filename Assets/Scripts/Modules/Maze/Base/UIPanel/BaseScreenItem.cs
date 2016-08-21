@@ -14,7 +14,7 @@ public class BaseScreenItem : MonoBehaviour
     protected virtual void Awake()
     {
         RectTransform = transform as RectTransform;
-        mainCamera = Camera3DScript.Instance.Camera;
+        mainCamera = Camera.main;
     }
 
 	public void UpdatePosition(Vector3 position)

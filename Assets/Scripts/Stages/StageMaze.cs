@@ -77,30 +77,6 @@ namespace GameLogic
 			GC.Collect();
 		}
 
-		private void PreloadAssets()
-		{
-			int mazeKid = IDManager.Instance.GetID(IDType.Maze, 1);
-			List<ResourceData> resourceDataList = ResourceDataManager.Instance.GetResourceDataList(mazeKid);
-
-			ResourceManager resManager = ResourceManager.Instance;
-			for (int i = 0; i < resourceDataList.Count; ++i)
-			{
-				ResourceData resourceData = resourceDataList[i];
-                if(resourceData.EntityKid != 0)
-                {
-                    IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
-                    EntityManager manager = GlobalConfig.Instance.GetManager(idType);
-                    EntityData data = manager.GetData(resourceData.EntityKid);
-                    resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
-                }
-                else
-                {
-                    resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.Life, resourceData.PreloadCount);
-                }
-			}
-
-		}
-
 	}
 }
 
