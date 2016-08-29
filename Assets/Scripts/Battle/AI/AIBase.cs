@@ -73,8 +73,10 @@ namespace Battle
             int monsterCol = (int)pos.x;
             int monsterRow = (int)pos.y;
 			MazeNode currentNode = blockProxy.GetNode(monsterCol, monsterRow);
-			MazeNode nextNode = blockProxy.FindNextSearchNode(monsterCol, monsterRow);
+            MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+            Vector3 currentPosition = MazeUtil.GetWorldPosition(currentNode.Col, currentNode.Row, mazeData.BlockSize);
 
+            MazeNode nextNode = blockProxy.FindNextSearchNode(monsterCol, monsterRow);
 			if (nextNode != null)
 			{
 				if (nextNode == currentNode)
@@ -83,9 +85,15 @@ namespace Battle
 				}
 				else
 				{
-					MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-					Vector3 nextPosition = MazeUtil.GetWorldPosition(nextNode.Col, nextNode.Row, mazeData.BlockSize);
-					currentMonster.Move(nextPosition - currentMonster.WorldPosition);
+                    Vector3 nextPosition = MazeUtil.GetWorldPosition(nextNode.Col, nextNode.Row, mazeData.BlockSize);
+                    if(CheckCollision(nextPosition))
+                    {
+                        currentMonster.Move(currentPosition - currentMonster.WorldPosition);
+                    }
+                    else
+                    {
+                        currentMonster.Move(nextPosition - currentMonster.WorldPosition);
+                    }
 				}
 			}
 			else
@@ -99,6 +107,14 @@ namespace Battle
             currentMonster.Move(Hero.Instance.WorldPosition - currentMonster.WorldPosition);
         }
 
+        private bool CheckCollision(Vector3 nextPosition)
+        {
+            const float h = 0.3f;
+            Vector3 origin = currentMonster.WorldPosition + Vector3.up * h;
+            Vector3 direction = nextPosition - currentMonster.WorldPosition;
+            bool result = Physics.Raycast(origin, direction, 2f, Layers.LayerBlock);
+            return result;
+        }
 	}
 }
 
