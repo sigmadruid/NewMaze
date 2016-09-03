@@ -55,7 +55,7 @@ namespace GameLogic
 
         public Monster GetNearestMonster(Vector3 position, float maxSqrDistance)
         {
-            Dictionary<string, Monster> monsterDic = Hero.Instance.IsInHall ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = Hero.Instance.Info.IsInHall ? monsterHallDic : monsterBlockDic;
             Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
             float sqrDistance = float.MaxValue;
             Monster result = null;

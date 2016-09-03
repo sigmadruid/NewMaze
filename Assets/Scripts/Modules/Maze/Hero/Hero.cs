@@ -94,7 +94,7 @@ namespace GameLogic
         {
             if (!IsSlowUpdating)
                 return;
-            if(!IsInHall)
+            if(!Info.IsInHall)
             {
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
             }
@@ -131,8 +131,6 @@ namespace GameLogic
                 return Info.IsAlive && !Info.IsConverting && IsVisible;
             }
         }
-
-        public bool IsInHall { get; set; }
 
         #endregion
 
@@ -189,6 +187,21 @@ namespace GameLogic
 
         #endregion
 
+        #region Event Handlers
+
+        private void OnTrapAttack(int trapKid)
+        {
+            TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
+            AttackContext context = new AttackContext();
+            context.Side = Side.Neutral;
+            context.Attack = data.Attack;
+            context.Critical = 0;
+            battleProxy.DoAttackHero(context);
+            Script.Hit(true);
+        }
+
+        #endregion
+
 		public static Hero Create(int heroKid, HeroInfo info)
 		{
 			Hero hero = new Hero();
@@ -199,6 +212,7 @@ namespace GameLogic
 			hero.Script.CallbackUpdate = hero.Update;
 			hero.Script.CallbackSlowUpdate = hero.SlowUpdate;
 			hero.Script.CallbackDie = hero.OnDie;
+            hero.Script.CallbackTrapAttack = hero.OnTrapAttack;
 			hero.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(hero.Data.Kid);
 			hero.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
 			hero.inputManager = InputManager.Instance;
@@ -241,7 +255,7 @@ namespace GameLogic
             record.WorldPosition = new Vector3Record(WorldPosition);
             record.WorldAngle = WorldAngle;
             record.IsVisible = IsVisible;
-            record.IsInHall = IsInHall;
+            record.IsInHall = Info.IsInHall;
             record.HP = Info.HP;
             return record;
         }

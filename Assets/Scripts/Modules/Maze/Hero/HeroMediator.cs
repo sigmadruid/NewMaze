@@ -101,7 +101,8 @@ namespace GameLogic
                 hero = Hero.Create(record);
                 hero.SetPosition(record.WorldPosition.ToVector3());
                 hero.SetRotation(record.WorldAngle);
-                hero.IsInHall = record.IsInHall;
+                hero.Info.IsInHall = record.IsInHall;
+                hero.IsVisible = record.IsVisible;
             }
 			hero.CallbackDie = OnHeroDie;
 

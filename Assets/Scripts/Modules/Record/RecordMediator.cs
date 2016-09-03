@@ -57,7 +57,7 @@ namespace GameLogic
             
             if(Hero.Instance != null && Hero.Instance.Info.IsAlive)
             {
-                if (Hero.Instance.IsInHall)
+                if (Hero.Instance.Info.IsInHall)
                     monsterProxy.DoRecordInHall();
                 monsterProxy.DoRecordBlock();
                 hallProxy.DoRecord();

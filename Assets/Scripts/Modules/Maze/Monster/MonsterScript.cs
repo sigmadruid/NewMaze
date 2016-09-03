@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 using Base;
@@ -6,6 +7,8 @@ using GameLogic;
 
 public class MonsterScript : CharacterScript 
 {
+    public Action<int> CallbackTrapAttack;
+
 	public Transform EmitTransform;
 
 	protected BarItem hpBar;
@@ -30,6 +33,15 @@ public class MonsterScript : CharacterScript
 			hpBar = null;
 		}
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag(Tags.Trap))
+        {
+            TrapScript trap = other.GetComponentInParent<TrapScript>();
+            CallbackTrapAttack(trap.Kid);
+        }
+    }
 
 	protected override void OnDieStarts ()
 	{

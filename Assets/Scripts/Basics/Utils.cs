@@ -7,20 +7,9 @@ using System.Text;
 
 namespace Base
 {
-	public enum DirectionEnum
-	{
-		Up,
-		Right,
-		Down,
-		Left,
-	}
-
 	public class Utils
 	{
 		public delegate void CallbackVoid();
-		public delegate void CallbackBoolean(bool state);
-		public delegate void CallbackVector3(Vector3 vec3);
-		public delegate void CallbackParam(object obj);
 
 		private static Shader rimShader;
 		public static Shader RimShader

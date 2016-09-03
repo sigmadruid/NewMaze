@@ -53,7 +53,7 @@ namespace GameLogic
 
         private void OnTransportForward()
         {
-            Hero.Instance.IsInHall = true;
+            Hero.Instance.Info.IsInHall = true;
             int hallKid = int.Parse(Data.Param1);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
             Hall.Instance.LeavePosition = Hero.Instance.WorldPosition;
@@ -63,7 +63,7 @@ namespace GameLogic
         }
         private void OnTransportBack()
         {
-            Hero.Instance.IsInHall = false;
+            Hero.Instance.Info.IsInHall = false;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.LeavePosition);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, Hall.Instance.LeavePosition);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);

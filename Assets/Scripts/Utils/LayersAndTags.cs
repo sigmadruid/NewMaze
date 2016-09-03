@@ -18,7 +18,8 @@ namespace GameLogic
         public const string NPC = "TagNPC";
         public const string TownHero = "TagTownHero";
 		public const string Block = "TagBlock";
-		public const string Exploration = "TagExploration";
+        public const string Exploration = "TagExploration";
+		public const string Trap = "TagTrap";
     }
 
 }

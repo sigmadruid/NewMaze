@@ -11,6 +11,7 @@ namespace Battle
 		public new HeroData Data;
 
 		public bool IsConverting;
+        public bool IsInHall;
 
 		public float LastHitTime = -1000f;
 
@@ -26,6 +27,7 @@ namespace Battle
 			{
 				hp = (int)(data.HP * info.HPRatio);
 				IsConverting = info.IsConverting;
+                IsInHall = info.IsInHall;
 				LastHitTime = info.LastHitTime;
 			}
 		}
@@ -34,6 +36,7 @@ namespace Battle
         {
             Data = data;
             hp = record.HP;
+            IsInHall = record.IsInHall;
         }
 	}
 }

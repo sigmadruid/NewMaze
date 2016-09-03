@@ -5,18 +5,19 @@ namespace StaticData
 	public enum IDType
 	{
 		Currency = 0,
-		Maze,
-		Block,
-		Hero,
-		Monster,
-		NPC,
-		NPCEvent,
-		Exploration,
-		Bullet,
-		Animator,
-		Drop,
-		Hall,
-        Buff,
+		Maze = 1,
+		Block = 2,
+		Hero = 3,
+		Monster = 4,
+		NPC = 5,
+		NPCEvent = 6,
+		Exploration = 7,
+		Bullet = 8,
+		Animator = 9,
+		Drop = 10,
+		Hall = 11,
+        Buff = 12,
+        Trap = 13,
 	}
 
     public class IDManager

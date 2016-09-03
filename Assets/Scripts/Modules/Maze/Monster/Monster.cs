@@ -63,6 +63,21 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
 		}
 
+        #endregion
+
+        #region Event Handlers
+
+        private void OnTrapAttack(int trapKid)
+        {
+            TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
+            AttackContext context = new AttackContext();
+            context.Side = Side.Neutral;
+            context.Attack = data.Attack;
+            context.Critical = 0;
+            battleProxy.DoAttackMonster(this, context);
+            Script.Hit(true);
+        }
+
 		#endregion
 
 		protected override void Update()
@@ -160,6 +175,7 @@ namespace GameLogic
             monster.Script.transform.parent = RootTransform.Instance.MonsterRoot; 
             monster.Script.CallbackUpdate = monster.Update;
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
+            monster.Script.CallbackTrapAttack = monster.OnTrapAttack;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
 
             Game.Instance.AICore.AddAI(monster);

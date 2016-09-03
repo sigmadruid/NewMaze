@@ -21,6 +21,7 @@ namespace StaticData
     {
         Hero,
         Monster,
+        Neutral,
     }
 
     public class HeroConfig

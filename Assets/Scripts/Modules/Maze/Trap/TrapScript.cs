@@ -1,8 +1,14 @@
-﻿using System;
+﻿using UnityEngine;
 
-public class TrapScript
+using System;
+
+public class TrapScript : MonoBehaviour
 {
-    public TrapScript()
+    public int Kid;
+
+    public Collider Trigger;
+
+    void Awake()
     {
     }
 }

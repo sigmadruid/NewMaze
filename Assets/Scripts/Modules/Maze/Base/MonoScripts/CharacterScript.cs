@@ -180,14 +180,17 @@ namespace GameLogic
                 CallbackAttackEnds();
     	}
 
-    	public void Hit()
+        public void Hit(bool forceStunned = false)
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Attack) && JudgeHit())
+    		if (CanPlay(AnimatorPriorityEnum.Attack))
     		{
-    			animator.SetTrigger(AnimatorDataManager.Instance.ParamIsHit);
-    			transitionEnds = false;
+                if(forceStunned || JudgeHit())
+                {
+                    animator.SetTrigger(AnimatorDataManager.Instance.ParamIsHit);
+                    transitionEnds = false;
+                }
     		}
     	}
 

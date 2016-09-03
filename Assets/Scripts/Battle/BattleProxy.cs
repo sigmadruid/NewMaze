@@ -54,26 +54,12 @@ namespace Battle
 				bool inArea = JudgeInArea(hero.Script.transform, monster.Script.transform, paramDic);
 				if (inArea)
 				{
-					if (!monster.Info.IsAlive)
-					{
-						continue;
-					}
-
-					AttackContext context = new AttackContext();
-					context.Side = Side.Hero;
+                    AttackContext context = new AttackContext();
+                    context.Side = Side.Hero;
                     context.Attack = (int)hero.Info.GetAttribute(BattleAttribute.Attack);
                     context.Critical = (int)hero.Info.GetAttribute(BattleAttribute.Critical);
 
-					AttackResult result = monster.Info.HurtBy(context);
-					NumberItem.Create(monster.WorldPosition, result);
-					if (monster.Info.HP > 0)
-					{
-						monster.Hit();
-					}
-					else
-					{
-						monster.Die();
-					}
+                    DoAttackMonster(monster, context);
 				}
 			}
 		}
@@ -117,6 +103,24 @@ namespace Battle
 
 			DispatchNotification(NotificationEnum.BATTLE_UI_UPDATE_HP, result);
 		}
+
+        public void DoAttackMonster(Monster monster, AttackContext attackContext)
+        {
+            if (!monster.Info.IsAlive)
+            {
+                return;
+            }
+            AttackResult result = monster.Info.HurtBy(attackContext);
+            NumberItem.Create(monster.WorldPosition, result);
+            if (monster.Info.HP > 0)
+            {
+                monster.Hit();
+            }
+            else
+            {
+                monster.Die();
+            }
+        }
 
 		public Monster GetNearMonsters()
 		{

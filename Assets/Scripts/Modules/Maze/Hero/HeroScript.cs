@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 using Base;
@@ -6,6 +7,8 @@ using GameLogic;
 
 public class HeroScript : CharacterScript 
 {
+    public Action<int> CallbackTrapAttack;
+
 	public MeleeWeaponTrail MeleeTrail;
 
 	protected override void Awake ()
@@ -32,6 +35,15 @@ public class HeroScript : CharacterScript
 	{
 		base.OnDisable();
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag(Tags.Trap))
+        {
+            TrapScript trap = other.GetComponentInParent<TrapScript>();
+            CallbackTrapAttack(trap.Kid);
+        }
+    }
 
 	protected override void OnAttackStarts ()
 	{
