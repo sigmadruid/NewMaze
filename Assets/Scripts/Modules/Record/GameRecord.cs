@@ -10,8 +10,8 @@ namespace GameLogic
 
         public HeroRecord Hero;
 
-        public Dictionary<int, List<MonsterRecord>> MonstersInBlock = new Dictionary<int, List<MonsterRecord>>();
-        public Dictionary<int, List<MonsterRecord>> MonstersInHall = new Dictionary<int, List<MonsterRecord>>();
+        public List<MonsterBlockRecord> MonstersInBlocks = new List<MonsterBlockRecord>();
+        public List<MonsterHallRecord> MonstersInHalls = new List<MonsterHallRecord>();
 
         public HallRecord Hall;
 

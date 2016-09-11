@@ -172,6 +172,7 @@ namespace GameLogic
 
 		private void OnHeroDie()
 		{
+            RecordMediator.DeleteRecord();
 			Game.Instance.SwitchStage(StageEnum.HomeTown);
 		}
 

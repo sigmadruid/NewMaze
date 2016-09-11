@@ -65,8 +65,20 @@ namespace GameLogic
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = RandomUtils.Seed;
                 gameRecord.Hero = Hero.Instance.ToRecord();
-                gameRecord.MonstersInBlock = monsterProxy.RecordBlockDic;
-                gameRecord.MonstersInHall = monsterProxy.RecordHallDic;
+                foreach(int kid in monsterProxy.RecordBlockDic.Keys)
+                {
+                    MonsterBlockRecord monsterRecord = new MonsterBlockRecord();
+                    monsterRecord.BlockKid = kid;
+                    monsterRecord.Monsters = monsterProxy.RecordBlockDic[kid];
+                    gameRecord.MonstersInBlocks.Add(monsterRecord);
+                }
+                foreach(int kid in monsterProxy.RecordHallDic.Keys)
+                {
+                    MonsterHallRecord monsterRecord = new MonsterHallRecord();
+                    monsterRecord.HallKid = kid;
+                    monsterRecord.Monsters = monsterProxy.RecordHallDic[kid];
+                    gameRecord.MonstersInHalls.Add(monsterRecord);
+                }
                 gameRecord.Hall = hallProxy.Record;
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
@@ -74,6 +86,9 @@ namespace GameLogic
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(stream, gameRecord);
                 }
+
+                string json = LitJson.JsonMapper.ToJson(gameRecord);
+                Debug.Log(json);
             }
             else//If dead, delete the record.
             {
@@ -97,8 +112,18 @@ namespace GameLogic
             {
                 RandomUtils.Seed = gameRecord.RandomSeed;
                 heroProxy.Record = gameRecord.Hero;
-                monsterProxy.RecordBlockDic = gameRecord.MonstersInBlock;
-                monsterProxy.RecordHallDic = gameRecord.MonstersInHall;
+                monsterProxy.RecordBlockDic = new Dictionary<int, List<MonsterRecord>>();
+                for(int i = 0; i < gameRecord.MonstersInBlocks.Count; ++i)
+                {
+                    MonsterBlockRecord monsterRecord = gameRecord.MonstersInBlocks[i];
+                    monsterProxy.RecordBlockDic.Add(monsterRecord.BlockKid, monsterRecord.Monsters);
+                }
+                monsterProxy.RecordHallDic = new Dictionary<int, List<MonsterRecord>>();
+                for(int i = 0; i < gameRecord.MonstersInHalls.Count; ++i)
+                {
+                    MonsterHallRecord monsterRecord = gameRecord.MonstersInHalls[i];
+                    monsterProxy.RecordHallDic.Add(monsterRecord.HallKid, monsterRecord.Monsters);
+                }
                 hallProxy.Record = gameRecord.Hall;
             }
         }
