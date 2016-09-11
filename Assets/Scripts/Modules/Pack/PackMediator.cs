@@ -2,7 +2,9 @@
 
 using Base;
 
-public class PackMediator : Mediator
+namespace GameLogic
 {
+    public class PackMediator : Mediator
+    {
+    }
 }
-

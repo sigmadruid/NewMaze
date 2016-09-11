@@ -46,3 +46,4 @@ MazeKid,EntityKid,Path,Life,PreloadCount
 10001,0,MazeBlocks/Mock/MockLink,-1,20
 10001,0,MazeBlocks/Mock/MockRoom,-1,10
 10001,0,MazeBlocks/Indicator/Indicator_3,-1,10
+10001,140001,,-1,10

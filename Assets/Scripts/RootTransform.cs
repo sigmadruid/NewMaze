@@ -16,7 +16,7 @@ public class RootTransform : MonoBehaviour
 	public Transform NPCRoot;
 	public Transform ExplorationRoot;
 	public Transform BulletRoot;
-	public Transform DropRoot;
+    public Transform DropRoot;
 
 	void Awake()
 	{

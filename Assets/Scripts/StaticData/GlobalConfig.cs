@@ -126,7 +126,8 @@ namespace StaticData
 			managerDic.Add(IDType.Exploration, ExplorationDataManager.Instance);
 			managerDic.Add(IDType.Bullet, BulletDataManager.Instance);
 			managerDic.Add(IDType.Currency, CurrencyDataManager.Instance);
-			managerDic.Add(IDType.Hall, HallDataManager.Instance);
+            managerDic.Add(IDType.Hall, HallDataManager.Instance);
+            managerDic.Add(IDType.Item, ItemDataManager.Instance);
 		}
 		public EntityManager GetManager(IDType type)
 		{
