@@ -15,7 +15,7 @@ namespace Base
 			set
 			{
 				seed = value;
-                Random.InitState(seed);
+                Random.seed = seed;
 			}
 		}
 

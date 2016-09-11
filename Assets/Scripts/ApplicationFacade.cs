@@ -30,6 +30,7 @@ namespace GameLogic
 			RegisterProxy(new ExplorationProxy());
 			RegisterProxy(new DropProxy());
 			RegisterProxy(new EnvironmentProxy());
+            RegisterProxy(new PackProxy());
 
 			RegisterMediator(new BlockMediator());
 			RegisterMediator(new MazeMapMediator());
@@ -46,6 +47,7 @@ namespace GameLogic
             RegisterMediator(new TownHeroMediator());
 
             RegisterMediator(new RecordMediator());
+            RegisterMediator(new PackMediator());
 		}
 	}
 }

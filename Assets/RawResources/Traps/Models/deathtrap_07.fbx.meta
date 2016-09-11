@@ -3,9 +3,24 @@ guid: 591118329290c3a4bbd8113cb65b8a01
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: track3
+    100004: trunk3
+    100006: trunk_col3
+    400000: //RootNode
+    400002: track3
+    400004: trunk3
+    400006: trunk_col3
+    2300000: track3
+    2300002: trunk3
+    2300004: trunk_col3
+    3300000: track3
+    3300002: trunk3
+    3300004: trunk_col3
     4300000: trunk3
     4300002: trunk_col3
     4300004: track3
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

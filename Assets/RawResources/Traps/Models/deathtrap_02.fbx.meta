@@ -3,11 +3,34 @@ guid: aa44ac3abfdf4bb4185b1fcbd9e01b3a
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: base2
+    100002: //RootNode
+    100004: stake1a
+    100006: stake1a_col
+    100008: stake1b
+    100010: stake1b_col
+    400000: base2
+    400002: //RootNode
+    400004: stake1a
+    400006: stake1a_col
+    400008: stake1b
+    400010: stake1b_col
+    2300000: base2
+    2300002: stake1a
+    2300004: stake1a_col
+    2300006: stake1b
+    2300008: stake1b_col
+    3300000: base2
+    3300002: stake1a
+    3300004: stake1a_col
+    3300006: stake1b
+    3300008: stake1b_col
     4300000: stake1b
     4300002: stake1a
     4300004: base2
     4300006: stake1a_col
     4300008: stake1b_col
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

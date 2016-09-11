@@ -3,9 +3,24 @@ guid: 1e91bd6d854b7354ca6732fba053294c
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: 2Traps
+    100002: blade3
+    100004: blade_col3
+    100006: //RootNode
+    400000: 2Traps
+    400002: blade3
+    400004: blade_col3
+    400006: //RootNode
+    2300000: 2Traps
+    2300002: blade3
+    2300004: blade_col3
+    3300000: 2Traps
+    3300002: blade3
+    3300004: blade_col3
     4300000: blade_col3
     4300002: blade3
     4300004: 2Traps
+    11100000: //RootNode
   materials:
     importMaterials: 0
     materialName: 0

@@ -18,6 +18,7 @@ namespace StaticData
 		Hall = 11,
         Buff = 12,
         Trap = 13,
+        Item = 14,
 	}
 
     public class IDManager

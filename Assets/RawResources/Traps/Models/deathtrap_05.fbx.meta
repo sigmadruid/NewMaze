@@ -3,10 +3,29 @@ guid: 1e13f8d5b3998254cbd70b7f4d6842fe
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: base3
+    100002: blade2
+    100004: blade_col2
+    100006: //RootNode
+    100008: wall
+    400000: base3
+    400002: blade2
+    400004: blade_col2
+    400006: //RootNode
+    400008: wall
+    2300000: base3
+    2300002: blade2
+    2300004: blade_col2
+    2300006: wall
+    3300000: base3
+    3300002: blade2
+    3300004: blade_col2
+    3300006: wall
     4300000: blade_col2
     4300002: wall
     4300004: base3
     4300006: blade2
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

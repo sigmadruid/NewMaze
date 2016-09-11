@@ -3,10 +3,29 @@ guid: bfd2f3168baacac48955ccf095369d53
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: spikes
+    100004: spikes_col
+    100006: timber
+    100008: trap
+    400000: //RootNode
+    400002: spikes
+    400004: spikes_col
+    400006: timber
+    400008: trap
+    2300000: spikes
+    2300002: spikes_col
+    2300004: timber
+    2300006: trap
+    3300000: spikes
+    3300002: spikes_col
+    3300004: timber
+    3300006: trap
     4300000: spikes_col
     4300002: trap
     4300004: spikes
     4300006: timber
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
