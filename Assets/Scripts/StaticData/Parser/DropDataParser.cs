@@ -19,9 +19,11 @@ namespace StaticData
 				
 				DropData data = new DropData();
                 data.Kid = ReadInt(col++);
-				data.GoodsKid = ReadInt(col++);
-				data.MinCount = ReadInt(col++);
-				data.MaxCount = ReadInt(col++);
+                data.MaxNum = ReadInt(col++);
+                data.ItemKidList = ReadIntList(col++);
+                data.MinCountList = ReadIntList(col++);
+                data.MaxCountList = ReadIntList(col++);
+                data.WeightList = ReadIntList(col++);
 
 				kvDic.Add(data.Kid, data);
 				

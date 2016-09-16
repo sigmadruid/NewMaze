@@ -13,22 +13,23 @@ namespace GameLogic
 	{
         public bool InHall;
 
-		public new MonsterData Data
-		{
-			get { return data as MonsterData; }
-			protected set { data = value; }
-		}
-		
-		public new MonsterScript Script
-		{
-			get { return script as MonsterScript; }
-			protected set { script = value; }
-		}
-
-		public MonsterInfo Info { get; protected set; }
+        public new MonsterScript Script
+        {
+            get { return script as MonsterScript; }
+            protected set { script = value; }
+        }
+        public new MonsterData Data
+        {
+            get { return data as MonsterData; }
+            protected set { data = value; }
+        }
+        public new MonsterInfo Info
+        {
+            get { return info as MonsterInfo; }
+            protected set { info = value; }
+        }
 
 		private BattleProxy battleProxy;
-
 
 		#region Animations
 
@@ -140,7 +141,7 @@ namespace GameLogic
 			if (record != null)
 			{
 				monster.Uid = record.Uid;
-				monster.Data = MonsterDataManager.Instance.GetData(record.Kid) as MonsterData;
+                monster.Data = MonsterDataManager.Instance.GetData(record.Kid) as MonsterData;
 				monster.Info = new MonsterInfo(monster.Data, record);
                 Init(monster);
                 Dictionary<int, float>.Enumerator enumertor = record.buffRemainTimeDic.GetEnumerator();

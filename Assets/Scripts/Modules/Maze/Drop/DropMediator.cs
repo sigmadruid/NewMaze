@@ -97,7 +97,8 @@ namespace GameLogic
 		}
 		private void HandleItemSpawnSingle(Monster monster)
 		{
-            Item item = Item.Create(monster.Data.DropKidList[0], monster.WorldPosition);
+            DropData dropData = DropDataManager.Instance.GetData(monster.Data.DropKid) as DropData;
+            Item item = Item.Create(dropData, monster.WorldPosition);
 			proxy.AddItem(item);
 			item.StartFlying(monster.WorldPosition);
 		}

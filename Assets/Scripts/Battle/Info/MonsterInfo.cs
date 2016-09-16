@@ -8,7 +8,11 @@ namespace Battle
 {
 	public class MonsterInfo : CharacterInfo
 	{
-		public new MonsterData Data;
+        public new MonsterData Data
+        {
+            get { return data as MonsterData; }
+            set { data = value; }
+        }
 		
 		public MonsterInfo (MonsterData data) : base(data)
 		{

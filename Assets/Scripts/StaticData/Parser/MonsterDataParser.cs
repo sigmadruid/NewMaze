@@ -34,7 +34,7 @@ namespace StaticData
 				data.DodgeRange = ReadFloat(col++);
 				data.BulletKid = ReadInt(col++);
 				data.AppearWeight = ReadInt(col++);
-				data.DropKidList = ReadIntList(col++);
+                data.DropKid = ReadInt(col++);
 
 				kvDic.Add(data.Kid, data);
 				dataList.Add(data);

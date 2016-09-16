@@ -18,7 +18,6 @@ namespace GameLogic
 		{
 			get { return script; }
 			protected set { script = value; }
-
 		}
 
 		protected EntityData data;
@@ -27,6 +26,13 @@ namespace GameLogic
 			get { return data; }
 			protected set { data = value; }
 		}
+
+        protected EntityInfo info;
+        public EntityInfo Info
+        {
+            get { return info; }
+            protected set { info = value; }
+        }
 		
 		public Vector3 WorldPosition 
 		{ 

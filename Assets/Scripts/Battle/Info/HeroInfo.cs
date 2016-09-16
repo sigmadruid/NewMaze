@@ -8,7 +8,11 @@ namespace Battle
 {
 	public class HeroInfo : CharacterInfo
 	{
-		public new HeroData Data;
+        public new HeroData Data
+        {
+            get { return data as HeroData; }
+            set { data = value; }
+        }
 
 		public bool IsConverting;
         public bool IsInHall;

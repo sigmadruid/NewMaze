@@ -8,7 +8,7 @@ namespace StaticData
 	{
 		public int AppearWeight;
 
-		public List<int> DropKidList;
+		public int DropKid;
 
 		public override string GetResPath ()
 		{

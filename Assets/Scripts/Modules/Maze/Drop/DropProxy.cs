@@ -24,6 +24,16 @@ namespace GameLogic
 			}
 			itemDic.Clear();
 		}
+
+        public static ItemInfo GenerateItemInfoByDrop(DropData dropData)
+        {
+            int index = RandomUtils.Weight(dropData.WeightList);
+            int itemKid = dropData.ItemKidList[index];
+            int count = RandomUtils.Range(dropData.MinCountList[index], dropData.MaxCountList[index]);
+            ItemData data = ItemDataManager.Instance.GetData(itemKid) as ItemData;
+            ItemInfo info = new ItemInfo(data, count);
+            return info;
+        }
 		
 		public void IterateDrops(IterateFunc func)
 		{

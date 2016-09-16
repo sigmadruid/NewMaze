@@ -14,19 +14,21 @@ namespace GameLogic
 	{
 		public Utils.CallbackVoid CallbackDie;
 
-		public new HeroData Data
-		{
-			get { return data as HeroData; }
-			protected set { data = value; }
-		}
-		
-		public new HeroScript Script
-		{
-			get { return script as HeroScript; }
-			protected set { script = value; }
-		}
-
-		public HeroInfo Info { get; protected set; }
+        public new HeroScript Script
+        {
+            get { return script as HeroScript; }
+            protected set { script = value; }
+        }
+        public new HeroData Data
+        {
+            get { return data as HeroData; }
+            protected set { data = value; }
+        }
+        public new HeroInfo Info
+        {
+            get { return info as HeroInfo; }
+            protected set { info = value; }
+        }
 
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
@@ -206,7 +208,7 @@ namespace GameLogic
 		{
 			Hero hero = new Hero();
 
-			hero.Data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+            hero.Data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
 			hero.Info = new HeroInfo(hero.Data, info);
 			hero.Script = ResourceManager.Instance.LoadAsset<HeroScript>(ObjectType.GameObject, hero.Data.GetResPath());
 			hero.Script.CallbackUpdate = hero.Update;

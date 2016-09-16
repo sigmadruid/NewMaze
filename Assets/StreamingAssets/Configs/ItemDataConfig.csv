@@ -1,2 +1,4 @@
 Kid,Name,Description,Type,Res2D,Res3D
-140001,test,test,Other,,Item_1
+140001,gold_small,gold_small,Resource,,Coin_1
+140002,gold_medium,gold_medium,Resource,,Coin_2
+140003,gold_large,gold_large,Resource,,Coin_3

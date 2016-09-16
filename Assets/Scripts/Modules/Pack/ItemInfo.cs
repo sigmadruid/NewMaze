@@ -4,9 +4,13 @@ using StaticData;
 
 namespace GameLogic
 {
-    public class ItemInfo
+    public class ItemInfo : EntityInfo
     {
-        public ItemData Data;
+        public new ItemData Data
+        {
+            get { return data as ItemData; }
+            set { data = value; }
+        }
 
         public int Count;
 

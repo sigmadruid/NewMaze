@@ -6,6 +6,7 @@ namespace StaticData
 {
     public enum ItemType
     {
+        Resource,
         Rune,
         Equipment,
         SoulStone,

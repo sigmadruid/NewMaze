@@ -7,11 +7,15 @@ namespace StaticData
     {
         public int Kid;
 
-		public int GoodsKid;
+        public int MaxNum;
 
-		public int MinCount;
+        public List<int> ItemKidList;
 
-		public int MaxCount;
+        public List<int> MinCountList;
+
+        public List<int> MaxCountList;
+
+        public List<int> WeightList;
     }
 }
 

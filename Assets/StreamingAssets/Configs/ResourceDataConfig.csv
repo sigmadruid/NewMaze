@@ -32,9 +32,6 @@ MazeKid,EntityKid,Path,Life,PreloadCount
 10001,70209,,-1,5
 10001,70301,,-1,5
 10001,70302,,-1,5
-10001,1,,-1,5
-10001,1,,-1,5
-10001,1,,-1,5
 10001,110001,,-1,1
 10001,110002,,-1,1
 10001,0,NewUI/Items/HeroItem,-1,5
@@ -47,3 +44,5 @@ MazeKid,EntityKid,Path,Life,PreloadCount
 10001,0,MazeBlocks/Mock/MockRoom,-1,10
 10001,0,MazeBlocks/Indicator/Indicator_3,-1,10
 10001,140001,,-1,10
+10001,140002,,-1,10
+10001,140003,,-1,10

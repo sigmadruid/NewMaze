@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 
 using Base;
+using GameLogic;
 using StaticData;
 
 namespace Battle
@@ -22,12 +23,16 @@ namespace Battle
         public bool IsDodge;
     }
 
-	public class CharacterInfo
+    public class CharacterInfo : EntityInfo
 	{
         protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
         protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
 		
-		public CharacterData Data;
+        public new CharacterData Data
+        {
+            get { return data as CharacterData; }
+            set { data = value; }
+        }
 		
 		public CharacterInfo (CharacterData data)
 		{
