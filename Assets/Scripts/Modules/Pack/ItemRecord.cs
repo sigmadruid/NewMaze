@@ -4,9 +4,9 @@ using System;
 
 namespace GameLogic
 {
-    public class DropRecord : EntityRecord
+    public class ItemRecord : EntityRecord
     {
-		public int GoodsKid;
+		public int ItemKid;
 		public int Count;
     }
 }

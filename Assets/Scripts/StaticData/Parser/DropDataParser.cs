@@ -18,7 +18,7 @@ namespace StaticData
 				int col = 0;
 				
 				DropData data = new DropData();
-				data.Kid = ReadInt(col++);
+                data.Kid = ReadInt(col++);
 				data.GoodsKid = ReadInt(col++);
 				data.MinCount = ReadInt(col++);
 				data.MaxCount = ReadInt(col++);
