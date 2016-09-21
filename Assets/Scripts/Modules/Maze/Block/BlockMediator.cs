@@ -62,8 +62,8 @@ namespace GameLogic
 
 		private void HandleBlockInit()
 		{
-			MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-			Vector3 position = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
+//			MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+//			Vector3 position = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
             prevCol = 0;
             prevRow = 0;
 		}

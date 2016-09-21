@@ -60,5 +60,12 @@ namespace GameLogic
 
         //Input
         MOUSE_UP,
+
+        #region Pack
+
+        PACK_SHOW,
+        PACK_REFRESH,
+
+        #endregion
 	}
 }

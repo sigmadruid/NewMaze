@@ -21,7 +21,7 @@ namespace GameLogic
             return null;
         }
 
-        public bool CheckCount(int kid, int count)
+        public bool HasCount(int kid, int count)
         {
             if(itemInfoDic.ContainsKey(kid))
             {
