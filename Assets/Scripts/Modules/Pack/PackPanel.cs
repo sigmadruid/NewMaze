@@ -19,6 +19,7 @@ public class PackPanel : BasePopupView
     public Button ButtonDiscard;
 
     [Header("Right Part")]
+    public ScrollRect ScrollItems;
     public GridLayoutGroup GridItems;
     public PackItem ItemTemplate;
 
