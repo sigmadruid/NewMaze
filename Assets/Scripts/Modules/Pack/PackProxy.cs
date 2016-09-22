@@ -54,6 +54,7 @@ namespace GameLogic
             {
                 BaseLogger.LogFormat("Illegal item count manuplation: kid={0}, count={1}", kid, count);
             }
+            DispatchNotification(NotificationEnum.PACK_REFRESH);
         }
 
         public List<ItemInfo> GetItemInfosByType(ItemType type)

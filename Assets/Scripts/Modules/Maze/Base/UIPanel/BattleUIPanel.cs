@@ -17,6 +17,7 @@ namespace GameUI
     	public Utils.CallbackVoid CallbackItemClick;
 
         public Button ButtonPause;
+        public Button ButtonPack;
         public GridLayoutGroup GridHero;
         public Slider HPBar;
         public Slider MPBar;

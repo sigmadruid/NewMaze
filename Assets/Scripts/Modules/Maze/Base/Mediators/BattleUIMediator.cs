@@ -71,6 +71,7 @@ namespace GameLogic
 			panel.CallbackItemClick = OnItemClick;
 			panel.CallbackUpdate = OnUpdate;
             EventTriggerListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
+            EventTriggerListener.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 		}
 		private void HandleUpdateHP(AttackResult ar)
 		{
@@ -101,6 +102,10 @@ namespace GameLogic
             PopupManager.Instance.CreateAndAddPopup<PausePanel>();
             Game.Instance.SetPause(true);
 		}
+        private void OnShowPack(GameObject go)
+        {
+            DispatchNotification(NotificationEnum.PACK_SHOW, true);
+        }
     }
 }
 
