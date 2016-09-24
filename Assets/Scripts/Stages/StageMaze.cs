@@ -53,6 +53,9 @@ namespace GameLogic
                 {
                     ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
                 });
+
+            //For test
+            ApplicationFacade.Instance.RetrieveProxy<PackProxy>().Init();
 		}
 		public override void End ()
 		{

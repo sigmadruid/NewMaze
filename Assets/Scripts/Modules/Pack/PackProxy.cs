@@ -12,6 +12,29 @@ namespace GameLogic
     {
         private Dictionary<int, ItemInfo> itemInfoDic = new Dictionary<int, ItemInfo>();
 
+        public void Init()
+        {
+            //Mock data
+            ItemData data;
+            ItemInfo info;
+
+            data = ItemDataManager.Instance.GetData(140001) as ItemData;
+            info = new ItemInfo(data, 1234);
+            itemInfoDic.Add(140001, info);
+
+            data = ItemDataManager.Instance.GetData(140002) as ItemData;
+            info = new ItemInfo(data, 56);
+            itemInfoDic.Add(140002, info);
+
+            data = ItemDataManager.Instance.GetData(140003) as ItemData;
+            info = new ItemInfo(data, 234);
+            itemInfoDic.Add(140003, info);
+        }
+
+        public void Dispose()
+        {
+        }
+
         public ItemInfo GetItemInfo(int kid)
         {
             if(itemInfoDic.ContainsKey(kid))
@@ -54,7 +77,7 @@ namespace GameLogic
             {
                 BaseLogger.LogFormat("Illegal item count manuplation: kid={0}, count={1}", kid, count);
             }
-            DispatchNotification(NotificationEnum.PACK_REFRESH);
+            DispatchNotification(NotificationEnum.PACK_REFRESH, ItemType.None);
         }
 
         public List<ItemInfo> GetItemInfosByType(ItemType type)
@@ -71,5 +94,7 @@ namespace GameLogic
             }
             return result;
         }
+
+
     }
 }

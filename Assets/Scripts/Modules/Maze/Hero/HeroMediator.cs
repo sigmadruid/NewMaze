@@ -30,7 +30,7 @@ namespace GameLogic
 			return new Enum[]
 			{
 				NotificationEnum.HERO_INIT,
-                NotificationEnum.MOUSE_UP,
+                NotificationEnum.MOUSE_HIT_OBJECT,
                 NotificationEnum.HERO_CONVERT,
 				NotificationEnum.BATTLE_PAUSE,
 				NotificationEnum.HERO_TRANSPORT,
@@ -47,9 +47,9 @@ namespace GameLogic
                     HandleHeroInit(record);
 					break;
 				}
-                case NotificationEnum.MOUSE_UP:
+                case NotificationEnum.MOUSE_HIT_OBJECT:
                 {
-                    HandleHeroAttack();
+                    HandleHeroClick();
                     break;
                 }
 				case NotificationEnum.HERO_CONVERT:
@@ -121,9 +121,15 @@ namespace GameLogic
             hero.Info.AddHP(999999);
 		}
 
-        private void HandleHeroAttack()
+        private void HandleHeroClick()
         {
-
+            InputManager inputManager = InputManager.Instance;
+            GameObject hitObject = inputManager.MouseHitObject;
+            if (inputManager.CheckMouseHitLayer(Layers.LayerItem))
+            {
+                ItemScript itemScript = hitObject.GetComponent<ItemScript>();
+                DispatchNotification(NotificationEnum.DROP_PICKED_UP, itemScript);
+            }
         }
 
 		private void HandleHeroConvert(int heroKid)
@@ -165,7 +171,6 @@ namespace GameLogic
 			if (hero != null)
 			{
 				hero.Function();
-                DispatchNotification(NotificationEnum.DROP_PICKED_UP);
                 DispatchNotification(NotificationEnum.EXPLORATION_FUNCTION);
 			}
 		}

@@ -53,6 +53,7 @@ namespace GameLogic
         {
             exploration.Uid = Guid.NewGuid().ToString();
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
+            exploration.Script.Uid = exploration.Uid;
             exploration.Script.transform.parent = RootTransform.Instance.ExplorationRoot;
             exploration.Script.CallbackClick = exploration.OnFunction;
             exploration.Script.CallbackEnter = exploration.OnEnter;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Base;
 using StaticData;
@@ -33,21 +34,32 @@ namespace GameLogic
                     HandlePackShow((bool)notification.Body);
                     break;
                 case NotificationEnum.PACK_REFRESH:
-                    HandlePackRefresh();
+                    ItemType type = (ItemType)notification.Body;
+                    HandlePackRefresh(type);
                     break;
             }
         }
 
+        private void HandlePickItem()
+        {
+        }
         private void HandlePackShow(bool show)
         {
             packPanel = PopupManager.Instance.CreateAndAddPopup<PackPanel>();
             packPanel.CallbackSwitchType = OnSwitch;
             packPanel.CallbackUseItem = OnUse;
-            packPanel.CallbackDeleteItem = OnDelete;
+            packPanel.CallbackDiscardItem = OnDiscard;
+            List<ItemInfo> itemInfoList = packProxy.GetItemInfosByType(ItemType.Resource);
+            packPanel.SetInfo(ItemType.Resource, itemInfoList);
         }
-        private void HandlePackRefresh()
+        private void HandlePackRefresh(ItemType type)
         {
-            
+            if (type == ItemType.None)
+            {
+                type = packPanel.CurrentItemType;
+            }
+            List<ItemInfo> itemInfoList = packProxy.GetItemInfosByType(type);
+            packPanel.SetInfo(type, itemInfoList);
         }
 
         private void OnSwitch(ItemType itemType)
@@ -56,7 +68,7 @@ namespace GameLogic
         private void OnUse(ItemInfo itemInfo)
         {
         }
-        private void OnDelete(ItemInfo itemInfo)
+        private void OnDiscard(ItemInfo itemInfo)
         {
         }
 

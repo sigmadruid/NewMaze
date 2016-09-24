@@ -62,7 +62,8 @@ namespace GameLogic
 			npc.Data = NPCDataManager.Instance.GetData(npcKid) as NPCData;
 			npc.EventData = NPCDataManager.Instance.GetEventDataByID(eventKid);
 			npc.Script = ResourceManager.Instance.LoadAsset<NPCScript>(ObjectType.GameObject, npc.Data.GetResPath());
-			npc.Script.transform.parent = RootTransform.Instance.NPCRoot;
+            npc.Script.Uid = npc.Uid;
+            npc.Script.transform.parent = RootTransform.Instance.NPCRoot;
 			npc.Script.CallbackClick = npc.OnNPCClick;
 			npc.State = state;
 			return npc;

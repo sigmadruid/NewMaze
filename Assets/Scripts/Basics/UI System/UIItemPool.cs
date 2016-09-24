@@ -17,6 +17,7 @@ namespace Base
         {
             isDirty = true;
             itemPrefab = prefab.GetComponent<T>();
+            itemPrefab.gameObject.SetActive(false);
             this.rootParent = rootParent;
         }
 		public void Init(string path, Transform rootParent)
@@ -57,6 +58,7 @@ namespace Base
 			item.transform.parent = rootParent;
 			item.transform.localScale = Vector3.one;
             item.transform.localPosition = Vector3.zero;
+            item.gameObject.SetActive(true);
 			return item;
 		}
 
@@ -73,26 +75,26 @@ namespace Base
 		{
             isDirty = true;
 
-			while(rootParent.childCount > 0)
+            for(int i = 0; i < rootParent.childCount; ++i)
 			{
-				Transform child = rootParent.GetChild(0);
-				child.parent = TempParent;
-                child.localPosition = Vector3.one * 99999f;
-//				child.gameObject.SetActive(false);
+				Transform child = rootParent.GetChild(i);
+//				child.parent = TempParent;
+//                child.localPosition = Vector3.one * 99999f;
+				child.gameObject.SetActive(false);
 			}
 		}
 
-		private static Transform tempParent;
-		private static Transform TempParent
+		private Transform tempParent;
+		private Transform TempParent
 		{
 			get
 			{
 				if (tempParent == null)
 				{
 					GameObject go = new GameObject();
-					go.name = "TempUIItemParent";
+					go.name = "__TempRoot";
 					tempParent = go.transform;
-					tempParent.parent = UICamera.currentCamera.transform;
+                    tempParent.SetParent(rootParent);
                     tempParent.localScale = Vector3.one;
 				}
 				return tempParent;

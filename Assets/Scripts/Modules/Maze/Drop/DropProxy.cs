@@ -46,6 +46,15 @@ namespace GameLogic
 			}
 		}
 		
+        public Item GetItemByUid(string uid)
+        {
+            if (!itemDic.ContainsKey(uid))
+            {
+                BaseLogger.Log("can't find item with uid: " + uid);
+            }
+            return itemDic[uid];
+        }
+
         public void AddItem(Item item)
 		{
 			if (!itemDic.ContainsKey(item.Uid))

@@ -11,6 +11,7 @@ namespace StaticData
         Equipment,
         SoulStone,
         Other,
+        None,
     }
 
     public class ItemData : EntityData
@@ -18,7 +19,6 @@ namespace StaticData
         public string Name;
         public string Description;
         public ItemType Type;
-        public string Icon;
 
         public string Res2D;
         public string Res3D;

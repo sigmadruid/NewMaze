@@ -59,7 +59,7 @@ namespace GameLogic
         SERIALIZE_GAME,
 
         //Input
-        MOUSE_UP,
+        MOUSE_HIT_OBJECT,
 
         #region Pack
 

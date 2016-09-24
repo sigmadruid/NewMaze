@@ -11,11 +11,13 @@ namespace GameLogic
 {
     public class DropMediator : Mediator
     {
-		private DropProxy proxy;
+        private DropProxy dropProxy;
+        private PackProxy packProxy;
 
         public override void OnRegister ()
         {
-			proxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
+            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
+            packProxy = ApplicationFacade.Instance.RetrieveProxy<PackProxy>();
         }
         
         public override IList<Enum> ListNotificationInterests ()
@@ -53,7 +55,8 @@ namespace GameLogic
 				}
 				case NotificationEnum.DROP_PICKED_UP:
                 {
-                    HandleItemDespawnSingle();
+                    ItemScript itemScript = notification.Body as ItemScript;
+                    HandleItemDespawnSingle(itemScript);
                     break;
                 }
             }
@@ -62,21 +65,21 @@ namespace GameLogic
 		private void HandleItemSpawn(Block block)
 		{
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			List<ItemRecord> recordList = proxy.GetRecordList(blockKey);
+			List<ItemRecord> recordList = dropProxy.GetRecordList(blockKey);
 			if (recordList != null)
 			{
 				for (int i = 0; i < recordList.Count; ++i)
 				{
 					ItemRecord record = recordList[i];
                     Item item = Item.Create(record);
-					proxy.AddItem(item);
+					dropProxy.AddItem(item);
 				}
 			}
 		}
 		private void HandleItemDespawn(Block block)
 		{
             List<Item> toDeleteDropList = new List<Item>();
-            proxy.IterateDrops((Item item) => 
+            dropProxy.IterateDrops((Item item) => 
             {
                 Vector2 itemPos = Maze.Instance.GetMazePosition(item.WorldPosition);
 				if (block.Contains((int)itemPos.x, (int)itemPos.y))
@@ -86,12 +89,12 @@ namespace GameLogic
 			});
 
 			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			proxy.InitRecordList(blockKey);
+			dropProxy.InitRecordList(blockKey);
 
 			for (int i = 0; i < toDeleteDropList.Count; ++i)
 			{
                 Item drop = toDeleteDropList[i];
-				proxy.HideItem(drop.Uid);
+				dropProxy.HideItem(drop.Uid);
                 Item.Recycle(drop);
 			}
 		}
@@ -99,17 +102,18 @@ namespace GameLogic
 		{
             DropData dropData = DropDataManager.Instance.GetData(monster.Data.DropKid) as DropData;
             Item item = Item.Create(dropData, monster.WorldPosition);
-			proxy.AddItem(item);
+			dropProxy.AddItem(item);
 			item.StartFlying(monster.WorldPosition);
 		}
-		private void HandleItemDespawnSingle()
+        private void HandleItemDespawnSingle(ItemScript itemScript)
 		{
-            Item nearbyItem = proxy.FindNearbyItem(Hero.Instance.WorldPosition);
-			if (nearbyItem != null)
+            Item item = dropProxy.GetItemByUid(itemScript.Uid);
+            if (item != null)
 			{
-				nearbyItem.PickedUp();
-				proxy.RemoveItem(nearbyItem.Uid);
-				Item.Recycle(nearbyItem);
+                item.PickedUp();
+                packProxy.ChangeCount(item.Data.Kid, item.Info.Count);
+                dropProxy.RemoveItem(item.Uid);
+                Item.Recycle(item);
 			}
 
 		}

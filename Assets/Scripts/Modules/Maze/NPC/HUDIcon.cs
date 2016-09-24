@@ -42,10 +42,10 @@ public class HUDIcon : BaseScreenItem
         switch(type)
         {
             case HUDIconType.NPC:
-                sprite = CreateSprite("Atlas/Common/npc_icon");
+                sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_COMMON, "npc_icon");
                 break;
             case HUDIconType.Exploration:
-                sprite = CreateSprite("Atlas/Common/skull_icon");
+                sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_COMMON, "skull_icon");
                 break;
         }
         icon.ImageIcon.sprite = sprite;
@@ -65,11 +65,6 @@ public class HUDIcon : BaseScreenItem
 		}
 	}
 
-    private static Sprite CreateSprite(string path)
-    {
-        Texture2D texture = Resources.Load<Texture2D>(path);
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        return sprite;
-    }
+
 }
 

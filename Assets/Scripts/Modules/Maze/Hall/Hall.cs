@@ -48,7 +48,8 @@ namespace GameLogic
 			hall.Uid = Guid.NewGuid().ToString();
 			hall.Data = HallDataManager.Instance.GetData(kid) as HallData;
 			hall.Script = resManager.LoadAsset<HallScript>(ObjectType.GameObject, hall.Data.GetResPath());
-			hall.SetPosition(GlobalConfig.HallConfig.HallPosition);
+            hall.Script.Uid = hall.Uid;
+            hall.SetPosition(GlobalConfig.HallConfig.HallPosition);
 			instance = hall;
 
 			return hall;

@@ -53,7 +53,7 @@ namespace GameLogic
             if(!IsUpdating)
                 return;
 
-            if(CanAttack && inputManager.MouseHitObject != null)
+            if(CanAttack && inputManager.CheckMouseHitLayer(Layers.LayerMonster))
             {
                 if(MathUtils.XZDistance(WorldPosition, inputManager.MouseHitPosition) < GlobalConfig.HeroConfig.AttackDistance)
                 {
@@ -208,10 +208,12 @@ namespace GameLogic
 		{
 			Hero hero = new Hero();
 
+            hero.Uid = Guid.NewGuid().ToString();
             hero.Data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
 			hero.Info = new HeroInfo(hero.Data, info);
 			hero.Script = ResourceManager.Instance.LoadAsset<HeroScript>(ObjectType.GameObject, hero.Data.GetResPath());
-			hero.Script.CallbackUpdate = hero.Update;
+            hero.Script.Uid = hero.Uid;
+            hero.Script.CallbackUpdate = hero.Update;
 			hero.Script.CallbackSlowUpdate = hero.SlowUpdate;
 			hero.Script.CallbackDie = hero.OnDie;
             hero.Script.CallbackTrapAttack = hero.OnTrapAttack;

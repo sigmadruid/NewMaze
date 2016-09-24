@@ -117,14 +117,11 @@ namespace Base
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit hitinfo;
-                        Debug.DrawRay(ray.origin, ray.direction, Color.red, 5f);
                         if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHitMask))
                         {
                             MouseHitPosition = hitinfo.point;
-                            if(1 << hitinfo.collider.gameObject.layer == Layers.LayerMonster)
-                            {
-                                MouseHitObject = hitinfo.collider.gameObject;
-                            }
+                            MouseHitObject = hitinfo.collider.gameObject;
+                            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MOUSE_HIT_OBJECT);
                         }
                     }
                 }
@@ -164,6 +161,11 @@ namespace Base
                 KeyboardAction action = keyboardActionDic[typeID];
                 action.Callback = callback;
             }
+        }
+
+        public bool CheckMouseHitLayer(int layer)
+        {
+            return MouseHitObject != null && 1 << MouseHitObject.layer == layer;
         }
 
 		void Test()

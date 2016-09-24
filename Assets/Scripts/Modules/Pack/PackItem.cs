@@ -3,14 +3,15 @@ using UnityEngine.UI;
 
 using System;
 
+using Base;
 using GameLogic;
 
 public class PackItem : MonoBehaviour
 {
-    public Image imageIcon;
-    public Text textCount;
+    public Image ImageIcon;
+    public Text TextCount;
 
-    private ItemInfo info;
+    public ItemInfo ItemInfo { get; private set; }
 
     public void Init()
     {
@@ -18,7 +19,9 @@ public class PackItem : MonoBehaviour
 
     public void SetInfo(ItemInfo info)
     {
-        this.info = info;
+        this.ItemInfo = info;
+        TextCount.text = info.Count.ToString();
+        ImageIcon.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_ITEM, info.Data.Res2D);
     }
 
     public void Dispose()

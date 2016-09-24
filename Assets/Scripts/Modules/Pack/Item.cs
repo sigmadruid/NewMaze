@@ -55,6 +55,7 @@ namespace GameLogic
             item.Data = ItemDataManager.Instance.GetData(record.Kid) as ItemData;
             item.Info = new ItemInfo(item.Data, record.Count);
             item.Script = ResourceManager.Instance.LoadAsset<ItemScript>(ObjectType.GameObject, item.Data.GetResPath());
+            item.Script.Uid = item.Uid;
             item.Script.transform.parent = RootTransform.Instance.DropRoot; 
 
             item.SetPosition(record.WorldPosition.ToVector3());
@@ -71,6 +72,7 @@ namespace GameLogic
             item.Info = info;
             item.Script = ResourceManager.Instance.LoadAsset<ItemScript>(ObjectType.GameObject, item.Data.GetResPath());
             item.Script.transform.parent = RootTransform.Instance.DropRoot; 
+            item.Script.Uid = item.Uid;
 
             item.SetPosition(position);
 

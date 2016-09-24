@@ -16,8 +16,12 @@ public class ItemScript : EntityScript
     private Vector3 destPosition;
     private Vector3 midPosition;
 
+    private Collider collider;
+
     void Awake()
     {
+        collider = GetComponent<Collider>();
+        collider.enabled = false;
     }
 
     void Update()
@@ -29,6 +33,7 @@ public class ItemScript : EntityScript
             if (Vector3.SqrMagnitude(transform.position - destPosition) < 0.01f)
             {
                 isFlying = false;
+                collider.enabled = true;
             }
         }
     }
@@ -37,7 +42,7 @@ public class ItemScript : EntityScript
     {
         Vector2 circle = UnityEngine.Random.insideUnitCircle;
         startPostion = position;
-        destPosition = position + new Vector3(circle.x, 0, circle.y) * 1f;
+        destPosition = position + new Vector3(circle.x, 0, circle.y) * 1f + Vector3.up * 0.2f;
         midPosition = BezierUtil.GetMiddlePosition(position, destPosition, 8f);
 
         t = 0f;
