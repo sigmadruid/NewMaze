@@ -71,6 +71,7 @@ namespace StaticData
     {
         public readonly float NearSqrDistance = 0.1f;
         public readonly int MouseHitMask = Layers.LayerBlock | Layers.LayerMonster | Layers.LayerItem;
+        public readonly int MouseHoverMask = Layers.LayerBlock | Layers.LayerMonster | Layers.LayerNPC | Layers.LayerItem;
 
     }
 

@@ -5,6 +5,8 @@ using System.Collections;
 using Base;
 using GameLogic;
 
+using HighlightingSystem;
+
 public class MonsterScript : CharacterScript 
 {
     public Action<int> CallbackTrapAttack;
@@ -12,10 +14,12 @@ public class MonsterScript : CharacterScript
 	public Transform EmitTransform;
 
 	protected BarItem hpBar;
+    protected Highlighter highlighter;
 	
 	protected override void Awake () 
 	{
 		base.Awake();
+        highlighter = GetComponent<Highlighter>();
 	}
 
 	protected override void OnEnable () 
@@ -33,6 +37,20 @@ public class MonsterScript : CharacterScript
 			hpBar = null;
 		}
 	}
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if(InputManager.Instance.MouseHoverObject == gameObject)
+        {
+            highlighter.ConstantOnImmediate(Color.white);
+        }
+        else
+        {
+            highlighter.ConstantOffImmediate();
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -59,3 +77,4 @@ public class MonsterScript : CharacterScript
 		hpBar.UpdateHP(hp, maxHP);
 	}
 }
+

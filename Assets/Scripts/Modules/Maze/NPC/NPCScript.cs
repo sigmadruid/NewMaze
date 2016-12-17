@@ -5,6 +5,8 @@ using System;
 using Base;
 using GameLogic;
 
+using HighlightingSystem;
+
 public class NPCScript : EntityScript
 {
 	public Utils.CallbackVoid CallbackEnter;
@@ -16,8 +18,12 @@ public class NPCScript : EntityScript
 	[HideInInspector]
 	public HUDIcon Icon;
 
+    private Highlighter highlighter;
+
 	void Awake()
 	{
+        highlighter = GetComponent<Highlighter>();
+
         Icon = HUDIcon.Create(HUDIconType.NPC);
 		Icon.CallbackClick = OnIconClick;
 		Icon.gameObject.SetActive(false);
@@ -29,6 +35,14 @@ public class NPCScript : EntityScript
 		{
 			Icon.UpdatePosition(IconPos.position);
 		}
+        if(InputManager.Instance.MouseHoverObject == gameObject)
+        {
+            highlighter.ConstantOnImmediate(Color.white);
+        }
+        else
+        {
+            highlighter.ConstantOffImmediate();
+        }
 	}
 
 	void OnTriggerEnter(Collider other)

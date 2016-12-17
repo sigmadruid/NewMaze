@@ -45,6 +45,8 @@ namespace Base
         public Vector3 DirectionVector { get; private set; }
         public Vector3 MouseHitPosition { get; private set; }
         public GameObject MouseHitObject { get; private set; }
+        public Vector3 MouseHoverPosition { get; private set; }
+        public GameObject MouseHoverObject { get; private set; }
 
         private bool enable = true;
         public bool Enable
@@ -107,12 +109,14 @@ namespace Base
                     PointerEventData eventData = new PointerEventData(InputSystem);
                     eventData.pressPosition = Input.mousePosition;
                     eventData.position = Input.mousePosition;
+
                     List<RaycastResult> raycastList = new List<RaycastResult>();
                     for(int i = 0; i < UIRaycasters.Length; ++i)
                     {
                         GraphicRaycaster raycaster = UIRaycasters[i];
                         raycaster.Raycast(eventData, raycastList);
                     }
+
                     if(raycastList.Count == 0)
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -123,6 +127,18 @@ namespace Base
                             MouseHitObject = hitinfo.collider.gameObject;
                             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MOUSE_HIT_OBJECT);
                         }
+                    }
+                }
+                else
+                {
+                    MouseHoverPosition = Vector3.zero;
+                    MouseHoverObject = null;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hitinfo;
+                    if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHoverMask))
+                    {
+                        MouseHoverPosition = hitinfo.point;
+                        MouseHoverObject = hitinfo.collider.gameObject;
                     }
                 }
 
