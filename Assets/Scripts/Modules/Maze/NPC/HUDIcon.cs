@@ -35,7 +35,7 @@ public class HUDIcon : BaseScreenItem
 		}
 	}
 
-    public static HUDIcon Create(HUDIconType type)
+    public static HUDIcon Create(HUDIconType type, Action callbackClick)
 	{
         HUDIcon icon = PopupManager.Instance.CreateItem<HUDIcon>(RootTransform.Instance.UIIconRoot);
         Sprite sprite = null;
@@ -49,6 +49,7 @@ public class HUDIcon : BaseScreenItem
                 break;
         }
         icon.ImageIcon.sprite = sprite;
+        icon.CallbackClick = callbackClick;
 		return icon;
 	}
 	
@@ -56,6 +57,7 @@ public class HUDIcon : BaseScreenItem
 	{
 		if (icon != null)
 		{
+            icon.CallbackClick = null;
             PopupManager.Instance.RemoveItem(icon.gameObject);
 		}
 		else

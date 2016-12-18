@@ -53,11 +53,8 @@ namespace GameLogic
         {
             exploration.Uid = Guid.NewGuid().ToString();
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
-            exploration.Script.Uid = exploration.Uid;
             exploration.Script.transform.parent = RootTransform.Instance.ExplorationRoot;
-            exploration.Script.CallbackClick = exploration.OnFunction;
-            exploration.Script.CallbackEnter = exploration.OnEnter;
-            exploration.Script.CallbackExit = exploration.OnExit;
+            exploration.Script.Init(exploration.Uid, exploration.OnFunction, exploration.OnEnter, exploration.OnExit);
             exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
         }
 
@@ -65,11 +62,12 @@ namespace GameLogic
 		{
 			if (exploration != null)
 			{
-                if (exploration.Script.Icon != null)
-                    HUDIcon.Recycle(exploration.Script.Icon);
-				exploration.Data = null;
-				ResourceManager.Instance.RecycleAsset(exploration.Script.gameObject);
+                exploration.Script.Dispose();
+                ResourceManager.Instance.RecycleAsset(exploration.Script.gameObject);
 				exploration.Script = null;
+                exploration.proxy = null;
+                exploration.Data = null;
+                exploration.Uid = null;
 			}
 			else
 			{

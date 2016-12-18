@@ -35,16 +35,23 @@ namespace GameUI
         
         private void OnConfirm(GameObject go)
         {
-            PopupManager.Instance.RemovePopup(this);
             if (CallbackConfirm != null)
                 CallbackConfirm();
+            Dispose();
         }
 		private void OnCancel(GameObject go)
 		{
-            PopupManager.Instance.RemovePopup(this);
             if (CallbackCancel != null)
 			    CallbackCancel();
+            Dispose();
 		}
+
+        private void Dispose()
+        {
+            PopupManager.Instance.RemovePopup(this);
+            CallbackConfirm = null;
+            CallbackCancel = null;
+        }
     }
 }
 

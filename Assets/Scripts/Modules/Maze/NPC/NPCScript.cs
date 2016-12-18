@@ -9,31 +9,23 @@ using HighlightingSystem;
 
 public class NPCScript : EntityScript
 {
-	public Utils.CallbackVoid CallbackEnter;
-	public Utils.CallbackVoid CallbackExit;
-	public Utils.CallbackVoid CallbackClick;
+    public Transform IconPos;
 
-	public Transform IconPos;
+    private Action callbackEnter;
+    private Action callbackExit;
 
-	[HideInInspector]
-	public HUDIcon Icon;
-
+    private HUDIcon hud;
     private Highlighter highlighter;
 
 	void Awake()
 	{
         highlighter = GetComponent<Highlighter>();
-
-        Icon = HUDIcon.Create(HUDIconType.NPC);
-		Icon.CallbackClick = OnIconClick;
-		Icon.gameObject.SetActive(false);
 	}
-
 	void Update()
 	{
-		if (Icon.gameObject.activeSelf)
+		if (hud.gameObject.activeSelf)
 		{
-			Icon.UpdatePosition(IconPos.position);
+			hud.UpdatePosition(IconPos.position);
 		}
         if(InputManager.Instance.MouseHoverObject == gameObject)
         {
@@ -49,30 +41,42 @@ public class NPCScript : EntityScript
 	{
 		if (!CheckNPC()) return;
 
-		Icon.gameObject.SetActive(true);
-		if (CallbackEnter != null)
+		hud.gameObject.SetActive(true);
+		if (callbackEnter != null)
 		{
-			CallbackEnter();
+			callbackEnter();
 		}
 	}
 	void OnTriggerExit(Collider other)
 	{
 		if (!CheckNPC()) return;
 
-		Icon.gameObject.SetActive(false);
-		if (CallbackExit != null)
+		hud.gameObject.SetActive(false);
+		if (callbackExit != null)
 		{
-			CallbackExit();
+			callbackExit();
 		}
 	}
 
-	private void OnIconClick()
-	{
-		if (CallbackClick != null)
-		{
-			CallbackClick();
-		}
-	}
+    public void Init(string uid, Action click, Action enter, Action exit)
+    {
+        Uid = uid;
+        callbackEnter = enter;
+        callbackExit = exit;
+        if(IconPos != null)
+        {
+            hud = HUDIcon.Create(HUDIconType.NPC, click);
+            hud.gameObject.SetActive(false);
+        }
+    }
+    public void Dispose()
+    {
+        HUDIcon.Recycle(hud);
+        hud = null;
+        callbackEnter = null;
+        callbackExit = null;
+        Uid = null;
+    }
 
 	private bool CheckNPC()
 	{

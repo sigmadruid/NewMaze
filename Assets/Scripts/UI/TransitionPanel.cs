@@ -58,12 +58,17 @@ namespace GameUI
             else
             {
                 isPlaying = false;
-                PopupManager.Instance.RemovePopup(this);
+                Dispose();
             }
             
             hasCompleted = true;
 		}
 
+        private void Dispose()
+        {
+            PopupManager.Instance.RemovePopup(this);
+            CallbackTransition = null;
+        }
 	}	
 }
 

@@ -10,72 +10,64 @@ namespace GameLogic
 {
     public class ExplorationScript : EntityScript
     {
-        public Action CallbackClick;
-        public Action CallbackEnter;
-        public Action CallbackExit;
-
         public Transform IconPos;
 
-        [HideInInspector]
-        public HUDIcon Icon;
+        private Action callbackEnter;
+        private Action callbackExit;
 
+        private HUDIcon hud;
 		private Highlighter highlighter;
 
 		void Awake()
 		{
 			highlighter = GetComponent<Highlighter>();
-
-            if(IconPos != null)
-            {
-                Icon = HUDIcon.Create(HUDIconType.Exploration);
-                Icon.CallbackClick = OnIconClick;
-                Icon.gameObject.SetActive(false);
-            }
 		}
-
-        void OnDestroy()
-        {
-            if(Icon != null)
-            {
-                Icon.CallbackClick = null;
-                HUDIcon.Recycle(Icon);
-            }
-        }
-
         void Update()
         {
-            if (Icon != null && Icon.gameObject.activeSelf)
+            if (hud != null && hud.gameObject.activeSelf)
             {
-                Icon.UpdatePosition(IconPos.position);
+                hud.UpdatePosition(IconPos.position);
             }
         }
-
 		void OnTriggerEnter(Collider other)
 		{
             if (other.CompareTag(Tags.Hero))
 			{
-                if (Icon != null)
-                    Icon.gameObject.SetActive(true);
-                if (CallbackEnter != null) 
-                    CallbackEnter();
+                if (hud != null)
+                    hud.gameObject.SetActive(true);
+                if (callbackEnter != null) 
+                    callbackEnter();
 			}
 		}
 		void OnTriggerExit(Collider other)
 		{
             if (other.CompareTag(Tags.Hero))
 			{
-                if (Icon != null)
-                    Icon.gameObject.SetActive(false);
-                if (CallbackExit != null) 
-                    CallbackExit();
+                if (hud != null)
+                    hud.gameObject.SetActive(false);
+                if (callbackExit != null) 
+                    callbackExit();
 			}
 		}
-        private void OnIconClick()
+
+        public void Init(string uid, Action click, Action enter, Action exit)
         {
-            if (CallbackClick != null)
+            Uid = uid;
+            callbackEnter = enter;
+            callbackExit = exit;
+            if(IconPos != null)
             {
-                CallbackClick();
+                hud = HUDIcon.Create(HUDIconType.Exploration, click);
+                hud.gameObject.SetActive(false);
             }
+        }
+        public void Dispose()
+        {
+            HUDIcon.Recycle(hud);
+            hud = null;
+            callbackEnter = null;
+            callbackExit = null;
+            Uid = null;
         }
 
         public void HighlightOn(Color color)

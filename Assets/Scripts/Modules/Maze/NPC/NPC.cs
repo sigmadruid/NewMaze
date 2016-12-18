@@ -62,9 +62,8 @@ namespace GameLogic
 			npc.Data = NPCDataManager.Instance.GetData(npcKid) as NPCData;
 			npc.EventData = NPCDataManager.Instance.GetEventDataByID(eventKid);
 			npc.Script = ResourceManager.Instance.LoadAsset<NPCScript>(ObjectType.GameObject, npc.Data.GetResPath());
-            npc.Script.Uid = npc.Uid;
             npc.Script.transform.parent = RootTransform.Instance.NPCRoot;
-			npc.Script.CallbackClick = npc.OnNPCClick;
+            npc.Script.Init(npc.Uid, npc.OnNPCClick, npc.OnNPCEnter, npc.OnNPCExit);
 			npc.State = state;
 			return npc;
 		}
@@ -73,12 +72,12 @@ namespace GameLogic
 		{
 			if (npc != null)
 			{
-                HUDIcon.Recycle(npc.Script.Icon);
-				npc.Data = null;
-				npc.EventData = null;
-				npc.Script.StopAllCoroutines();
-				ResourceManager.Instance.RecycleAsset(npc.Script.gameObject);
-				npc.Script = null;
+                npc.Script.Dispose();
+                ResourceManager.Instance.RecycleAsset(npc.Script.gameObject);
+                npc.Script = null;
+                npc.EventData = null;
+                npc.Data = null;
+                npc.Uid = null;
 				
 			}
 			else
