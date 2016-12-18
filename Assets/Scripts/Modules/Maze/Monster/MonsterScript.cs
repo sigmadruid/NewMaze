@@ -19,7 +19,7 @@ public class MonsterScript : CharacterScript
 	protected override void Awake () 
 	{
 		base.Awake();
-        highlighter = GetComponent<Highlighter>();
+        highlighter = GetComponentInChildren<Highlighter>();
 	}
 
 	protected override void OnEnable () 
