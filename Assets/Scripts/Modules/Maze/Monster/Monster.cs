@@ -60,7 +60,7 @@ namespace GameLogic
 		public void Die()
 		{
 			Script.Die();
-
+            SetAtNight(false);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
 		}
 
@@ -111,7 +111,7 @@ namespace GameLogic
         public void SetAtNight(bool isNight)
         {
             int nightFuryBuffID = GlobalConfig.EnvironmentConfig.NightFuryBuffID;
-            if(isNight)
+            if(isNight && Info.IsAlive)
             {
                 AddBuff(nightFuryBuffID);
             }
