@@ -12,9 +12,9 @@ using DG.Tweening;
 public class NumberItem : BaseScreenItem
 {
 	public bool AutoDestroy = true;
-    public float DestroyDelay = 1f;
+    public float DestroyDelay = 1.2f;
 
-    private bool startDestroy;
+    private bool isPlaying;
     private float timer;
     private Text labelNumber;
     private DOTweenAnimation tween;
@@ -44,26 +44,22 @@ public class NumberItem : BaseScreenItem
 		{
 			Show("Miss");
 		}
+        timer = 0f;
+        isPlaying = true;
 	}
 	public void Show(string text)
 	{
 		labelNumber.text = text;
 	}
 
-    public void OnFinished()
-	{
-        startDestroy = true;
-        timer = 0f;
-	}
-
     void Update()
     {
-        if(startDestroy)
+        if(isPlaying)
         {
             timer += Time.deltaTime;
             if(timer > DestroyDelay)
             {
-                startDestroy = false;
+                isPlaying = false;
                 if(AutoDestroy)
                 {
                     NumberItem.Recycle(this);
