@@ -33,7 +33,6 @@ namespace GameLogic
             {
                 RandomUtils.Seed = UnityEngine.Random.Range(0, 20140413);
             }
-            RandomUtils.Seed = 13880388;
 		}
 
 		public float ElapsedTime

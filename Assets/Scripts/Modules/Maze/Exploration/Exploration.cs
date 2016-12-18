@@ -53,7 +53,6 @@ namespace GameLogic
         {
             exploration.Uid = Guid.NewGuid().ToString();
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
-            exploration.Script.transform.parent = RootTransform.Instance.ExplorationRoot;
             exploration.Script.Init(exploration.Uid, exploration.OnFunction, exploration.OnEnter, exploration.OnExit);
             exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
         }

@@ -60,6 +60,7 @@ namespace GameLogic
                 hud = HUDIcon.Create(HUDIconType.Exploration, click);
                 hud.gameObject.SetActive(false);
             }
+            transform.parent = RootTransform.Instance.ExplorationRoot;
         }
         public void Dispose()
         {

@@ -24,12 +24,12 @@ namespace GameLogic
         {
             return new Enum[]
             {
-//                NotificationEnum.BLOCK_SPAWN,
-//                NotificationEnum.BLOCK_DESPAWN,
-//                NotificationEnum.HALL_SPAWN,
-//                NotificationEnum.HALL_DESPAWN,
-//				NotificationEnum.DROP_CREATED,
-//                NotificationEnum.DROP_PICKED_UP,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
+				NotificationEnum.DROP_CREATED,
+                NotificationEnum.DROP_PICKED_UP,
             };
         }
         
@@ -115,9 +115,25 @@ namespace GameLogic
 		}
         private void HandleItemSpawn(Hall hall)
         {
+            int mazeKid = Maze.Instance.Data.Kid;
+            int location = Maze.GetLocation(mazeKid, hall.Data.Kid);
+            List<ItemRecord> recordList = dropProxy.GetRecordList(location);
+            if (recordList != null)
+            {
+                for (int i = 0; i < recordList.Count; ++i)
+                {
+                    ItemRecord record = recordList[i];
+                    Item item = Item.Create(record);
+                    dropProxy.AddItem(item);
+                }
+            }
         }
         private void HandleItemDespawn(Hall hall)
         {
+            int mazeKid = Maze.Instance.Data.Kid;
+            int location = Maze.GetLocation(mazeKid, hall.Data.Kid);
+            dropProxy.InitRecordList(location);
+            dropProxy.ClearItems();
         }
 		private void HandleItemSpawnSingle(Monster monster)
 		{

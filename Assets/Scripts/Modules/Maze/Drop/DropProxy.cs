@@ -17,12 +17,8 @@ namespace GameLogic
 
 		public void Dispose()
 		{
-            Dictionary<string, Item>.Enumerator enumerator = itemDic.GetEnumerator();
-			while (enumerator.MoveNext())
-			{
-                Item.Recycle(enumerator.Current.Value);
-			}
-			itemDic.Clear();
+            ClearItems();
+            recordDic.Clear();
 		}
 
         public static ItemInfo GenerateItemInfoByDrop(DropData dropData)
@@ -101,6 +97,16 @@ namespace GameLogic
                 Item.Recycle(item);
 			}
 		}
+
+        public void ClearItems()
+        {
+            Dictionary<string, Item>.Enumerator enumerator = itemDic.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Item.Recycle(enumerator.Current.Value);
+            }
+            itemDic.Clear();
+        }
 
         public Item FindNearbyItem(Vector3 position)
 		{

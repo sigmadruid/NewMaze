@@ -68,6 +68,7 @@ public class NPCScript : EntityScript
             hud = HUDIcon.Create(HUDIconType.NPC, click);
             hud.gameObject.SetActive(false);
         }
+        transform.parent = RootTransform.Instance.NPCRoot;
     }
     public void Dispose()
     {

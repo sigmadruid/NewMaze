@@ -31,7 +31,7 @@ namespace GameLogic
 
         public void PickedUp()
         {
-//            TopAlertPanel.AddAlert(string.Format("Pick up coins: {0}", Count));
+//            TopAlertPanel.AddAlert(string.Format("Pick up coins: {0}", Info.Count));
         }
 
         public void StartFlying(Vector3 position)
