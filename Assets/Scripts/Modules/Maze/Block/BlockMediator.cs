@@ -29,6 +29,7 @@ namespace GameLogic
 				NotificationEnum.BLOCK_REFRESH,
                 NotificationEnum.BLOCK_DISPOSE,
                 NotificationEnum.BLOCK_SHOW_ALL,
+                NotificationEnum.BLOCK_HIDE_ALL,
 			};
 		}
 
@@ -57,15 +58,18 @@ namespace GameLogic
                     HandleShowAllBlocks();
                     break;
                 }
+                case NotificationEnum.BLOCK_HIDE_ALL:
+                {
+                    HandleHideAllBlocks();
+                    break;
+                }
 			}
 		}
 
 		private void HandleBlockInit()
 		{
-//			MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-//			Vector3 position = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
-            prevCol = 0;
-            prevRow = 0;
+            prevCol = -1;
+            prevRow = -1;
 		}
 		private void HandleBlockDispose()
 		{
@@ -98,7 +102,7 @@ namespace GameLogic
 				if (node.AboveBlock != null)
 				{
 					OnDisposeBlock(node.AboveBlock);
-//					Logger.Log("block: ", block.Col, block.Row);
+//                    BaseLogger.LogFormat("block: {0},{1}", node.Col, node.Row);
 					blockProxy.RemoveBlock(node);
 				}
 			}
@@ -125,7 +129,7 @@ namespace GameLogic
 
         private void HandleShowAllBlocks()
         {
-            blockProxy.UpdateAllMazeNodes();
+            blockProxy.ShowAllMazeNodes();
             List<MazeNode> toCreateList = blockProxy.ToCreateNodeList;
             for (int i = 0; i < toCreateList.Count; ++i)
             {
@@ -134,6 +138,23 @@ namespace GameLogic
                 {
                     Block block = blockProxy.AddBlock(node);
                     OnInitBlock(block);
+                }
+            }
+        }
+        private void HandleHideAllBlocks()
+        {
+            prevCol = -1;
+            prevRow = -1;
+            blockProxy.HideAllMazeNodes();
+            List<MazeNode> toDeleteList = blockProxy.ToDeleteNodeList;
+            for (int i = 0; i < toDeleteList.Count; ++i)
+            {
+                MazeNode node = toDeleteList[i];
+                if (node.AboveBlock != null)
+                {
+                    Block block = blockProxy.GetBlockAtPosition(node.Col, node.Row);
+                    OnDisposeBlock(block);
+                    blockProxy.RemoveBlock(node);
                 }
             }
         }

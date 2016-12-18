@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,10 +13,14 @@ namespace GameUI
 {
 	public class TransitionPanel : BasePopupView
 	{
-		public Utils.CallbackVoid CallbackTransition;
+        private const float LOOP_DURATION = 1f;
+
+        public Action CallbackTransition;
 
         private CanvasGroup group;
 
+        private float timer;
+        private bool isPlaying;
         private bool hasCompleted;
 
 	    void Awake()
@@ -21,20 +28,38 @@ namespace GameUI
             group = GetComponent<CanvasGroup>();
 	    }
 
-		public void StartTransition()
+        void Update()
+        {
+            //Tweener's onStepComplete uses try...catch. It's hard to debug...
+            if(isPlaying)
+            {
+                timer += Time.deltaTime;
+                if(timer > LOOP_DURATION)
+                {
+                    OnStep();
+                }
+            }
+        }
+
+		public void Play()
 		{
+            timer = 0;
+            isPlaying = true;
             hasCompleted = false;
-            group.alpha = 0f;
-            Tweener tweener =  group.DOFade(1f, 1f).SetLoops(2, LoopType.Yoyo);
-            tweener.OnStepComplete(OnStep);
+            Tweener tweener = group.DOFade(1, LOOP_DURATION).SetLoops(2, LoopType.Yoyo);
 		}
 
 		private void OnStep()
 		{
-            if (!hasCompleted)
-			    CallbackTransition();
+            if(!hasCompleted)
+            {
+                CallbackTransition();
+            }
             else
+            {
+                isPlaying = false;
                 PopupManager.Instance.RemovePopup(this);
+            }
             
             hasCompleted = true;
 		}

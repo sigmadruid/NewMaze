@@ -5,6 +5,8 @@ using Base;
 using StaticData;
 using Battle;
 
+using DG.Tweening;
+
 namespace GameLogic
 {
 	public class StageMaze : BaseStage
@@ -12,7 +14,8 @@ namespace GameLogic
         private HeroProxy heroProxy;
 		private BlockProxy blockProxy;
         private HallProxy hallProxy;
-		private MonsterProxy monsterProxy;
+        private MonsterProxy monsterProxy;
+        private DropProxy dropProxy;
 		private BulletProxy bulletProxy;
 		private NPCProxy npcProxy;
 		private ExplorationProxy explorationProxy;
@@ -22,6 +25,8 @@ namespace GameLogic
 
 		public override void Start ()
 		{
+            DOTween.Init();
+
 			Maze.Instance.Init();
 
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
@@ -29,7 +34,8 @@ namespace GameLogic
 			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 			blockProxy.Init();
             hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
-			monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
+            monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
+            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
 			bulletProxy = ApplicationFacade.Instance.RetrieveProxy<BulletProxy>();
 			npcProxy = ApplicationFacade.Instance.RetrieveProxy<NPCProxy>();
 			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
@@ -69,6 +75,7 @@ namespace GameLogic
             blockProxy.Dispose();
             hallProxy.Dispose();
             monsterProxy.Dispose();
+            dropProxy.Dispose();
             bulletProxy.Dispose();
 			npcProxy.Dispose();
 			explorationProxy.Dispose();

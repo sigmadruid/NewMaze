@@ -15,13 +15,11 @@ namespace GameLogic
     }
     public class TransporterExpl : Exploration
     {
-        public TransporterDirectionType DirectionState;
-
         public override void OnFunction()
         {
             base.OnFunction();
 
-            if(DirectionState == TransporterDirectionType.Forward)
+            if (Hall.Instance == null)
             {
                 ConfirmPanel.Show("Transporter", "Do you want to transport to somwhere unknown?", DoTransportForward, OnCancel);
             }
@@ -34,17 +32,19 @@ namespace GameLogic
 
         private void DoTransportForward()
         {
+            Debug.LogError("this---------------" + Uid);
+            Debug.LogError(Data.Kid);
             BeforeTransport();
             TransitionPanel panel = PopupManager.Instance.CreateAndAddPopup<TransitionPanel>();
             panel.CallbackTransition = OnTransportForward;
-            panel.StartTransition();
+            panel.Play();
         }
         private void DoTransportBack()
         {
             BeforeTransport();
             TransitionPanel panel = PopupManager.Instance.CreateAndAddPopup<TransitionPanel>();
             panel.CallbackTransition = OnTransportBack;
-            panel.StartTransition();
+            panel.Play();
         }
         private void OnCancel()
         {
@@ -55,18 +55,20 @@ namespace GameLogic
         {
             Hero.Instance.Info.IsInHall = true;
             int hallKid = int.Parse(Data.Param1);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_HIDE_ALL);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
             Hall.Instance.LeavePosition = Hero.Instance.WorldPosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
-//            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
             AfterTransport();
         }
         private void OnTransportBack()
         {
-            Hero.Instance.Info.IsInHall = false;
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.LeavePosition);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, Hall.Instance.LeavePosition);
+            Vector3 leavePosition = Hall.Instance.LeavePosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, leavePosition);
+            Hero.Instance.Info.IsInHall = false;
             AfterTransport();
         }
 
@@ -78,11 +80,6 @@ namespace GameLogic
             Game.Instance.SetPause(false);
         }
 
-        public static void Init(TransporterExpl expl, TransporterDirectionType directionType)
-        {
-            Exploration.Init(expl);
-            expl.DirectionState = directionType;
-        }
     }
 }
 

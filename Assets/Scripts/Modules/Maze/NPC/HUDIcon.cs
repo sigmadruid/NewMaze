@@ -56,7 +56,6 @@ public class HUDIcon : BaseScreenItem
 	{
 		if (icon != null)
 		{
-			icon.CallbackClick = null;
             PopupManager.Instance.RemoveItem(icon.gameObject);
 		}
 		else

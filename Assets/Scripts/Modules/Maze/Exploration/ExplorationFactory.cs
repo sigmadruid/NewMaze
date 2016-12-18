@@ -7,31 +7,30 @@ namespace GameLogic
 {
     public static class ExplorationFactory
     {
-        public static Exploration Create(int kid, List<object> paramList = null)
+        public static Exploration Create(int kid)
         {
             ExplorationData data = ExplorationDataManager.Instance.GetData(kid) as ExplorationData;
-            Exploration expl = DoCreate(data, paramList);
+            Exploration expl = DoCreate(data);
             return expl;
         }
 
-        public static Exploration Create(ExplorationType type, List<object> paramList = null)
+        public static Exploration Create(ExplorationType type)
         {
             ExplorationData data = ExplorationDataManager.Instance.GetRandomData(type);
-            Exploration expl = DoCreate(data, paramList);
+            Exploration expl = DoCreate(data);
             return expl;
         }
 
-        private static Exploration DoCreate(ExplorationData data, List<object> paramList)
+        private static Exploration DoCreate(ExplorationData data)
         {
             Exploration exploration = null;
             switch (data.Type)
             {
                 case ExplorationType.Transporter:   
                 {
-                    TransporterExpl expl = new TransporterExpl();
-                    expl.Data = data;
-                    TransporterExpl.Init(expl, (TransporterDirectionType)paramList[0]);
-                    exploration = expl;
+                    exploration = new TransporterExpl();
+                    exploration.Data = data;
+                    TransporterExpl.Init(exploration);
                     break;
                 }
                 default:      

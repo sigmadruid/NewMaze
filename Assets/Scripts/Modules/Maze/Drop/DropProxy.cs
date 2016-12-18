@@ -13,7 +13,7 @@ namespace GameLogic
         public delegate void IterateFunc(Item item);
 
         private Dictionary<string, Item> itemDic = new Dictionary<string, Item>();
-		private Dictionary<int, List<ItemRecord>> recordDic = new Dictionary<int, List<ItemRecord>>();
+        private Dictionary<int, List<ItemRecord>> recordDic = new Dictionary<int, List<ItemRecord>>();
 
 		public void Dispose()
 		{
@@ -40,15 +40,15 @@ namespace GameLogic
 			if (func == null) { return; }
 			
             Dictionary<string, Item>.Enumerator enumerator = itemDic.GetEnumerator();
-			while(enumerator.MoveNext())
-			{
-				func(enumerator.Current.Value);
-			}
+            while(enumerator.MoveNext())
+            {
+                func(enumerator.Current.Value);
+            }
 		}
 		
         public Item GetItemByUid(string uid)
         {
-            if (!itemDic.ContainsKey(uid))
+            if(!itemDic.ContainsKey(uid))
             {
                 BaseLogger.Log("can't find item with uid: " + uid);
             }
@@ -68,11 +68,12 @@ namespace GameLogic
 			if (itemDic.ContainsKey(uid))
 			{
                 Item item = itemDic[uid];
-				Vector2 mazePos = Maze.Instance.GetMazePosition(item.WorldPosition);
-				List<ItemRecord> recordList = GetRecordList((int)mazePos.x, (int)mazePos.y);
+                int mazeKid = Maze.Instance.Data.Kid;
+                int location = Maze.GetLocation(mazeKid, item.WorldPosition);
+                List<ItemRecord> recordList = GetRecordList(mazeKid);
 				recordList.Add(item.ToRecord() as ItemRecord);
-
 				itemDic.Remove(uid);
+                Item.Recycle(item);
 			}
 		}
 
@@ -81,8 +82,9 @@ namespace GameLogic
 			if (itemDic.ContainsKey(uid))
 			{
                 Item item = itemDic[uid];
-				Vector2 mazePos = Maze.Instance.GetMazePosition(item.WorldPosition);
-				List<ItemRecord> recordList = GetRecordList((int)mazePos.x, (int)mazePos.y);
+                int mazeKid = Maze.Instance.Data.Kid;
+                int location = Maze.GetLocation(mazeKid, item.WorldPosition);
+                List<ItemRecord> recordList = GetRecordList(location);
 				if (recordList != null)
 				{
 					for (int i = 0; i < recordList.Count; ++i)
@@ -95,8 +97,8 @@ namespace GameLogic
 						}
 					}
 				}
-
 				itemDic.Remove(uid);
+                Item.Recycle(item);
 			}
 		}
 
@@ -112,21 +114,15 @@ namespace GameLogic
 			return null;
 		}
 
-		public void InitRecordList(int blockKey)
+        public void InitRecordList(int location)
 		{
-			recordDic[blockKey] = new List<ItemRecord>();
+            recordDic[location] = new List<ItemRecord>();
 		}
-		public List<ItemRecord> GetRecordList(int blockKey)
+        public List<ItemRecord> GetRecordList(int location)
 		{
 			List<ItemRecord> recordList = null;
-			recordDic.TryGetValue(blockKey, out recordList);
+            recordDic.TryGetValue(location, out recordList);
 			return recordList;
-		}
-		public List<ItemRecord> GetRecordList(int col, int row)
-		{
-			Block block = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>().GetBlockAtPosition(col, row);
-			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			return GetRecordList(blockKey);
 		}
     }
 }

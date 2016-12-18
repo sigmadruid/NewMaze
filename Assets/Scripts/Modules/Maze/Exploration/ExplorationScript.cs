@@ -33,6 +33,15 @@ namespace GameLogic
             }
 		}
 
+        void OnDestroy()
+        {
+            if(Icon != null)
+            {
+                Icon.CallbackClick = null;
+                HUDIcon.Recycle(Icon);
+            }
+        }
+
         void Update()
         {
             if (Icon != null && Icon.gameObject.activeSelf)

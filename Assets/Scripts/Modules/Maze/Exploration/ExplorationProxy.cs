@@ -18,6 +18,15 @@ namespace GameLogic
         private Dictionary<string, Exploration> explorationBlockDic = new Dictionary<string, Exploration>();
         private Dictionary<string, Exploration> explorationHallDic = new Dictionary<string, Exploration>();
 		
+        public void Dispose()
+        {
+            ClearInBlocks();
+            ClearInHall();
+
+            enteredExplorationSet.Clear();
+        }
+
+        #region Block
 
         public void IterateInBlocks(IterateFunc func)
         {
@@ -41,6 +50,8 @@ namespace GameLogic
 		{
 			if (explorationBlockDic.ContainsKey(uid))
 			{
+                Exploration expl = explorationBlockDic[uid];
+                RemoveEnteredExploration(expl);
 				explorationBlockDic.Remove(uid);
 			}
 		}
@@ -52,7 +63,12 @@ namespace GameLogic
                 Exploration.Recycle(blockEnum.Current.Value);
             }
             explorationBlockDic.Clear();
+            enteredExplorationSet.Clear();
         }
+
+        #endregion
+
+        #region Hall
 
         public void IterateInHall(IterateFunc func)
         {
@@ -88,16 +104,13 @@ namespace GameLogic
                 Exploration.Recycle(hallEnum.Current.Value);
             }
             explorationHallDic.Clear();
-        }
-		
-		public void Dispose()
-		{
-            ClearInBlocks();
-            ClearInHall();
-
             enteredExplorationSet.Clear();
-		}
+        }
 
+        #endregion
+
+        #region Entering
+		
         public Exploration FindNearbyExploration(Vector3 position)
         {
             foreach(Exploration expl in enteredExplorationSet)
@@ -119,6 +132,18 @@ namespace GameLogic
             if (enteredExplorationSet.Contains(expl))
                 enteredExplorationSet.Remove(expl);
         }
+        public void IterateInEntered(IterateFunc func)
+        {
+            if (func == null) { return; }
+
+            var enumerator = enteredExplorationSet.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                func(enumerator.Current);
+            }
+        }
+
+        #endregion
     }
 }
 

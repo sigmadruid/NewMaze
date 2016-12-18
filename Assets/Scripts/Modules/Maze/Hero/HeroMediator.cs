@@ -166,15 +166,6 @@ namespace GameLogic
 		
 		#region Event Handlers
 
-		private void OnHeroFunction()
-		{
-			if (hero != null)
-			{
-				hero.Function();
-                DispatchNotification(NotificationEnum.EXPLORATION_FUNCTION);
-			}
-		}
-
 		private void OnHeroDie()
 		{
             RecordMediator.DeleteRecord();

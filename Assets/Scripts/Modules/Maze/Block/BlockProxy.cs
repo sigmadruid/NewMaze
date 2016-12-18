@@ -33,7 +33,7 @@ namespace GameLogic
 			StartNode = mazeTable.GetNode(mazeData.StartCol, mazeData.StartRow);
 
             InitGlobalExplorationPositions();
-//            TestGlobalExplorationPositions();
+            TestGlobalExplorationPositions();
 		}
 
 		public void Dispose()
@@ -154,10 +154,16 @@ namespace GameLogic
             prevAroundList = aroundList;
         }
 
-        public void UpdateAllMazeNodes()
+        public void ShowAllMazeNodes()
         {
             ToCreateNodeList = mazeTable.GetAllNodes();
             ToDeleteNodeList.Clear();
+            prevAroundList.Clear();
+        }
+        public void HideAllMazeNodes()
+        {
+            ToCreateNodeList.Clear();
+            ToDeleteNodeList = mazeTable.GetAllNodes();
             prevAroundList.Clear();
         }
 

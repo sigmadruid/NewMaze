@@ -33,6 +33,7 @@ namespace GameLogic
             {
                 RandomUtils.Seed = UnityEngine.Random.Range(0, 20140413);
             }
+            RandomUtils.Seed = 13880388;
 		}
 
 		public float ElapsedTime
@@ -51,6 +52,29 @@ namespace GameLogic
 			return new Vector2(col, row);
 		}
 
+        public const int BLOCK_MARK = 1;
+        public const int HALL_MARK = 2;
+        //XXYZZZZ...X:MazeKid, Y:Mark, ZZZZ:block id or hall id
+        public static int GetLocation(int mazeKid, int hallKid)
+        {
+            return mazeKid * 100000 + HALL_MARK * 10000 + hallKid;
+        }
+        public static int GetLocation(int mazeKid, int col, int row)
+        {
+            return mazeKid * 100000 + BLOCK_MARK * 10000 + col * 100 + row;
+        }
+        public static int GetLocation(int mazeKid, Vector3 worldPosition)
+        {
+            if(Hall.Instance != null)
+            {
+                return GetLocation(mazeKid, Hall.Instance.Data.Kid);
+            }
+            else
+            {
+                Vector2 mazePos = Maze.Instance.GetMazePosition(worldPosition);
+                return GetLocation(mazeKid, (int)mazePos.x, (int)mazePos.y);
+            }
+        }
     }
 }
 

@@ -16,7 +16,8 @@ namespace GameLogic
 		BLOCK_INIT,
 		BLOCK_DISPOSE,
         BLOCK_REFRESH,
-		BLOCK_SHOW_ALL,
+        BLOCK_SHOW_ALL,
+		BLOCK_HIDE_ALL,
         BLOCK_SPAWN,
         BLOCK_DESPAWN,
 

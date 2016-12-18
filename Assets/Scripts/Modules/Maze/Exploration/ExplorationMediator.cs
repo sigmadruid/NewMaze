@@ -74,9 +74,7 @@ namespace GameLogic
             if (block.ExplorationType != ExplorationType.Common)
             {
                 birth = block.Script.GetGlobalPosition(PositionType.Exploration);
-                List<object> paramList = new List<object>();
-                paramList.Add(TransporterDirectionType.Forward);
-                CreateExploration(block.ExplorationType, birth, paramList);
+                CreateExploration(block.ExplorationType, birth);
                 explorationCount--;
             }
 
@@ -105,11 +103,11 @@ namespace GameLogic
                 Exploration.Recycle(expl);
             }
 		}
-        private void CreateExploration(ExplorationType type, PositionScript birth, List<object> paramList = null)
+        private void CreateExploration(ExplorationType type, PositionScript birth)
         {
             if (birth != null)
             {
-                Exploration expl = ExplorationFactory.Create(type, paramList);
+                Exploration expl = ExplorationFactory.Create(type);
                 expl.SetPosition(birth.transform.position);
                 expl.SetRotation(birth.transform.eulerAngles.y);
                 explorationProxy.AddInBlock(expl);
@@ -122,24 +120,18 @@ namespace GameLogic
             for(int i = 0; i < positionList.Length; ++i)
             {
                 PositionScript birth = positionList[i];
-                List<object> paramList = new List<object>();//TODO: How to change this hard code?
-                paramList.Add(TransporterDirectionType.Back);
-                CreateExploration(birth.Kid, birth, paramList);
+                CreateExploration(birth.Kid, birth);
             }
         }
         private void HandleHallDespawn(Hall hall)
         {
-            explorationProxy.IterateInHall((Exploration expl) =>
-                {
-                    explorationProxy.RemoveInHall(expl.Uid);
-                });
             explorationProxy.ClearInHall();
         }
-        private void CreateExploration(int kid, PositionScript birth, List<object> paramList = null)
+        private void CreateExploration(int kid, PositionScript birth)
         {
             if (birth != null)
             {
-                Exploration expl = ExplorationFactory.Create(kid, paramList);
+                Exploration expl = ExplorationFactory.Create(kid);
                 expl.SetPosition(birth.transform.position);
                 expl.SetRotation(birth.transform.eulerAngles.y);
                 explorationProxy.AddInHall(expl);
