@@ -19,10 +19,10 @@ namespace GameLogic
         public void Init()
         {
             int kid;
-            kid = IDManager.Instance.GetID(IDType.Hero, 1);
+            kid = IDManager.Instance.GetKid(IDType.Hero, 1);
             if (!heroDataDic.ContainsKey(kid))
                 heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
-            kid = IDManager.Instance.GetID(IDType.Hero, 2);
+            kid = IDManager.Instance.GetKid(IDType.Hero, 2);
             if (!heroDataDic.ContainsKey(kid))
                 heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
         }

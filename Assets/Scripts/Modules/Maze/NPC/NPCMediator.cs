@@ -78,8 +78,8 @@ namespace GameLogic
 		}
 		private void HandleTownNPCSpawn()
 		{
-			int npcID = IDManager.Instance.GetID(IDType.NPC, 1);
-			int npcEventID = IDManager.Instance.GetID(IDType.NPCEvent, 1);
+			int npcID = IDManager.Instance.GetKid(IDType.NPC, 1);
+			int npcEventID = IDManager.Instance.GetKid(IDType.NPCEvent, 1);
 			NPC npc = NPC.Create(npcID, npcEventID);
 			npc.SetPosition(new Vector3(-1.45f, -0.1f, 17));
 			npc.SetRotation(180f);

@@ -4,9 +4,9 @@ using System;
 
 namespace GameLogic
 {
+    [Serializable]
     public class ItemRecord : EntityRecord
     {
-		public int ItemKid;
 		public int Count;
     }
 }

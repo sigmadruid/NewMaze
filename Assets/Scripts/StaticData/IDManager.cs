@@ -35,10 +35,15 @@ namespace StaticData
             }
         }
 
-		public int GetID(IDType type, int subID)
+		public int GetKid(IDType type, int subID)
 		{
 			return ((int)type) * PRE_MULTIPLIER + subID;
 		}
+
+        public int GetID(int kid)
+        {
+            return kid % PRE_MULTIPLIER;
+        }
 
 		public IDType GetIDType(int id)
 		{

@@ -12,7 +12,7 @@ namespace GameLogic
 
 		public override void Start ()
 		{
-            PreloadAssets(IDManager.Instance.GetID(IDType.Maze, 0));
+            PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);

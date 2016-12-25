@@ -56,11 +56,11 @@ namespace GameLogic
         //XXYZZZZ...X:MazeKid, Y:Mark, ZZZZ:block id or hall id
         public static int GetLocation(int mazeKid, int hallKid)
         {
-            return mazeKid * 100000 + HALL_MARK * 10000 + hallKid;
+            return IDManager.Instance.GetID(mazeKid) * 100000 + HALL_MARK * 10000 + hallKid;
         }
         public static int GetLocation(int mazeKid, int col, int row)
         {
-            return mazeKid * 100000 + BLOCK_MARK * 10000 + col * 100 + row;
+            return IDManager.Instance.GetID(mazeKid) * 100000 + BLOCK_MARK * 10000 + col * 100 + row;
         }
         public static int GetLocation(int mazeKid, Vector3 worldPosition)
         {
@@ -73,6 +73,21 @@ namespace GameLogic
                 Vector2 mazePos = Maze.Instance.GetMazePosition(worldPosition);
                 return GetLocation(mazeKid, (int)mazePos.x, (int)mazePos.y);
             }
+        }
+        public static int GetCurrentLocation(int hallKid)
+        {
+            int mazeKid = Maze.Instance.Data.Kid;
+            return GetLocation(mazeKid, hallKid);
+        }
+        public static int GetCurrentLocation(int col, int row)
+        {
+            int mazeKid = Maze.Instance.Data.Kid;
+            return GetLocation(mazeKid, col, row);
+        }
+        public static int GetCurrentLocation(Vector3 worldPosition)
+        {
+            int mazeKid = Maze.Instance.Data.Kid;
+            return GetLocation(mazeKid, worldPosition);
         }
     }
 }

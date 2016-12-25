@@ -39,13 +39,13 @@ namespace GameLogic
             Script.Fly(position);
         }
 
-        public override EntityRecord ToRecord()
+        public new ItemRecord ToRecord()
         {
             ItemRecord record = new ItemRecord();
             record.Uid = Uid;
             record.Kid = Data.Kid;
+            record.Count = Info.Count;
             record.WorldPosition = new Vector3Record(WorldPosition);
-            record.ItemKid = Data.Kid;
             return record;
         }
 

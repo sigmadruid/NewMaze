@@ -21,7 +21,6 @@ public class ItemScript : EntityScript
     void Awake()
     {
         collider = GetComponent<Collider>();
-        collider.enabled = false;
     }
 
     void Update()
@@ -47,7 +46,7 @@ public class ItemScript : EntityScript
 
         t = 0f;
         isFlying = true;
-
+        collider.enabled = false;
     }
 }
 

@@ -15,6 +15,12 @@ namespace GameLogic
         private Dictionary<string, Item> itemDic = new Dictionary<string, Item>();
         private Dictionary<int, List<ItemRecord>> recordDic = new Dictionary<int, List<ItemRecord>>();
 
+        public Dictionary<int, List<ItemRecord>> RecordDic
+        {
+            get { return recordDic; }
+            set { recordDic = value; }
+        }
+
 		public void Dispose()
 		{
             ClearItems();
@@ -64,8 +70,7 @@ namespace GameLogic
 			if (itemDic.ContainsKey(uid))
 			{
                 Item item = itemDic[uid];
-                int mazeKid = Maze.Instance.Data.Kid;
-                int location = Maze.GetLocation(mazeKid, item.WorldPosition);
+                int location = Maze.GetCurrentLocation(item.WorldPosition);
                 List<ItemRecord> recordList = GetRecordList(location);
 				recordList.Add(item.ToRecord() as ItemRecord);
 				itemDic.Remove(uid);
@@ -78,8 +83,7 @@ namespace GameLogic
 			if (itemDic.ContainsKey(uid))
 			{
                 Item item = itemDic[uid];
-                int mazeKid = Maze.Instance.Data.Kid;
-                int location = Maze.GetLocation(mazeKid, item.WorldPosition);
+                int location = Maze.GetCurrentLocation(item.WorldPosition);
                 List<ItemRecord> recordList = GetRecordList(location);
 				if (recordList != null)
 				{
@@ -106,6 +110,33 @@ namespace GameLogic
                 Item.Recycle(enumerator.Current.Value);
             }
             itemDic.Clear();
+        }
+
+        public void DoRecord()
+        {
+            int location;
+            if(Hall.Instance != null)
+            {
+                location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
+                InitRecordList(location);
+            }
+            else
+            {
+                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+                blockProxy.Iterate((Block block) =>
+                    {
+                        location = Maze.GetCurrentLocation(block.Col, block.Row);
+                        InitRecordList(location);
+                    });
+            }
+            var enumerator = itemDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Item item = enumerator.Current.Value;
+                location = Maze.GetCurrentLocation(item.WorldPosition);
+                List<ItemRecord> recordList = GetRecordList(location);
+                recordList.Add(item.ToRecord());
+            }
         }
 
         public Item FindNearbyItem(Vector3 position)

@@ -33,7 +33,7 @@ namespace StaticData
 			{
 				if (currentMaze == null)
 				{
-					int id = IDManager.Instance.GetID(IDType.Maze, 1);
+					int id = IDManager.Instance.GetKid(IDType.Maze, 1);
 					currentMaze = kvDic[id];
 				}
 				return currentMaze;

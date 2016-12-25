@@ -41,7 +41,7 @@ namespace GameLogic
 			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
 
-            PreloadAssets(IDManager.Instance.GetID(IDType.Maze, 1));
+            PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
 
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);

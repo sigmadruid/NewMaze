@@ -14,6 +14,8 @@ namespace GameLogic
 
         public void Init()
         {
+            itemInfoDic.Clear();
+
             //Mock data
             ItemData data;
             ItemInfo info;

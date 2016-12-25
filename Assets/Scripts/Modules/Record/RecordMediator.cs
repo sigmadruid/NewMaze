@@ -14,6 +14,7 @@ namespace GameLogic
         private HeroProxy heroProxy;
         private MonsterProxy monsterProxy;
         private HallProxy hallProxy;
+        private DropProxy dropProxy;
 
         private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
 
@@ -23,6 +24,7 @@ namespace GameLogic
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
+            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
         }
         public override IList<Enum> ListNotificationInterests ()
         {
@@ -57,29 +59,16 @@ namespace GameLogic
             
             if(Hero.Instance != null && Hero.Instance.Info.IsAlive)
             {
-                if (Hero.Instance.Info.IsInHall)
-                    monsterProxy.DoRecordInHall();
-                monsterProxy.DoRecordBlock();
+                monsterProxy.DoRecord();
                 hallProxy.DoRecord();
+                dropProxy.DoRecord();
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = RandomUtils.Seed;
                 gameRecord.Hero = Hero.Instance.ToRecord();
-                foreach(int kid in monsterProxy.RecordBlockDic.Keys)
-                {
-                    MonsterBlockRecord monsterRecord = new MonsterBlockRecord();
-                    monsterRecord.BlockKid = kid;
-                    monsterRecord.Monsters = monsterProxy.RecordBlockDic[kid];
-                    gameRecord.MonstersInBlocks.Add(monsterRecord);
-                }
-                foreach(int kid in monsterProxy.RecordHallDic.Keys)
-                {
-                    MonsterHallRecord monsterRecord = new MonsterHallRecord();
-                    monsterRecord.HallKid = kid;
-                    monsterRecord.Monsters = monsterProxy.RecordHallDic[kid];
-                    gameRecord.MonstersInHalls.Add(monsterRecord);
-                }
+                gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = hallProxy.Record;
+                gameRecord.Items = dropProxy.RecordDic;
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
@@ -112,19 +101,9 @@ namespace GameLogic
             {
                 RandomUtils.Seed = gameRecord.RandomSeed;
                 heroProxy.Record = gameRecord.Hero;
-                monsterProxy.RecordBlockDic = new Dictionary<int, List<MonsterRecord>>();
-                for(int i = 0; i < gameRecord.MonstersInBlocks.Count; ++i)
-                {
-                    MonsterBlockRecord monsterRecord = gameRecord.MonstersInBlocks[i];
-                    monsterProxy.RecordBlockDic.Add(monsterRecord.BlockKid, monsterRecord.Monsters);
-                }
-                monsterProxy.RecordHallDic = new Dictionary<int, List<MonsterRecord>>();
-                for(int i = 0; i < gameRecord.MonstersInHalls.Count; ++i)
-                {
-                    MonsterHallRecord monsterRecord = gameRecord.MonstersInHalls[i];
-                    monsterProxy.RecordHallDic.Add(monsterRecord.HallKid, monsterRecord.Monsters);
-                }
+                monsterProxy.RecordDic = gameRecord.Monsters;
                 hallProxy.Record = gameRecord.Hall;
+                dropProxy.RecordDic = gameRecord.Items;
             }
         }
 

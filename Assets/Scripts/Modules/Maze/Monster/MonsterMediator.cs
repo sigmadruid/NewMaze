@@ -41,25 +41,25 @@ namespace GameLogic
                 case NotificationEnum.BLOCK_SPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleBlockSpawn(block);
+					HandleSpawn(block);
 					break;
 				}
                 case NotificationEnum.BLOCK_DESPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleBlockDespawn(block);
+					HandleDespawn(block);
 					break;
 				}
                 case NotificationEnum.HALL_SPAWN:
                 {
                     Hall hall = notification.Body as Hall;
-                    HandleHallSpawn(hall);
+                    HandleSpawn(hall);
                     break;
                 }
                 case NotificationEnum.HALL_DESPAWN:
                 {
                     Hall hall = notification.Body as Hall;
-                    HandleHallDespawn(hall);
+                    HandleDespawn(hall);
                     break;
                 }
                 case NotificationEnum.ENVIRONMENT_DAYNIGHT_CHANGE:
@@ -78,18 +78,18 @@ namespace GameLogic
 		}
 
 		//When spawn a block, check if any monster already stores on this pos.
-		private void HandleBlockSpawn(Block block)
+		private void HandleSpawn(Block block)
 		{
 			//Room??
-			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			List<MonsterRecord> recordList = monsterProxy.GetRecordBlockList(blockKey);
+            int location = Maze.GetCurrentLocation(block.Col, block.Row);
+            List<MonsterRecord> recordList = monsterProxy.GetRecordList(location);
 			if (recordList != null)
 			{
 				for (int i = 0; i < recordList.Count; ++i)
 				{
 					MonsterRecord record = recordList[i];
 					Monster monster = Monster.Create(record);
-                    InitMonsterInBlock(monster, record.WorldPosition.ToVector3());
+                    InitMonster(monster, record.WorldPosition.ToVector3());
 				}
 			}
 			else
@@ -101,25 +101,16 @@ namespace GameLogic
 					if (birth != null)
 					{
 						Monster monster = Monster.Create(null);
-                        InitMonsterInBlock(monster, birth.transform.position);
+                        InitMonster(monster, birth.transform.position);
 					}
 				}
 			}
 		}
-        private void InitMonsterInBlock(Monster monster, Vector3 position)
-        {
-            bool isNight = ApplicationFacade.Instance.RetrieveProxy<EnvironmentProxy>().IsNight;
-            monster.SetAtNight(isNight);
-            monster.SetPosition(position);
-            monsterProxy.AddMonsterInBlock(monster);
-            battleProxy.AddMonster(monster);
-        }
-
 		//When a block despawns, remove all monsters on it from the monsterDic, and store them in the recordDic
-		private void HandleBlockDespawn(Block block)
+		private void HandleDespawn(Block block)
 		{
 			List<Monster> toDeleteMonsterList = new List<Monster>();
-			monsterProxy.IterateMonstersInBlocks((Monster monster) => 
+			monsterProxy.IterateMonsters((Monster monster) => 
 	         {
 				Vector2 monsterPos = Maze.Instance.GetMazePosition(monster.WorldPosition);
 				if (block.Contains((int)monsterPos.x, (int)monsterPos.y))
@@ -128,8 +119,8 @@ namespace GameLogic
 				}
 			});
 
-			int blockKey = Block.GetBlockKey(block.Col, block.Row);
-			monsterProxy.InitRecordBlockList(blockKey);
+            int location = Maze.GetCurrentLocation(block.Col, block.Row);
+            monsterProxy.InitRecordList(location);
 
 			for (int i = 0; i < toDeleteMonsterList.Count; ++i)
 			{
@@ -138,26 +129,26 @@ namespace GameLogic
 
 				if (monster.Info.IsAlive)
 				{
-					monsterProxy.HideMonsterInBlock(monster.Uid);
+					monsterProxy.HideMonster(monster.Uid);
 				}
 				else
 				{
-					monsterProxy.RemoveMonsterInBlock(monster.Uid);
+					monsterProxy.RemoveMonster(monster.Uid);
 				}
 				Monster.Recycle(monster);
 			}
 		}
-
-        private void HandleHallSpawn(Hall hall)
+        private void HandleSpawn(Hall hall)
         {
-            List<MonsterRecord> recordList = monsterProxy.GetRecordHallList(hall.Data.Kid);
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
+            List<MonsterRecord> recordList = monsterProxy.GetRecordList(location);
             if(recordList != null)
             {
                 for(int i = 0; i < recordList.Count; ++i)
                 {
                     MonsterRecord record = recordList[i];
                     Monster monster = Monster.Create(record);
-                    InitMonsterInHall(monster, record.WorldPosition.ToVector3());
+                    InitMonster(monster, record.WorldPosition.ToVector3());
                 }
             }
             else
@@ -167,44 +158,49 @@ namespace GameLogic
                 {
                     PositionScript birth = positionList[i];
                     Monster monster = Monster.Create(birth.Kid);
-                    InitMonsterInHall(monster, birth.transform.position);
+                    InitMonster(monster, birth.transform.position);
                 }
             }
         }
-        private void HandleHallDespawn(Hall hall)
+        private void HandleDespawn(Hall hall)
         {
-            monsterProxy.InitRecordHallList(hall.Data.Kid);
-            monsterProxy.IterateMonstersInHall((Monster monster) => 
+            List<Monster> toDeleteMonsterList = new List<Monster>();
+            monsterProxy.IterateMonsters((Monster monster) => 
                 {
-                    battleProxy.RemoveMonster(monster.Uid);
-                    if (monster.Info.IsAlive)
-                    {
-                        monsterProxy.HideMonsterInHall(monster.Uid, hall.Data.Kid);
-                    }
-                    else
-                    {
-                        monsterProxy.RemoveMonsterInHall(monster.Uid, hall.Data.Kid);
-                    }
+                    toDeleteMonsterList.Add(monster);
                 });
 
-            monsterProxy.ClearMonstersInHall();
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
+            monsterProxy.InitRecordList(location);
+
+            for (int i = 0; i < toDeleteMonsterList.Count; ++i)
+            {
+                Monster monster = toDeleteMonsterList[i];
+                battleProxy.RemoveMonster(monster.Uid);
+
+                if (monster.Info.IsAlive)
+                {
+                    monsterProxy.HideMonster(monster.Uid);
+                }
+                else
+                {
+                    monsterProxy.RemoveMonster(monster.Uid);
+                }
+                Monster.Recycle(monster);
+            }
         }
-        private void InitMonsterInHall(Monster monster, Vector3 position)
+        private void InitMonster(Monster monster, Vector3 position)
         {
             bool isNight = ApplicationFacade.Instance.RetrieveProxy<EnvironmentProxy>().IsNight;
             monster.SetAtNight(isNight);
             monster.SetPosition(position);
-            monsterProxy.AddMonsterInHall(monster);
+            monsterProxy.AddMonster(monster);
             battleProxy.AddMonster(monster);
         }
 
         private void HandleEnvironmentChange(bool isNight)
         {
-            monsterProxy.IterateMonstersInBlocks((Monster monster) => 
-                {
-                    monster.SetAtNight(isNight);
-                });
-            monsterProxy.IterateMonstersInHall((Monster monster) => 
+            monsterProxy.IterateMonsters((Monster monster) => 
                 {
                     monster.SetAtNight(isNight);
                 });
@@ -212,7 +208,7 @@ namespace GameLogic
 
 		private void HandleBattlePause(bool isPause)
 		{
-			monsterProxy.IterateMonstersInBlocks((Monster monster) => 
+			monsterProxy.IterateMonsters((Monster monster) => 
 			{
 				monster.Pause(isPause);
 			});

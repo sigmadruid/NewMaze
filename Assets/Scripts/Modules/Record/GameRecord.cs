@@ -10,10 +10,11 @@ namespace GameLogic
 
         public HeroRecord Hero;
 
-        public List<MonsterBlockRecord> MonstersInBlocks = new List<MonsterBlockRecord>();
-        public List<MonsterHallRecord> MonstersInHalls = new List<MonsterHallRecord>();
+        public Dictionary<int, List<MonsterRecord>> Monsters = new Dictionary<int, List<MonsterRecord>>();
 
         public HallRecord Hall;
+
+        public Dictionary<int, List<ItemRecord>> Items = new Dictionary<int, List<ItemRecord>>();
 
         //TODO:NPCs
         //TODO:Explorations

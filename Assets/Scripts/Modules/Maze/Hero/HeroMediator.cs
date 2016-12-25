@@ -89,7 +89,7 @@ namespace GameLogic
 			//Init
             if(record == null)
             {
-                int heroKid = IDManager.Instance.GetID(IDType.Hero, 1);
+                int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
                 hero = Hero.Create(heroKid, null);
 
                 MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;

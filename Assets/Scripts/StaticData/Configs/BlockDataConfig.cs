@@ -25,7 +25,7 @@ namespace StaticData
 			PassageDataDic.Add(PassageType.One, list);
 
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 1);
+			data.Kid = idManager.GetKid(IDType.Block, 1);
 			data.BlockType = BlockType.Passage;
 			data.PassageType = PassageType.One;
 			data.Res3D = "PassageOne";
@@ -36,7 +36,7 @@ namespace StaticData
 			PassageDataDic.Add(PassageType.TwoLine, list);
 			
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 1201);
+			data.Kid = idManager.GetKid(IDType.Block, 1201);
 			data.BlockType = BlockType.Passage;
 			data.PassageType = PassageType.TwoLine;
 			data.Res3D = "PassageTwoLine";
@@ -47,7 +47,7 @@ namespace StaticData
 			PassageDataDic.Add(PassageType.TwoTurn, list);
 			
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 2401);
+			data.Kid = idManager.GetKid(IDType.Block, 2401);
 			data.BlockType = BlockType.Passage;
 			data.PassageType = PassageType.TwoTurn;
 			data.Res3D = "PassageTwoTurn";
@@ -58,7 +58,7 @@ namespace StaticData
 			PassageDataDic.Add(PassageType.Three, list);
 			
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 3601);
+			data.Kid = idManager.GetKid(IDType.Block, 3601);
 			data.BlockType = BlockType.Passage;
 			data.PassageType = PassageType.Three;
 			data.Res3D = "PassageThree";
@@ -69,7 +69,7 @@ namespace StaticData
 			PassageDataDic.Add(PassageType.Four, list);
 			
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 4801);
+			data.Kid = idManager.GetKid(IDType.Block, 4801);
 			data.BlockType = BlockType.Passage;
 			data.PassageType = PassageType.Four;
 			data.Res3D = "PassageFour";
@@ -77,7 +77,7 @@ namespace StaticData
 
 			//----Room----
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 6001);
+			data.Kid = idManager.GetKid(IDType.Block, 6001);
 			data.BlockType = BlockType.Room;
 			data.PassageType = PassageType.One;
 			data.Res3D = "Room_1";
@@ -87,7 +87,7 @@ namespace StaticData
 			RoomDataList.Add(data);
 
 			data = new BlockData();
-			data.Kid = idManager.GetID(IDType.Block, 6002);
+			data.Kid = idManager.GetKid(IDType.Block, 6002);
 			data.BlockType = BlockType.Room;
 			data.PassageType = PassageType.One;
 			data.Res3D = "Room_2";

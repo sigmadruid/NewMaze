@@ -15,7 +15,7 @@ namespace StaticData
 			BulletData data;
 
 			data = new BulletData();
-			data.Kid = idManager.GetID(IDType.Bullet, 1);
+			data.Kid = idManager.GetKid(IDType.Bullet, 1);
 			data.Name = "FireBall";
 			data.Res3D = "Bullet_1";
 			data.Speed = 3f;

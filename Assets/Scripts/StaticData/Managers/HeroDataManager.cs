@@ -30,7 +30,7 @@ namespace StaticData
 			{
 				if (currentHero == null)
 				{
-					int id = IDManager.Instance.GetID(IDType.Hero, 1);
+					int id = IDManager.Instance.GetKid(IDType.Hero, 1);
 					currentHero = kvDic[id];
 				}
 				return currentHero;

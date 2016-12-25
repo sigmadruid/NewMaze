@@ -78,8 +78,7 @@ namespace GameLogic
 
 		private void HandleItemSpawn(Block block)
 		{
-            int mazeKid = Maze.Instance.Data.Kid;
-            int location = Maze.GetLocation(mazeKid, block.Col, block.Row);
+            int location = Maze.GetCurrentLocation(block.Col, block.Row);
             List<ItemRecord> recordList = dropProxy.GetRecordList(location);
 			if (recordList != null)
 			{
@@ -103,8 +102,7 @@ namespace GameLogic
 				}
 			});
 
-            int mazeKid = Maze.Instance.Data.Kid;
-            int location = Maze.GetLocation(mazeKid, block.Col, block.Row);
+            int location = Maze.GetCurrentLocation(block.Col, block.Row);
             dropProxy.InitRecordList(location);
 
 			for (int i = 0; i < toHideItemList.Count; ++i)
@@ -115,8 +113,7 @@ namespace GameLogic
 		}
         private void HandleItemSpawn(Hall hall)
         {
-            int mazeKid = Maze.Instance.Data.Kid;
-            int location = Maze.GetLocation(mazeKid, hall.Data.Kid);
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
             List<ItemRecord> recordList = dropProxy.GetRecordList(location);
             if (recordList != null)
             {
@@ -130,10 +127,20 @@ namespace GameLogic
         }
         private void HandleItemDespawn(Hall hall)
         {
-            int mazeKid = Maze.Instance.Data.Kid;
-            int location = Maze.GetLocation(mazeKid, hall.Data.Kid);
+            List<Item> toHideItemList = new List<Item>();
+            dropProxy.IterateDrops((Item item) => 
+                {
+                    toHideItemList.Add(item);
+                });
+
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
             dropProxy.InitRecordList(location);
-            dropProxy.ClearItems();
+
+            for (int i = 0; i < toHideItemList.Count; ++i)
+            {
+                Item drop = toHideItemList[i];
+                dropProxy.HideItem(drop.Uid);
+            }
         }
 		private void HandleItemSpawnSingle(Monster monster)
 		{
