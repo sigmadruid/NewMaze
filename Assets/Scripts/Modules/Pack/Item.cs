@@ -42,6 +42,7 @@ namespace GameLogic
         public override EntityRecord ToRecord()
         {
             ItemRecord record = new ItemRecord();
+            record.Uid = Uid;
             record.Kid = Data.Kid;
             record.WorldPosition = new Vector3Record(WorldPosition);
             record.ItemKid = Data.Kid;

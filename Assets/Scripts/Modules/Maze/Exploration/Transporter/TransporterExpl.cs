@@ -32,8 +32,6 @@ namespace GameLogic
 
         private void DoTransportForward()
         {
-            Debug.LogError("this---------------" + Uid);
-            Debug.LogError(Data.Kid);
             BeforeTransport();
             TransitionPanel panel = PopupManager.Instance.CreateAndAddPopup<TransitionPanel>();
             panel.CallbackTransition = OnTransportForward;

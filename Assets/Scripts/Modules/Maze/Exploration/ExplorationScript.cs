@@ -64,7 +64,8 @@ namespace GameLogic
         }
         public void Dispose()
         {
-            HUDIcon.Recycle(hud);
+            if (hud != null)
+                HUDIcon.Recycle(hud);
             hud = null;
             callbackEnter = null;
             callbackExit = null;

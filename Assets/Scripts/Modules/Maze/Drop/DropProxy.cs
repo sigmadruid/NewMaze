@@ -66,7 +66,7 @@ namespace GameLogic
                 Item item = itemDic[uid];
                 int mazeKid = Maze.Instance.Data.Kid;
                 int location = Maze.GetLocation(mazeKid, item.WorldPosition);
-                List<ItemRecord> recordList = GetRecordList(mazeKid);
+                List<ItemRecord> recordList = GetRecordList(location);
 				recordList.Add(item.ToRecord() as ItemRecord);
 				itemDic.Remove(uid);
                 Item.Recycle(item);
