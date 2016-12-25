@@ -72,6 +72,7 @@ namespace GameLogic
 
         private void BeforeTransport()
         {
+            InputManager.Instance.PreventMouseAction();
         }
         private void AfterTransport()
         {

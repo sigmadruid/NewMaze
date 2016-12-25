@@ -128,6 +128,7 @@ namespace GameLogic
             if (inputManager.CheckMouseHitLayer(Layers.LayerItem))
             {
                 ItemScript itemScript = hitObject.GetComponent<ItemScript>();
+                inputManager.PreventMouseAction();
                 DispatchNotification(NotificationEnum.DROP_PICKED_UP, itemScript);
             }
         }
