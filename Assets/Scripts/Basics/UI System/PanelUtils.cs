@@ -6,6 +6,8 @@ namespace Base
     public static class PanelUtils
     {
         public const string ATLAS_COMMON = "Atlas/Common/";
+        public const string ATLAS_NEWCOMMON = "Atlas/NewCommon/";
+        public const string ATLAS_PORTRAIT = "Atlas/Portrait/";
         public const string ATLAS_ITEM = "Atlas/Item/";
 
         public static void ClearChildren(Transform root)

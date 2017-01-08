@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,9 +14,10 @@ namespace GameUI
 {
     public class BattleUIPanel : BasePopupView 
     {
-    	public Utils.CallbackVoid CallbackUpdate;
-    	public Utils.CallbackVoid CallbackItemClick;
+    	public Action CallbackUpdate;
+    	public Action CallbackItemClick;
 
+        public Image ImageHero;
         public Button ButtonPause;
         public Button ButtonPack;
         public VerticalLayoutGroup LayoutHeroes;
@@ -48,6 +50,7 @@ namespace GameUI
                 HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(LayoutHeroes.transform);
     			HeroData data = dataList[i];
     			item.Data = data;
+                item.ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, data.Res2D);
                 item.TextName.text = TextDataManager.Instance.GetData(data.Name);
                 EventTriggerListener.Get(item.gameObject).onClick = OnItemClick;
 
@@ -80,10 +83,10 @@ namespace GameUI
     	private void OnItemClick(GameObject go)
     	{
     		CurrentItem = go.GetComponent<HeroItem>();
-    		CallbackItemClick();
+            ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, CurrentItem.Data.Res2D);
+
+            CallbackItemClick();
     	}
-
-
 
     }
 }

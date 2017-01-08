@@ -12,6 +12,7 @@ namespace StaticData
 	{
         public string Name;
 
+        public string Res2D;
 		public string Res3D;
 		
 		public int HP;

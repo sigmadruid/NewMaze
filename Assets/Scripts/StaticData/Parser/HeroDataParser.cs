@@ -18,6 +18,7 @@ namespace StaticData
 
 				data.Kid = ReadInt(col++);
                 data.Name = ReadString(col++);
+                data.Res2D = ReadString(col++);
 				data.Res3D = ReadString(col++);
 				data.HP = ReadInt(col++);
 				data.Attack = ReadInt(col++);

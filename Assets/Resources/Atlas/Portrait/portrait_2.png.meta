@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: b7d32d462bfc27f48b6d194255b0bc5e
+guid: e722106b1f065be478801b1b100f303f
+timeCreated: 1483867249
+licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -25,7 +27,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 1024
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -51,7 +53,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Portrait
   userData: 
   assetBundleName: 
   assetBundleVariant: 
