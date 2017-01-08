@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 using Base;
@@ -19,7 +20,9 @@ public class BaseScreenItem : MonoBehaviour
 
 	public void UpdatePosition(Vector3 position)
 	{
-		Vector3 screenPos = mainCamera.WorldToScreenPoint(position);
+        CanvasScaler scaler = PopupManager.Instance.Scaler;
+        float ratio = Screen.width / scaler.referenceResolution.x;
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(position) / ratio;
         RectTransform.anchoredPosition = screenPos;
 	}
 }

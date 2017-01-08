@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -68,6 +69,7 @@ namespace Base
 			};
 
 			animationManager = new PopupAnimationManager();
+
 		}
 
 		/// <summary>
@@ -320,6 +322,20 @@ namespace Base
 		{
 			return (popupMode & mode) > 0;
 		}
+
+
+        private CanvasScaler scaler;
+        public CanvasScaler Scaler
+        {
+            get
+            {
+                if(scaler == null)
+                {
+                    scaler = GameObject.FindObjectOfType<CanvasScaler>();
+                }            
+                return scaler;
+            }
+        }
 
 	}
 }
