@@ -8,7 +8,9 @@ using GameLogic;
 
 public class HeroItem : MonoBehaviour
 {
-    public Text Label;
+    public Image ImageHero;
+
+    public Text TextName;
 
 	public HeroData Data;
 

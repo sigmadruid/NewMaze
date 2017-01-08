@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 03006262287e2aa4db5cd9de43753d33
+guid: 73dd7fcaa7469db4ab54cd4c83c7a5dd
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -41,7 +41,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 41, y: 24, z: 43, w: 32}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -51,7 +51,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: NewCommon
   userData: 
   assetBundleName: 
   assetBundleVariant: 

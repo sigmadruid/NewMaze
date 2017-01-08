@@ -18,7 +18,7 @@ namespace GameUI
 
         public Button ButtonPause;
         public Button ButtonPack;
-        public GridLayoutGroup GridHero;
+        public VerticalLayoutGroup LayoutHeroes;
         public Slider HPBar;
         public Slider MPBar;
     	public NumberItem HPNumber;
@@ -41,14 +41,14 @@ namespace GameUI
 
     	public void Init(List<HeroData> dataList)
     	{
-    		PanelUtils.ClearChildren(GridHero.transform);
+    		PanelUtils.ClearChildren(LayoutHeroes.transform);
 
     		for (int i = 0; i < dataList.Count; ++i)
     		{
-                HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(GridHero.transform);
+                HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(LayoutHeroes.transform);
     			HeroData data = dataList[i];
     			item.Data = data;
-    			item.Label.text = TextDataManager.Instance.GetData(data.Name);
+                item.TextName.text = TextDataManager.Instance.GetData(data.Name);
                 EventTriggerListener.Get(item.gameObject).onClick = OnItemClick;
 
     			heroItemList.Add(item);
