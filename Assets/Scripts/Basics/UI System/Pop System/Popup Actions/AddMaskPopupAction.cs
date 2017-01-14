@@ -48,10 +48,10 @@ namespace Base
 				blackMaskTransform.localScale = Vector3.one;
 				blackMaskTransform.localPosition = Vector3.zero;
 				blackMaskStack.Add(blackMaskTransform);
-				blackMaskTransform.GetComponent<UIPanel>().depth = dto.depth - Z_MASK_INCREMENT;
+//				blackMaskTransform.GetComponent<UIPanel>().depth = dto.depth - Z_MASK_INCREMENT;
 				
 				if (dto.clickHide)
-					UIEventListener.Get(blackMaskTransform.gameObject).onClick = onBlackMaskClick;
+                    EventTriggerListener.Get(blackMaskTransform.gameObject).onClick = onBlackMaskClick;
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace Base
 			{
 				int lastIndex = blackMaskStack.Count - 1;
 				Transform blackMaskTransform = blackMaskStack[lastIndex];
-				UIEventListener.Get(blackMaskTransform.gameObject).onClick = null;
+                EventTriggerListener.Get(blackMaskTransform.gameObject).onClick = null;
 				blackMaskStack.RemoveAt(lastIndex);
 				ResourceManager.Instance.RecycleAsset(blackMaskTransform.gameObject);
 			}
@@ -69,7 +69,7 @@ namespace Base
 
 		private void onBlackMaskClick(GameObject go)
 		{
-			UIEventListener.Get(go).onClick = null;
+            EventTriggerListener.Get(go).onClick = null;
 			popupManagerDelegate.RemovePopup(currentPopup);
 		}
 	}

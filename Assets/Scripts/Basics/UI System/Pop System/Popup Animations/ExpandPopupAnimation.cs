@@ -20,12 +20,12 @@ namespace Base
 			if (!reverse)
 			{
 				popupView.transform.localScale = Vector3.one * ORIGIN_SCALE;
-				TweenScale.Begin(popupView.gameObject, duration, Vector3.one);
+//				TweenScale.Begin(popupView.gameObject, duration, Vector3.one);
 			}
 			else
 			{
 				popupView.transform.localScale = Vector3.one;
-				TweenScale.Begin(popupView.gameObject, duration, Vector3.one * ORIGIN_SCALE);
+//				TweenScale.Begin(popupView.gameObject, duration, Vector3.one * ORIGIN_SCALE);
 			}
 
 		}
