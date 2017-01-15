@@ -71,9 +71,9 @@ namespace GameLogic
 				script.MainLightScript.DayNightConvert(proxy.IsNight);
                 string title = null;
                 if(proxy.IsNight)
-                    title = TextDataManager.Instance.GetData("common.nighttitle");
-                else
                     title = TextDataManager.Instance.GetData("common.daytitle");
+                else
+                    title = TextDataManager.Instance.GetData("common.nighttitle");
 				TitlePanel.Show(title);
 			}
 		}

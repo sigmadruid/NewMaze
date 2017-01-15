@@ -9,7 +9,7 @@ public class EnvironmentScript : MonoBehaviour
 {
 	public bool IsNight;
 
-	public Utils.CallbackVoid CallbackUpdate;
+    public Action CallbackUpdate;
 
 	public LightScript MainLightScript;
     public Light MazeMapLight;
