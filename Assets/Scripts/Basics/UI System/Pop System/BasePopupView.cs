@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -29,25 +31,11 @@ namespace Base
 		/// </summary>
 		public Dictionary<uint, object> paramDic;
 
-        private CanvasGroup group;
-        public CanvasGroup Group
-		{
-			get
-			{
-				if (group == null)
-                    group = GetComponent<CanvasGroup>();
-				return group;
-			}
-		}
-
-        private RectTransform rectTransform;
         public RectTransform RectTransform
         {
             get
             {
-                if(rectTransform == null)
-                    rectTransform = GetComponent<RectTransform>();
-                return rectTransform;
+                return transform as RectTransform;
             }
         }
 
@@ -60,27 +48,27 @@ namespace Base
 		public UpdateDelegate UpdateShowDelegate;
 		public UpdateDelegate UpdateHideDelegate;
 
-		public virtual void onInitialize()
+		public virtual void OnInitialize()
 		{
 		}
 
-		public virtual void onDispose()
+		public virtual void OnDispose()
 		{
 		}
 
-		public virtual void beforeEnter ()
+		public virtual void BeforeEnter ()
 		{
 		}
 
-		public virtual void onEnter()
+		public virtual void OnEnter()
 		{
 		}
 
-		public virtual void onExit()
+		public virtual void BeforeExit()
 		{
 		}
 
-		public virtual void afterExit ()
+		public virtual void OnExit ()
 		{
 		}
 
@@ -88,37 +76,19 @@ namespace Base
 
 		#region Popup Animation
 
-		public BasePopupAnimation popupAnimation;
-		
-		public PopupAnimationType AnimationType
+        public bool IsAnimationPlaying;
+
+        public void StartAnimation(Action<UIAnimationParam> callbackAnimEnds, UIAnimationParam param)
 		{
-			get
-			{
-				PopupAnimationDTO dto = getAnimationDTO();
-				return dto.animationType;
-			}
+            IsAnimationPlaying = true;
+            Framework.Instance.TaskManager.AddTask(TaskEnum.UI_ANIMATION, 1f, 1, () => 
+                {
+                    IsAnimationPlaying = false;
+                    callbackAnimEnds(param);
+                });
 		}
 
-		public void StartAnimation(bool reverse, BasePopupAnimation.AnimationDelegate endDelegate, object delegateParam = null)
-		{
-			PopupAnimationDTO dto = getAnimationDTO();
-			
-			popupAnimation.OnAnimationEnds = endDelegate;
-			popupAnimation.endParam = delegateParam;
-			popupAnimation.StartAnimation(this, dto.duration > 0 ? dto.duration : popupAnimation.DefaultDuration, reverse);
-		}
 
-		private PopupAnimationDTO getAnimationDTO()
-		{
-			PopupAnimationDTO dto;
-			
-			if (paramDic == null || !paramDic.ContainsKey(PopupMode.ANIMATED))
-				dto = PopupAnimationDTO.defaultDTO;
-			else
-				dto = (PopupAnimationDTO)paramDic[PopupMode.ANIMATED];
-			
-			return dto;
-		}
 
 		#endregion
 	}

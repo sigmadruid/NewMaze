@@ -5,13 +5,9 @@ using System.Collections.Generic;
 
 namespace Base
 {
-	public struct AddMaskDTO
+	public struct AddMaskParam
 	{
-		public int depth;
-		
 		public bool clickHide;
-
-		public Transform popupRoot;
 	}
 
 	/// <summary>
@@ -22,14 +18,12 @@ namespace Base
 	{
 		private const int Z_MASK_INCREMENT = 5;
 
-		private List<Transform> blackMaskStack;
+        private MaskPanel mask;
 
 		private BasePopupView currentPopup;
 
 		public AddMaskPopupAction (IPopupManagerDelegate popupManagerDelegate) : base(PopupMode.ADD_MASK, popupManagerDelegate)
 		{
-			blackMaskStack = new List<Transform>();
-
 			DefaultParam = false;
 		}
 
@@ -37,34 +31,25 @@ namespace Base
 		{
 			if (param != null)
 			{
-				AddMaskDTO dto = (AddMaskDTO)param;
-				
+                AddMaskParam maskParam = (AddMaskParam)param;
 				currentPopup = view;
 				
-				Transform popParent = dto.popupRoot;
+                if(mask == null)
+                    CreateMask();
+
+                int index = view.transform.GetSiblingIndex();
+                mask.transform.SetSiblingIndex(index - 1);
+                mask.gameObject.SetActive(true);
 				
-				Transform blackMaskTransform = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, PopupConst.MASK_PATH).transform;
-				blackMaskTransform.parent = popParent;
-				blackMaskTransform.localScale = Vector3.one;
-				blackMaskTransform.localPosition = Vector3.zero;
-				blackMaskStack.Add(blackMaskTransform);
-//				blackMaskTransform.GetComponent<UIPanel>().depth = dto.depth - Z_MASK_INCREMENT;
-				
-				if (dto.clickHide)
-                    EventTriggerListener.Get(blackMaskTransform.gameObject).onClick = onBlackMaskClick;
+				if (maskParam.clickHide)
+                    EventTriggerListener.Get(mask.gameObject).onClick = onBlackMaskClick;
 			}
 		}
 
 		public override void ExecuteHide (BasePopupView view, object param = null)
 		{
-			if (blackMaskStack.Count > 0)
-			{
-				int lastIndex = blackMaskStack.Count - 1;
-				Transform blackMaskTransform = blackMaskStack[lastIndex];
-                EventTriggerListener.Get(blackMaskTransform.gameObject).onClick = null;
-				blackMaskStack.RemoveAt(lastIndex);
-				ResourceManager.Instance.RecycleAsset(blackMaskTransform.gameObject);
-			}
+            mask.gameObject.SetActive(false);
+            EventTriggerListener.Get(mask.gameObject).onClick = null;
 		}
 
 		private void onBlackMaskClick(GameObject go)
@@ -72,6 +57,18 @@ namespace Base
             EventTriggerListener.Get(go).onClick = null;
 			popupManagerDelegate.RemovePopup(currentPopup);
 		}
+
+
+        private void CreateMask()
+        {
+            string path = string.Format(PopupConst.UI_PANEL_PATH, "MaskPanel");
+            mask = ResourceManager.Instance.CreateAsset<MaskPanel>(path);
+            mask.transform.SetParent(RootTransform.Instance.UIPanelRoot);
+            mask.transform.localPosition = Vector3.zero;
+            mask.transform.localScale = Vector3.one;
+            mask.RectTransform.offsetMin = Vector2.zero;
+            mask.RectTransform.offsetMax = Vector2.zero;
+        }
 	}
 }
 

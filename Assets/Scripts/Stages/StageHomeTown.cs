@@ -18,7 +18,7 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
 
-			Game.Instance.Looper.SetActive(TaskEnum.InputUpdate, true);
+			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, true);
 
             InputManager.Instance.Init();
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
@@ -27,7 +27,7 @@ namespace GameLogic
 		}
 		public override void End ()
 		{
-			Game.Instance.Looper.SetActive(TaskEnum.InputUpdate, false);
+			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
 
             PopupManager.Instance.Clear();
 

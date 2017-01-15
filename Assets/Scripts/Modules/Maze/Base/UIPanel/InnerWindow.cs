@@ -43,8 +43,6 @@ namespace GameLogic
                                                     rectTransform.anchorMin.y * rectTransform.rect.height);
                 Vector2 endPosition   = new Vector2(rectTransform.anchorMax.x * rectTransform.rect.width, 
                                                     rectTransform.anchorMax.y * rectTransform.rect.height);
-                Debug.Log(startPosition);
-                Debug.Log(endPosition);
                 Rect viewRect = new Rect(
     				startPosition.x, 
     				startPosition.y, 

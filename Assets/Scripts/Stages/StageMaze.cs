@@ -52,7 +52,7 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
 
-			Game.Instance.Looper.SetAllActive(true);
+			Game.Instance.TaskManager.SetAllActive(true);
 
             InputManager.Instance.Init();
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, () =>
@@ -65,7 +65,7 @@ namespace GameLogic
 		}
 		public override void End ()
 		{
-			Game.Instance.Looper.SetAllActive(false);
+			Game.Instance.TaskManager.SetAllActive(false);
 
             PopupManager.Instance.Clear();
 

@@ -11,9 +11,9 @@ namespace Base
 	{
         public const float RESOURCE_UPDATE_INTERVAL = 1f;
 
-		private AssetManager assetManager;
-		private CacheManager cacheManager;
-		private ObjectPool objectPool;
+        private AssetManager assetManager = new AssetManager();
+        private CacheManager cacheManager = new CacheManager();
+        private ObjectPool objectPool = new ObjectPool();
 
 		private static ResourceManager instance;
 		public static ResourceManager Instance
@@ -26,13 +26,6 @@ namespace Base
 				}
 				return instance;
 			}
-		}
-
-		public ResourceManager ()
-		{
-			assetManager = new AssetManager();
-			cacheManager = new CacheManager();
-			objectPool = new ObjectPool();
 		}
 
 		/// <summary>

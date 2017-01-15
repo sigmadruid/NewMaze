@@ -20,7 +20,7 @@ namespace GameUI
         
 		public static void Show(string title, string content, Action callbackConfirm, Action callbackCancel = null)
         {
-			ConfirmPanel panel = PopupManager.Instance.CreateAndAddPopup<ConfirmPanel>(PopupMode.DEFAULT, PopupQueueMode.NoQueue);
+            ConfirmPanel panel = PopupManager.Instance.CreateAndAddPopup<ConfirmPanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
 			panel.LabelTitle.text = title;
 			panel.LabelContent.text = content;
 			panel.CallbackConfirm = callbackConfirm;

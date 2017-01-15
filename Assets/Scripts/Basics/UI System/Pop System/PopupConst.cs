@@ -7,14 +7,9 @@ namespace Base
 	/// </summary>
 	public enum PopupQueueMode
 	{
-		/// 新面板不排队
-		NoQueue,
-		/// 新面板排至队尾
+        NoQueue,
 		QueueBack,
-		/// 新面板排至队头
 		QueueFront,
-		/// 新面板排至队头，并立即展示。旧面板隐藏，排至队头。
-		QueueFrontShow,
 	}
 
 	public enum PopupAnimationType

@@ -66,7 +66,7 @@ namespace GameLogic
         {
 			List<HeroData> dataList = heroProxy.GetAllHeroDataList();
 
-			panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
+            panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
 			panel.Init(dataList);
 			panel.CallbackItemClick = OnItemClick;
 			panel.CallbackUpdate = OnUpdate;

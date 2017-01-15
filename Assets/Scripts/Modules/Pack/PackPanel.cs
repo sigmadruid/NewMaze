@@ -35,9 +35,9 @@ public class PackPanel : BasePopupView
     private UIItemPool<Toggle> togglePool = new UIItemPool<Toggle>();
     private UIItemPool<PackItem> itemPool = new UIItemPool<PackItem>();
 
-    public override void onInitialize()
+    public override void OnInitialize()
     {
-        base.onInitialize();
+        base.OnInitialize();
 
         togglePool.Init(ToggleItemTypeTemplate.gameObject, GridItemType.transform);
         itemPool.Init(ItemTemplate.gameObject, GridItems.transform);
@@ -47,9 +47,9 @@ public class PackPanel : BasePopupView
         EventTriggerListener.Get(ButtonDiscard.gameObject).onClick = OnClose;
     }
 
-    public override void onDispose()
+    public override void OnDispose()
     {
-        base.onDispose();
+        base.OnDispose();
     }
 
     public void SetInfo(ItemType itemType, List<ItemInfo> infoList)

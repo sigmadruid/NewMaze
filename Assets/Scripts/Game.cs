@@ -14,17 +14,17 @@ namespace GameLogic
 {
 	public class Game
 	{
-		public StageEnum LoadingStageEnum;
+        public StageEnum LoadingStageEnum;
 
 		public bool IsPause = false;
 
-		public InputManager InputManager;
-		public ResourceManager ResourceManager;
-		public AICore AICore;
-		public GameLooper Looper;
+        public ConfigManager ConfigManager;
+        public AICore AICore;
 
-		private bool hasInit;
-		private BaseStage currentStage;
+        private BaseStage currentStage;
+        private bool hasInit;
+
+        private Framework framework;
 
 		private static Game instance;
 		public static Game Instance
@@ -38,8 +38,8 @@ namespace GameLogic
 
 		public Game ()
 		{
-			ResourceManager = ResourceManager.Instance;
-			InputManager = InputManager.Instance;
+            framework = Framework.Instance;
+            ConfigManager = ConfigManager.Instance;
 			AICore = new AICore();
 		}
 
@@ -50,12 +50,12 @@ namespace GameLogic
 				return;
 			}
 
-			ConfigManager.Instance.InitAllData();
+            framework.Init();
 
-			Looper = new GameLooper();
-			Looper.AddTask(TaskEnum.AIUpdate, -1f, AICore.Update);
-            Looper.AddTask(TaskEnum.AISlowUpdate, AICore.AI_UPDATE_INTERVAL, AICore.SlowUpdate);
-            Looper.AddTask(TaskEnum.ResourceUpdate, ResourceManager.RESOURCE_UPDATE_INTERVAL, ResourceManager.Tick);
+			ConfigManager.InitAllData();
+
+            framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
+            framework.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, AICore.SlowUpdate);
 
 			ApplicationFacade.Instance.Startup();
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
@@ -68,7 +68,7 @@ namespace GameLogic
             InputManager.Instance.Update();
 
 			if (IsPause)  return; 
-			Looper.Update(deltaTime);
+			TaskManager.Update(deltaTime);
 		}
 
 		public void Start(StageEnum stageEnum)
@@ -81,6 +81,30 @@ namespace GameLogic
         {
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.SERIALIZE_GAME);
         }
+
+        #region Managers
+
+        public ResourceManager ResourceManager
+        {
+            get { return framework.ResourceManager; }
+        }
+
+        public InputManager InputManager
+        {
+            get { return framework.InputManager; }
+        }
+
+        public PopupManager PopupManager
+        {
+            get { return framework.PopupManager; }
+        }
+
+        public TaskManager TaskManager
+        {
+            get { return framework.TaskManager; }
+        }
+
+        #endregion
 
 		#region Stage Management
 
@@ -105,14 +129,14 @@ namespace GameLogic
 			currentStage.Start();
 		}
 
-		public void SetPause(bool state)
-		{
+        #endregion
+
+        public void SetPause(bool state)
+        {
             IsPause = state;
             InputManager.Instance.IsPause = IsPause;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_PAUSE, IsPause);
-		}
-
-		#endregion
+        }
 	}
 }
 
