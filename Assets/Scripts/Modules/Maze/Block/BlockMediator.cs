@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using Base;
 using StaticData;
+using Pathfinding;
 
 namespace GameLogic
 {
@@ -124,6 +125,9 @@ namespace GameLogic
 
 			blockProxy.UpdateSearchIndex(col, row);
 
+            //TODO: do this in coroutin can be better?
+            RefreshRecastGraph();
+
 //            StaticBatchingUtility.Combine(RootTransform.Instance.BlockRoot.gameObject);
 		}
 
@@ -169,6 +173,16 @@ namespace GameLogic
 			block.Script.gameObject.isStatic = false;
             DispatchNotification(NotificationEnum.BLOCK_DESPAWN, block);
 		}
+
+        private void RefreshRecastGraph()
+        {
+            MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+            RecastGraph graph = AstarPath.active.graphs[0] as RecastGraph;
+            float scope = 2f * GlobalConfig.BlockConfig.RefreshScope + 1f;
+            graph.forcedBoundsCenter = new Vector3(Hero.Instance.MazePosition.x * mazeData.BlockSize, 0, Hero.Instance.MazePosition.y * mazeData.BlockSize);
+            graph.forcedBoundsSize = new Vector3(scope * mazeData.BlockSize, 20, scope * mazeData.BlockSize);
+            AstarPath.active.Scan();
+        }
 	}
 }
 
