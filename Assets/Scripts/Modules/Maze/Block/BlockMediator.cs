@@ -83,9 +83,9 @@ namespace GameLogic
 
 		private void HandleRefreshBlocks(Vector3 position)
 		{
-            Vector2 pos = Maze.Instance.GetMazePosition(position);
-            int col = (int)pos.x;
-            int row = (int)pos.y;
+            MazePosition pos = Maze.Instance.GetMazePosition(position);
+            int col = pos.Col;
+            int row = pos.Row;
 
 			if (col == prevCol && row == prevRow)
 			{

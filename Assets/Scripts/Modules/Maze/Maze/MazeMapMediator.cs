@@ -78,10 +78,10 @@ namespace GameLogic
 
         private Vector3 GetHeroMazeMapPosition(Vector3 heroPosition)
         {
-            Vector2 heroPos = Maze.Instance.GetMazePosition(heroPosition);
+            MazePosition heroPos = Maze.Instance.GetMazePosition(heroPosition);
             float cubeSize = GlobalConfig.BlockConfig.MockCubeSize;
             float posY = GlobalConfig.BlockConfig.MockBlockPosY;
-            Vector3 position = new Vector3(heroPos.x * cubeSize, posY, heroPos.y * cubeSize);
+            Vector3 position = new Vector3(heroPos.Col * cubeSize, posY, heroPos.Row * cubeSize);
             return position;
         }
 

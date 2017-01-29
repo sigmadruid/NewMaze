@@ -9,6 +9,16 @@ using Base;
 
 namespace GameLogic
 {
+    public struct MazePosition
+    {
+        public int Col;
+        public int Row;
+        public MazePosition(int col, int row)
+        {
+            Col = col;
+            Row = row;
+        }
+    }
     public class Maze
     {
 		public MazeData Data;
@@ -43,12 +53,12 @@ namespace GameLogic
 			}
 		}
 
-		public Vector2 GetMazePosition(Vector3 position)
+        public MazePosition GetMazePosition(Vector3 position)
 		{
 			float blockSize = Data.BlockSize;
 			int col, row;
 			MazeUtil.GetMazePosition(position, blockSize, out col, out row);
-			return new Vector2(col, row);
+            return new MazePosition(col, row);
 		}
 
         public const int BLOCK_MARK = 1;
@@ -70,8 +80,8 @@ namespace GameLogic
             }
             else
             {
-                Vector2 mazePos = Maze.Instance.GetMazePosition(worldPosition);
-                return GetLocation(mazeKid, (int)mazePos.x, (int)mazePos.y);
+                MazePosition mazePos = Maze.Instance.GetMazePosition(worldPosition);
+                return GetLocation(mazeKid, mazePos.Col, (mazePos.Row));
             }
         }
         public static int GetCurrentLocation(int hallKid)

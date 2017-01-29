@@ -95,8 +95,8 @@ namespace GameLogic
             List<Item> toHideItemList = new List<Item>();
             dropProxy.IterateDrops((Item item) => 
             {
-                Vector2 itemPos = Maze.Instance.GetMazePosition(item.WorldPosition);
-				if (block.Contains((int)itemPos.x, (int)itemPos.y))
+                MazePosition itemPos = Maze.Instance.GetMazePosition(item.WorldPosition);
+                if (block.Contains(itemPos.Col, itemPos.Row))
 				{
 					toHideItemList.Add(item);
 				}

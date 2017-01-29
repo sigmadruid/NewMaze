@@ -69,9 +69,9 @@ namespace Battle
 
         private void SearchForHeroByNode()
 		{
-            Vector2 pos = Maze.Instance.GetMazePosition(currentMonster.WorldPosition);
-            int monsterCol = (int)pos.x;
-            int monsterRow = (int)pos.y;
+            MazePosition pos = Maze.Instance.GetMazePosition(currentMonster.WorldPosition);
+            int monsterCol = pos.Col;
+            int monsterRow = pos.Row;
 			MazeNode currentNode = blockProxy.GetNode(monsterCol, monsterRow);
             MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
             Vector3 currentPosition = MazeUtil.GetWorldPosition(currentNode.Col, currentNode.Row, mazeData.BlockSize);

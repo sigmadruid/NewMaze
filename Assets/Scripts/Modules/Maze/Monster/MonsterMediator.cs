@@ -112,8 +112,8 @@ namespace GameLogic
 			List<Monster> toDeleteMonsterList = new List<Monster>();
 			monsterProxy.IterateMonsters((Monster monster) => 
 	         {
-				Vector2 monsterPos = Maze.Instance.GetMazePosition(monster.WorldPosition);
-				if (block.Contains((int)monsterPos.x, (int)monsterPos.y))
+                MazePosition monsterPos = Maze.Instance.GetMazePosition(monster.WorldPosition);
+                if (block.Contains(monsterPos.Col, monsterPos.Row))
 				{
 					toDeleteMonsterList.Add(monster);
 				}

@@ -89,8 +89,8 @@ namespace GameLogic
             List<Exploration> toDeleteList = new List<Exploration>();
             explorationProxy.IterateInBlocks((Exploration expl) => 
                 {
-                    Vector2 pos = Maze.Instance.GetMazePosition(expl.WorldPosition);
-                    if (block.Contains((int)pos.x, (int)pos.y))
+                    MazePosition pos = Maze.Instance.GetMazePosition(expl.WorldPosition);
+                    if (block.Contains(pos.Col, pos.Row))
                     {
                         toDeleteList.Add(expl);
                     }
