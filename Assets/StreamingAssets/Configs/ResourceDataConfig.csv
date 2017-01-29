@@ -46,3 +46,8 @@ MazeKid,EntityKid,Path,Life,PreloadCount
 10001,140001,,-1,10
 10001,140002,,-1,10
 10001,140003,,-1,10
+10001,0,MazeBlocks/One/PassageOneWalk,-1,10
+10001,0,MazeBlocks/TwoLine/PassageTwoLineWalk,-1,10
+10001,0,MazeBlocks/TwoTurn/PassageTwoTurnWalk,-1,10
+10001,0,MazeBlocks/Three/PassageThreeWalk,-1,10
+10001,0,MazeBlocks/Four/PassageFourWalk,-1,10
