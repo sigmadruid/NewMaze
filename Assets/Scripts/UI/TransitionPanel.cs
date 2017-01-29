@@ -21,7 +21,6 @@ namespace GameUI
 
         private float timer;
         private bool isPlaying;
-        private bool hasCompleted;
 
 	    void Awake()
 	    {
@@ -36,7 +35,7 @@ namespace GameUI
                 timer += Time.deltaTime;
                 if(timer > LOOP_DURATION)
                 {
-                    OnStep();
+                    OnComplete();
                 }
             }
         }
@@ -45,23 +44,15 @@ namespace GameUI
 		{
             timer = 0;
             isPlaying = true;
-            hasCompleted = false;
             Tweener tweener = group.DOFade(1, LOOP_DURATION).SetLoops(2, LoopType.Yoyo);
 		}
 
-		private void OnStep()
+		private void OnComplete()
 		{
-            if(!hasCompleted)
-            {
-                CallbackTransition();
-            }
-            else
-            {
-                isPlaying = false;
-                Dispose();
-            }
-            
-            hasCompleted = true;
+            Debug.LogError("on complete");
+            CallbackTransition();
+            isPlaying = false;
+            Dispose();
 		}
 
         private void Dispose()

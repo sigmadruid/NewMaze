@@ -176,7 +176,7 @@ namespace GameLogic
 		}
         public List<MazeNode> GetAllNodes()
         {
-            return mazeNodesList;
+            return new List<MazeNode>(mazeNodesList);
         }
 
         public void IterateNodesInScope(int centerCol, int centerRow, int scope, System.Action<MazeNode> callback)
