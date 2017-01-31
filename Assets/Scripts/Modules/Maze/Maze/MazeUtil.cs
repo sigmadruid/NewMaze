@@ -8,10 +8,12 @@ namespace GameLogic
 {
     public static class MazeUtil
     {
-		public static void GetMazePosition(Vector3 position, float blockSize, out int outCol, out int outRow)
+        public static MazePosition GetMazePosition(Vector3 position, float blockSize)
 		{
-			outCol = (int)(position.x / blockSize + 0.5f);
-			outRow = (int)(position.z / blockSize + 0.5f);
+            MazePosition mazePos = new MazePosition();
+            mazePos.Col = (int)(position.x / blockSize + 0.5f);
+            mazePos.Row = (int)(position.z / blockSize + 0.5f);
+            return mazePos;
 		}
 		public static Vector3 GetWorldPosition(int col, int row, float blockSize)
 		{

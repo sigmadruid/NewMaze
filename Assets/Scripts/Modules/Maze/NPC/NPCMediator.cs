@@ -86,7 +86,7 @@ namespace GameLogic
 		}
 		private void HandleNPCSpawn(Block block)
 		{
-			int npcCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.MonsterMaxCount);
+            int npcCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.NPCMaxCount);
 			
 			for (int i = 0; i < npcCount; ++i)
 			{
@@ -106,14 +106,12 @@ namespace GameLogic
 		private void HandleNPCDespawn(Block block)
 		{
 			List<NPC> npcList = npcProxy.GetAllNPCs();
-			float blockSize = MazeDataManager.Instance.CurrentMazeData.BlockSize;
 			int count = npcList.Count;
 			for (int i = 0; i < count; ++i)
 			{
 				NPC npc = npcList[i];
-				int col, row;
-				MazeUtil.GetMazePosition(npc.WorldPosition, blockSize, out col, out row);
-				if (block.Contains(col, row))
+                MazePosition mazePos = Maze.Instance.GetMazePosition(npc.WorldPosition);
+                if (block.Contains(mazePos.Col, mazePos.Row))
 				{
 					npcProxy.RemoveNPC(npc.Uid);
 					

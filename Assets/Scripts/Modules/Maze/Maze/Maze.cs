@@ -56,9 +56,8 @@ namespace GameLogic
         public MazePosition GetMazePosition(Vector3 position)
 		{
 			float blockSize = Data.BlockSize;
-			int col, row;
-			MazeUtil.GetMazePosition(position, blockSize, out col, out row);
-            return new MazePosition(col, row);
+            MazePosition mazePos = MazeUtil.GetMazePosition(position, blockSize);
+            return mazePos;
 		}
 
         public const int BLOCK_MARK = 1;

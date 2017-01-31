@@ -179,7 +179,7 @@ namespace GameLogic
             MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
             RecastGraph graph = AstarPath.active.graphs[0] as RecastGraph;
             float scope = 2f * GlobalConfig.BlockConfig.RefreshScope + 1f;
-            graph.forcedBoundsCenter = new Vector3(Hero.Instance.MazePosition.x * mazeData.BlockSize, 0, Hero.Instance.MazePosition.y * mazeData.BlockSize);
+            graph.forcedBoundsCenter = new Vector3(Hero.Instance.MazePosition.Col * mazeData.BlockSize, 0, Hero.Instance.MazePosition.Row * mazeData.BlockSize);
             graph.forcedBoundsSize = new Vector3(scope * mazeData.BlockSize, 20, scope * mazeData.BlockSize);
             AstarPath.active.Scan();
         }
