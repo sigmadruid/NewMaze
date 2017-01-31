@@ -49,9 +49,10 @@ namespace GameLogic
             proxy.RemoveEnteredExploration(this);
         }
 
-        public static void Init(Exploration exploration)
+        public static void Init(Exploration exploration, ExplorationData data)
         {
             exploration.Uid = Guid.NewGuid().ToString();
+            exploration.Data = data;
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
             exploration.Script.Init(exploration.Uid, exploration.OnFunction, exploration.OnEnter, exploration.OnExit);
             exploration.proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();

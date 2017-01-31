@@ -29,15 +29,13 @@ namespace GameLogic
                 case ExplorationType.Transporter:   
                 {
                     exploration = new TransporterExpl();
-                    exploration.Data = data;
-                    TransporterExpl.Init(exploration);
+                    TransporterExpl.Init(exploration, data);
                     break;
                 }
                 default:      
                 {
                     exploration = new Exploration();
-                    exploration.Data = data;
-                    Exploration.Init(exploration);
+                    Exploration.Init(exploration, data);
                     break;
                 }
             }

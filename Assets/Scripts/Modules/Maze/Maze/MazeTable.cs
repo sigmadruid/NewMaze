@@ -32,7 +32,7 @@ namespace GameLogic
         /// <summary>
         /// The type of the exploration in this block.
         /// </summary>
-        public ExplorationType ExplorationType = ExplorationType.Common;
+        public int ExplorationKid = 0;
 
 		public string Format()
 		{

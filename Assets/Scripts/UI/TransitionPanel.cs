@@ -49,7 +49,6 @@ namespace GameUI
 
 		private void OnComplete()
 		{
-            Debug.LogError("on complete");
             CallbackTransition();
             isPlaying = false;
             Dispose();

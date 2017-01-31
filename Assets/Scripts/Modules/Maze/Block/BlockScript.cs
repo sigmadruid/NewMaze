@@ -27,6 +27,7 @@ public class BlockScript : EntityScript
 		if (posRoot != null)
 		{
 			PositionScript[] positionArray = posRoot.GetComponentsInChildren<PositionScript>();
+            //The first pos of exploration is reserved for global exploration
             int start = type == PositionType.Exploration ? 1 : 0;
             Utils.Shift<PositionScript>(positionArray, start);
 			positionListDic[type] = positionArray;

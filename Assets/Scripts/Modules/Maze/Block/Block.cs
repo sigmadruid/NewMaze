@@ -28,7 +28,7 @@ namespace GameLogic
 		
 		public int Direction;
 
-        public ExplorationType ExplorationType;
+        public int ExplorationKid;
 
 		public bool IsRoom { get { return Data.Cols > 1 || Data.Rows > 1;} }
 
@@ -108,7 +108,7 @@ namespace GameLogic
 				block.InitRandomDecorations();
 			}
 
-            block.ExplorationType = node.ExplorationType;
+            block.ExplorationKid = node.ExplorationKid;
 
 			return block;
 		}

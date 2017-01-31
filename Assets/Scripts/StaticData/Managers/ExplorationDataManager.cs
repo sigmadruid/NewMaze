@@ -56,7 +56,14 @@ namespace StaticData
 			int index = RandomUtils.Range(0, dataList.Count);
 			return dataList[index];
         }
-
+        public List<ExplorationData> GetDataList(ExplorationType type)
+        {
+            if(!typeDic.ContainsKey(type))
+            {
+                BaseLogger.LogFormat("No such type in Exploration typeDic: {0}", type);
+            }
+            return typeDic[type];
+        }
     }
 }
 

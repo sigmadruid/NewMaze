@@ -101,7 +101,7 @@ namespace GameLogic
 					CreateMockPassage(node);
 				}
 
-                if(node.ExplorationType != ExplorationType.Common)
+                if(node.ExplorationKid != 0)
                 {
                     CreateIndicator(node);
                 }
@@ -120,7 +120,7 @@ namespace GameLogic
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
             cube.transform.position = cube.transform.position - cube.transform.forward * GlobalConfig.BlockConfig.MockLinkSize * 0.5f;
             cube.GetComponentInChildren<MeshRenderer>().material.mainTextureScale = new Vector2(room.Data.Cols, room.Data.Rows);
-            cube.GetComponent<Sparking>().IsEnabled = room.ExplorationType != ExplorationType.Common;
+            cube.GetComponent<Sparking>().IsEnabled = room.ExplorationKid != 0;
 		}
 		private void CreateMockPassage(MazeNode node)
 		{
@@ -130,7 +130,7 @@ namespace GameLogic
 			GameObject cube = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, GlobalConfig.BlockConfig.MockPassagePath);
 			cube.transform.position = new Vector3(node.Col * cubeSize, posY, node.Row * cubeSize);
 			cube.transform.parent = RootTransform.Instance.MockBlockRoot;
-            cube.GetComponent<Sparking>().IsEnabled = node.ExplorationType != ExplorationType.Common;
+            cube.GetComponent<Sparking>().IsEnabled = node.ExplorationKid != 0;
 
 			GameObject link = null;
             float offsetSize = cubeSize * 0.5f;

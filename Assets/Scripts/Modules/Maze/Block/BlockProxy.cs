@@ -278,28 +278,35 @@ namespace GameLogic
         public void InitGlobalExplorationPositions()
         {
             //Calculate how many nodes you need to add global explorations.
-            int positionTotalCount = 0;
+            int globalExplCount = 0;
             foreach(ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
             {
                 int count = mazeData.GlobalExplorationCountDic[type];
-                positionTotalCount += count;
+                globalExplCount += count;
             }
 
             //Get the random indexes in node table.
-            List<int> indexList = Utils.GetRandomIndexList(positionTotalCount, mazeTable.NodeCount);
+            List<int> nodeIndexList = Utils.GetRandomIndexList(globalExplCount, mazeTable.NodeCount);
 
             //Arrange the explorations to the nodes I have created.
-            int index = 0;
+            int j = 0;
             foreach (ExplorationType type in mazeData.GlobalExplorationCountDic.Keys)
             {
-                int count = mazeData.GlobalExplorationCountDic[type];
-                for (int i = 0; i < count; ++i)
+                //Get random data of specific type and count
+                int dataCount = mazeData.GlobalExplorationCountDic[type];
+                List<ExplorationData> dataList = ExplorationDataManager.Instance.GetDataList(type);
+                List<int> dataIndexList = Utils.GetRandomIndexList(dataCount, dataList.Count);
+                for(int i = 0; i < dataIndexList.Count; ++i)
                 {
-                    MazeNode node = mazeTable.GetNode(indexList[index]);
-                    node.ExplorationType = type;
+                    int dataIndex = dataIndexList[i];
+                    ExplorationData data = dataList[dataIndex];
+                    int nodeIndex = nodeIndexList[j];
+                    MazeNode node = mazeTable.GetNode(nodeIndex);
+                    node.ExplorationKid = data.Kid;
                     AddMockNode(node);
-                    index++;
+                    j++;
                 }
+
             }
         }
 
@@ -307,9 +314,9 @@ namespace GameLogic
         {
             mazeTable.ForeachMazeNode((MazeNode node) =>
                 {
-                    if (node.ExplorationType != ExplorationType.Common)
+                    if (node.ExplorationKid != 0)
                     {
-                        Debug.LogFormat("{0}, col={1}, row={2}", node.ExplorationType, node.Col, node.Row);
+                        Debug.LogFormat("{0}, col={1}, row={2}", node.ExplorationKid, node.Col, node.Row);
                     }
                 });
         }

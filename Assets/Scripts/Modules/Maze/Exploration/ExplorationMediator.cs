@@ -71,10 +71,10 @@ namespace GameLogic
 			int explorationCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.ExplorationMaxCount);
             PositionScript birth = null;
 
-            if (block.ExplorationType != ExplorationType.Common)
+            if (block.ExplorationKid != 0)
             {
                 birth = block.Script.GetGlobalPosition(PositionType.Exploration);
-                CreateExploration(block.ExplorationType, birth);
+                CreateExploration(block.ExplorationKid, birth);
                 explorationCount--;
             }
 
@@ -111,6 +111,8 @@ namespace GameLogic
                 expl.SetPosition(birth.transform.position);
                 expl.SetRotation(birth.transform.eulerAngles.y);
                 explorationProxy.AddInBlock(expl);
+                if (expl.Data.Type == ExplorationType.Transporter)
+                    UnityEngine.Debug.LogError(expl.Data.Kid.ToString() + ", " + expl.WorldPosition.ToString());
             }
         }
 
