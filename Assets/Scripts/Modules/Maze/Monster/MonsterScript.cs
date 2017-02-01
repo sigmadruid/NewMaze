@@ -50,6 +50,7 @@ public class MonsterScript : CharacterScript
         {
             highlighter.ConstantOffImmediate();
         }
+        highlighter.ReinitMaterials();
     }
 
     void OnTriggerEnter(Collider other)

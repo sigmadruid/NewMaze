@@ -18,7 +18,7 @@ namespace GameLogic
         public Camera Camera;
 
     	private Transform cachedTransform;
-    	private GameObject prevObstacle;
+        private RaycastHit[] prevHitInfos;
 
     	public static Camera3DScript Instance { get; private set; }
 
@@ -60,9 +60,12 @@ namespace GameLogic
 
     	private void CheckObstacleObjects()
     	{
-    		if (prevObstacle != null)
+            if (prevHitInfos != null && prevHitInfos.Length > 0)
     		{
-    			SetTransparent(prevObstacle, false);
+                foreach(RaycastHit hitInfo in prevHitInfos)
+                {
+                    SetTransparent(hitInfo.collider.gameObject, false);
+                }
     		}
 
     		if (playerTransofrm != null)
@@ -70,12 +73,14 @@ namespace GameLogic
     			float distance = Vector3.Distance(cachedTransform.position, playerTransofrm.position);
     			Vector3 direction = playerTransofrm.position - cachedTransform.position;
 
-    			RaycastHit hitInfo;
-    			if (Physics.Raycast(cachedTransform.position, direction, out hitInfo, distance - 1f, Layers.LayerBlock))
+                RaycastHit[] hitInfos = Physics.RaycastAll(cachedTransform.position, direction, distance - 1f, Layers.LayerBlock);
+                if (hitInfos != null && hitInfos.Length > 0)
     			{
-    				GameObject go = hitInfo.collider.gameObject;
-    				SetTransparent(go, true);
-    				prevObstacle = go;
+                    foreach(RaycastHit hitInfo in hitInfos)
+                    {
+                        SetTransparent(hitInfo.collider.gameObject, true);
+                    }
+                    prevHitInfos = hitInfos;
     			}
     		}
     	}
