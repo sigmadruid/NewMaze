@@ -59,11 +59,10 @@ namespace GameLogic
 
 			if (show)
 			{
-                BuildMockBlock();
-
                 panel = PopupManager.Instance.CreateAndAddPopup<MazeMapPanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
                 Vector3 position = GetHeroMazeMapPosition(Hero.Instance.WorldPosition);
                 panel.SetData(position, Hero.Instance.WorldAngle);		
+                BuildMockBlock();
 			}
 			else
 			{
@@ -88,6 +87,7 @@ namespace GameLogic
 		private void BuildMockBlock()
 		{
             HashSet<MazeNode> nodeSet = blockProxy.MockNodeSet;
+            Debug.LogError(nodeSet.Count);
             foreach(MazeNode node in nodeSet)
 			{
                 if(mockBlockSet.Contains(node)) continue;

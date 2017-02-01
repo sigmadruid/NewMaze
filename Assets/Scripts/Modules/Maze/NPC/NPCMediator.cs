@@ -86,6 +86,7 @@ namespace GameLogic
 		}
 		private void HandleNPCSpawn(Block block)
 		{
+            RandomUtils.Seed = block.RandomID;
             int npcCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.NPCMaxCount);
 			
 			for (int i = 0; i < npcCount; ++i)
@@ -105,19 +106,22 @@ namespace GameLogic
 		}
 		private void HandleNPCDespawn(Block block)
 		{
-			List<NPC> npcList = npcProxy.GetAllNPCs();
-			int count = npcList.Count;
-			for (int i = 0; i < count; ++i)
-			{
-				NPC npc = npcList[i];
-                MazePosition mazePos = Maze.Instance.GetMazePosition(npc.WorldPosition);
-                if (block.Contains(mazePos.Col, mazePos.Row))
-				{
-					npcProxy.RemoveNPC(npc.Uid);
-					
-					NPC.Recycle(npc);
-				}
-			}
+            List<NPC> toDeleteList = new List<NPC>();
+            npcProxy.IterateActives((NPC npc) =>
+                {
+                    MazePosition mazePos = Maze.Instance.GetMazePosition(npc.WorldPosition);
+                    if (block.Contains(mazePos.Col, mazePos.Row))
+                    {
+                        toDeleteList.Add(npc);
+                    }
+                });
+
+            for(int i = 0; i < toDeleteList.Count; ++i)
+            {
+                NPC npc = toDeleteList[i];
+                npcProxy.RemoveNPC(npc.Uid);
+                NPC.Recycle(npc);
+            }
 		}
 		private void HandleDialogShow(NPC npc)
 		{

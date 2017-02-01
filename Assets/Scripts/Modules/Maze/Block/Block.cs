@@ -25,10 +25,10 @@ namespace GameLogic
 
 		public int Col;
 		public int Row;
-		
 		public int Direction;
 
         public int ExplorationKid;
+        public int RandomID;
 
 		public bool IsRoom { get { return Data.Cols > 1 || Data.Rows > 1;} }
 
@@ -109,6 +109,7 @@ namespace GameLogic
 			}
 
             block.ExplorationKid = node.ExplorationKid;
+            block.RandomID = Maze.Instance.Data.Kid * 10000 + Block.GetBlockKey(block.Col, block.Row);
 
 			return block;
 		}

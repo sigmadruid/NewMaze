@@ -68,6 +68,7 @@ namespace GameLogic
 
 		private void HandleBlockSpawn(Block block)
 		{
+            RandomUtils.Seed = block.RandomID;
 			int explorationCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.ExplorationMaxCount);
             PositionScript birth = null;
 

@@ -81,6 +81,7 @@ namespace GameLogic
 		private void HandleSpawn(Block block)
 		{
 			//Room??
+            RandomUtils.Seed = block.RandomID;
             int location = Maze.GetCurrentLocation(block.Col, block.Row);
             List<MonsterRecord> recordList = monsterProxy.GetRecordList(location);
 			if (recordList != null)
@@ -110,7 +111,7 @@ namespace GameLogic
 		private void HandleDespawn(Block block)
 		{
 			List<Monster> toDeleteMonsterList = new List<Monster>();
-			monsterProxy.IterateMonsters((Monster monster) => 
+			monsterProxy.IterateActives((Monster monster) => 
 	         {
                 MazePosition monsterPos = Maze.Instance.GetMazePosition(monster.WorldPosition);
                 if (block.Contains(monsterPos.Col, monsterPos.Row))
@@ -165,7 +166,7 @@ namespace GameLogic
         private void HandleDespawn(Hall hall)
         {
             List<Monster> toDeleteMonsterList = new List<Monster>();
-            monsterProxy.IterateMonsters((Monster monster) => 
+            monsterProxy.IterateActives((Monster monster) => 
                 {
                     toDeleteMonsterList.Add(monster);
                 });
@@ -200,7 +201,7 @@ namespace GameLogic
 
         private void HandleEnvironmentChange(bool isNight)
         {
-            monsterProxy.IterateMonsters((Monster monster) => 
+            monsterProxy.IterateActives((Monster monster) => 
                 {
                     monster.SetAtNight(isNight);
                 });
@@ -208,7 +209,7 @@ namespace GameLogic
 
 		private void HandleBattlePause(bool isPause)
 		{
-			monsterProxy.IterateMonsters((Monster monster) => 
+			monsterProxy.IterateActives((Monster monster) => 
 			{
 				monster.Pause(isPause);
 			});

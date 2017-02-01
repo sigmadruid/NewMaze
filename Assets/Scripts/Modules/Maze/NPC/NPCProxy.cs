@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,18 @@ namespace GameLogic
 {
 	public class NPCProxy : Proxy
 	{
-		private Dictionary<string, NPC> npcDic;
+        private Dictionary<string, NPC> npcDic = new Dictionary<string, NPC>();
 
-		public NPCProxy ()
-		{
-			npcDic = new Dictionary<string, NPC>();
-		}
-
+        public void IterateActives(Action<NPC> func)
+        {
+            if(func == null)
+                return;
+            var enumerator = npcDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                func(enumerator.Current.Value);
+            }
+        }
 		public List<NPC> GetAllNPCs()
 		{
 			return npcDic.Values.ToList();

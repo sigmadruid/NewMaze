@@ -57,7 +57,7 @@ namespace GameLogic
 
         #region Block
 
-		public void IterateMonsters(IterateFunc func)
+		public void IterateActives(IterateFunc func)
 		{
 			if (func == null) { return; }
 
