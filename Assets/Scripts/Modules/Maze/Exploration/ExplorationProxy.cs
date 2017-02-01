@@ -15,101 +15,58 @@ namespace GameLogic
 
         public HashSet<Exploration> enteredExplorationSet = new HashSet<Exploration>();
 
-        private Dictionary<string, Exploration> explorationBlockDic = new Dictionary<string, Exploration>();
-        private Dictionary<string, Exploration> explorationHallDic = new Dictionary<string, Exploration>();
+        private Dictionary<string, Exploration> explorationDic = new Dictionary<string, Exploration>();
 		
         public void Dispose()
         {
-            ClearInBlocks();
-            ClearInHall();
+            ClearExpls();
 
             enteredExplorationSet.Clear();
         }
 
-        #region Block
+        #region Add and Remove
 
-        public void IterateInBlocks(IterateFunc func)
+        public void IterateActiveExpl(IterateFunc func)
         {
             if (func == null) { return; }
 
-            Dictionary<string, Exploration>.Enumerator enumerator = explorationBlockDic.GetEnumerator();
+            var enumerator = explorationDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
                 func(enumerator.Current.Value);
             }
         }
 
-		public void AddInBlock(Exploration exploration)
+		public void AddExpl(Exploration exploration)
 		{
-			if (!explorationBlockDic.ContainsKey(exploration.Uid))
+			if (!explorationDic.ContainsKey(exploration.Uid))
 			{
-				explorationBlockDic.Add(exploration.Uid, exploration);
+				explorationDic.Add(exploration.Uid, exploration);
 			}
 		}
-		public void RemoveInBlock(string uid)
+		public void RemoveExpl(string uid)
 		{
-			if (explorationBlockDic.ContainsKey(uid))
+			if (explorationDic.ContainsKey(uid))
 			{
-                Exploration expl = explorationBlockDic[uid];
+                Exploration expl = explorationDic[uid];
                 RemoveEnteredExploration(expl);
-				explorationBlockDic.Remove(uid);
+				explorationDic.Remove(uid);
 			}
 		}
-        public void ClearInBlocks()
+        public void ClearExpls()
         {
-            Dictionary<string, Exploration>.Enumerator blockEnum = explorationBlockDic.GetEnumerator();
+            Dictionary<string, Exploration>.Enumerator blockEnum = explorationDic.GetEnumerator();
             while(blockEnum.MoveNext())
             {
                 Exploration.Recycle(blockEnum.Current.Value);
             }
-            explorationBlockDic.Clear();
+            explorationDic.Clear();
             enteredExplorationSet.Clear();
         }
 
         #endregion
 
-        #region Hall
-
-        public void IterateInHall(IterateFunc func)
-        {
-            if (func == null) { return; }
-
-            Dictionary<string, Exploration>.Enumerator enumerator = explorationHallDic.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                func(enumerator.Current.Value);
-            }
-        }
-
-        public void AddInHall(Exploration exploration)
-        {
-            if (!explorationHallDic.ContainsKey(exploration.Uid))
-            {
-                explorationHallDic.Add(exploration.Uid, exploration);
-            }
-        }
-        public void RemoveInHall(string uid)
-        {
-            if (explorationHallDic.ContainsKey(uid))
-            {
-                Exploration expl = explorationHallDic[uid];
-                RemoveEnteredExploration(expl);
-            }
-        }
-        public void ClearInHall()
-        {
-            Dictionary<string, Exploration>.Enumerator hallEnum = explorationHallDic.GetEnumerator();
-            while(hallEnum.MoveNext())
-            {
-                Exploration.Recycle(hallEnum.Current.Value);
-            }
-            explorationHallDic.Clear();
-            enteredExplorationSet.Clear();
-        }
-
-        #endregion
-
-        #region Entering
+        #region Enter and Exit
 		
         public Exploration FindNearbyExploration(Vector3 position)
         {

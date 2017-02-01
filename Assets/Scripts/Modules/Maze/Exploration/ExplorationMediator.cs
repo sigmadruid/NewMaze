@@ -87,7 +87,7 @@ namespace GameLogic
 		private void HandleBlockDespawn(Block block)
 		{
             List<Exploration> toDeleteList = new List<Exploration>();
-            explorationProxy.IterateInBlocks((Exploration expl) => 
+            explorationProxy.IterateActiveExpl((Exploration expl) => 
                 {
                     MazePosition pos = Maze.Instance.GetMazePosition(expl.WorldPosition);
                     if (block.Contains(pos.Col, pos.Row))
@@ -99,25 +99,14 @@ namespace GameLogic
             for (int i = 0; i < toDeleteList.Count; ++i)
             {
                 Exploration expl = toDeleteList[i];
-                explorationProxy.RemoveInBlock(expl.Uid);
+                explorationProxy.RemoveExpl(expl.Uid);
                 Exploration.Recycle(expl);
+
             }
 		}
-        private void CreateExploration(ExplorationType type, PositionScript birth)
-        {
-            if (birth != null)
-            {
-                Exploration expl = ExplorationFactory.Create(type);
-                expl.SetPosition(birth.transform.position);
-                expl.SetRotation(birth.transform.eulerAngles.y);
-                explorationProxy.AddInBlock(expl);
-                if (expl.Data.Type == ExplorationType.Transporter)
-                    UnityEngine.Debug.LogError(expl.Data.Kid.ToString() + ", " + expl.WorldPosition.ToString());
-            }
-        }
-
         private void HandleHallSpawn(Hall hall)
         {
+            explorationProxy.ClearExpls();
             PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Exploration);
             for(int i = 0; i < positionList.Length; ++i)
             {
@@ -127,17 +116,29 @@ namespace GameLogic
         }
         private void HandleHallDespawn(Hall hall)
         {
-            explorationProxy.ClearInHall();
+            explorationProxy.ClearExpls();
+        }
+        private void CreateExploration(ExplorationType type, PositionScript birth)
+        {
+            if (birth != null)
+            {
+                Exploration expl = ExplorationFactory.Create(type);
+                DoCreate(expl, birth);
+            }
         }
         private void CreateExploration(int kid, PositionScript birth)
         {
             if (birth != null)
             {
                 Exploration expl = ExplorationFactory.Create(kid);
-                expl.SetPosition(birth.transform.position);
-                expl.SetRotation(birth.transform.eulerAngles.y);
-                explorationProxy.AddInHall(expl);
+                DoCreate(expl, birth);
             }
+        }
+        private void DoCreate(Exploration expl, PositionScript birth)
+        {
+            expl.SetPosition(birth.transform.position);
+            expl.SetRotation(birth.transform.eulerAngles.y);
+            explorationProxy.AddExpl(expl);
         }
 
         private void HandleFunction()
