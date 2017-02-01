@@ -64,7 +64,7 @@ namespace GameLogic
                 dropProxy.DoRecord();
 
                 GameRecord gameRecord = new GameRecord();
-                gameRecord.RandomSeed = RandomUtils.Seed;
+                gameRecord.RandomSeed = Maze.Instance.Seed;
                 gameRecord.Hero = Hero.Instance.ToRecord();
                 gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = hallProxy.Record;

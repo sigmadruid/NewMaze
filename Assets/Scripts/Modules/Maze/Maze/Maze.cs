@@ -23,6 +23,7 @@ namespace GameLogic
     {
 		public MazeData Data;
 
+
 		private long startTicks;
 
 		private static Maze instance;
@@ -41,10 +42,12 @@ namespace GameLogic
 			Data = MazeDataManager.Instance.CurrentMazeData;
             if(RandomUtils.Seed == 0)
             {
-                RandomUtils.Seed = UnityEngine.Random.Range(0, 20140413);
+                Seed = UnityEngine.Random.Range(0, 20140413);
+                RandomUtils.Seed = Seed;
             }
 		}
 
+        public int Seed { get; private set; }
 		public float ElapsedTime
 		{
 			get

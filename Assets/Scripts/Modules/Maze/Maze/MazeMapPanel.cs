@@ -16,8 +16,6 @@ public class MazeMapPanel : BasePopupView
 	public InnerWindow innerWindow;
 
     private GameObject mazeMapHero;
-    private Vector3 heroPosition;
-    private float heroAngle;
 
     public override void OnInitialize()
     {
@@ -36,24 +34,16 @@ public class MazeMapPanel : BasePopupView
     public override void OnEnter()
     {
         base.OnEnter();
-        DoShowMap(true);
         EventTriggerListener.Get(innerWindow.gameObject).onDrag = OnDrag;
     }
 
-    public override void BeforeExit()
+    public override void OnExit()
     {
-        base.BeforeExit();
-        DoShowMap(false);
+        base.OnExit();
         EventTriggerListener.Get(innerWindow.gameObject).onDrag = null;
     }
 
-	public void SetData(Vector3 position, float angle)
-	{
-        heroPosition = position;
-        heroAngle = angle;
-	}
-
-    private void DoShowMap(bool show)
+    public void Show(bool show, Vector3 position, float angle)
     {
         innerWindow.Display(show);
         innerWindow.Camera.enabled = show;
@@ -61,10 +51,10 @@ public class MazeMapPanel : BasePopupView
 
         if (show)
         {
-            innerWindow.CameraTransform.position = heroPosition + Vector3.forward * (-Distance) + Vector3.up * Height + Vector3.right * Distance;;
-            innerWindow.CameraTransform.LookAt(heroPosition);
-            mazeMapHero.transform.position = heroPosition;
-            mazeMapHero.transform.localEulerAngles = Vector3.up * heroAngle;
+            innerWindow.CameraTransform.position = position + Vector3.forward * (-Distance) + Vector3.up * Height + Vector3.right * Distance;;
+            innerWindow.CameraTransform.LookAt(position);
+            mazeMapHero.transform.position = position;
+            mazeMapHero.transform.localEulerAngles = Vector3.up * angle;
         }
     }
 

@@ -12,8 +12,6 @@ namespace GameLogic
 {
     public class MazeMapMediator : Mediator
     {
-		private const string PANEL_PATH = "UI/MazeMapPanel";
-
 		private bool show;
 
 		private MazeMapPanel panel;
@@ -61,11 +59,12 @@ namespace GameLogic
 			{
                 panel = PopupManager.Instance.CreateAndAddPopup<MazeMapPanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
                 Vector3 position = GetHeroMazeMapPosition(Hero.Instance.WorldPosition);
-                panel.SetData(position, Hero.Instance.WorldAngle);		
+                panel.Show(true, position, Hero.Instance.WorldAngle);	
                 BuildMockBlock();
 			}
 			else
 			{
+                panel.Show(false, Vector3.zero, 0);  
 				PopupManager.Instance.RemovePopup(panel);
 			}
             DispatchNotification(NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP, show);
