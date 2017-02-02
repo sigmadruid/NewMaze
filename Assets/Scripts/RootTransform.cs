@@ -11,6 +11,7 @@ public class RootTransform : MonoBehaviour
 
 	public Transform BlockRoot;
 	public Transform MockBlockRoot;
+    public Transform WalkSurfaceRoot;
 
 	public Transform MonsterRoot;
 	public Transform NPCRoot;

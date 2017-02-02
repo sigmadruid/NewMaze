@@ -86,7 +86,6 @@ namespace GameLogic
 		private void BuildMockBlock()
 		{
             HashSet<MazeNode> nodeSet = blockProxy.MockNodeSet;
-            Debug.LogError(nodeSet.Count);
             foreach(MazeNode node in nodeSet)
 			{
                 if(mockBlockSet.Contains(node)) continue;

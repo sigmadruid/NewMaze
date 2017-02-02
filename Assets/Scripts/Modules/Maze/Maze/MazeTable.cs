@@ -14,6 +14,8 @@ namespace GameLogic
 
 		public int Row;
 
+        public int Direction;
+
         /// <summary>
         /// Link to other nodes. The sequence: Up, Right, Down, Left
         /// </summary>
@@ -34,6 +36,8 @@ namespace GameLogic
         /// </summary>
         public int ExplorationKid = 0;
 
+        public BlockData Data;
+
 		public string Format()
 		{
 			return string.Format("(col:{0}, row:{1}, searchIndex:{2})", Col, Row, SearchIndex);
@@ -47,13 +51,6 @@ namespace GameLogic
         /// A digit to indicate whether the room has created/deleted.
         /// </summary>
 		public bool HasCreated;
-
-        /// <summary>
-        /// The room's entry direction.
-        /// </summary>
-		public int Direction;
-
-		public BlockData Data;
 	}
 
     public class MazeTable
@@ -204,6 +201,8 @@ namespace GameLogic
 		}
 		public void ForeachMazeNode(Action<MazeNode> callback)
 		{
+            if(callback == null)
+                return;
 			for (int i = 0; i < mazeNodesList.Count; ++i)
 			{
 				callback(mazeNodesList[i]);

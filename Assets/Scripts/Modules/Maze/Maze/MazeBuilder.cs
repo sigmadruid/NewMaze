@@ -108,6 +108,8 @@ namespace GameLogic
 								nodeList.Add(newNode);
 								mazeTable.SetNode(newNode, newNode.Col, newNode.Row);
 								mazeTable.AddMazeNode(newNode);
+
+                                UpdatePassageData(newNode);
 							}
 							else
 							{
@@ -144,10 +146,18 @@ namespace GameLogic
 					{
 						node.LinkList[direction] = null;
 					}
+                    UpdatePassageData(node);
 				}
 			}
 
 		}
+
+        private void UpdatePassageData(MazeNode node)
+        {
+            PassageType type = MazeUtil.GetPassageType(node);
+            node.Data = BlockDataManager.Instance.GetRandomPassageData(type);
+            node.Direction = MazeUtil.GetPassageDirection(node, type);
+        }
 
     }
 }

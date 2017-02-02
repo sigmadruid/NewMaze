@@ -78,18 +78,7 @@ namespace GameLogic
 			
 			Block block = new Block();
 			block.Uid = Guid.NewGuid().ToString();
-
-			PassageType passageType = MazeUtil.GetPassageType(node);
-			if (node is MazeRoom)
-			{
-				MazeRoom room = node as MazeRoom;
-				block.Data = room.Data;
-			}
-			else
-			{
-				block.Data = BlockDataManager.Instance.GetRandomPassageData(passageType); 
-			}
-
+            block.Data = node.Data;
 			block.Script = resManager.LoadAsset<BlockScript>(ObjectType.GameObject, block.Data.GetResPath());
             block.Script.Uid = block.Uid;
             block.Script.transform.parent = RootTransform.Instance.BlockRoot;
@@ -103,8 +92,7 @@ namespace GameLogic
 			else
 			{
 				block.SetPosition(node.Col, node.Row);
-				int direction = MazeUtil.GetPassageDirection(node, passageType);
-				block.SetRotation(direction);
+                block.SetRotation(node.Direction);
 				block.InitRandomDecorations();
 			}
 

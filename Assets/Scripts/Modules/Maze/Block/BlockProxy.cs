@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -181,6 +182,10 @@ namespace GameLogic
 			}
 		}
 
+        public void ForeachNode(Action<MazeNode> func)
+        {
+            mazeTable.ForeachMazeNode(func);
+        }
 		public MazeNode GetNode(int col, int row)
 		{
 			return mazeTable.GetNode(col, row);
