@@ -45,8 +45,8 @@ namespace Battle
 			{
 				if (Delay(currentData.AttackDelay) && hero.Info.IsAlive)
 				{
-					currentMonster.Move(Vector3.zero);
-					currentMonster.LookAt(hero.WorldPosition);
+                    currentMonster.Idle();
+                    currentMonster.LookAt(hero.WorldPosition);
 					currentMonster.Attack();
 				}
 				else
@@ -57,7 +57,7 @@ namespace Battle
 			}
 			else
 			{
-				if (hero.Script != null)
+                if (hero.Info.IsAlive)
 				{
                     SearchForHero();
 				}

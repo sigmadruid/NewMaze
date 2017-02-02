@@ -17,6 +17,8 @@ namespace Base
 
         public bool IsControllable = true;
 
+        public bool LerpRotation;
+
         public float AngularSpeed = 5;
 
         public float StopDistance = 0.1f;
@@ -53,10 +55,18 @@ namespace Base
             {
                 nextPosition = path.vectorPath[nextPathIndex];
                 desiredDirection = (nextPosition - transform.position).normalized;
+                if(LerpRotation)
+                {
+                    currentDirection = transform.forward;
+                    currentDirection = Vector3.Lerp(currentDirection, desiredDirection, Time.deltaTime * AngularSpeed);
+                    currentDirection.Normalize();
+                }
+                else
+                {
+                    currentDirection = desiredDirection;
+                }
+                LookAt(currentDirection);
 
-                currentDirection = transform.forward;
-                currentDirection = Vector3.Lerp(currentDirection, desiredDirection, Time.deltaTime * AngularSpeed);
-                currentDirection.Normalize();
                 controller.Move(desiredDirection * speed * Time.deltaTime);
 
                 if (MathUtils.XZDistance(transform.position, nextPosition) < StopDistance)
@@ -98,6 +108,13 @@ namespace Base
                 seeker.StartPath(transform.position, destPosition, OnPathComplete);
             }
         }
+
+        public void LookAt(Vector3 direction)
+        {
+            Vector3 lookDirection = MathUtils.XZDirection(direction);
+            transform.localRotation = Quaternion.LookRotation(lookDirection);
+        }
+
         private void OnPathComplete(Path p)
         {
             if(!p.error && p.vectorPath.Count > 1)

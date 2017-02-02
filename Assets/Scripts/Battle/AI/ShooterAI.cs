@@ -49,7 +49,8 @@ namespace Battle
 			{
 				if (Delay(currentData.DodgeDelay))
 				{
-					currentMonster.Move(currentMonster.WorldPosition - hero.WorldPosition);
+                    Vector3 escapeDir = (currentMonster.WorldPosition - hero.WorldPosition).normalized;
+                    currentMonster.Move(currentMonster.WorldPosition + escapeDir);
 				}
 			}
 			//To far, run to the hero
@@ -68,14 +69,14 @@ namespace Battle
 			{
 				if (Delay(currentData.AttackDelay) && hero.Info.IsAlive)
 				{
-					currentMonster.Move(Vector3.zero);
+                    currentMonster.Idle();
 					currentMonster.LookAt(hero.WorldPosition);
 					currentMonster.Attack();
 				}
 				else
 				{
-					currentMonster.LookAt(hero.WorldPosition);
-					currentMonster.Idle();
+                    currentMonster.Idle();
+                    currentMonster.LookAt(hero.WorldPosition);
 				}
 			}
 		}

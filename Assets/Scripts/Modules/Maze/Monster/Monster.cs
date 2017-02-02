@@ -37,9 +37,9 @@ namespace GameLogic
 		{
 			Script.Move(Vector3.zero, 0f);
 		}
-		public void Move(Vector3 direction)
+		public void Move(Vector3 destination)
 		{
-			Script.Move(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
+			Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 		public void LookAt(Vector3 destPos)
 		{

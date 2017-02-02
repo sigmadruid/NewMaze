@@ -55,16 +55,8 @@ namespace Battle
 
         protected void SearchForHero()
         {
-            bool monsterInMaze = blockProxy.CheckInRange(currentMonster.WorldPosition);
-            bool heroInMaze = blockProxy.CheckInRange(Hero.Instance.WorldPosition);
-            if (heroInMaze && monsterInMaze)
-            {
-                SearchForHeroByNode();
-            }
-            else if (!heroInMaze && !monsterInMaze)
-            {
-                SearchForHeroDirectly();
-            }
+            destPosition = Hero.Instance.WorldPosition;
+            currentMonster.Move(destPosition);
         }
 
         private void SearchForHeroByNode()

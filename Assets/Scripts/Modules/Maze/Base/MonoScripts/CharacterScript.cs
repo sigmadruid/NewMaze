@@ -126,22 +126,20 @@ namespace GameLogic
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Run))
-    		{
-                LookAt(movementScript.Direction);
+            if(CanPlay(AnimatorPriorityEnum.Run))
+            {
                 movementScript.SetDestination(destination, speed);
-    			animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
-    		}
-    		else
-    		{
+                animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
+            }
+            else
+            {
                 movementScript.SetDestination(Vector3.zero, 0f);
-    		}
+            }
     	}
 
     	public void LookAt(Vector3 direction)
     	{
-            Vector3 lookDirection = MathUtils.XZDirection(direction);
-            transform.localRotation = Quaternion.LookRotation(lookDirection);
+            movementScript.LookAt(direction);
     	}
 
         public void Attack(Action callbackStarts, Action<Dictionary<AnimatorParamKey, string>> callbackEffect, Action callbackEnds)

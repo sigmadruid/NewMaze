@@ -42,7 +42,8 @@ public class BulletScript : EntityScript
 
 	void OnTriggerEnter(Collider other)
 	{
-		CallbackHit(other);
+        if (currentState != BulletState.After)
+		    CallbackHit(other);
 	}
 
 	public void SetState(BulletState state)
