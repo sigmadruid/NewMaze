@@ -80,7 +80,6 @@ namespace GameLogic
 		private void ExpandNode(MazeNode node)
 		{
 			int col, row;
-			int baseCol, baseRow;
 
 			nodeList.Remove(node);
 
@@ -121,13 +120,13 @@ namespace GameLogic
 							//Room
 							BlockData roomData = BlockDataManager.Instance.GetRandomRoomData();
 
-							MazeUtil.GetRoomBasePos(direction, col, row, roomData.Cols, roomData.Rows, roomData.LeftOffset, out baseCol, out baseRow);
-							if (mazeTable.CheckRoom(baseCol, baseRow, roomData.Cols, roomData.Rows))
+                            MazePosition basePos = MazeUtil.GetRoomBasePos(direction, col, row, roomData.Cols, roomData.Rows, roomData.LeftOffset);
+                            if (mazeTable.CheckRoom(basePos.Col, basePos.Row, roomData.Cols, roomData.Rows))
 						    {
 								MazeRoom room = CreateMazeRoom(roomData, direction, col, row);
-								for (int i = baseCol; i < baseCol + roomData.Cols; ++i)
+                                for (int i = basePos.Col; i < basePos.Col + roomData.Cols; ++i)
 								{
-									for (int j = baseRow; j < baseRow + roomData.Rows; ++j)
+                                    for (int j = basePos.Row; j < basePos.Row + roomData.Rows; ++j)
 									{
 										mazeTable.SetNode(room, i, j);
 									}

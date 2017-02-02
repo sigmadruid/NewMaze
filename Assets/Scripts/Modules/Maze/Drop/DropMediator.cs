@@ -78,17 +78,21 @@ namespace GameLogic
 
 		private void HandleItemSpawn(Block block)
 		{
-            int location = Maze.GetCurrentLocation(block.Col, block.Row);
-            List<ItemRecord> recordList = dropProxy.GetRecordList(location);
-			if (recordList != null)
-			{
-				for (int i = 0; i < recordList.Count; ++i)
-				{
-					ItemRecord record = recordList[i];
-                    Item item = Item.Create(record);
-					dropProxy.AddItem(item);
-				}
-			}
+            block.ForeachNode((MazePosition mazePos) =>
+                {
+                    int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
+                    List<ItemRecord> recordList = dropProxy.GetRecordList(location);
+                    if (recordList != null)
+                    {
+                        for (int i = 0; i < recordList.Count; ++i)
+                        {
+                            ItemRecord record = recordList[i];
+                            Item item = Item.Create(record);
+                            dropProxy.AddItem(item);
+                        }
+                    }
+                });
+
 		}
 		private void HandleItemDespawn(Block block)
 		{
@@ -102,8 +106,7 @@ namespace GameLogic
 				}
 			});
 
-            int location = Maze.GetCurrentLocation(block.Col, block.Row);
-            dropProxy.InitRecordList(location);
+            dropProxy.InitRecordList(block);
 
 			for (int i = 0; i < toHideItemList.Count; ++i)
 			{
@@ -133,8 +136,7 @@ namespace GameLogic
                     toHideItemList.Add(item);
                 });
 
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            dropProxy.InitRecordList(location);
+            dropProxy.InitRecordList(hall);
 
             for (int i = 0; i < toHideItemList.Count; ++i)
             {

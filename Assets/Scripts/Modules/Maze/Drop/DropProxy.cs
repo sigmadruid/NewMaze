@@ -118,15 +118,14 @@ namespace GameLogic
             if(Hall.Instance != null)
             {
                 location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
-                InitRecordList(location);
+                InitRecordList(Hall.Instance);
             }
             else
             {
                 BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
                 blockProxy.Iterate((Block block) =>
                     {
-                        location = Maze.GetCurrentLocation(block.Col, block.Row);
-                        InitRecordList(location);
+                        InitRecordList(block);
                     });
             }
             var enumerator = itemDic.GetEnumerator();
@@ -151,10 +150,27 @@ namespace GameLogic
 			return null;
 		}
 
-        public void InitRecordList(int location)
+        public void InitRecordList(Block block)
 		{
+            if(block.IsRoom)
+            {
+                block.ForeachNode((MazePosition mazePos) =>
+                    {
+                        int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
+                        recordDic[location] = new List<ItemRecord>();
+                    });
+            }
+            else
+            {
+                int location = Maze.GetCurrentLocation(block.Col, block.Row);
+                recordDic[location] = new List<ItemRecord>();
+            }
+        }
+        public void InitRecordList(Hall hall)
+        {
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
             recordDic[location] = new List<ItemRecord>();
-		}
+        }
         public List<ItemRecord> GetRecordList(int location)
 		{
 			List<ItemRecord> recordList = null;

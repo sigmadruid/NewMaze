@@ -77,30 +77,29 @@ namespace GameLogic
 		}
 
 		//Base pos is the bottom-left point of the room.
-		public static void GetRoomBasePos(int direction, int inCol, int inRow, int cols, int rows, int leftOffset, out int outCol, out int outRow)
+        public static MazePosition GetRoomBasePos(int direction, int inCol, int inRow, int cols, int rows, int leftOffset)
 		{
+            MazePosition mazePos = new MazePosition();
 			switch(direction)
 			{
 				case 0:
-					outCol = inCol - leftOffset + 1;
-					outRow = inRow;
-					return;
+                    mazePos.Col = inCol - leftOffset + 1;
+                    mazePos.Row = inRow;
+                    break;
 				case 1:
-					outCol = inCol;
-					outRow = inRow - leftOffset + 1;
-					return;
+                    mazePos.Col = inCol;
+                    mazePos.Row = inRow - leftOffset + 1;
+                    break;
 				case 2:
-					outCol = inCol - leftOffset + 1;
-					outRow = inRow - rows + 1;
-					return;
+                    mazePos.Col = inCol - leftOffset + 1;
+                    mazePos.Row = inRow - rows + 1;
+                    break;
 				case 3:
-					outCol = inCol - cols + 1;
-					outRow = inRow - leftOffset + 1;
-					return;
+                    mazePos.Col = inCol - cols + 1;
+                    mazePos.Row = inRow - leftOffset + 1;
+                    break;
 			}
-			outCol = inCol;
-			outRow = inRow;
-
+            return mazePos;
 		}
 
 		public static int GetNodeLinkCount(MazeNode node)

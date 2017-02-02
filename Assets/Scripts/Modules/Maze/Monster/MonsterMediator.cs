@@ -80,32 +80,35 @@ namespace GameLogic
 		//When spawn a block, check if any monster already stores on this pos.
 		private void HandleSpawn(Block block)
 		{
-			//Room??
             RandomUtils.Seed = block.RandomID;
-            int location = Maze.GetCurrentLocation(block.Col, block.Row);
-            List<MonsterRecord> recordList = monsterProxy.GetRecordList(location);
-			if (recordList != null)
-			{
-				for (int i = 0; i < recordList.Count; ++i)
-				{
-					MonsterRecord record = recordList[i];
-					Monster monster = Monster.Create(record);
-                    InitMonster(monster, record.WorldPosition.ToVector3());
-				}
-			}
-			else
-			{
-				int monsterCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.MonsterMaxCount);
-				for (int i = 0; i < monsterCount; ++i)
-				{
-                    PositionScript birth = block.Script.GetRandomPosition(PositionType.Monster);
-					if (birth != null)
-					{
-						Monster monster = Monster.Create(null);
-                        InitMonster(monster, birth.transform.position);
-					}
-				}
-			}
+            block.ForeachNode((MazePosition mazePos) =>
+                {
+                    int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
+                    List<MonsterRecord> recordList = monsterProxy.GetRecordList(location);
+                    if (recordList != null)
+                    {
+                        for (int i = 0; i < recordList.Count; ++i)
+                        {
+                            MonsterRecord record = recordList[i];
+                            Monster monster = Monster.Create(record);
+                            InitMonster(monster, record.WorldPosition.ToVector3());
+                        }
+                    }
+                    else
+                    {
+                        int monsterCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.MonsterMaxCount);
+                        for (int i = 0; i < monsterCount; ++i)
+                        {
+                            PositionScript birth = block.Script.GetRandomPosition(PositionType.Monster);
+                            if (birth != null)
+                            {
+                                Monster monster = Monster.Create(null);
+                                InitMonster(monster, birth.transform.position);
+                            }
+                        }
+                    }
+                });
+			
 		}
 		//When a block despawns, remove all monsters on it from the monsterDic, and store them in the recordDic
 		private void HandleDespawn(Block block)
@@ -120,8 +123,7 @@ namespace GameLogic
 				}
 			});
 
-            int location = Maze.GetCurrentLocation(block.Col, block.Row);
-            monsterProxy.InitRecordList(location);
+            monsterProxy.InitRecordList(block);
 
 			for (int i = 0; i < toDeleteMonsterList.Count; ++i)
 			{
@@ -171,8 +173,7 @@ namespace GameLogic
                     toDeleteMonsterList.Add(monster);
                 });
 
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            monsterProxy.InitRecordList(location);
+            monsterProxy.InitRecordList(hall);
 
             for (int i = 0; i < toDeleteMonsterList.Count; ++i)
             {

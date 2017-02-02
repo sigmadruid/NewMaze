@@ -40,9 +40,15 @@ namespace GameLogic
 		{
 			startTicks = DateTime.Now.Ticks;
 			Data = MazeDataManager.Instance.CurrentMazeData;
-            if(RandomUtils.Seed == 0)
+            Main main = GameObject.FindObjectOfType<Main>();
+            if(main.Seed != 0)
+            {
+                Seed = main.Seed;
+            }
+            else if(RandomUtils.Seed == 0)
             {
                 Seed = UnityEngine.Random.Range(0, 20140413);
+                Debug.Log("random seed: " + Seed.ToString());
                 RandomUtils.Seed = Seed;
             }
 		}
@@ -83,7 +89,7 @@ namespace GameLogic
             else
             {
                 MazePosition mazePos = Maze.Instance.GetMazePosition(worldPosition);
-                return GetLocation(mazeKid, mazePos.Col, (mazePos.Row));
+                return GetLocation(mazeKid, mazePos.Col, mazePos.Row);
             }
         }
         public static int GetCurrentLocation(int hallKid)

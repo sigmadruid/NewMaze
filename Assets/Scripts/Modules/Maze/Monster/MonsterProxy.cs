@@ -82,6 +82,7 @@ namespace GameLogic
 			{
 				Monster monster = monsterDic[uid];
                 int location = Maze.GetCurrentLocation(monster.WorldPosition);
+                Debug.LogError("monster: " + location.ToString());
                 List<MonsterRecord> recordList = GetRecordList(location);
 				recordList.Add(monster.ToRecord());
 				monsterDic.Remove(uid);
@@ -94,6 +95,7 @@ namespace GameLogic
 			{
 				Monster monster = monsterDic[uid];
                 int location = Maze.GetCurrentLocation(monster.WorldPosition);
+                Debug.LogError("monster: " + location.ToString());
                 List<MonsterRecord> recordList = GetRecordList(location);
 				if (recordList != null)
 				{
@@ -121,8 +123,25 @@ namespace GameLogic
             monsterDic.Clear();
         }
 
-        public void InitRecordList(int location)
+        public void InitRecordList(Block block)
+        {
+            if(block.IsRoom)
+            {
+                block.ForeachNode((MazePosition mazePos) =>
+                    {
+                        int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
+                        recordDic[location] = new List<MonsterRecord>();
+                    });
+            }
+            else
+            {
+                int location = Maze.GetCurrentLocation(block.Col, block.Row);
+                recordDic[location] = new List<MonsterRecord>();
+            }
+        }
+        public void InitRecordList(Hall hall)
 		{
+            int location = Maze.GetCurrentLocation(hall.Data.Kid);
             recordDic[location] = new List<MonsterRecord>();
 		}
 		public List<MonsterRecord> GetRecordList(int location)
@@ -139,16 +158,14 @@ namespace GameLogic
             int location;
             if(Hall.Instance != null)
             {
-                location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
-                InitRecordList(location);
+                InitRecordList(Hall.Instance);
             }
             else
             {
                 BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
                 blockProxy.Iterate((Block block) =>
                     {
-                        location = Maze.GetCurrentLocation(block.Col, block.Row);
-                        InitRecordList(location);
+                        InitRecordList(block);
                     });
             }
             var enumerator = monsterDic.GetEnumerator();
@@ -159,6 +176,10 @@ namespace GameLogic
                 {
                     location = Maze.GetCurrentLocation(monster.WorldPosition);
                     List<MonsterRecord> recordList = GetRecordList(location);
+                    if(recordList == null)
+                    {
+                        Debug.LogError(location);
+                    }
                     recordList.Add(monster.ToRecord());
                 }
             }

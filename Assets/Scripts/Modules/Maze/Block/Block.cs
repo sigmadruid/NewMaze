@@ -40,9 +40,8 @@ namespace GameLogic
 			}
 			else
 			{
-				int baseCol, baseRow;
-				MazeUtil.GetRoomBasePos(Direction, Col, Row, Data.Cols, Data.Rows, Data.LeftOffset, out baseCol, out baseRow);
-				return col >= baseCol && row >= baseRow && col <= baseCol + Data.Cols - 1 && row <= baseRow + Data.Rows - 1;
+                MazePosition basePos = MazeUtil.GetRoomBasePos(Direction, Col, Row, Data.Cols, Data.Rows, Data.LeftOffset);
+                return col >= basePos.Col && row >= basePos.Row && col <= basePos.Col + Data.Cols - 1 && row <= basePos.Row + Data.Rows - 1;
 			}
 		}
 
@@ -65,6 +64,27 @@ namespace GameLogic
 		{
 			Script.InitRandomDecorations();
 		}
+
+        public void ForeachNode(Action<MazePosition> func)
+        {
+            if(IsRoom)
+            {
+                MazePosition basePos = MazeUtil.GetRoomBasePos(Direction, Col, Row, Data.Cols, Data.Rows, Data.LeftOffset);
+                for(int i = basePos.Col; i < basePos.Col + Data.Cols; ++i)
+                {
+                    for(int j = basePos.Row; j < basePos.Row + Data.Rows; ++j)
+                    {
+                        MazePosition pos = new MazePosition(i, j);
+                        func(pos);
+                    }
+                }
+            }
+            else
+            {
+                MazePosition pos = new MazePosition(Col, Row);
+                func(pos);
+            }
+        }
 
 		public static Block Create(MazeNode node)
 		{

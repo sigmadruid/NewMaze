@@ -8,9 +8,7 @@ using GameLogic;
 
 public class Main : MonoBehaviour 
 {
-	public const float AI_UPDATE_INTERVAL = 0.2f;
-	public const float SLOW_UPDATE_INTERVAL = 1f;
-
+    public int Seed;
 	public StageEnum CurrentStageType;
 
 	private Game game;
