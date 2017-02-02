@@ -41,37 +41,37 @@ namespace GameLogic
                 case NotificationEnum.BLOCK_SPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleSpawn(block);
+//					HandleSpawn(block);
 					break;
 				}
                 case NotificationEnum.BLOCK_DESPAWN:
 				{
 					Block block = notification.Body as Block;
-					HandleDespawn(block);
+//					HandleDespawn(block);
 					break;
 				}
                 case NotificationEnum.HALL_SPAWN:
                 {
                     Hall hall = notification.Body as Hall;
-                    HandleSpawn(hall);
+//                    HandleSpawn(hall);
                     break;
                 }
                 case NotificationEnum.HALL_DESPAWN:
                 {
                     Hall hall = notification.Body as Hall;
-                    HandleDespawn(hall);
+//                    HandleDespawn(hall);
                     break;
                 }
                 case NotificationEnum.ENVIRONMENT_DAYNIGHT_CHANGE:
                 {
                     bool isNight = (bool)notification.Body;
-                    HandleEnvironmentChange(isNight);
+//                    HandleEnvironmentChange(isNight);
                     break;
                 }
 				case NotificationEnum.BATTLE_PAUSE:
 				{
 					bool isPause = (bool)notification.Body;
-					HandleBattlePause(isPause);
+//					HandleBattlePause(isPause);
 					break;
 				}
 			}

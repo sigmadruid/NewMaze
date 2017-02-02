@@ -63,8 +63,7 @@ namespace GameLogic
                 {
                     if(CanMove)
                     {
-                        Vector3 direction = MathUtils.XZDirection(WorldPosition, inputManager.MouseHitPosition);
-                        Move(direction);
+                        Move(inputManager.MouseHitPosition);
                     }
                     else
                     {
@@ -78,8 +77,7 @@ namespace GameLogic
                 {
                     if(CanMove && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
                     {
-                        Vector3 direction = MathUtils.XZDirection(WorldPosition, inputManager.MouseHitPosition);
-                        Move(direction);
+                        Move(inputManager.MouseHitPosition);
                     }
                     else
                     {
@@ -138,9 +136,9 @@ namespace GameLogic
 
         #region Animations
 
-		public void Move(Vector3 direction)
+		public void Move(Vector3 destination)
 		{
-			Script.Move(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
+			Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 
         public void Attack()

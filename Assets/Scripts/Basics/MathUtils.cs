@@ -25,6 +25,10 @@ namespace Base
 		{
 			return new Vector3(to.x - from.x, 0, to.z - from.z);
 		}
+        public static Vector3 XZDirection(Vector3 direction)
+        {
+            return new Vector3(direction.x, 0, direction.z);
+        }
 
 		public static bool CircleContains(Vector3 basePos, float radius, Vector3 testPos)
 		{

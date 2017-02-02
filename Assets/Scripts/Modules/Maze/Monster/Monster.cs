@@ -43,7 +43,7 @@ namespace GameLogic
 		}
 		public void LookAt(Vector3 destPos)
 		{
-			Script.LookAt(destPos);
+            Script.LookAt(destPos - WorldPosition);
 		}
 		public void Attack()
 		{

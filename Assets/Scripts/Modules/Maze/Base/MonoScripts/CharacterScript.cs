@@ -12,7 +12,7 @@ using DG.Tweening;
 namespace GameLogic
 {
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(MoveScript))]
+    [RequireComponent(typeof(MovementScript))]
     [RequireComponent(typeof(Animator))]
     public class CharacterScript : EntityScript
     {
@@ -33,7 +33,7 @@ namespace GameLogic
 
     	public Dictionary<int, AnimatorData> AnimatorDataDic;
 
-    	protected MoveScript moveScript;
+        protected MovementScript movementScript;
 
     	protected Animator animator;
     	protected bool transitionEnds;
@@ -44,7 +44,7 @@ namespace GameLogic
     	
     	protected virtual void Awake()
     	{
-    		moveScript = GetComponent<MoveScript>();
+            movementScript = GetComponent<MovementScript>();
 
     		animator = GetComponent<Animator>();
     		currentNameHash = 0;
@@ -122,25 +122,26 @@ namespace GameLogic
 
     	#region Behavior
 
-    	public void Move(Vector3 direction, float velocity)
+    	public void Move(Vector3 destination, float speed)
     	{
     		if (Game.Instance.IsPause) { return; }
 
     		if (CanPlay(AnimatorPriorityEnum.Run))
     		{
-				moveScript.Move(direction, velocity);
-    			animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, moveScript.IsMoving);
+                LookAt(movementScript.Direction);
+                movementScript.SetDestination(destination, speed);
+    			animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
     		}
     		else
     		{
-    			moveScript.Move(Vector3.zero, 0f);
+                movementScript.SetDestination(Vector3.zero, 0f);
     		}
     	}
 
-    	public void LookAt(Vector3 destPos)
+    	public void LookAt(Vector3 direction)
     	{
-    		Vector3 lookDirection = destPos - transform.position;
-    		moveScript.LookAt(lookDirection);
+            Vector3 lookDirection = MathUtils.XZDirection(direction);
+            transform.localRotation = Quaternion.LookRotation(lookDirection);
     	}
 
         public void Attack(Action callbackStarts, Action<Dictionary<AnimatorParamKey, string>> callbackEffect, Action callbackEnds)
@@ -200,7 +201,7 @@ namespace GameLogic
 
     		if (CanPlay(AnimatorPriorityEnum.Die))
     		{
-    			moveScript.Move(Vector3.zero, 0f);
+                movementScript.SetDestination(Vector3.zero, 0f);
     			GetComponent<Collider>().enabled = false;
 
     			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
@@ -226,7 +227,7 @@ namespace GameLogic
 
     	public override void Pause(bool isPause)
     	{
-    		moveScript.IsControllable = !isPause;
+    		movementScript.IsControllable = !isPause;
     	}
 
         protected bool JudgeHit()
