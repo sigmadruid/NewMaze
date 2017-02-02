@@ -82,7 +82,6 @@ namespace GameLogic
 			{
 				Monster monster = monsterDic[uid];
                 int location = Maze.GetCurrentLocation(monster.WorldPosition);
-                Debug.LogError("monster: " + location.ToString());
                 List<MonsterRecord> recordList = GetRecordList(location);
 				recordList.Add(monster.ToRecord());
 				monsterDic.Remove(uid);
@@ -95,7 +94,6 @@ namespace GameLogic
 			{
 				Monster monster = monsterDic[uid];
                 int location = Maze.GetCurrentLocation(monster.WorldPosition);
-                Debug.LogError("monster: " + location.ToString());
                 List<MonsterRecord> recordList = GetRecordList(location);
 				if (recordList != null)
 				{
@@ -176,10 +174,6 @@ namespace GameLogic
                 {
                     location = Maze.GetCurrentLocation(monster.WorldPosition);
                     List<MonsterRecord> recordList = GetRecordList(location);
-                    if(recordList == null)
-                    {
-                        Debug.LogError(location);
-                    }
                     recordList.Add(monster.ToRecord());
                 }
             }

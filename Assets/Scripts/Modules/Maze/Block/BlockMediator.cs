@@ -125,7 +125,7 @@ namespace GameLogic
 			prevCol = col;
 			prevRow = row;
 
-			blockProxy.UpdateSearchIndex(col, row);
+//			blockProxy.UpdateSearchIndex(col, row);
 
 //            StaticBatchingUtility.Combine(RootTransform.Instance.BlockRoot.gameObject);
 		}
@@ -183,31 +183,44 @@ namespace GameLogic
         }
         private void InitWalkSurface()
         {
-            GameObject one = Resources.Load("MazeBlocks/One/PassageOneWalk") as GameObject;
-            GameObject twoLine = Resources.Load("MazeBlocks/TwoLine/PassageTwoLineWalk") as GameObject;
-            GameObject twoTurn = Resources.Load("MazeBlocks/TwoTurn/PassageTwoTurnWalk") as GameObject;
-            GameObject three = Resources.Load("MazeBlocks/Three/PassageThreeWalk") as GameObject;
-            GameObject four = Resources.Load("MazeBlocks/Four/PassageFourWalk") as GameObject;
-            Dictionary<PassageType, GameObject> prefabDic = new Dictionary<PassageType, GameObject>();
-            prefabDic.Add(PassageType.One, one);
-            prefabDic.Add(PassageType.TwoLine, twoLine);
-            prefabDic.Add(PassageType.TwoTurn, twoTurn);
-            prefabDic.Add(PassageType.Three, three);
-            prefabDic.Add(PassageType.Four, four);
-
             blockProxy.ForeachNode((MazeNode node) => 
                 {
-                    PassageType type = MazeUtil.GetPassageType(node);
-                    GameObject prefab = prefabDic[type];
-                    GameObject surface = GameObject.Instantiate(prefab);
-                    surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                    MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-                    surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
-                    surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                    if (node.Data.BlockType == BlockType.Room)
+                    {
+                        MazeRoom room = node as MazeRoom;
+                        if (!room.HasCreated)
+                        {
+                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + "Walk");
+                            surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                            MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+                            surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                            surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                            room.HasCreated = true;
+                        }
+                    }
+                    else if (node.Data.BlockType == BlockType.Passage)
+                    {
+                        PassageType type = MazeUtil.GetPassageType(node);
+                        GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + "Walk");
+                        surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                        MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+                        surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                        surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                    }
                 });
+            
             RecastGraph graph = AstarPath.active.graphs[0] as RecastGraph;
             graph.SnapForceBoundsToScene();
             AstarPath.active.Scan();
+
+            blockProxy.ForeachNode((MazeNode node) =>
+                {
+                    if (node.Data.BlockType == BlockType.Room)
+                    {
+                        MazeRoom room = node as MazeRoom;
+                        room.HasCreated = false;
+                    }
+                });
         }
 	}
 }

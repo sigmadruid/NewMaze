@@ -12,6 +12,7 @@ namespace GameLogic
         public static readonly int LayerBullet = LayerMask.GetMask("LayerBullet");
         public static readonly int LayerMockBlock = LayerMask.GetMask("LayerMockBlock");
         public static readonly int LayerItem = LayerMask.GetMask("LayerItem");
+        public static readonly int LayerWalkSurface = LayerMask.GetMask("LayerWalkSurface");
 	}
     public static class Tags
     {
