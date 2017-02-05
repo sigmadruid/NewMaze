@@ -16,6 +16,7 @@ namespace GameLogic
 
 		private int prevCol;
 		private int prevRow;
+        private bool walkSurfaceLoaded;
 
 		public BlockMediator () : base()
 		{
@@ -160,6 +161,7 @@ namespace GameLogic
                     blockProxy.RemoveBlock(node);
                 }
             }
+            ShowWalkSurface(false);
         }
 
 		private void OnInitBlock(Block block)
@@ -183,34 +185,50 @@ namespace GameLogic
         }
         private void InitWalkSurface()
         {
-            blockProxy.ForeachNode((MazeNode node) => 
-                {
-                    if (node.Data.BlockType == BlockType.Room)
+            MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+            if(!walkSurfaceLoaded)
+            {
+                blockProxy.ForeachNode((MazeNode node) =>
                     {
-                        MazeRoom room = node as MazeRoom;
-                        if (!room.HasCreated)
+                        if(node.Data.BlockType == BlockType.Room)
                         {
-                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + "Walk");
+                            MazeRoom room = node as MazeRoom;
+                            if(!room.HasCreated)
+                            {
+                                GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
+                                surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                                surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                                surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                                room.HasCreated = true;
+                            }
+                        }
+                        else if(node.Data.BlockType == BlockType.Passage)
+                        {
+                            PassageType type = MazeUtil.GetPassageType(node);
+                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
                             surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                            MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
                             surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
                             surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
-                            room.HasCreated = true;
                         }
-                    }
-                    else if (node.Data.BlockType == BlockType.Passage)
-                    {
-                        PassageType type = MazeUtil.GetPassageType(node);
-                        GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + "Walk");
-                        surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                        MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-                        surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
-                        surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
-                    }
-                });
+                    });
+                walkSurfaceLoaded = true;
+            }
+            else
+            {
+                ShowWalkSurface(true);
+            }
             
             RecastGraph graph = AstarPath.active.graphs[0] as RecastGraph;
-            graph.SnapForceBoundsToScene();
+            graph.useTiles = true;
+            graph.editorTileSize = 10;
+            graph.cellSize = 0.4f;
+            graph.maxSlope = 60f;
+            graph.forcedBoundsCenter = new Vector3((mazeData.StartCol * 1f - 0.5f) * mazeData.BlockSize, 0, (mazeData.StartRow * 1f - 0.5f) * mazeData.BlockSize);
+            graph.forcedBoundsSize = new Vector3(mazeData.Cols * mazeData.BlockSize, 10, mazeData.Rows * mazeData.BlockSize);
+//            for(int i = 0; i < GlobalConfig.PathfindingConfig.SnapTimes; ++i)
+//            {
+//                graph.SnapForceBoundsToScene();
+//            }
             AstarPath.active.Scan();
 
             blockProxy.ForeachNode((MazeNode node) =>
@@ -221,6 +239,15 @@ namespace GameLogic
                         room.HasCreated = false;
                     }
                 });
+        }
+        private void ShowWalkSurface(bool state)
+        {
+            Transform surfaceRoot = RootTransform.Instance.WalkSurfaceRoot;
+            for(int i = 0; i < surfaceRoot.childCount; ++i)
+            {
+                GameObject surface = surfaceRoot.GetChild(i).gameObject;
+                surface.gameObject.SetActive(state);
+            }
         }
 	}
 }

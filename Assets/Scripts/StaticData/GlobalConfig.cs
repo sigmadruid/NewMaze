@@ -57,6 +57,13 @@ namespace StaticData
 		public readonly Vector3 HallPosition = new Vector3(10000, 0, 10000);
 	}
 
+    public class PathfindingConfig
+    {
+        public readonly int SnapTimes = 5;
+        public readonly string WalkSuffix = "_Walk";
+        public readonly string WalkDataSuffix = "_WalkData";
+    }
+
 	public class DropConfig
 	{
 		public readonly float NearSqrDistance = 4f;
@@ -101,6 +108,7 @@ namespace StaticData
 		public static CameraConfig CameraConfig = new CameraConfig();
 		public static EnvironmentConfig EnvironmentConfig = new EnvironmentConfig();
 		public static HallConfig HallConfig = new HallConfig();
+        public static PathfindingConfig PathfindingConfig = new PathfindingConfig();
 
 		private Dictionary<IDType, EntityManager> managerDic;
 
