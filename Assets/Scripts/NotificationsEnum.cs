@@ -68,5 +68,13 @@ namespace GameLogic
         PACK_REFRESH,
 
         #endregion
+
+        #region Pathfinding
+
+        PATHFINDING_INIT,
+        PATHFINDING_DISPOSE,
+
+
+        #endregion
 	}
 }

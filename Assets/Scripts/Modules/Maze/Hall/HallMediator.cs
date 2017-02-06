@@ -51,35 +51,25 @@ namespace GameLogic
             if(param is HallRecord)
             {
                 HallRecord record = param as HallRecord;
-                InitWalkSurface(record.Kid);
                 Hall.Create(record);
                 Hall.Instance.LeavePosition = record.LeavePosition.ToVector3();
             }
             else
             {
                 int hallKid = (int)param;
-                InitWalkSurface(hallKid);
                 Hall.Create(hallKid);
             }
+            DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.Hall);
             DispatchNotification(NotificationEnum.HALL_SPAWN, Hall.Instance);
 		}
 		
 		private void HandleHallDispose()
 		{
             DispatchNotification(NotificationEnum.HALL_DESPAWN, Hall.Instance);
+            DispatchNotification(NotificationEnum.PATHFINDING_DISPOSE, true);
             Hall.Recycle(Hall.Instance);
-            DisposeWalkSurface();
 		}
 
-        private void InitWalkSurface(int kid)
-        {
-            HallData data = HallDataManager.Instance.GetData(kid) as HallData;
-            TextAsset ta = Resources.Load<TextAsset>(data.GetResPath() + GlobalConfig.PathfindingConfig.WalkDataSuffix);
-            AstarPath.active.astarData.DeserializeGraphs(ta.bytes);
-        }
-        private void DisposeWalkSurface()
-        {
-        }
     }
 }
 
