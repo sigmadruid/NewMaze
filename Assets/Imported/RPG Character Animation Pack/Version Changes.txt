@@ -1,0 +1,13 @@
+Update v1.7: Add ladder climbing.
+
+Update v1.6: Add new Club and 1 handed Spear fightstyles and models.  Added 2Handed Spear animations and Shield bash animation. Fix issue with weapon switching after Swimming.
+
+Update v1.5: Add Rifle weapon type and directional movement and aiming.
+
+Update v1.4: Add camera rotation control and requested Sit/Stand animations.
+
+Update v1.3: Adjust control script for camera relative movement and abstracted inputs for easier script hookup for outside controllers.  Added requested Shield-Run-Block animation and IK hands script for adjusting hand placement on weapons for different proportioned arms/weapons.
+
+Update v1.2: Added swimming and female walk.  Fixed a few issues with Animator referencing incorrect animations.
+
+Update v1.1: Added 9 pistol animations for Left/Right/Dual attacks.
