@@ -11,6 +11,8 @@ namespace Base
 	{
 		public delegate void CallbackVoid();
 
+        #region Rendering
+
 		private static Shader rimShader;
 		public static Shader RimShader
 		{
@@ -47,6 +49,10 @@ namespace Base
 				return transparentShader;
 			}
 		}
+
+        #endregion
+
+        #region Collection
 
         public static void Shift<T>(IList<T> list, int start = 0, int count = 0)
 		{
@@ -88,6 +94,10 @@ namespace Base
             return resultSet.ToList();
         }
 
+        #endregion
+
+        #region String
+
 		public static string CombineString(params object[] objlist)
 		{
 			StringBuilder sb = new StringBuilder();
@@ -111,6 +121,10 @@ namespace Base
 			return sb.ToString();
 		}
 
+        #endregion
+
+        #region Time
+
 		private static long t;
         public static void GetStartTime(string log = "")
 		{
@@ -122,6 +136,8 @@ namespace Base
 			DateTime dt = new DateTime(DateTime.Now.Ticks - t);
             BaseLogger.LogFormat("{0} costs {1}ms", log, dt.Millisecond);
 		}
+
+        #endregion
 	}
 }
 

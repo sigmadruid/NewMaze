@@ -16,7 +16,7 @@ namespace GameLogic
 
 		private bool isConverting;
 
-		private EffectScript convertEffect;
+        private ParticleScript convertEffect;
 
 		private HeroProxy heroProxy;
 		
@@ -111,7 +111,7 @@ namespace GameLogic
 			battleProxy.SetHero(hero);
 
 			//Conversion
-			convertEffect = ResourceManager.Instance.LoadAsset<EffectScript>(ObjectType.GameObject, "Effects/ConversionEffect");
+            convertEffect = ResourceManager.Instance.LoadAsset<ParticleScript>(ObjectType.GameObject, "Effects/ConversionEffect");
 			convertEffect.Deactive();
 
 			//Input
