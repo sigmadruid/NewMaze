@@ -25,14 +25,12 @@ namespace StaticData
 				data.Defense = ReadInt(col++);
 				data.Critical = ReadInt(col++);
 				data.Dodge = ReadInt(col++);
-				data.MoveSpeed = ReadFloat(col++);
-				data.DetectRange = ReadFloat(col++);
+                data.MoveSpeed = ReadFloat(col++);
+                data.AttackSpeed = ReadFloat(col++);
 				data.AttackType = ReadEnum<AttackType>(col++);
-				data.AttackDelay = ReadFloat(col++);
-				data.AttackRange = ReadFloat(col++);
-				data.DodgeDelay = ReadFloat(col++);
-				data.DodgeRange = ReadFloat(col++);
 				data.BulletKid = ReadInt(col++);
+                data.Trigger = ReadString(col++);
+                data.SkillList = ReadIntList(col++);
 				
 				kvDic.Add(data.Kid, data);
 				NextLine();

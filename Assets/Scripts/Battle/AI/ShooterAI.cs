@@ -29,10 +29,10 @@ namespace Battle
 
 			base.SlowUpdate();
 
-			Hero hero = Hero.Instance;
-			float heroSqrDistance = MathUtils.XZSqrDistance(hero.WorldPosition, currentMonster.WorldPosition);
+            Adam adam = Adam.Instance;
+			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);
 
-            if(!hero.CanBeAttacked)
+            if(!adam.CanBeAttacked)
             {
                 currentMonster.Idle();
                 return;
@@ -49,14 +49,14 @@ namespace Battle
 			{
 				if (Delay(currentData.DodgeDelay))
 				{
-                    Vector3 escapeDir = (currentMonster.WorldPosition - hero.WorldPosition).normalized;
+                    Vector3 escapeDir = (currentMonster.WorldPosition - adam.WorldPosition).normalized;
                     currentMonster.Move(currentMonster.WorldPosition + escapeDir);
 				}
 			}
 			//To far, run to the hero
 			else if (heroSqrDistance > sqrAttackDistance)
 			{
-				if (hero.Script != null)
+				if (adam.Script != null)
 				{
                     SearchForHero();
 				}
@@ -67,16 +67,16 @@ namespace Battle
 			}
 			else
 			{
-				if (Delay(currentData.AttackDelay) && hero.Info.IsAlive)
+				if (Delay(currentData.AttackDelay) && adam.Info.IsAlive)
 				{
                     currentMonster.Idle();
-					currentMonster.LookAt(hero.WorldPosition);
+					currentMonster.LookAt(adam.WorldPosition);
 					currentMonster.Attack();
 				}
 				else
 				{
                     currentMonster.Idle();
-                    currentMonster.LookAt(hero.WorldPosition);
+                    currentMonster.LookAt(adam.WorldPosition);
 				}
 			}
 		}

@@ -12,7 +12,7 @@ namespace GameLogic
 {
 	public class HeroMediator : Mediator
 	{
-		private Hero hero;
+        private Adam adam;
 
 		private bool isConverting;
 
@@ -78,37 +78,31 @@ namespace GameLogic
         private void HandleHeroInit(HeroRecord record)
 		{
 			//Preload resources
-			List<HeroData> dataList = heroProxy.GetAllHeroDataList();
-			for (int i = 0; i < dataList.Count; ++i)
-			{
-				HeroData heroData = dataList[i];
-				ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, heroData.GetResPath());
-			}
 			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, "Effects/ConversionEffect");
 
 			//Init
             if(record == null)
             {
                 int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
-                hero = Hero.Create(heroKid, null);
+                adam = Adam.Create(heroKid, null);
 
                 MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
                 Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
-                hero.SetPosition(startPosition);
+                adam.SetPosition(startPosition);
             }
             else
             {
-                hero = Hero.Create(record);
-                hero.SetPosition(record.WorldPosition.ToVector3());
-                hero.SetRotation(record.WorldAngle);
-                hero.Info.IsInHall = record.IsInHall;
-                hero.IsVisible = record.IsVisible;
+                adam = Adam.Create(record);
+                adam.SetPosition(record.WorldPosition.ToVector3());
+                adam.SetRotation(record.WorldAngle);
+                adam.Info.IsInHall = record.IsInHall;
+                adam.IsVisible = record.IsVisible;
             }
-			hero.CallbackDie = OnHeroDie;
+			adam.CallbackDie = OnHeroDie;
 
 			//Battle
 			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
-			battleProxy.SetHero(hero);
+			battleProxy.SetAdam(adam);
 
 			//Conversion
             convertEffect = ResourceManager.Instance.LoadAsset<ParticleScript>(ObjectType.GameObject, "Effects/ConversionEffect");
@@ -118,7 +112,7 @@ namespace GameLogic
 //            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Attack, OnHeroAttack);
 //            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, OnHeroFunction);
 
-            hero.Info.AddHP(999999);
+            adam.Info.AddHP(999999);
 		}
 
         private void HandleHeroClick()
@@ -135,18 +129,20 @@ namespace GameLogic
 
 		private void HandleHeroConvert(int heroKid)
 		{
-			if (!hero.Info.IsAlive || hero.Info.IsConverting)
+            if (!adam.Info.IsAlive || adam.Info.IsConverting)
 			{
 				return;
 			}
-			hero.Info.IsConverting = true;
 
 			convertEffect.ResetTask();
 			convertEffect.AddTask(1f, OnConversionMiddle, heroKid);
 			convertEffect.AddTask(2f, OnConversionFinished);
-			convertEffect.Active(hero.WorldPosition);
+            convertEffect.Active(adam.WorldPosition);
 
 			InputManager.Instance.Enable = false;
+
+            adam.Info.IsConverting = true;
+            adam.Convert(heroKid);
 		}
 
 		private void HandleBattlePause(bool isPause)
@@ -155,12 +151,12 @@ namespace GameLogic
 			{
 				convertEffect.IsEnabled = !isPause;
 			}
-			hero.Pause(isPause);
+			adam.Pause(isPause);
 		}
 
 		private void HandleHeroTransport(Vector3 destPosition)
 		{
-			hero.SetPosition(destPosition);
+			adam.SetPosition(destPosition);
 		}
 
 		#endregion
@@ -175,27 +171,27 @@ namespace GameLogic
 
 		private void OnConversionMiddle(object param)
 		{
-			int heroKid = (int)param;
-			
-			Vector3 position = hero.WorldPosition;
-			float angle = hero.Script.transform.localEulerAngles.y;
-			
-			Hero.Recycle();
-			Hero newHero = Hero.Create(heroKid, hero.Info);
-			newHero.SetPosition(position);
-			newHero.SetRotation(angle);
-			hero = newHero;
-			hero.CallbackDie = OnHeroDie;
-			
-			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
-			battleProxy.SetHero(newHero);
+//			int heroKid = (int)param;
+//			
+//			Vector3 position = adam.WorldPosition;
+//			float angle = adam.Script.transform.localEulerAngles.y;
+//			
+//			Hero.Recycle();
+//			Hero newHero = Hero.Create(heroKid, adam.Info);
+//			newHero.SetPosition(position);
+//			newHero.SetRotation(angle);
+//			adam = newHero;
+//			adam.CallbackDie = OnHeroDie;
+//			
+//			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+//			battleProxy.SetAdam(newHero);
 		}
 		private void OnConversionFinished(object param)
 		{
 			InputManager.Instance.Enable = true;
 			convertEffect.Deactive();
 			
-			hero.Info.IsConverting = false;
+			adam.Info.IsConverting = false;
 		}
 
 		#endregion

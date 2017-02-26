@@ -19,6 +19,8 @@ namespace StaticData
         Buff = 12,
         Trap = 13,
         Item = 14,
+        Skill = 15,
+        Area = 16,
 	}
 
     public class IDManager

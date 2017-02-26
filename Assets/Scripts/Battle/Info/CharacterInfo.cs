@@ -52,7 +52,8 @@ namespace Battle
 			attrDic.Add((int)BattleAttribute.Defense, Data.Defense);
 			attrDic.Add((int)BattleAttribute.Critical, Data.Critical);
 			attrDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
-			attrDic.Add((int)BattleAttribute.MoveSpeed, Data.MoveSpeed);
+            attrDic.Add((int)BattleAttribute.MoveSpeed, Data.MoveSpeed);
+            attrDic.Add((int)BattleAttribute.AttackSpeed, Data.AttackSpeed);
 		}
 		public void Dispose()
 		{

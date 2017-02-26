@@ -9,18 +9,25 @@ namespace StaticData
 {
 	public class AnimatorDataManager
 	{
+        public int NullHash;
 		public int IdleHash;
-		public int RunHash;
+		public int MoveHash;
+        public int SkillHash;
 		public int Attack1Hash;
 		public int Attack2Hash;
 		public int HitHash;
-		public int DieHash;
+        public int DieHash;
 
 		public int ParamIsMoving;
+        public int ParamDoSkill;
 		public int ParamDoAttack;
 		public int ParamAttackRandomValue;
-		public int ParamIsHit;
-		public int ParamDoDie;
+		public int ParamDoHit;
+        public int ParamDoDie;
+        public int ParamDoExit;
+        public int ParamDoUnarmed;
+        public int ParamDoSword;
+        public int ParamDoAxe;
 
 		private Dictionary<int, Dictionary<int, AnimatorData>> kvDic;
 
@@ -36,18 +43,25 @@ namespace StaticData
 
 		public AnimatorDataManager ()
 		{
+            NullHash = Animator.StringToHash("Base.null");
 			IdleHash = Animator.StringToHash("Base.idle");
-			RunHash = Animator.StringToHash("Base.run");
+			MoveHash = Animator.StringToHash("Base.move");
+            SkillHash = Animator.StringToHash("Base.skill_1");
 			Attack1Hash = Animator.StringToHash("Base.attack01");
 			Attack2Hash = Animator.StringToHash("Base.attack02");
 			HitHash = Animator.StringToHash("Base.hit");
 			DieHash = Animator.StringToHash("Base.die");
 
-			ParamIsMoving = Animator.StringToHash("isMoving");
-			ParamDoAttack = Animator.StringToHash("doAttack");
-			ParamAttackRandomValue = Animator.StringToHash("attackRandomValue");
-			ParamIsHit = Animator.StringToHash("isHit");
-			ParamDoDie = Animator.StringToHash("doDie");
+			ParamIsMoving = Animator.StringToHash("IsMoving");
+            ParamDoSkill = Animator.StringToHash("DoSkill_1");
+			ParamDoAttack = Animator.StringToHash("DoAttack");
+			ParamAttackRandomValue = Animator.StringToHash("AttackRandomValue");
+			ParamDoHit = Animator.StringToHash("DoHit");
+            ParamDoDie = Animator.StringToHash("DoDie");
+            ParamDoExit = Animator.StringToHash("DoExit");
+            ParamDoUnarmed = Animator.StringToHash("DoUnarmed");
+            ParamDoSword = Animator.StringToHash("DoSword");
+            ParamDoAxe = Animator.StringToHash("DoAxe");
 		}
 
 		public void Init()
@@ -90,6 +104,16 @@ namespace StaticData
 			}
 			return null;
 		}
+        public AnimatorData GetAdamAnimatorData(int nameHash)
+        {
+            Dictionary<int, AnimatorData> dataDic = kvDic[30001];
+            if (dataDic.ContainsKey(nameHash))
+            {
+                AnimatorData data = dataDic[nameHash];
+                return data;
+            }
+            return null;
+        }
 	}
 }
 

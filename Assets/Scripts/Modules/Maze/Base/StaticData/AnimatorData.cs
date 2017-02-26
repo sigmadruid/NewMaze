@@ -1,5 +1,4 @@
 using System;
-
 using System.Collections.Generic;
 
 namespace StaticData
@@ -7,8 +6,8 @@ namespace StaticData
 	public enum AnimatorPriorityEnum
 	{
 		Idle = 1,
-		Run,
-		Attack,
+		Move,
+		Skill,
 		Hit,
 		Die,
 	}

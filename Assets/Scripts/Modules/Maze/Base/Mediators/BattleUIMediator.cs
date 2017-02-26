@@ -93,7 +93,7 @@ namespace GameLogic
 		}
 		private void OnUpdate()
 		{
-			float hpVal = Hero.Instance.Info.HP * 1f / Hero.Instance.Data.HP;
+            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
 			float mpVal = 1f;
 			panel.UpdateSliderBar(hpVal, mpVal);
 		}

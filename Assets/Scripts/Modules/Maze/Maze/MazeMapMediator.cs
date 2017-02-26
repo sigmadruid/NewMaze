@@ -58,8 +58,8 @@ namespace GameLogic
 			if (show)
 			{
                 panel = PopupManager.Instance.CreateAndAddPopup<MazeMapPanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
-                Vector3 position = GetHeroMazeMapPosition(Hero.Instance.WorldPosition);
-                panel.Show(true, position, Hero.Instance.WorldAngle);	
+                Vector3 position = GetHeroMazeMapPosition(Adam.Instance.WorldPosition);
+                panel.Show(true, position, Adam.Instance.WorldAngle);	
                 BuildMockBlock();
 			}
 			else

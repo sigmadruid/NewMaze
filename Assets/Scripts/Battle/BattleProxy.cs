@@ -12,7 +12,7 @@ namespace Battle
 {
 	public class BattleProxy : Proxy
 	{
-		private Hero hero;
+        private Adam adam;
 		private Dictionary<string, Monster> monsterDic;
 
 		public BattleProxy () : base()
@@ -20,9 +20,9 @@ namespace Battle
 			monsterDic = new Dictionary<string, Monster>();
 		}
 
-		public void SetHero(Hero hero)
+        public void SetAdam(Adam adam)
 		{
-			this.hero = hero;
+			this.adam = adam;
 		}
 
 		public void AddMonster(Monster monster)
@@ -41,7 +41,7 @@ namespace Battle
 		}
 		public void Dispose()
 		{
-			hero = null;
+			adam = null;
 			monsterDic.Clear();
 		}
 
@@ -51,13 +51,13 @@ namespace Battle
 			while (enumerator.MoveNext())
 			{
 				Monster monster = enumerator.Current.Value;
-				bool inArea = JudgeInArea(hero.Script.transform, monster.Script.transform, paramDic);
+				bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
 				if (inArea)
 				{
                     AttackContext context = new AttackContext();
                     context.Side = Side.Hero;
-                    context.Attack = (int)hero.Info.GetAttribute(BattleAttribute.Attack);
-                    context.Critical = (int)hero.Info.GetAttribute(BattleAttribute.Critical);
+                    context.Attack = (int)adam.Info.GetAttribute(BattleAttribute.Attack);
+                    context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
 
                     DoAttackMonster(monster, context);
 				}
@@ -79,7 +79,7 @@ namespace Battle
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
-				bool inArea = JudgeInArea(hero.Script.transform, monster.Script.transform, paramDic);
+				bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
 				if (inArea)
 				{
 					DoAttackHero(ac);
@@ -89,16 +89,16 @@ namespace Battle
 
 		public void DoAttackHero(AttackContext attackContext)
 		{
-			if (hero.Info.IsConverting) return;
+			if (adam.Info.IsConverting) return;
 
-			AttackResult result = hero.Info.HurtBy(attackContext);
-			if (hero.Info.HP > 0)
+			AttackResult result = adam.Info.HurtBy(attackContext);
+			if (adam.Info.HP > 0)
 			{
-				hero.Hit();
+				adam.Hit();
 			}
 			else
 			{
-				hero.Die();
+				adam.Die();
 			}
 
 			DispatchNotification(NotificationEnum.BATTLE_UI_UPDATE_HP, result);
@@ -121,21 +121,6 @@ namespace Battle
                 monster.Die();
             }
         }
-
-		public Monster GetNearMonsters()
-		{
-			float sqrRange = hero.Data.AttackRange * hero.Data.AttackRange;
-			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
-			while (enumerator.MoveNext())
-			{
-				Monster monster = enumerator.Current.Value;
-				if (monster.Info.IsAlive && MathUtils.XZSqrDistance(monster.WorldPosition, hero.WorldPosition) < sqrRange)
-				{
-					return monster;
-				}
-			}
-			return null;
-		}
 
         private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, Dictionary<AnimatorParamKey, string> paramDic)
 		{

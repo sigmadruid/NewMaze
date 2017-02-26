@@ -37,6 +37,8 @@ namespace StaticData
             BuffDataManager.Instance.Init();
             TrapDataManager.Instance.Init();
             ItemDataManager.Instance.Init();
+            SkillDataManager.Instance.Init();
+            AreaDataManager.Instance.Init();
 
 			Utils.GetEndTime();
 

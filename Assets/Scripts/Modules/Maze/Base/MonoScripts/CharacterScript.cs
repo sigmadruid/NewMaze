@@ -126,7 +126,7 @@ namespace GameLogic
     	{
     		if (Game.Instance.IsPause) { return; }
 
-            if(CanPlay(AnimatorPriorityEnum.Run))
+            if(CanPlay(AnimatorPriorityEnum.Move))
             {
                 movementScript.SetDestination(destination, speed);
                 animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
@@ -146,7 +146,7 @@ namespace GameLogic
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Attack))
+    		if (CanPlay(AnimatorPriorityEnum.Skill))
     		{
     			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoAttack);
     			animator.SetFloat(AnimatorDataManager.Instance.ParamAttackRandomValue, UnityEngine.Random.value);
@@ -183,11 +183,11 @@ namespace GameLogic
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Attack))
+    		if (CanPlay(AnimatorPriorityEnum.Skill))
     		{
                 if(forceStunned || JudgeHit())
                 {
-                    animator.SetTrigger(AnimatorDataManager.Instance.ParamIsHit);
+                    animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
                     transitionEnds = false;
                 }
     		}

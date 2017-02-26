@@ -188,7 +188,7 @@ namespace Base
 		{
             if(Input.GetKeyDown(KeyCode.F1))
             {
-                Hero.Instance.IsVisible = !Hero.Instance.IsVisible;
+                Adam.Instance.IsVisible = !Adam.Instance.IsVisible;
             }
 		}
 

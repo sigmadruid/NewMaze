@@ -16,6 +16,7 @@ namespace StaticData
         Critical,
         Dodge,
         MoveSpeed,
+        AttackSpeed,
     }
     public enum Side
     {

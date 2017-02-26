@@ -144,7 +144,7 @@ namespace GameLogic
 
         private void HandleFunction()
         {
-            Exploration enteredExpl = explorationProxy.FindNearbyExploration(Hero.Instance.WorldPosition);
+            Exploration enteredExpl = explorationProxy.FindNearbyExploration(Adam.Instance.WorldPosition);
             if (enteredExpl != null)
             {
                 enteredExpl.OnFunction();

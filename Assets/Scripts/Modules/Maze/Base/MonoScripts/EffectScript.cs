@@ -17,6 +17,7 @@ namespace GameLogic
             if(isTransparent)
             {
                 material.shader = Utils.TransparentShader;
+                material.SetColor("_Color", new Color(1, 1, 1, alpha));
             }
             else
             {

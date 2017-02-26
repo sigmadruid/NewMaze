@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using Base;
 using StaticData;
@@ -22,6 +23,7 @@ namespace GameLogic
         public Action CallbackDie;
         public Action<int> CallbackTrapAttack;
 
+        protected int currentNameHash;
         protected AnimatorData currentAnimatorData;
 
         protected MovementScript movementScript;
@@ -46,6 +48,7 @@ namespace GameLogic
             {
                 return;
             }
+
             if (CallbackUpdate != null)
             {
                 CallbackUpdate();
@@ -78,7 +81,7 @@ namespace GameLogic
             }
             cameraController.playerTransofrm = transform;
 
-            MeleeTrail.Emit = false;
+//            MeleeTrail.Emit = false;
         }
 
         void OnDisable()
@@ -104,66 +107,52 @@ namespace GameLogic
 
         #region Animation States
 
-        public void Idle()
-        {
-            animator.SetBool(AdamConstDef.BOOL_IS_MOVING, false);
-        }
         public void Move(Vector3 destination, float speed)
         {
-            animator.SetBool(AdamConstDef.BOOL_IS_MOVING, true);
             if (Game.Instance.IsPause) { return; }
 
-            if(CanPlay(AnimatorPriorityEnum.Run))
-            {
-                movementScript.SetDestination(destination, speed);
-                animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
-            }
-            else
-            {
-                movementScript.SetDestination(Vector3.zero, 0f);
-            }
+            movementScript.SetDestination(destination, speed);
+            animator.speed = speed / 3f;
+            animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
         }
-        public void Skill(int skillID)
+        public void Skill(int skillID, float attackSpeed)
         {
-            string skillTrigger = AdamConstDef.TRIGGER_SKILLS[skillID];
+            int skillTrigger = AnimatorDataManager.Instance.ParamDoSkill;
+            movementScript.SetDestination(Vector3.zero, 0);
+            animator.speed = attackSpeed;
             animator.SetTrigger(skillTrigger);
         }
         public void Hit(bool forceStunned = false)
         {
             if (Game.Instance.IsPause) { return; }
 
-            if (CanPlay(AnimatorPriorityEnum.Attack))
+            if(forceStunned || JudgeHit())
             {
-                if(forceStunned || JudgeHit())
-                {
-                    animator.SetTrigger(AdamConstDef.TRIGGER_HIT);
-                }
+                movementScript.SetDestination(Vector3.zero, 0f);
+                animator.speed = 1f;
+                animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
             }
         }
         public void Die()
         {
             if (Game.Instance.IsPause) { return; }
 
-            if (CanPlay(AnimatorPriorityEnum.Die))
-            {
-                movementScript.SetDestination(Vector3.zero, 0f);
-                GetComponent<Collider>().enabled = false;
+            movementScript.SetDestination(Vector3.zero, 0f);
+            GetComponent<Collider>().enabled = false;
 
-                animator.SetTrigger(AdamConstDef.TRIGGER_DIE);
-            }
+            animator.speed = 1f;
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
         }
-        public void Switch(string state)
+        public void Switch(int eliteHash)
         {
-            animator.SetTrigger(AdamConstDef.TRIGGER_EXIT);
-            animator.SetTrigger(state);
+            animator.speed = 1f;
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
+            animator.SetTrigger(eliteHash);
         }
         protected bool JudgeHit()
         {
-            return RandomUtils.Value() > 0.8f;
-        }
-        protected bool CanPlay(AnimatorPriorityEnum priority)
-        {
-            return priority == currentAnimatorData.Priority && currentAnimatorData.IsLoop || (int)priority > (int)currentAnimatorData.Priority;
+            return false;
+//            return RandomUtils.Value() > 0.8f;
         }
 
         #endregion
@@ -184,11 +173,12 @@ namespace GameLogic
         }
         public void OnUnsheath(string state)
         {
-            if(state == AdamConstDef.STATE_AXE)
+            int hash = Animator.StringToHash(state);
+            if(hash == AnimatorDataManager.Instance.ParamDoAxe)
             {
                 axe.SetActive(true);
             }
-            else if (state == AdamConstDef.STATE_SWORD)
+            else if (hash == AnimatorDataManager.Instance.ParamDoSword)
             {
                 sword.SetActive(true);
             }
@@ -196,11 +186,12 @@ namespace GameLogic
         }
         public void OnSheath(string state)
         {
-            if(state == AdamConstDef.STATE_AXE)
+            int hash = Animator.StringToHash(state);
+            if(hash == AnimatorDataManager.Instance.ParamDoAxe)
             {
                 axe.SetActive(false);
             }
-            else if (state == AdamConstDef.STATE_SWORD)
+            else if (hash == AnimatorDataManager.Instance.ParamDoSword)
             {
                 sword.SetActive(false);
             }

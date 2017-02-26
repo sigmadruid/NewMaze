@@ -57,7 +57,7 @@ namespace GameLogic
             if(Game.Instance.CurrentStageType != StageEnum.Maze)
                 return;
             
-            if(Hero.Instance != null && Hero.Instance.Info.IsAlive)
+            if(Adam.Instance != null && Adam.Instance.Info.IsAlive)
             {
                 monsterProxy.DoRecord();
                 hallProxy.DoRecord();
@@ -65,7 +65,7 @@ namespace GameLogic
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
-                gameRecord.Hero = Hero.Instance.ToRecord();
+                gameRecord.Hero = Adam.Instance.ToRecord();
                 gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = hallProxy.Record;
                 gameRecord.Items = dropProxy.RecordDic;

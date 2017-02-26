@@ -45,7 +45,7 @@ namespace GameLogic
 
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
-            if (Hero.Instance.Info.IsInHall)
+            if (Adam.Instance.Info.IsInHall)
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallProxy.Record);
             else
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);

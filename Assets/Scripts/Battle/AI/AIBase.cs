@@ -55,7 +55,7 @@ namespace Battle
 
         protected void SearchForHero()
         {
-            destPosition = Hero.Instance.WorldPosition;
+            destPosition = Adam.Instance.WorldPosition;
             currentMonster.Move(destPosition);
         }
 
@@ -96,7 +96,7 @@ namespace Battle
 
         private void SearchForHeroDirectly()
         {
-            currentMonster.Move(Hero.Instance.WorldPosition - currentMonster.WorldPosition);
+            currentMonster.Move(Adam.Instance.WorldPosition - currentMonster.WorldPosition);
         }
 
         private bool CheckCollision(Vector3 nextPosition)

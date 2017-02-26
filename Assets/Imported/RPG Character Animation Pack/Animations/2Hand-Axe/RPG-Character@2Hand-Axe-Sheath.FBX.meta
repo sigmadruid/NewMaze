@@ -185,7 +185,7 @@ ModelImporter:
       events:
       - time: 0.23236515
         functionName: OnSheath
-        data: Axe
+        data: DoAxe
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

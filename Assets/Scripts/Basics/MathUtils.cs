@@ -4,13 +4,6 @@ using System;
 
 namespace Base
 {
-	public enum AreaType
-	{
-		Circle = 1,
-		Fan,
-		Rectangle,
-	}
-
 	public class MathUtils
 	{
 		public static float XZSqrDistance(Vector3 from, Vector3 to)

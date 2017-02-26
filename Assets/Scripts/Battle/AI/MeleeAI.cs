@@ -26,10 +26,10 @@ namespace Battle
 
 			base.SlowUpdate();
 
-			Hero hero = Hero.Instance;
-			float heroSqrDistance = MathUtils.XZSqrDistance(hero.WorldPosition, currentMonster.WorldPosition);
+            Adam adam = Adam.Instance;
+			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);
 
-            if(!hero.CanBeAttacked)
+            if(!adam.CanBeAttacked)
             {
                 currentMonster.Idle();
                 return;
@@ -43,10 +43,10 @@ namespace Battle
 
 			if (heroSqrDistance < sqrAttackDistance)
 			{
-				if (Delay(currentData.AttackDelay) && hero.Info.IsAlive)
+				if (Delay(currentData.AttackDelay) && adam.Info.IsAlive)
 				{
                     currentMonster.Idle();
-                    currentMonster.LookAt(hero.WorldPosition);
+                    currentMonster.LookAt(adam.WorldPosition);
 					currentMonster.Attack();
 				}
 				else
@@ -57,7 +57,7 @@ namespace Battle
 			}
 			else
 			{
-                if (hero.Info.IsAlive)
+                if (adam.Info.IsAlive)
 				{
                     SearchForHero();
 				}

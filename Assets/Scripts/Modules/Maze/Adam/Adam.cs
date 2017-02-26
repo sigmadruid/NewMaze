@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using Base;
 using StaticData;
@@ -33,9 +34,6 @@ namespace GameLogic
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
-        public bool CanMove = true;
-        public bool CanAttack = true;
-
         private InputManager inputManager;
         private BattleProxy battleProxy;
 
@@ -53,7 +51,7 @@ namespace GameLogic
             if(!IsUpdating)
                 return;
 
-            if(CanAttack && inputManager.CheckMouseHitLayer(Layers.LayerMonster))
+            if(Info.CanCastSkill(0) && inputManager.CheckMouseHitLayer(Layers.LayerMonster))
             {
                 if(MathUtils.XZDistance(WorldPosition, inputManager.MouseHitPosition) < GlobalConfig.HeroConfig.AttackDistance)
                 {
@@ -61,7 +59,7 @@ namespace GameLogic
                 }
                 else
                 {
-                    if(CanMove)
+                    if(Info.CanMove)
                     {
                         Move(inputManager.MouseHitPosition);
                     }
@@ -75,7 +73,7 @@ namespace GameLogic
             {
                 if(inputManager.MouseHitPosition != Vector3.zero)
                 {
-                    if(CanMove && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                    if(Info.CanMove && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
                     {
                         Move(inputManager.MouseHitPosition);
                     }
@@ -99,6 +97,21 @@ namespace GameLogic
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
             }
         }
+
+        #region Interfaces
+
+        public void Convert(int heroKid)
+        {
+            HeroData newData = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+
+            HeroInfo newInfo = new HeroInfo(newData, Info);
+            Info = newInfo;
+
+            int hash = Animator.StringToHash(newData.Trigger);
+            Switch(hash);
+        }
+
+        #endregion
 
         #region States
 
@@ -136,29 +149,26 @@ namespace GameLogic
 
         #region Animations
 
-        public void Idle()
-        {
-            Script.Idle();
-        }
         public void Move(Vector3 destination)
         {
             Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
         }
-        public void Skill(int skillID)
+        public void Skill(int skillIndex)
         {
-            if (!Info.IsAlive)
+            Skill skill = Info.GetSkill(skillIndex);
+            if(skill.Data.NeedTarget)
             {
-                return;
+                GameObject target = inputManager.MouseHitObject;
+                if(target != null && target.CompareTag(Tags.Monster))
+                {
+                    Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
+                    SetRotation(direction);
+                    Info.CastSkill(skillIndex);
+                    Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));
+                    inputManager.PreventMouseAction();
+                }
             }
 
-            GameObject target = inputManager.MouseHitObject;
-            if(target != null && target.CompareTag(Tags.Monster))
-            {
-                Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
-                SetRotation(direction);
-                Script.Skill(skillID);
-                inputManager.PreventMouseAction();
-            }
         }
         public void Hit()
         {
@@ -172,22 +182,28 @@ namespace GameLogic
         {
             CallbackDie();
         }
-        public void Switch(string state)
+        public void Switch(int eliteHash)
         {
-            Script.Switch(state);
+            Script.Switch(eliteHash);
         }
 
         #endregion
 
         #region Event Handlers
 
+        private Dictionary<AnimatorParamKey, string> paramDic = new Dictionary<AnimatorParamKey, string>()
+        {
+            {AnimatorParamKey.AreaType, "Rectangle"},
+            {AnimatorParamKey.Range, "3"},
+            {AnimatorParamKey.Width, "1"},
+        };
         private void OnSkill()
         {
-            //TODO: Make a wrapper for the param dic
-//            if (paramDic != null && paramDic.Count > 0)
-//            {
-//                battleProxy.AttackMonster(paramDic);
-//            }
+            //TODO: Put in skill data instead of this
+            if (paramDic != null && paramDic.Count > 0)
+            {
+                battleProxy.AttackMonster(paramDic);
+            }
         }
 
         private void OnTrapAttack(int trapKid)
@@ -198,7 +214,7 @@ namespace GameLogic
             context.Attack = data.Attack;
             context.Critical = 0;
             battleProxy.DoAttackHero(context);
-            Script.Hit(true);
+//            Script.Hit(true);
         }
 
         #endregion
@@ -217,7 +233,6 @@ namespace GameLogic
             adam.Script.CallbackDie = adam.OnDie;
             adam.Script.CallbackSkill = adam.OnSkill;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
-//            hero.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(hero.Data.Kid);
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             adam.inputManager = InputManager.Instance;
 

@@ -1,3 +1,3 @@
-Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,DetectRange,AttackType,AttackDelay,AttackRange,AvoidDelay,AvoidRange,BulletKid
-30001,hero.name.Edward,Portrait_1,Hero_1,1000,100,10,20,10,3,0,Melee,0,2,0,0,0
-30002,hero.name.Thomas,Portrait_2,Hero_2,5000,200,20,50,0,2,0,Melee,0,0,0,0,0
+Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,AttackType,BulletKid,Trigger,SkillList
+30001,hero.name.Edward,Portrait_1,Adam,1000,100,10,20,10,3,5,Melee,0,DoSword,150001
+30002,hero.name.Thomas,Portrait_2,Hero_2,5000,200,20,50,0,2,1,Melee,0,DoAxe,150002

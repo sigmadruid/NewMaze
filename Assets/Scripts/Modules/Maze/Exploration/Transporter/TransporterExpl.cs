@@ -51,11 +51,11 @@ namespace GameLogic
 
         private void OnTransportForward()
         {
-            Hero.Instance.Info.IsInHall = true;
+            Adam.Instance.Info.IsInHall = true;
             int hallKid = int.Parse(Data.Param1);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_HIDE_ALL);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
-            Hall.Instance.LeavePosition = Hero.Instance.WorldPosition;
+            Hall.Instance.LeavePosition = Adam.Instance.WorldPosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
             AfterTransport();
         }
@@ -66,7 +66,7 @@ namespace GameLogic
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, leavePosition);
-            Hero.Instance.Info.IsInHall = false;
+            Adam.Instance.Info.IsInHall = false;
             AfterTransport();
         }
 
