@@ -113,7 +113,8 @@ namespace GameLogic
             if (Game.Instance.IsPause) { return; }
 
             movementScript.SetDestination(destination, speed);
-            animator.speed = speed / 3f;
+            if(destination != Vector3.zero)
+                animator.speed = speed / 3f;
             animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
         }
         public void Skill(int skillID, float attackSpeed)
@@ -208,6 +209,7 @@ namespace GameLogic
         public void OnSkillEnd(string state)
         {
 //            MeleeTrail.Emit = false;
+            animator.speed = 1f;
             CallbackSkillEnd();
         }
 
