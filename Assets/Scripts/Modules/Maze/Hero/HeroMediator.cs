@@ -135,7 +135,6 @@ namespace GameLogic
 			}
 
 			convertEffect.ResetTask();
-			convertEffect.AddTask(1f, OnConversionMiddle, heroKid);
 			convertEffect.AddTask(2f, OnConversionFinished);
             convertEffect.Active(adam.WorldPosition);
 
@@ -169,23 +168,6 @@ namespace GameLogic
 			Game.Instance.SwitchStage(StageEnum.HomeTown);
 		}
 
-		private void OnConversionMiddle(object param)
-		{
-//			int heroKid = (int)param;
-//			
-//			Vector3 position = adam.WorldPosition;
-//			float angle = adam.Script.transform.localEulerAngles.y;
-//			
-//			Hero.Recycle();
-//			Hero newHero = Hero.Create(heroKid, adam.Info);
-//			newHero.SetPosition(position);
-//			newHero.SetRotation(angle);
-//			adam = newHero;
-//			adam.CallbackDie = OnHeroDie;
-//			
-//			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
-//			battleProxy.SetAdam(newHero);
-		}
 		private void OnConversionFinished(object param)
 		{
 			InputManager.Instance.Enable = true;

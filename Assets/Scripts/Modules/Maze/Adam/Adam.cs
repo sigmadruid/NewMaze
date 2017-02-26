@@ -34,6 +34,8 @@ namespace GameLogic
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
+        private GameObject farTarget;
+
         private InputManager inputManager;
         private BattleProxy battleProxy;
 
@@ -51,15 +53,22 @@ namespace GameLogic
             if(!IsUpdating)
                 return;
 
-            if(Info.CanCastSkill(0) && inputManager.CheckMouseHitLayer(Layers.LayerMonster))
+            if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(0))
             {
-                if(MathUtils.XZDistance(WorldPosition, inputManager.MouseHitPosition) < GlobalConfig.HeroConfig.AttackDistance)
+                Skill skill = Info.GetSkill(0);
+                GameObject target = inputManager.MouseHitObject;
+                if(target == null)
+                    target = farTarget;
+                if(MathUtils.XZSqrDistance(WorldPosition, target.transform.position) < skill.Data.Range * skill.Data.Range)
                 {
                     Skill(0);
+                    farTarget = null;
                 }
                 else
                 {
-                    if(Info.CanMove)
+                    if (inputManager.MouseHitObject != null)
+                        farTarget = inputManager.MouseHitObject;
+                    if(Info.CanMove())
                     {
                         Move(inputManager.MouseHitPosition);
                     }
@@ -73,7 +82,7 @@ namespace GameLogic
             {
                 if(inputManager.MouseHitPosition != Vector3.zero)
                 {
-                    if(Info.CanMove && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                    if(Info.CanMove() && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
                     {
                         Move(inputManager.MouseHitPosition);
                     }
@@ -155,15 +164,17 @@ namespace GameLogic
         }
         public void Skill(int skillIndex)
         {
-            Skill skill = Info.GetSkill(skillIndex);
-            if(skill.Data.NeedTarget)
+            Info.CurrentSkill = Info.GetSkill(skillIndex);
+            if(Info.CurrentSkill.Data.NeedTarget)
             {
-                GameObject target = inputManager.MouseHitObject;
+                GameObject target = farTarget;
+                if (target == null)
+                    target = inputManager.MouseHitObject;
                 if(target != null && target.CompareTag(Tags.Monster))
                 {
                     Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
                     SetRotation(direction);
-                    Info.CastSkill(skillIndex);
+                    Info.CurrentSkill.Cast();
                     Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));
                     inputManager.PreventMouseAction();
                 }
@@ -205,6 +216,10 @@ namespace GameLogic
                 battleProxy.AttackMonster(paramDic);
             }
         }
+        private void OnSkillEnd()
+        {
+            Info.CurrentSkill = null;
+        }
 
         private void OnTrapAttack(int trapKid)
         {
@@ -232,6 +247,7 @@ namespace GameLogic
             adam.Script.CallbackSlowUpdate = adam.SlowUpdate;
             adam.Script.CallbackDie = adam.OnDie;
             adam.Script.CallbackSkill = adam.OnSkill;
+            adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             adam.inputManager = InputManager.Instance;

@@ -17,8 +17,7 @@ namespace Battle
         }
 
         public List<Skill> SkillList = new List<Skill>();
-
-        public bool CanMove = true;
+        public Skill CurrentSkill;
 
 		public bool IsConverting;
         public bool IsInHall;
@@ -50,6 +49,13 @@ namespace Battle
             hp = record.HP;
             IsInHall = record.IsInHall;
             InitSkillList();
+        }
+
+        public bool CanMove()
+        {
+            return IsAlive 
+                && !IsConverting 
+                && (CurrentSkill == null || CurrentSkill.Data.CanMove);
         }
 
         #region Skill
@@ -93,16 +99,6 @@ namespace Battle
 
             Skill skill = SkillList[index];
             return skill.CD <= 0;
-        }
-
-        public void CastSkill(int index)
-        {
-            if(index < 0 || index >= SkillList.Count)
-            {
-                BaseLogger.LogFormat("skill index out of range: {0}", index);
-            }
-            Skill skill = SkillList[index];
-            skill.Cast();
         }
 
         #endregion

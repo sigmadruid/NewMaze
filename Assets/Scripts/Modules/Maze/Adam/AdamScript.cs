@@ -20,6 +20,7 @@ namespace GameLogic
         public Action CallbackUpdate;
         public Action CallbackSlowUpdate;
         public Action CallbackSkill;
+        public Action CallbackSkillEnd;
         public Action CallbackDie;
         public Action<int> CallbackTrapAttack;
 
@@ -207,6 +208,7 @@ namespace GameLogic
         public void OnSkillEnd(string state)
         {
 //            MeleeTrail.Emit = false;
+            CallbackSkillEnd();
         }
 
         #endregion

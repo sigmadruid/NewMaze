@@ -25,6 +25,7 @@ namespace StaticData
                 data.CanMove = ReadBool(col++);
                 data.AreaKid = ReadInt(col++);
                 data.NeedTarget = ReadBool(col++);
+                data.Range = ReadFloat(col++);
 
                 kvDic.Add(data.Kid, data);
 

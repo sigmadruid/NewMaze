@@ -17,6 +17,8 @@ namespace StaticData
         public int AreaKid;
 
         public bool NeedTarget;
+
+        public float Range;
     }
 }
 
