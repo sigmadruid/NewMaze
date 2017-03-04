@@ -35,53 +35,52 @@ public class BulletScript : EntityScript
 		if (Game.Instance.IsPause) return;
 
 		if (CallbackUpdate != null)
-		{
 			CallbackUpdate();
-		}
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
-        if (currentState != BulletState.After)
-		    CallbackHit(other);
+        if (CallbackHit != null)
+	        CallbackHit(other);
 	}
 
-	public void SetState(BulletState state)
+    public void SetState(BulletState state, float duration = 0)
 	{
 		if (currentState == state)
 		{
 			return;
 		}
-
-		if (BeforeEffect != null)
-			BeforeEffect.SetActive(false);
-		if (NormalEffect != null)
-			NormalEffect.SetActive(false);
-		if (AfterEffect != null)
-			AfterEffect.SetActive(false);
-
-		switch(state)
-		{
-			case BulletState.Before:
-			{
-				if (BeforeEffect != null)
-					BeforeEffect.SetActive(true);
-				break;
-			}
-			case BulletState.Normal:
-			{
-				if (NormalEffect != null)
-					NormalEffect.SetActive(true);
-				break;
-			}
-			case BulletState.After:
-			{
-				if (AfterEffect != null)
-					AfterEffect.SetActive(true);
-				StartCoroutine(DelayDestroy());
-				break;
-			}
-		}
+        if(BeforeEffect != null)
+        {
+            BeforeEffect.SetActive(state == BulletState.Before);
+        }
+        if(NormalEffect != null)
+        {
+            NormalEffect.SetActive(state == BulletState.Normal);
+        }
+        if(AfterEffect != null)
+        {
+            AfterEffect.SetActive(state == BulletState.After);
+        }
+        switch(state)
+        {
+            case BulletState.Before:
+            {
+                break;
+            }
+            case BulletState.Normal:
+            {
+                break;
+            }
+            case BulletState.After:
+            {
+                if(duration != 0)
+                    StartCoroutine(DelayDestroy(duration));
+                else if(CallbackDestroy != null)
+                    CallbackDestroy();
+                break;
+            }
+        }
 		currentState = state;
 	}
 
@@ -94,13 +93,11 @@ public class BulletScript : EntityScript
 		}
 	}
 
-	private IEnumerator DelayDestroy()
+    private IEnumerator DelayDestroy(float duration)
 	{
-		yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(duration);
 
 		if (CallbackDestroy != null)
-		{
 			CallbackDestroy();
-		}
 	}
 }

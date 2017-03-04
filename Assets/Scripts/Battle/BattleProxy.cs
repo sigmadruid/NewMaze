@@ -45,29 +45,42 @@ namespace Battle
 			monsterDic.Clear();
 		}
 
+        //TODO: set skill instead of paramDic
         public void AttackMonster(Dictionary<AnimatorParamKey, string> paramDic)
 		{
-			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
-			while (enumerator.MoveNext())
-			{
-				Monster monster = enumerator.Current.Value;
-				bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
-				if (inArea)
-				{
-                    AttackContext context = new AttackContext();
-                    context.Side = Side.Hero;
-                    context.Attack = (int)adam.Info.GetAttribute(BattleAttribute.Attack);
-                    context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
+            AttackContext context = new AttackContext();
+            context.CasterSide = Side.Hero;
+            context.Attack = (int)adam.Info.GetAttribute(BattleAttribute.Attack);
+            context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
 
-                    DoAttackMonster(monster, context);
-				}
-			}
+			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
+            if(adam.Data.AttackType == AttackType.Range)
+            {
+                Bullet bullet = Bullet.Create(adam.Data.BulletKid);
+                bullet.AttackContext = context;
+                bullet.Start(adam.Script.EmitTransform);
+
+            }
+            else if (adam.Data.AttackType == AttackType.Melee)
+            {
+                while(enumerator.MoveNext())
+                {
+                    Monster monster = enumerator.Current.Value;
+                    bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
+                    if (inArea)
+                    {
+                        DoAttackMonster(monster, context);
+                    }
+                }
+            }
+
 		}
 
+        //TODO: set skill instead of paramDic
         public void AttackHero(Monster monster, Dictionary<AnimatorParamKey, string> paramDic)
 		{
 			AttackContext ac = new AttackContext();
-			ac.Side = Side.Monster;
+			ac.CasterSide = Side.Monster;
             ac.Attack = (int)monster.Info.GetAttribute(BattleAttribute.Attack);
             ac.Critical = (int)monster.Info.GetAttribute(BattleAttribute.Critical);
 

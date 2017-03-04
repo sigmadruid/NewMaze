@@ -28,19 +28,21 @@ namespace GameLogic
 
 		private BattleProxy battleProxy;
 
+        private bool isHit;
 		private float timeCounter;
 
 		public void Start(Transform trans)
 		{
 			Script.transform.position = trans.position;
 			Script.transform.localRotation = Quaternion.LookRotation(trans.forward);
-			Script.SetState(BulletState.Before);
-			timeCounter = 0f;
+            Script.SetState(BulletState.Normal);
+            isHit = false;
+            timeCounter = 0f;
 		}
 
 		protected override void Update()
 		{
-			Script.SetState(BulletState.Normal);
+            if(isHit) return;
 
 			Vector3 velocity = Vector3.forward * Data.Speed;
 			Script.transform.Translate(velocity * Time.deltaTime, Space.Self);
@@ -48,22 +50,40 @@ namespace GameLogic
 			timeCounter += Time.deltaTime;
 			if (timeCounter > LIFE_TIME)
 			{
-				Script.SetState(BulletState.After);
+                OnDestroy();
 			}
 		}
 
         private void OnHit(Collider other)
 		{
-			if (!other.CompareTag(Tags.Monster))
-			{
-				if (other.CompareTag(Tags.Hero))
-				{
-					//TODO: Hero bullet attack
-					battleProxy.DoAttackHero(AttackContext);
-				}
-				Script.SetState(BulletState.After);
-				Script.CallbackUpdate = null;
-			}
+            if(isHit) return;
+
+            if(AttackContext.CasterSide == Side.Hero)
+            {
+                if (!other.CompareTag(Tags.Hero))
+                {
+                    isHit = true;
+                    if (other.CompareTag(Tags.Monster))
+                    {
+                        string uid = other.GetComponent<MonsterScript>().Uid;
+                        Monster monster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(uid);
+                        battleProxy.DoAttackMonster(monster, AttackContext);
+                    }
+                    Script.SetState(BulletState.After, Data.EndDuration);
+                }
+            }
+            else if(AttackContext.CasterSide == Side.Monster)
+            {
+                if (!other.CompareTag(Tags.Monster))
+                {
+                    isHit = true;
+                    if (other.CompareTag(Tags.Hero))
+                    {
+                        battleProxy.DoAttackHero(AttackContext);
+                    }
+                    Script.SetState(BulletState.After, Data.EndDuration);
+                }
+            }
 			
 		}
 		private void OnDestroy()
@@ -98,7 +118,6 @@ namespace GameLogic
 				ResourceManager.Instance.RecycleAsset(bullet.Script.gameObject);
 				bullet.Script = null;
 				bullet.battleProxy = null;
-				bullet.timeCounter = 0f;
 			}
 			else
 			{

@@ -20,7 +20,8 @@ namespace StaticData
 				data.Name = ReadString(col++);
 				data.Res3D = ReadString(col++);
 				data.Speed = ReadFloat(col++);
-				data.Radius = ReadFloat(col++);
+                data.Radius = ReadFloat(col++);
+                data.EndDuration = ReadFloat(col++);
 
 				kvDic.Add(data.Kid, data);
 				NextLine();

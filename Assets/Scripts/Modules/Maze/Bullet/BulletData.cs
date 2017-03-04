@@ -10,7 +10,9 @@ namespace StaticData
 
 		public float Speed;
 
-		public float Radius;
+        public float Radius;
+
+		public float EndDuration;
 
 		public override string GetResPath ()
 		{

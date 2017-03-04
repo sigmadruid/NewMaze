@@ -37,6 +37,15 @@ namespace GameLogic
             recordDic.Clear();
 		}
 
+        public Monster GetMonster(string uid)
+        {
+            if(!monsterDic.ContainsKey(uid))
+            {
+                BaseLogger.LogFormat("Can't find monster. uid={0}", uid);
+            }
+            return monsterDic[uid];
+        }
+
         public Monster GetNearestMonster(Vector3 position, float maxSqrDistance)
         {
             Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();

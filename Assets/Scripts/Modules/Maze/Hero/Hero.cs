@@ -193,7 +193,7 @@ namespace GameLogic
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
             AttackContext context = new AttackContext();
-            context.Side = Side.Neutral;
+            context.CasterSide = Side.Neutral;
             context.Attack = data.Attack;
             context.Critical = 0;
             battleProxy.DoAttackHero(context);

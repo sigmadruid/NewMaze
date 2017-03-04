@@ -12,6 +12,7 @@ namespace GameLogic
     public class AdamScript : EntityScript
     {
         public Transform TopPosTransform;
+        public Transform EmitTransform;
         public Transform BottomPosTransform;
         public MeleeWeaponTrail MeleeTrail;
         public GameObject sword;

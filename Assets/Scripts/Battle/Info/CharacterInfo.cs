@@ -11,7 +11,7 @@ namespace Battle
 {
     public struct AttackContext
     {
-        public Side Side;
+        public Side CasterSide;
         public int Attack;
         public int Critical;
     }
