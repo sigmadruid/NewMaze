@@ -19,6 +19,8 @@ namespace StaticData
         public bool NeedTarget;
 
         public float Range;
+
+        public int BulletKid;
     }
 }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace StaticData
 {
@@ -26,8 +27,7 @@ namespace StaticData
 		//Melee or shoot
 		public AttackType AttackType;
 
-		public int BulletKid;
-
+        public List<int> SkillList;
 
 	}
 }

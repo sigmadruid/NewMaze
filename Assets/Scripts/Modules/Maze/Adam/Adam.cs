@@ -242,19 +242,9 @@ namespace GameLogic
 
         #region Event Handlers
 
-        private Dictionary<AnimatorParamKey, string> paramDic = new Dictionary<AnimatorParamKey, string>()
-        {
-            {AnimatorParamKey.AreaType, "Rectangle"},
-            {AnimatorParamKey.Range, "3"},
-            {AnimatorParamKey.Width, "1"},
-        };
         private void OnSkill()
         {
-            //TODO: Put in skill data instead of this
-            if (paramDic != null && paramDic.Count > 0)
-            {
-                battleProxy.AttackMonster(paramDic);
-            }
+            battleProxy.AttackMonster(Info.CurrentSkill);
         }
         private void OnSkillEnd()
         {

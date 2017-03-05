@@ -1,3 +1,6 @@
 Kid,AreaType,Param1,Param2
-150001,Rectangle,3,1
-150002,Fan,3,360
+160001,Rectangle,3,1
+160002,Fan,3,360
+,,,
+165001,Fan,3,360
+165002,Fan,4,360

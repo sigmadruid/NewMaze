@@ -26,6 +26,7 @@ namespace StaticData
                 data.AreaKid = ReadInt(col++);
                 data.NeedTarget = ReadBool(col++);
                 data.Range = ReadFloat(col++);
+                data.BulletKid = ReadInt(col++);
 
                 kvDic.Add(data.Kid, data);
 

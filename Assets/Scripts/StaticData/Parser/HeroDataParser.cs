@@ -28,9 +28,8 @@ namespace StaticData
                 data.MoveSpeed = ReadFloat(col++);
                 data.AttackSpeed = ReadFloat(col++);
 				data.AttackType = ReadEnum<AttackType>(col++);
-				data.BulletKid = ReadInt(col++);
-                data.Trigger = ReadString(col++);
                 data.SkillList = ReadIntList(col++);
+                data.Trigger = ReadString(col++);
 				
 				kvDic.Add(data.Kid, data);
 				NextLine();

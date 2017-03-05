@@ -49,9 +49,9 @@ namespace GameLogic
 		{
 			Script.Attack(null, OnAttack, null);
 		}
-        private void OnAttack(Dictionary<AnimatorParamKey, string> paramDic)
+        private void OnAttack()
 		{
-			battleProxy.AttackHero(this, paramDic);
+            battleProxy.AttackHero(this, Info.SkillList[0]);
 		}
 		public void Hit()
 		{

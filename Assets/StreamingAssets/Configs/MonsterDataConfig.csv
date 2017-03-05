@@ -1,4 +1,4 @@
-Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,DetectRange,AttackType,AttackDelay,AttackRange,DodgeDelay,DodgeRange,BulletKid,AppearWeight,DropKid
-40001,monster.name.moying,,Monster_1,300,20,5,20,10,3,1,12,Melee,1.5,1.5,0,0,0,500,100001
-40002,monster.name.yuanling,,Monster_2,200,30,0,40,30,2.5,1,12,Range,2,6,2,2,80002,300,100002
-40003,monster.name.jushenbing,,Monster_3,800,50,10,80,0,1.5,1,10,Melee,2,3,0,0,0,100,100003
+Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,DetectRange,AttackType,SkillList,AttackDelay,AttackRange,DodgeDelay,DodgeRange,AppearWeight,DropKid
+40001,monster.name.moying,,Monster_1,300,20,5,20,10,3,1,12,Melee,155001,1.5,1.5,0,0,500,100001
+40002,monster.name.yuanling,,Monster_2,200,30,0,40,30,2.5,1,12,Range,155002,2,6,2,2,300,100002
+40003,monster.name.jushenbing,,Monster_3,800,50,10,80,0,1.5,1,10,Melee,155003,2,3,0,0,100,100003

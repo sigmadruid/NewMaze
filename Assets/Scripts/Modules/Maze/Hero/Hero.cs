@@ -153,18 +153,18 @@ namespace GameLogic
             {
                 Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
                 SetRotation(direction);
-                Script.Attack(null, OnAttackEffect, null);
+                Script.Attack(null, null, null);
                 inputManager.PreventMouseAction();
             }
 
 		}
-        private void OnAttackEffect(Dictionary<AnimatorParamKey, string> paramDic)
-		{
-			if (paramDic != null && paramDic.Count > 0)
-			{
-				battleProxy.AttackMonster(paramDic);
-			}
-		}
+//        private void OnAttackEffect(Dictionary<AnimatorParamKey, string> paramDic)
+//		{
+//			if (paramDic != null && paramDic.Count > 0)
+//			{
+//				battleProxy.AttackMonster(paramDic);
+//			}
+//		}
 
 		public void Function()
 		{

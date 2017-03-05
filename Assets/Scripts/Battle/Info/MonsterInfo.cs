@@ -17,13 +17,14 @@ namespace Battle
 		public MonsterInfo (MonsterData data) : base(data)
 		{
 			Data = data;
+            InitSkillList();
 		}
 
 		public MonsterInfo (MonsterData data, MonsterRecord record) : base(data)
 		{
 			Data = data;
-
 			hp = record.HP;
+            InitSkillList();
 		}
 	}
 }

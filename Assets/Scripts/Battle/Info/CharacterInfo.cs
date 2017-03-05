@@ -27,6 +27,9 @@ namespace Battle
 	{
         protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
         protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
+
+        public List<Skill> SkillList = new List<Skill>();
+        public Skill CurrentSkill;
 		
         public new CharacterData Data
         {
@@ -185,6 +188,51 @@ namespace Battle
                 recordDic.Add(buff.Data.Kid, buff.RemainTime);
             }
             return recordDic;
+        }
+
+        #endregion
+
+        #region Skill
+
+        protected void InitSkillList()
+        {
+            for(int i = 0; i < Data.SkillList.Count; ++i)
+            {
+                int skillKid = Data.SkillList[i];
+                Skill skill = Skill.Create(skillKid, 0);
+                SkillList.Add(skill);
+            }
+        }
+
+        public void UpdateSkill(float deltaTime)
+        {
+            for(int i = 0; i < SkillList.Count; ++i)
+            {
+                Skill skill = SkillList[i];
+                if(skill.CD > 0)
+                {
+                    skill.CD -= deltaTime;
+                }
+            }
+        }
+
+        public Skill GetSkill(int index)
+        {
+            if(index < 0 || index >= SkillList.Count)
+            {
+                BaseLogger.LogFormat("skill index out of range: {0}", index);
+            }
+            Skill skill = SkillList[index];
+            return skill;
+        }
+
+        public virtual bool CanCastSkill(int index)
+        {
+            if (!IsAlive)
+                return false;
+
+            Skill skill = SkillList[index];
+            return skill.CD <= 0;
         }
 
         #endregion

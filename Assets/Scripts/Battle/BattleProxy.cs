@@ -46,7 +46,7 @@ namespace Battle
 		}
 
         //TODO: set skill instead of paramDic
-        public void AttackMonster(Dictionary<AnimatorParamKey, string> paramDic)
+        public void AttackMonster(Skill skill)
 		{
             AttackContext context = new AttackContext();
             context.CasterSide = Side.Hero;
@@ -56,7 +56,7 @@ namespace Battle
 			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
             if(adam.Data.AttackType == AttackType.Range)
             {
-                Bullet bullet = Bullet.Create(adam.Data.BulletKid);
+                Bullet bullet = Bullet.Create(skill.Data.BulletKid);
                 bullet.AttackContext = context;
                 bullet.Start(adam.Script.EmitTransform);
 
@@ -66,7 +66,8 @@ namespace Battle
                 while(enumerator.MoveNext())
                 {
                     Monster monster = enumerator.Current.Value;
-                    bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
+                    AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
+                    bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
                     if (inArea)
                     {
                         DoAttackMonster(monster, context);
@@ -77,7 +78,7 @@ namespace Battle
 		}
 
         //TODO: set skill instead of paramDic
-        public void AttackHero(Monster monster, Dictionary<AnimatorParamKey, string> paramDic)
+        public void AttackHero(Monster monster, Skill skill)
 		{
 			AttackContext ac = new AttackContext();
 			ac.CasterSide = Side.Monster;
@@ -86,13 +87,14 @@ namespace Battle
 
 			if (monster.Data.AttackType == AttackType.Range)
 			{
-				Bullet bullet = Bullet.Create(monster.Data.BulletKid);
+                Bullet bullet = Bullet.Create(skill.Data.BulletKid);
 				bullet.AttackContext = ac;
 				bullet.Start(monster.Script.EmitTransform);
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
-				bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, paramDic);
+                AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
+                bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
 				if (inArea)
 				{
 					DoAttackHero(ac);
@@ -135,25 +137,20 @@ namespace Battle
             }
         }
 
-        private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, Dictionary<AnimatorParamKey, string> paramDic)
+        private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, AreaData areaData)
 		{
-            if (paramDic == null || paramDic.Count == 0)
-			{
-				return false;
-			}
-
 			bool inArea = false;
-            AreaType areaType = (AreaType)Enum.Parse(typeof(AreaType), paramDic[AnimatorParamKey.AreaType]);
+            AreaType areaType = areaData.AreaType;
 			if (areaType == AreaType.Fan)
 			{
-                int range = int.Parse(paramDic[AnimatorParamKey.Range]);
-                int angle = int.Parse(paramDic[AnimatorParamKey.Angle]);
+                float range = areaData.Param1;
+                float angle = areaData.Param2;
 				inArea = MathUtils.FanContains(attackerTrans.position, attackerTrans.forward, defenderTrans.position, range, angle);
 			}
 			else if (areaType == AreaType.Rectangle)
 			{
-                int length = int.Parse(paramDic[AnimatorParamKey.Range]);
-                int width = int.Parse(paramDic[AnimatorParamKey.Width]);
+                float length = areaData.Param1;
+                float width = areaData.Param2;
 				inArea = MathUtils.RectContains(attackerTrans.position, attackerTrans.forward, width, length, defenderTrans.position);
 			}
 			return inArea;

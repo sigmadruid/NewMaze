@@ -30,11 +30,11 @@ namespace StaticData
                 data.AttackSpeed = ReadFloat(col++);
 				data.DetectRange = ReadFloat(col++);
 				data.AttackType = ReadEnum<AttackType>(col++);
+                data.SkillList = ReadIntList(col++);
 				data.AttackDelay = ReadFloat(col++);
 				data.AttackRange = ReadFloat(col++);
 				data.DodgeDelay = ReadFloat(col++);
 				data.DodgeRange = ReadFloat(col++);
-				data.BulletKid = ReadInt(col++);
 				data.AppearWeight = ReadInt(col++);
                 data.DropKid = ReadInt(col++);
 
