@@ -10,6 +10,7 @@ namespace StaticData
 {
     public class BaseParser
     {
+        public static bool CHECK_TYPE = true;
 		public static string CONFIG_PATH = Application.streamingAssetsPath + "/Configs/";
 
 		private int rowIndex;
@@ -27,15 +28,22 @@ namespace StaticData
 			if (File.Exists(path))
 			{
                 StreamReader sr = new StreamReader(path, System.Text.UTF8Encoding.UTF8);
-				bool isFirstLine = true;
+                bool isNameLine = true;
+                bool isTypeLine = true;
 				while (!sr.EndOfStream)
 				{
 					string line = sr.ReadLine();
-					if (isFirstLine)
+					if (isNameLine)
 					{
-						isFirstLine = false;
+						isNameLine = false;
 						continue;
 					}
+                    if (isTypeLine)
+                    {
+                        isTypeLine = false;
+                        continue;
+                    }
+
 					char firstChar = line[0];
 					if (firstChar == ',')
 					{
@@ -81,11 +89,23 @@ namespace StaticData
 				return false;
 			}
 		}
+        private int ParseInt(string str, int col)
+        {
+            if(CHECK_TYPE)
+            {
+                int value = 0;
+                bool result = int.TryParse(str, out value);
+                if (!result)
+                    BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", str, rowIndex, col, this.ToString());
+                return value;
+            }
+            return Convert.ToInt32(str);
+        }
 		protected int ReadInt(int col)
 		{
 			string[] strArray = dataStrList[rowIndex];
 			string str = strArray[col];
-			return Convert.ToInt32(str);
+            return ParseInt(str, col);
 		}
 		protected string ReadString(int col)
 		{
@@ -93,20 +113,28 @@ namespace StaticData
 			string str = strArray[col];
 			return str;
 		}
+        private float ParseFloat(string str, int col)
+        {
+            if(CHECK_TYPE)
+            {
+                float value = 0;
+                bool result = float.TryParse(str, out value);
+                if (!result)
+                    BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", str, rowIndex, col, this.ToString());
+                return value;
+            }
+            return Convert.ToSingle(str);
+        }
 		protected float ReadFloat(int col)
 		{
 			string[] strArray = dataStrList[rowIndex];
 			string str = strArray[col];
-			return Convert.ToSingle(str);
+            return ParseFloat(str, col);
 		}
 		protected T ReadEnum<T>(int col)
 		{
-			string value = ReadString(col);
-			if(!Enum.IsDefined(typeof(T), value))
-			{
-				BaseLogger.LogFormat("Parse error. CSV: {0}, Col:{1}, Row:{2}", this.ToString(), col, rowIndex);
-			}
-			return ParseKey<T>(value);
+            string str = ReadString(col);
+			return ParseKey<T>(str, col);
 		}
 		protected List<string> ReadStringList(int col)
 		{
@@ -133,7 +161,7 @@ namespace StaticData
 				for (int i = 0; i < strList.Length; ++i)
 				{
 					string str = strList[i];
-					list.Add(Convert.ToInt32(str));
+                    list.Add(ParseInt(str, col));
 				}
 			}
 			return list;
@@ -148,8 +176,7 @@ namespace StaticData
 				for (int i = 0; i < strList.Length; ++i)
 				{
 					string str = strList[i];
-					T enumVal = ParseKey<T>(str);
-					list.Add(enumVal);
+                    list.Add(ParseKey<T>(str, col));
 				}
 			}
 			return list;
@@ -167,39 +194,42 @@ namespace StaticData
             for(int i = 0; i < valList.Length; ++i)
             {
                 string[] pairList = valList[i].Split(':');
-                K k = ParseKey<K>(pairList[0].Trim());
-                V v = ParseValue<V>(pairList[1].Trim());
+                K k = ParseKey<K>(pairList[0].Trim(), col);
+                V v = ParseValue<V>(pairList[1].Trim(), col);
                 dic.Add(k, v);
             }
             return dic;
         }
 
 
-		private T ParseKey<T>(string str)
+        private T ParseKey<T>(string str, int col)
 		{
-//            T enumKey = (T)Enum.Parse(typeof(T), str);
             object resultKey = null;
             if (typeof(T) == typeof(int))
             {
-                resultKey = Convert.ToInt32(str);
+                resultKey = ParseInt(str, col);
             }
             else
             {
+                if(!Enum.IsDefined(typeof(T), str))
+                {
+                    BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", str, rowIndex, col, this.ToString());
+                }
                 resultKey = Enum.Parse(typeof(T), str);
             }
             return (T)resultKey;
 		}
-		private T ParseValue<T>(string str)
+        private T ParseValue<T>(string str, int col)
 		{
 			object resultVal = null;
 
             if(typeof(T) == typeof(int))
             {
-                resultVal = Convert.ToInt32(str);
+                resultVal = ParseInt(str, col);
             }
             else if(typeof(T) == typeof(float))
             {
-                resultVal = Convert.ToSingle(str);
+                resultVal = ParseFloat(str, col);
             }
             else
             {
@@ -219,12 +249,12 @@ namespace StaticData
 
             string[] colorList = value.Split('#');
             Color color = new Color();
-            color.r = Convert.ToSingle(colorList[0]);
-            color.g = Convert.ToSingle(colorList[1]);
-            color.b = Convert.ToSingle(colorList[2]);
+            color.r = ParseFloat(colorList[0], col);
+            color.g = ParseFloat(colorList[1], col);
+            color.b = ParseFloat(colorList[2], col);
             if(colorList.Length == 4)
             {
-                color.a = Convert.ToSingle(colorList[3]);
+                color.a = ParseFloat(colorList[3], col);
             }
             else
             {

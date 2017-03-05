@@ -1,4 +1,5 @@
-ID,Type,Res3D,MazeKid,IsGlobal,Param1,Param2,Param3
+Kid,Type,Res3D,MazeKid,IsGlobal,Param1,Param2,Param3
+int,ExplorationType,string,int,bool,string,string,string
 ,Chest,,,,,,
 70101,Chest,Chest_1,10001,FALSE,,,
 70102,Chest,Chest_2,10001,FALSE,,,

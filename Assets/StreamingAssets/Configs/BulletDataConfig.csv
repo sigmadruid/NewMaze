@@ -1,3 +1,4 @@
 Kid,Name,Res3D,Speed,Radius,EndDuration
+int,string,string ,float,float,float
 80001,Arrow,Arrow,20,0.2,0
 80002,FireBall,FireBall,5,0.4,2

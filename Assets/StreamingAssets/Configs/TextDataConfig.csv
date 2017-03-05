@@ -1,4 +1,5 @@
 ﻿id,text
+int,string
 ,Common
 common.daytitle,光明降临
 common.nighttitle,黑暗蔓延

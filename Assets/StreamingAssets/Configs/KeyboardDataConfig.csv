@@ -1,4 +1,5 @@
 Type,Key,Name,ActiveWhenPause
+KeyboardActionType,KeyCode,string,bool
 Attack,J,,FALSE
 Function,U,,FALSE
 MazeMap,Tab,,TRUE

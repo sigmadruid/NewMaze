@@ -1,5 +1,5 @@
 Kid,MaxNum,ItemKidList,MinCountList,MaxCountList,WeightList
-,,,,,
+int ,int,List<int>,List<int>,List<int>,List<int>
 100001,1,140001,1,1,100
 100002,1,140002,1,1,100
 100003,1,140003,1,1,100

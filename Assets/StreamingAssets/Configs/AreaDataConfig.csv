@@ -1,4 +1,5 @@
 Kid,AreaType,Param1,Param2
+int,AreaType,float,float
 160001,Rectangle,3,1
 160002,Fan,3,360
 ,,,

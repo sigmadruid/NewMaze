@@ -1,4 +1,5 @@
 MazeKid,EntityKid,Path,Life,PreloadCount
+int,int,string,int,int
 ,¹ÊÏç³¡¾°,,,
 10000,50001,,-1,1
 10000,0,NewUI/Items/HUDIcon,-1,1
