@@ -19,7 +19,7 @@ namespace StaticData
                 data.Kid = ReadInt(col++);
                 data.Name = ReadString(col++);
                 data.Res3D = ReadString(col++);
-                data.Attack = ReadInt(col++);
+                data.Attack = ReadFloat(col++);
 
                 kvDic.Add(data.Kid, data);
                 NextLine();

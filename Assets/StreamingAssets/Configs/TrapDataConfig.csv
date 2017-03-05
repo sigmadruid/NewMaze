@@ -1,4 +1,4 @@
 Kid,Name,Res3D,Attack
-int,string,string,int
+int,string,string,float
 130001,trap.arm,Trap_1,30
 130002,trap.stake,Trap_2,50

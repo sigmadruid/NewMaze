@@ -50,7 +50,7 @@ namespace Battle
 		{
             AttackContext context = new AttackContext();
             context.CasterSide = Side.Hero;
-            context.Attack = (int)adam.Info.GetAttribute(BattleAttribute.Attack);
+            context.Attack = adam.Info.GetAttribute(BattleAttribute.Attack) * skill.Data.Ratio;
             context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
 
 			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
@@ -82,7 +82,7 @@ namespace Battle
 		{
 			AttackContext ac = new AttackContext();
 			ac.CasterSide = Side.Monster;
-            ac.Attack = (int)monster.Info.GetAttribute(BattleAttribute.Attack);
+            ac.Attack = monster.Info.GetAttribute(BattleAttribute.Attack) * skill.Data.Ratio;
             ac.Critical = (int)monster.Info.GetAttribute(BattleAttribute.Critical);
 
 			if (monster.Data.AttackType == AttackType.Range)

@@ -12,7 +12,7 @@ namespace Battle
     public struct AttackContext
     {
         public Side CasterSide;
-        public int Attack;
+        public float Attack;
         public int Critical;
     }
 
@@ -109,7 +109,7 @@ namespace Battle
 			float critical = attackContext.Critical / RandomUtils.RANDOM_BASE;
 			result.IsCritical = randomValue <= critical;
 
-			int attack = attackContext.Attack;
+            int attack = (int)attackContext.Attack;
             int defense = (int)GetAttribute(BattleAttribute.Defense);
 			int criticalRatio = result.IsCritical ? 2 : 1;
 			result.Damage = -(attack - defense) * criticalRatio;

@@ -10,7 +10,7 @@ namespace StaticData
 
         public string Res3D;
 
-        public int Attack;
+        public float Attack;
 
         public override string GetResPath ()
         {
