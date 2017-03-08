@@ -29,7 +29,7 @@ namespace StaticData
 		{
 			if (!kvDic.ContainsKey(id))
 			{
-				BaseLogger.LogFormat("No such id in TextDataManager: {0}" + id);
+				BaseLogger.LogFormat("No such id in TextDataManager: {0}", id);
 			}
 			return kvDic[id];
 		}

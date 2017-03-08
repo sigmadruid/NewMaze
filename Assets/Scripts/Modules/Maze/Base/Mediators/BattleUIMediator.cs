@@ -64,7 +64,7 @@ namespace GameLogic
 
 		private void HandleUIInit()
         {
-			List<HeroData> dataList = heroProxy.GetAllHeroDataList();
+			List<HeroData> dataList = heroProxy.GetUnlockHeroList();
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
 			panel.Init(dataList);

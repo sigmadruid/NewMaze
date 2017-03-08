@@ -1,4 +1,4 @@
-﻿id,text
+﻿Kid,Text
 int,string
 ,Common
 common.daytitle,光明降临
@@ -17,6 +17,7 @@ npc.dialog.6,好想我的家人……我为何要来到此地……
 ,Hero
 hero.name.Edward,艾德
 hero.name.Thomas,托马斯·巨斧
+hero.name.Sally,萨利·鹰眼
 ,Monster
 monster.name.moying,魔婴
 monster.name.yuanling,怨灵

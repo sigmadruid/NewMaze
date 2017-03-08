@@ -14,28 +14,20 @@ namespace GameLogic
         public HeroRecord Record;
 
 		private List<HeroData> heroDataList;
-        private Dictionary<int, HeroData> heroDataDic = new Dictionary<int, HeroData>();
 
         public void Init()
         {
-            int kid;
-            kid = IDManager.Instance.GetKid(IDType.Hero, 1);
-            if (!heroDataDic.ContainsKey(kid))
-                heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
-            kid = IDManager.Instance.GetKid(IDType.Hero, 2);
-            if (!heroDataDic.ContainsKey(kid))
-                heroDataDic.Add(kid, HeroDataManager.Instance.GetData(kid) as HeroData);
         }
 
         public void Dispose()
         {
         }
 
-		public List<HeroData> GetAllHeroDataList()
+		public List<HeroData> GetUnlockHeroList()
 		{
 			if (heroDataList == null)
 			{
-				heroDataList = heroDataDic.Values.ToList();
+                heroDataList = HeroDataManager.Instance.GetAllData();
 			}
 			return heroDataList;
 		}

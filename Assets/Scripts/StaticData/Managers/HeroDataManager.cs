@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 namespace StaticData
 {
 	public class HeroDataManager : EntityManager
@@ -45,6 +47,10 @@ namespace StaticData
 			}
 			return kvDic[kid];
 		}
+        public List<HeroData> GetAllData()
+        {
+            return kvDic.Values.ToList();
+        }
 	}
 }
 

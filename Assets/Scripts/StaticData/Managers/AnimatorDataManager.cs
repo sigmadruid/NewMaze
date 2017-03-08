@@ -28,6 +28,7 @@ namespace StaticData
         public int ParamDoUnarmed;
         public int ParamDoSword;
         public int ParamDoAxe;
+        public int ParamDoBow;
 
 		private Dictionary<int, Dictionary<int, AnimatorData>> kvDic;
 
@@ -62,6 +63,7 @@ namespace StaticData
             ParamDoUnarmed = Animator.StringToHash("DoUnarmed");
             ParamDoSword = Animator.StringToHash("DoSword");
             ParamDoAxe = Animator.StringToHash("DoAxe");
+            ParamDoBow = Animator.StringToHash("DoBow");
 		}
 
 		public void Init()

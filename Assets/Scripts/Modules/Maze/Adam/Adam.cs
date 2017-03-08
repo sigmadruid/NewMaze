@@ -53,9 +53,9 @@ namespace GameLogic
             if(!IsUpdating)
                 return;
 
-            if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(1))
+            if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(0))
             {
-                Skill skill = Info.GetSkill(1);
+                Skill skill = Info.GetSkill(0);
                 GameObject target = inputManager.MouseHitObject;
                 if(target == null)
                     target = farTarget;
@@ -104,6 +104,7 @@ namespace GameLogic
         public void Convert(int heroKid)
         {
             HeroData newData = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+            Data = newData;
 
             HeroInfo newInfo = new HeroInfo(newData, Info);
             Info = newInfo;
@@ -175,7 +176,7 @@ namespace GameLogic
         {
             if(MathUtils.XZSqrDistance(WorldPosition, target.transform.position) < skill.Data.Range * skill.Data.Range)
             {
-                Skill(1);
+                Skill(0);
                 farTarget = null;
                 //TODO: Try to detect and avoid obstalces
             }
@@ -244,7 +245,10 @@ namespace GameLogic
 
         private void OnSkill()
         {
-            battleProxy.AttackMonster(Info.CurrentSkill);
+            if(Info.CurrentSkill != null)
+                battleProxy.AttackMonster(Info.CurrentSkill);
+            else
+                Debug.LogError("null");
         }
         private void OnSkillEnd()
         {

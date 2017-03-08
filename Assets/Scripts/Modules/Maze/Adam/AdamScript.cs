@@ -17,6 +17,7 @@ namespace GameLogic
         public MeleeWeaponTrail MeleeTrail;
         public GameObject sword;
         public GameObject axe;
+        public GameObject bow;
 
         public Action CallbackUpdate;
         public Action CallbackSlowUpdate;
@@ -185,6 +186,10 @@ namespace GameLogic
             {
                 sword.SetActive(true);
             }
+            else if (hash == AnimatorDataManager.Instance.ParamDoBow)
+            {
+                bow.SetActive(true);
+            }
                 
         }
         public void OnSheath(string state)
@@ -197,6 +202,10 @@ namespace GameLogic
             else if (hash == AnimatorDataManager.Instance.ParamDoSword)
             {
                 sword.SetActive(false);
+            }
+            else if (hash == AnimatorDataManager.Instance.ParamDoBow)
+            {
+                bow.SetActive(false);
             }
         }
         public void OnSkillStart(string state)
