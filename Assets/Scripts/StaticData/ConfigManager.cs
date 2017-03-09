@@ -18,7 +18,7 @@ namespace StaticData
 
 		public void InitAllData()
 		{
-			Utils.GetStartTime();
+			Utils.GetStartTime("Static Data deserializing");
 
             KeyboardDataManager.Instance.Init();
 			AnimatorDataManager.Instance.Init();
@@ -40,7 +40,7 @@ namespace StaticData
             SkillDataManager.Instance.Init();
             AreaDataManager.Instance.Init();
 
-			Utils.GetEndTime();
+            Utils.GetEndTime("Static Data deserializing");
 
 			GC.Collect();
 		}

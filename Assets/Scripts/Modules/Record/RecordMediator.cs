@@ -99,7 +99,7 @@ namespace GameLogic
             }
             if(gameRecord != null)
             {
-                RandomUtils.Seed = gameRecord.RandomSeed;
+                Maze.Instance.Seed = gameRecord.RandomSeed;
                 heroProxy.Record = gameRecord.Hero;
                 monsterProxy.RecordDic = gameRecord.Monsters;
                 hallProxy.Record = gameRecord.Hall;

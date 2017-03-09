@@ -45,15 +45,15 @@ namespace GameLogic
             {
                 Seed = main.Seed;
             }
-            else if(RandomUtils.Seed == 0)
+            else if(Seed == 0)
             {
                 Seed = UnityEngine.Random.Range(0, 20140413);
-                Debug.Log("random seed: " + Seed.ToString());
-                RandomUtils.Seed = Seed;
             }
+            RandomUtils.Seed = Seed;
+            Debug.Log("random seed: " + Seed.ToString());
 		}
 
-        public int Seed { get; private set; }
+        public int Seed { get; set; }
 		public float ElapsedTime
 		{
 			get

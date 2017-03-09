@@ -111,8 +111,6 @@ namespace GameLogic
 			//Input
 //            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Attack, OnHeroAttack);
 //            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, OnHeroFunction);
-
-            adam.Info.AddHP(999999);
 		}
 
         private void HandleHeroClick()
