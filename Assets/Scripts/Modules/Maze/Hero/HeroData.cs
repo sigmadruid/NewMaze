@@ -9,6 +9,9 @@ namespace StaticData
 	{
         public string Trigger;
 
+        public int LeftWeapon;
+        public int RightWeapon;
+
 		public override string GetResPath ()
 		{
 			if (resPath == null)

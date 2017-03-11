@@ -14,16 +14,19 @@ namespace GameLogic
         public Transform TopPosTransform;
         public Transform EmitTransform;
         public Transform BottomPosTransform;
+        public Transform LeftHandPosTransform;
+        public Transform RightHandPosTransform;
+
         public MeleeWeaponTrail MeleeTrail;
-        public GameObject sword;
-        public GameObject axe;
-        public GameObject bow;
+        public WeaponScript LeftWeapon;
+        public WeaponScript RightWeapon;
 
         public Action CallbackUpdate;
         public Action CallbackSlowUpdate;
         public Action CallbackSkill;
         public Action CallbackSkillEnd;
         public Action CallbackDie;
+        public Action CallbackUnsheath;
         public Action<int> CallbackTrapAttack;
 
         protected int currentNameHash;
@@ -178,35 +181,15 @@ namespace GameLogic
         public void OnUnsheath(string state)
         {
             int hash = Animator.StringToHash(state);
-            if(hash == AnimatorDataManager.Instance.ParamDoAxe)
-            {
-                axe.SetActive(true);
-            }
-            else if (hash == AnimatorDataManager.Instance.ParamDoSword)
-            {
-                sword.SetActive(true);
-            }
-            else if (hash == AnimatorDataManager.Instance.ParamDoBow)
-            {
-                bow.SetActive(true);
-            }
-                
+            CallbackUnsheath();
         }
         public void OnSheath(string state)
         {
             int hash = Animator.StringToHash(state);
-            if(hash == AnimatorDataManager.Instance.ParamDoAxe)
-            {
-                axe.SetActive(false);
-            }
-            else if (hash == AnimatorDataManager.Instance.ParamDoSword)
-            {
-                sword.SetActive(false);
-            }
-            else if (hash == AnimatorDataManager.Instance.ParamDoBow)
-            {
-                bow.SetActive(false);
-            }
+            if (LeftWeapon != null)
+                ResourceManager.Instance.RecycleAsset(LeftWeapon.gameObject);
+            if (RightWeapon != null)
+                ResourceManager.Instance.RecycleAsset(RightWeapon.gameObject);
         }
         public void OnSkillStart(string state)
         {

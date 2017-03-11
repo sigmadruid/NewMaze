@@ -138,6 +138,7 @@ namespace StaticData
 			managerDic.Add(IDType.Currency, CurrencyDataManager.Instance);
             managerDic.Add(IDType.Hall, HallDataManager.Instance);
             managerDic.Add(IDType.Item, ItemDataManager.Instance);
+            managerDic.Add(IDType.Weapon, WeaponDataManager.Instance);
 		}
 		public EntityManager GetManager(IDType type)
 		{

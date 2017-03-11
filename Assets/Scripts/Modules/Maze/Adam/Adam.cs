@@ -31,6 +31,9 @@ namespace GameLogic
             protected set { info = value; }
         }
 
+        public WeaponData LeftWeaponData { get; protected set; }
+        public WeaponData RightWeaponData { get; protected set; }
+
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
@@ -105,7 +108,6 @@ namespace GameLogic
         {
             HeroData newData = HeroDataManager.Instance.GetData(heroKid) as HeroData;
             Data = newData;
-
             HeroInfo newInfo = new HeroInfo(newData, Info);
             Info = newInfo;
 
@@ -254,6 +256,21 @@ namespace GameLogic
         {
             Info.CurrentSkill = null;
         }
+        private void OnUnsheath()
+        {
+            if (Data.LeftWeapon != 0)
+            {
+                LeftWeaponData = WeaponDataManager.Instance.GetData(Data.LeftWeapon) as WeaponData;
+                Script.LeftWeapon = ResourceManager.Instance.LoadAsset<WeaponScript>(ObjectType.GameObject, LeftWeaponData.GetResPath());
+                Script.LeftWeapon.Attach(Script.LeftHandPosTransform);
+            }
+            if (Data.RightWeapon != 0)
+            {
+                RightWeaponData = WeaponDataManager.Instance.GetData(Data.RightWeapon) as WeaponData;
+                Script.RightWeapon = ResourceManager.Instance.LoadAsset<WeaponScript>(ObjectType.GameObject, RightWeaponData.GetResPath());
+                Script.RightWeapon.Attach(Script.RightHandPosTransform);
+            }
+        }
 
         private void OnTrapAttack(int trapKid)
         {
@@ -282,6 +299,7 @@ namespace GameLogic
             adam.Script.CallbackDie = adam.OnDie;
             adam.Script.CallbackSkill = adam.OnSkill;
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
+            adam.Script.CallbackUnsheath = adam.OnUnsheath;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             adam.inputManager = InputManager.Instance;

@@ -45,6 +45,10 @@ namespace GameLogic
                     IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
                     EntityManager manager = GlobalConfig.Instance.GetManager(idType);
                     EntityData data = manager.GetData(resourceData.EntityKid);
+                    if(data == null)
+                    {
+                        BaseLogger.LogFormat("Can't find data {0}", resourceData.EntityKid);
+                    }
                     resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
                 }
                 else

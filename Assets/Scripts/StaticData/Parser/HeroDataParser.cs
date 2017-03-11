@@ -30,6 +30,8 @@ namespace StaticData
 				data.AttackType = ReadEnum<AttackType>(col++);
                 data.SkillList = ReadIntList(col++);
                 data.Trigger = ReadString(col++);
+                data.LeftWeapon = ReadInt(col++);
+                data.RightWeapon = ReadInt(col++);
 				
 				kvDic.Add(data.Kid, data);
 				NextLine();

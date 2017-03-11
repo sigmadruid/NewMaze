@@ -39,6 +39,7 @@ namespace StaticData
             ItemDataManager.Instance.Init();
             SkillDataManager.Instance.Init();
             AreaDataManager.Instance.Init();
+            WeaponDataManager.Instance.Init();
 
             Utils.GetEndTime("Static Data deserializing");
 

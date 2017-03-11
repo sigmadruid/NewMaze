@@ -21,6 +21,7 @@ namespace StaticData
         Item = 14,
         Skill = 15,
         Area = 16,
+        Weapon = 17,
 	}
 
     public class IDManager

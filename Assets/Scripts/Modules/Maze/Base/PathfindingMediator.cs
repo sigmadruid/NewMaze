@@ -143,7 +143,6 @@ namespace GameLogic
                 settings.nodes = true;
                 graphData = AstarPath.active.astarData.SerializeGraphs(settings);
                 graphDataDic[PathfindingType.Maze] = graphData;
-                Debug.LogError(graphData.Length);
             }
             else
             {
