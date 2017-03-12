@@ -138,6 +138,13 @@ namespace Base
 		}
 
         #endregion
+
+        public bool RayCast(Vector3 from, Vector3 to, int layer)
+        {
+            Ray ray = new Ray(from, to - from);
+            float distance = Vector3.Distance(from, to);
+            return Physics.Raycast(ray, distance, layer);
+        }
 	}
 }
 

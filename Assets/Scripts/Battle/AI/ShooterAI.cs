@@ -45,26 +45,26 @@ namespace Battle
 			}
 
 			//To near, run away
-			if (heroSqrDistance < sqrAvoidDistance)
-			{
-				if (Delay(currentData.DodgeDelay))
-				{
+            if(heroSqrDistance < sqrAvoidDistance)
+            {
+                if(Delay(currentData.DodgeDelay))
+                {
                     Vector3 escapeDir = (currentMonster.WorldPosition - adam.WorldPosition).normalized;
                     currentMonster.Move(currentMonster.WorldPosition + escapeDir);
-				}
-			}
+                }
+            }
 			//To far, run to the hero
-			else if (heroSqrDistance > sqrAttackDistance)
-			{
-				if (adam.Script != null)
-				{
+            else if(heroSqrDistance > sqrAttackDistance || CheckCollision())
+            {
+                if(adam.Script != null)
+                {
                     SearchForHero();
-				}
-				else
-				{
-					currentMonster.Idle();
-				}
-			}
+                }
+                else
+                {
+                    currentMonster.Idle();
+                }
+            }
 			else
 			{
 				if (Delay(currentData.AttackDelay) && adam.Info.IsAlive)
