@@ -11,7 +11,7 @@ namespace GameLogic
 {
 	public class TownHeroMediator : Mediator
 	{
-		private TownHeroScript heroScript;
+        private AdamScript heroScript;
 
 		private InputManager inputManager;
 
@@ -25,7 +25,7 @@ namespace GameLogic
 			return new Enum[]
 			{
 				NotificationEnum.TOWN_HERO_INIT,
-				NotificationEnum.TOWN_HERO_DISPOSE,
+                NotificationEnum.TOWN_HERO_DISPOSE,
 			};
 		}
 		
@@ -44,8 +44,9 @@ namespace GameLogic
 
 		private void HandleTownHeroInit()
 		{
-			heroScript = GameObject.Find("TownHero").GetComponent<TownHeroScript>();
-			heroScript.CallbackUpdate = OnUpdate;
+            heroScript = GameObject.Find("TownHero").GetComponent<AdamScript>();
+            heroScript.Switch(AnimatorDataManager.Instance.ParamDoUnarmed);
+            heroScript.CallbackUpdate = OnUpdate;
 		}
 		private void HandleTownHeroDispose()
 		{
@@ -54,13 +55,21 @@ namespace GameLogic
 
 		private void OnUpdate()
 		{
+            float speed = GlobalConfig.HeroConfig.TownAdamWalkSpeed;
             if(inputManager.MouseHitPosition != Vector3.zero)
             {
                 if(MathUtils.XZSqrDistance(heroScript.transform.position, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
                 {
-                    Vector3 direction = MathUtils.XZDirection(heroScript.transform.position, inputManager.MouseHitPosition);
-                    heroScript.Move(direction, 3f);
+                    heroScript.Move(inputManager.MouseHitPosition, speed);
                 }
+                else
+                {
+                    heroScript.Move(Vector3.zero, 0);
+                }
+            }
+            else
+            {
+                heroScript.Move(Vector3.zero, 0);
             }
 
 		}

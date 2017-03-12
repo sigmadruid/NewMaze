@@ -150,10 +150,11 @@ namespace GameLogic
             animator.speed = 1f;
             animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
         }
-        public void Switch(int eliteHash)
+        public void Switch(int eliteHash, bool first = false)
         {
             animator.speed = 1f;
-            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
+            if (!first)
+                animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
             animator.SetTrigger(eliteHash);
         }
         protected bool JudgeHit()
@@ -181,7 +182,8 @@ namespace GameLogic
         public void OnUnsheath(string state)
         {
             int hash = Animator.StringToHash(state);
-            CallbackUnsheath();
+            if (CallbackUnsheath != null)
+                CallbackUnsheath();
         }
         public void OnSheath(string state)
         {
@@ -197,13 +199,15 @@ namespace GameLogic
         }
         public void OnSkillMiddle(string state)
         {
-            CallbackSkill();
+            if (CallbackSkill != null)
+                CallbackSkill();
         }
         public void OnSkillEnd(string state)
         {
 //            MeleeTrail.Emit = false;
             animator.speed = 1f;
-            CallbackSkillEnd();
+            if (CallbackSkillEnd != null)
+                CallbackSkillEnd();
         }
 
         #endregion

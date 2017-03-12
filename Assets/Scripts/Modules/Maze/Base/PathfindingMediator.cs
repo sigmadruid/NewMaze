@@ -19,6 +19,7 @@ namespace GameLogic
     }
     public class PathfindingMediator : Mediator
     {
+        private const string DATA_PATH = "AstarData/";
         private PathfindingType currentType = PathfindingType.Maze;
         private Dictionary<PathfindingType, byte[]> graphDataDic = new Dictionary<PathfindingType, byte[]>();
 
@@ -68,6 +69,7 @@ namespace GameLogic
             {
                 case PathfindingType.HomeTown:
                 {
+                    InitHomeTown();
                     break;
                 }
                 case PathfindingType.Maze:
@@ -151,19 +153,24 @@ namespace GameLogic
         }
         private void InitHall()
         {
-            byte[] graphData = graphDataDic[PathfindingType.Hall];
+            HallData data = Hall.Instance.Data;
+            TextAsset ta = Resources.Load<TextAsset>(DATA_PATH + data.Res3D + GlobalConfig.PathfindingConfig.WalkDataSuffix);
+            AstarPath.active.astarData.DeserializeGraphs(ta.bytes);
+        }
+        private void InitHomeTown()
+        {
+            byte[] graphData = graphDataDic[PathfindingType.HomeTown];
             if(graphData == null)
             {
-                HallData data = Hall.Instance.Data;
-                TextAsset ta = Resources.Load<TextAsset>(data.GetResPath() + GlobalConfig.PathfindingConfig.WalkDataSuffix);
+                TextAsset ta = Resources.Load<TextAsset>(DATA_PATH + PathfindingType.HomeTown.ToString());
                 AstarPath.active.astarData.DeserializeGraphs(ta.bytes);
+                graphDataDic[PathfindingType.HomeTown] = ta.bytes;
             }
             else
             {
                 AstarPath.active.astarData.DeserializeGraphs(graphData);
             }
         }
-
     }
 }
 

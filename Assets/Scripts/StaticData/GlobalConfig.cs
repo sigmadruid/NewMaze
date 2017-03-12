@@ -29,6 +29,7 @@ namespace StaticData
     {
         public readonly float MonsterClickSearchDistance = 1f;
         public readonly float AttackDistance = 2.5f; //For temp use.
+        public readonly float TownAdamWalkSpeed = 3f;
     }
 
 	public class BattleConfig

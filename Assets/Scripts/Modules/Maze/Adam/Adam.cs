@@ -61,7 +61,17 @@ namespace GameLogic
                 Skill skill = Info.GetSkill(0);
                 GameObject target = inputManager.MouseHitObject;
                 if(target == null)
-                    target = farTarget;
+                {
+                    MonsterScript monsterScript = farTarget.GetComponent<MonsterScript>();
+                    if(monsterScript != null)
+                    {
+                        Monster monster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+                        if(monster.Info.IsAlive)
+                        {
+                            target = farTarget;
+                        }
+                    }
+                }
                 
                 if(Data.AttackType == AttackType.Melee)
                 {
@@ -176,6 +186,7 @@ namespace GameLogic
         }
         private void UpdateRange(GameObject target, Skill skill)
         {
+            
             if(MathUtils.XZSqrDistance(WorldPosition, target.transform.position) < skill.Data.Range * skill.Data.Range)
             {
                 Skill(0);
@@ -301,6 +312,7 @@ namespace GameLogic
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackUnsheath = adam.OnUnsheath;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
+            adam.Script.Switch(Animator.StringToHash(adam.Data.Trigger), true);
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             adam.inputManager = InputManager.Instance;
 

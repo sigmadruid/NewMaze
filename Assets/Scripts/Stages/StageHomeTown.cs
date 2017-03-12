@@ -12,11 +12,16 @@ namespace GameLogic
 
 		public override void Start ()
 		{
+            ApplicationFacade facade = ApplicationFacade.Instance;
+            if(facade.RetrieveMediator<TownHeroMediator>() == null)
+                facade.RegisterMediator(new TownHeroMediator());
+
             PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
+            facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
+			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
+			facade.DispatchNotification(NotificationEnum.NPC_INIT);
+			facade.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
 
 			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, true);
 

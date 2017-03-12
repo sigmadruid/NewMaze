@@ -105,6 +105,7 @@ namespace Base
             {
                 Destination = destPosition;
                 this.speed = speed;
+                IsMoving = true;
                 seeker.StartPath(transform.position, destPosition, OnPathComplete);
             }
         }
@@ -122,7 +123,6 @@ namespace Base
                 path = p;
                 nextPathIndex = 1;
                 transform.position = path.vectorPath[0];
-                IsMoving = true;
                 if (CallbackMoveStart != null) CallbackMoveStart();
             }
         }
