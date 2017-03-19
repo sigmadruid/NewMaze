@@ -6,7 +6,7 @@ namespace StaticData
     {
 		public void Parse(string name, out Dictionary<int, ExplorationData> kvDic, out Dictionary<ExplorationType, List<ExplorationData>> typeDic)
 		{
-			LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 
 			kvDic = new Dictionary<int, ExplorationData>();
 

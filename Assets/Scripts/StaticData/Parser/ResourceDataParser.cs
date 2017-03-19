@@ -7,7 +7,7 @@ namespace StaticData
     {
 		public void Parse(string name, out Dictionary<int, List<ResourceData>> typeDic)
 		{
-			LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 
 			typeDic = new Dictionary<int, List<ResourceData>>();
 

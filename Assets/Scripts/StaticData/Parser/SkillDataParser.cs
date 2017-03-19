@@ -9,7 +9,7 @@ namespace StaticData
     {
         public void Parse(string name, out Dictionary<int, SkillData> kvDic)
         {
-            LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 
             kvDic = new Dictionary<int, SkillData>();
 

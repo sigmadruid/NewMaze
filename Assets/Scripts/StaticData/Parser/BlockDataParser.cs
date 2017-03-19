@@ -10,7 +10,7 @@ namespace StaticData
 		                  out List<BlockData> roomList, 
 		                  out Dictionary<int, BlockData> kvDic)
 		{
-			LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 
 			passageDic = new Dictionary<PassageType, List<BlockData>>();
 			passageDic.Add(PassageType.One, new List<BlockData>());

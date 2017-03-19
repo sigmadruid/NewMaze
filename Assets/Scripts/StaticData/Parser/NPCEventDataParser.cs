@@ -7,7 +7,7 @@ namespace StaticData
     {
 		public void Parse(string name, out Dictionary<NPCAppearScene, List<NPCEventData>> typeDic, out Dictionary<int, NPCEventData> kvDic)
 		{
-			LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 
 			typeDic = new Dictionary<NPCAppearScene, List<NPCEventData>>();
 			typeDic.Add(NPCAppearScene.HomeTown, new List<NPCEventData>());

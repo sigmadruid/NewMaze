@@ -8,23 +8,22 @@ using Base;
 
 namespace StaticData
 {
+    public enum DataFileType
+    {
+        Config,
+        Plot,
+    }
     public class BaseParser
     {
         public static bool CHECK_TYPE = true;
-		public static string CONFIG_PATH = Application.streamingAssetsPath + "/Configs/";
+        public static string CONFIG_PATH = Application.streamingAssetsPath + "/Configs/";
+		public static string PLOT_PATH = Application.streamingAssetsPath + "/Configs/";
 
 		private int rowIndex;
-		private List<string[]> dataStrList;
+        private List<string[]> dataStrList = new List<string[]>();
 
-        public BaseParser()
-        {
-			dataStrList = new List<string[]>();
-        }
-
-		protected void LoadFile(string name)
+        protected void LoadFile(string path)
 		{
-			string path = CONFIG_PATH + name;
-
 			if (File.Exists(path))
 			{
                 StreamReader sr = new StreamReader(path, System.Text.UTF8Encoding.UTF8);

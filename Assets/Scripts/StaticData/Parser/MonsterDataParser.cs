@@ -7,7 +7,7 @@ namespace StaticData
     {
 		public void Parse(string name, out Dictionary<int, MonsterData> kvDic, out List<MonsterData> dataList)
         {
-			LoadFile(name);
+            LoadFile(CONFIG_PATH + name);
 			
 			kvDic = new Dictionary<int, MonsterData>();
 			dataList = new List<MonsterData>();
