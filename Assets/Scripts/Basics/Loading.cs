@@ -14,24 +14,23 @@ public class Loading : MonoBehaviour
 	void Start()
 	{
 		string sceneName = Game.Instance.LoadingStageEnum.ToString();
-		operation = SceneManager.LoadSceneAsync(sceneName.ToString());
+		operation = SceneManager.LoadSceneAsync(sceneName);
 		operation.allowSceneActivation = false;
-
-		StartCoroutine(UpdateLoading());
 	}
 
-	IEnumerator UpdateLoading()
-	{
-		while(operation.progress < 0.9f) 
-		{
-			SliderProgress.value = operation.progress;
-			yield return new WaitForEndOfFrame();
-		}
-		SliderProgress.value = 1f;
-		
-		operation.allowSceneActivation = true;  
-//		yield return new WaitForEndOfFrame();
-//		Game.Instance.SwitchStageComplete();
-	}
+    void Update()
+    {
+        if(operation.progress < 0.9f)
+        {
+            Debug.LogError(operation.progress);
+            SliderProgress.value = operation.progress;
+        }
+        else
+        {
+            SliderProgress.value = 1f;
+            operation.allowSceneActivation = true; 
+        }
+    }
+
 }
 

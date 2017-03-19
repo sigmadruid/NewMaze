@@ -120,7 +120,7 @@ namespace GameLogic
 				currentStage.End();
 			}
 			LoadingStageEnum = stageEnum;
-            SceneManager.LoadScene("Loading");
+            SceneManager.LoadSceneAsync("Loading");
 		}
 
 		public void SwitchStageComplete()

@@ -16,11 +16,11 @@ public class ItemScript : EntityScript
     private Vector3 destPosition;
     private Vector3 midPosition;
 
-    private Collider collider;
+    private Collider trigger;
 
     void Awake()
     {
-        collider = GetComponent<Collider>();
+        trigger = GetComponent<Collider>();
     }
 
     void Update()
@@ -32,7 +32,7 @@ public class ItemScript : EntityScript
             if (Vector3.SqrMagnitude(transform.position - destPosition) < 0.01f)
             {
                 isFlying = false;
-                collider.enabled = true;
+                trigger.enabled = true;
             }
         }
     }
@@ -46,7 +46,7 @@ public class ItemScript : EntityScript
 
         t = 0f;
         isFlying = true;
-        collider.enabled = false;
+        trigger.enabled = false;
     }
 }
 

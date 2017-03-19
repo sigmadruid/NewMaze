@@ -44,7 +44,7 @@ namespace GameUI
 		{
             timer = 0;
             isPlaying = true;
-            Tweener tweener = group.DOFade(1, LOOP_DURATION).SetLoops(2, LoopType.Yoyo);
+            group.DOFade(1, LOOP_DURATION).SetLoops(2, LoopType.Yoyo);
 		}
 
 		private void OnComplete()
