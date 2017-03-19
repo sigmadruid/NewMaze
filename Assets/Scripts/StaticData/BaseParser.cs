@@ -17,7 +17,7 @@ namespace StaticData
     {
         public static bool CHECK_TYPE = true;
         public static string CONFIG_PATH = Application.streamingAssetsPath + "/Configs/";
-		public static string PLOT_PATH = Application.streamingAssetsPath + "/Configs/";
+		public static string PLOT_PATH = Application.streamingAssetsPath + "/Plots/";
 
 		private int rowIndex;
         private List<string[]> dataStrList = new List<string[]>();
@@ -135,6 +135,27 @@ namespace StaticData
             string str = ReadString(col);
 			return ParseKey<T>(str, col);
 		}
+        private Vector3 ParseVector3(string str, int col)
+        {
+            string[] strList = str.Split('#');
+            Vector3 vec = Vector3.zero;
+            if(CHECK_TYPE)
+            {
+                bool result = strList != null && strList.Length == 3;
+                if (!result)
+                    BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", str, rowIndex, col, this.ToString());
+            }
+            vec.x = ParseFloat(strList[0], col);
+            vec.y = ParseFloat(strList[1], col);
+            vec.z = ParseFloat(strList[2], col);
+            return vec;
+        }
+        protected Vector3 ReadVector3(int col)
+        {
+            string[] strArray = dataStrList[rowIndex];
+            string str = strArray[col];
+            return ParseVector3(str, col);
+        }
 		protected List<string> ReadStringList(int col)
 		{
 			string value = ReadString(col);

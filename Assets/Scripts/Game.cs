@@ -9,6 +9,7 @@ using Base;
 using StaticData;
 using GameLogic;
 using Battle;
+using GamePlot;
 
 namespace GameLogic
 {
@@ -19,6 +20,7 @@ namespace GameLogic
 		public bool IsPause = false;
 
         public ConfigManager ConfigManager;
+        public PlotRunner PlotRunner;
         public AICore AICore;
 
         private BaseStage currentStage;
@@ -41,6 +43,7 @@ namespace GameLogic
             framework = Framework.Instance;
             ConfigManager = ConfigManager.Instance;
 			AICore = new AICore();
+            PlotRunner = new PlotRunner();
 		}
 
 		public void Init()
@@ -53,6 +56,7 @@ namespace GameLogic
             framework.Init();
 
 			ConfigManager.InitAllData();
+            PlotRunner.Init();
 
             framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
             framework.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, AICore.SlowUpdate);
