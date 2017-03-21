@@ -10,13 +10,14 @@ namespace StaticData
             LoadFile(PLOT_PATH + name);
 
             dataList = new List<SegmentData>();
+            int step = 1;
 
             while(!EndOfRow)
             {
                 int col = 0;
                 SegmentData data = new SegmentData();
 
-                data.Step = ReadInt(col++);
+                data.Step = step++;
                 data.StartTime = ReadFloat(col++);
                 data.EndTime = ReadFloat(col++);
                 data.Type = ReadEnum<SegmentType>(col++);

@@ -59,6 +59,9 @@ namespace Base
                 {
                     DirectionVector = Vector3.zero;
                     MouseHitPosition = Vector3.zero;
+                    MouseHitObject = null;
+                    MouseHoverPosition = Vector3.zero;
+                    MouseHoverObject = null;
                 }
             }
         }

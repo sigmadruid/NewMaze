@@ -11,7 +11,7 @@ namespace GameLogic
 {
 	public class TownHeroMediator : Mediator
 	{
-        private AdamScript heroScript;
+        private Adam adam;
 
 		private InputManager inputManager;
 
@@ -44,35 +44,36 @@ namespace GameLogic
 
 		private void HandleTownHeroInit()
 		{
-            heroScript = GameObject.Find("TownHero").GetComponent<AdamScript>();
-            heroScript.Switch(AnimatorDataManager.Instance.ParamDoUnarmed);
-            heroScript.CallbackUpdate = OnUpdate;
+            int heroKid = IDManager.Instance.GetKid(IDType.Hero, 0);
+            adam = Adam.Create(heroKid, null);
+            adam.SetPosition(new Vector3(-1.77f, 0, 13.02f));
+            adam.Switch(AnimatorDataManager.Instance.ParamDoUnarmed);
 		}
 		private void HandleTownHeroDispose()
 		{
-			GameObject.Destroy(heroScript.gameObject);
+            Adam.Recycle();
 		}
 
-		private void OnUpdate()
-		{
-            float speed = GlobalConfig.HeroConfig.TownAdamWalkSpeed;
-            if(inputManager.MouseHitPosition != Vector3.zero)
-            {
-                if(MathUtils.XZSqrDistance(heroScript.transform.position, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
-                {
-                    heroScript.Move(inputManager.MouseHitPosition, speed);
-                }
-                else
-                {
-                    heroScript.Move(Vector3.zero, 0);
-                }
-            }
-            else
-            {
-                heroScript.Move(Vector3.zero, 0);
-            }
-
-		}
+//		private void OnUpdate()
+//		{
+//            float speed = GlobalConfig.HeroConfig.TownAdamWalkSpeed;
+//            if(inputManager.MouseHitPosition != Vector3.zero)
+//            {
+//                if(MathUtils.XZSqrDistance(heroScript.transform.position, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+//                {
+//                    heroScript.Move(inputManager.MouseHitPosition, speed);
+//                }
+//                else
+//                {
+//                    heroScript.Move(Vector3.zero, 0);
+//                }
+//            }
+//            else
+//            {
+//                heroScript.Move(Vector3.zero, 0);
+//            }
+//
+//		}
 	}
 }
 

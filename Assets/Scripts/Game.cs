@@ -56,7 +56,6 @@ namespace GameLogic
             framework.Init();
 
 			ConfigManager.InitAllData();
-            PlotRunner.Init();
 
             framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
             framework.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, AICore.SlowUpdate);
@@ -64,12 +63,15 @@ namespace GameLogic
 			ApplicationFacade.Instance.Startup();
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
 
+            PlotRunner.Init();
+
 			hasInit = true;
 		}
 
 		public void Update(float deltaTime)
 		{
             InputManager.Instance.Update();
+            PlotRunner.Update(deltaTime);
 
 			if (IsPause)  return; 
 			TaskManager.Update(deltaTime);

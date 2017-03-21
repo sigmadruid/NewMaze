@@ -10,7 +10,7 @@ using Battle;
 
 namespace GameLogic
 {
-    public class Adam : Entity
+    public class Adam : Entity, GamePlot.IActor
     {
         public Action CallbackDie;
 
@@ -53,7 +53,7 @@ namespace GameLogic
 
         protected override void Update()
         {
-            if(!IsUpdating)
+            if(!IsUpdating || Game.Instance.PlotRunner.IsPlaying)
                 return;
 
             if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(0))
@@ -106,7 +106,7 @@ namespace GameLogic
         {
             if (!IsSlowUpdating)
                 return;
-            if(!Info.IsInHall)
+            if(Game.Instance.CurrentStageType == StageEnum.Maze && !Info.IsInHall)
             {
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
             }
@@ -212,9 +212,17 @@ namespace GameLogic
 
         #region Animations
 
+        public void Idle()
+        {
+            Script.Move(Vector3.zero, 0f);
+        }
         public void Move(Vector3 destination)
         {
             Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
+        }
+        public void LookAt(Vector3 destPos)
+        {
+//            Script.LookAt(destPos - WorldPosition);
         }
         public void Skill(int skillIndex)
         {
@@ -246,6 +254,9 @@ namespace GameLogic
         private void OnDie()
         {
             CallbackDie();
+        }
+        public void PlayAnimation(string trigger)
+        {
         }
         public void Switch(int eliteHash)
         {

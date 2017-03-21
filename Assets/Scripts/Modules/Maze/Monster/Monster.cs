@@ -9,7 +9,7 @@ using Battle;
 
 namespace GameLogic
 {
-	public class Monster : Entity
+    public class Monster : Entity, GamePlot.IActor
 	{
         public bool InHall;
 
@@ -31,7 +31,7 @@ namespace GameLogic
 
 		private BattleProxy battleProxy;
 
-		#region Animations
+        #region Animations
 
 		public void Idle()
 		{
@@ -45,7 +45,7 @@ namespace GameLogic
 		{
             Script.LookAt(destPos - WorldPosition);
 		}
-		public void Attack()
+        public void Skill(int skillIndex)
 		{
 			Script.Attack(null, OnAttack, null);
 		}
@@ -63,6 +63,9 @@ namespace GameLogic
             SetAtNight(false);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
 		}
+        public void PlayAnimation(string trigger)
+        {
+        }
 
         #endregion
 
@@ -84,9 +87,7 @@ namespace GameLogic
 		protected override void Update()
 		{
 			if (!Info.IsAlive)
-			{
 				return;
-			}
 
             Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP));
 		}
