@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class MazeDataParser : BaseParser
@@ -11,27 +13,36 @@ namespace StaticData
 			
 			kvDic = new Dictionary<int, MazeData>();
 			
-			while(!EndOfRow)
-			{
-				int col = 0;
-				MazeData data = new MazeData();
-				
-				data.Kid = ReadInt(col++);
-				data.StartCol = ReadInt(col++);
-				data.StartRow = ReadInt(col++);
-				data.BlockSize = ReadFloat(col++);
-				data.Cols = ReadInt(col++);
-				data.Rows = ReadInt(col++);
-				data.LinkRate = ReadFloat(col++);
-				data.PassageRate = ReadFloat(col++);
-				data.MonsterMaxCount = ReadInt(col++);
-				data.NPCMaxCount = ReadInt(col++);
-				data.ExplorationMaxCount = ReadInt(col++);
-                data.GlobalExplorationCountDic = ReadDictionary<ExplorationType, int>(col++);
-				
-				kvDic.Add(data.Kid, data);
-				NextLine();
-			}
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    col = 0;
+                    MazeData data = new MazeData();
+
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.StartCol = StaticReader.ReadInt(GetContent(col++));
+                    data.StartRow = StaticReader.ReadInt(GetContent(col++));
+                    data.BlockSize = StaticReader.ReadFloat(GetContent(col++));
+                    data.Cols = StaticReader.ReadInt(GetContent(col++));
+                    data.Rows = StaticReader.ReadInt(GetContent(col++));
+                    data.LinkRate = StaticReader.ReadFloat(GetContent(col++));
+                    data.PassageRate = StaticReader.ReadFloat(GetContent(col++));
+                    data.MonsterMaxCount = StaticReader.ReadInt(GetContent(col++));
+                    data.NPCMaxCount = StaticReader.ReadInt(GetContent(col++));
+                    data.ExplorationMaxCount = StaticReader.ReadInt(GetContent(col++));
+                    data.GlobalExplorationCountDic = StaticReader.ReadDictionary<ExplorationType, int>(GetContent(col++));
+
+                    kvDic.Add(data.Kid, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
         }
     }
 }

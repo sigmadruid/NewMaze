@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+
+using Base;
+
 namespace StaticData
 {
     public class ExplorationDataParser : BaseParser
@@ -17,22 +20,31 @@ namespace StaticData
 				typeDic.Add((ExplorationType)val, new List<ExplorationData>());
 			}
 
-			while (!EndOfRow)
-			{
-				int col = 0;
-				ExplorationData data = new ExplorationData();
-				data.Kid = ReadInt(col++);
-				data.Type = ReadEnum<ExplorationType>(col++);
-				data.Res3D = ReadString(col++);
-				data.MazeKid = ReadInt(col++);
-                data.IsGlobal = ReadBool(col++);
-                data.Param1 = ReadString(col++);
-                data.Param2 = ReadString(col++);
-                data.Param3 = ReadString(col++);
-				kvDic.Add(data.Kid, data);
-				typeDic[data.Type].Add(data);
-				NextLine();
-			}
+            int col = 0;
+            try
+            {
+                while (!EndOfRow)
+                {
+                    col = 0;
+                    ExplorationData data = new ExplorationData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Type = StaticReader.ReadEnum<ExplorationType>(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.MazeKid = StaticReader.ReadInt(GetContent(col++));
+                    data.IsGlobal = StaticReader.ReadBool(GetContent(col++));
+                    data.Param1 = StaticReader.ReadString(GetContent(col++));
+                    data.Param2 = StaticReader.ReadString(GetContent(col++));
+                    data.Param3 = StaticReader.ReadString(GetContent(col++));
+                    kvDic.Add(data.Kid, data);
+                    typeDic[data.Type].Add(data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
 
     }

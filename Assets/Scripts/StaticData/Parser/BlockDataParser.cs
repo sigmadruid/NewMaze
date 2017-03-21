@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class BlockDataParser : BaseParser
@@ -22,31 +24,40 @@ namespace StaticData
 			roomList = new List<BlockData>();
 			kvDic = new Dictionary<int, BlockData>();
 
-			while (!EndOfRow)
-			{
-				int col = 0;
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    col = 0;
 
-				BlockData data = new BlockData();
-				data.Kid = ReadInt(col++);
-				data.BlockType = ReadEnum<BlockType>(col++);
-				data.PassageType = ReadEnum<PassageType>(col++);
-				data.Cols = ReadInt(col++);
-				data.Rows = ReadInt(col++);
-				data.LeftOffset = ReadInt(col++);
-				data.Res3D = ReadString(col++);
+                    BlockData data = new BlockData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.BlockType = StaticReader.ReadEnum<BlockType>(GetContent(col++));
+                    data.PassageType = StaticReader.ReadEnum<PassageType>(GetContent(col++));
+                    data.Cols = StaticReader.ReadInt(GetContent(col++));
+                    data.Rows = StaticReader.ReadInt(GetContent(col++));
+                    data.LeftOffset = StaticReader.ReadInt(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
 
-				if (data.BlockType == BlockType.Passage)
-				{
-					passageDic[data.PassageType].Add(data);
-				}
-				else
-				{
-					roomList.Add(data);
-				}
-				kvDic.Add(data.Kid, data);
+                    if (data.BlockType == BlockType.Passage)
+                    {
+                        passageDic[data.PassageType].Add(data);
+                    }
+                    else
+                    {
+                        roomList.Add(data);
+                    }
+                    kvDic.Add(data.Kid, data);
 
-				NextLine();
-			}
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class TextDataParser : BaseParser
@@ -11,14 +13,23 @@ namespace StaticData
 			
             kvDic = new Dictionary<string, string>();
 			
-			while(!EndOfRow)
-			{
-				int col = 0;
-                string id = ReadString(col++);
-				string text = ReadString(col++);
-				kvDic.Add(id, text);
-				NextLine();
-			}
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    col = 0;
+                    string id = StaticReader.ReadString(GetContent(col++));
+                    string text = StaticReader.ReadString(GetContent(col++));
+                    kvDic.Add(id, text);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
     }
 }

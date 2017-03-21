@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class NPCEventDataParser : BaseParser
@@ -15,24 +17,33 @@ namespace StaticData
 
 			kvDic = new Dictionary<int, NPCEventData>();
 
-			while (!EndOfRow)
-			{
-				int col = 0;
+            int col = 0;
+            try
+            {
+                while (!EndOfRow)
+                {
+                    col = 0;
 
-				NPCEventData data = new NPCEventData();
-				data.Kid = ReadInt(col++);
-				data.AppearScene = ReadEnum<NPCAppearScene>(col++);
-				data.Type = ReadEnum<NPCEventType>(col++);
-                data.FirstTalkList = ReadStringList(col++);
-                data.InTaskTalkList = ReadStringList(col++);
-                data.FinishTalkList = ReadStringList(col++);
-                data.EndTalkList = ReadStringList(col++);
+                    NPCEventData data = new NPCEventData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.AppearScene = StaticReader.ReadEnum<NPCAppearScene>(GetContent(col++));
+                    data.Type = StaticReader.ReadEnum<NPCEventType>(GetContent(col++));
+                    data.FirstTalkList = StaticReader.ReadStringList(GetContent(col++));
+                    data.InTaskTalkList = StaticReader.ReadStringList(GetContent(col++));
+                    data.FinishTalkList = StaticReader.ReadStringList(GetContent(col++));
+                    data.EndTalkList = StaticReader.ReadStringList(GetContent(col++));
 
-				typeDic[data.AppearScene].Add(data);
-				kvDic.Add(data.Kid, data);
+                    typeDic[data.AppearScene].Add(data);
+                    kvDic.Add(data.Kid, data);
 
-				NextLine();
-			}
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
     }
 }

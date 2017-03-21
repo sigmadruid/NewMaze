@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class CurrencyDataParser : BaseParser
@@ -12,20 +14,29 @@ namespace StaticData
 			
 			kvDic = new Dictionary<int, CurrencyData>();
 			
-			while (!EndOfRow)
-			{
-				int col = 0;
-				
-				CurrencyData data = new CurrencyData();
-				data.Kid = ReadInt(col++);
-				data.Name = ReadString(col++);
-				data.Desc = ReadString(col++);
-				data.Res2D = ReadString(col++);
-				data.Res3DList = ReadStringList(col++);
-				kvDic.Add(data.Kid, data);
-				
-				NextLine();
-			}
+            int col = 0;
+            try
+            {
+                while (!EndOfRow)
+                {
+                    col = 0;
+
+                    CurrencyData data = new CurrencyData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.Desc = StaticReader.ReadString(GetContent(col++));
+                    data.Res2D = StaticReader.ReadString(GetContent(col++));
+                    data.Res3DList = StaticReader.ReadStringList(GetContent(col++));
+                    kvDic.Add(data.Kid, data);
+
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
         }
     }
 }

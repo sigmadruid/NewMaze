@@ -81,7 +81,6 @@ namespace StaticData
         public readonly float NearSqrDistance = 0.1f;
         public readonly int MouseHitMask = Layers.LayerWalkSurface | Layers.LayerMonster | Layers.LayerItem;
         public readonly int MouseHoverMask = Layers.LayerBlock | Layers.LayerMonster | Layers.LayerNPC | Layers.LayerItem;
-
     }
 
 	public class CameraConfig
@@ -99,6 +98,11 @@ namespace StaticData
         public readonly int NightFuryBuffID = 120001;
 	}
 
+    public class StaticDataConfig
+    {
+        public readonly bool CheckType = true;
+    }
+
     public class GlobalConfig
     {
         public static HeroConfig HeroConfig = new HeroConfig();
@@ -111,6 +115,7 @@ namespace StaticData
 		public static EnvironmentConfig EnvironmentConfig = new EnvironmentConfig();
 		public static HallConfig HallConfig = new HallConfig();
         public static PathfindingConfig PathfindingConfig = new PathfindingConfig();
+        public static StaticDataConfig StaticDataConfig = new StaticDataConfig();
 
 		private Dictionary<IDType, EntityManager> managerDic;
 

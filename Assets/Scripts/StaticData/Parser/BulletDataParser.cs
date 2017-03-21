@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class BulletDataParser : BaseParser
@@ -11,21 +13,30 @@ namespace StaticData
 			
 			kvDic = new Dictionary<int, BulletData>();
 
-			while(!EndOfRow)
-			{
-				int col = 0;
-				BulletData data = new BulletData();
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    BulletData data = new BulletData();
 
-				data.Kid = ReadInt(col++);
-				data.Name = ReadString(col++);
-				data.Res3D = ReadString(col++);
-				data.Speed = ReadFloat(col++);
-                data.Radius = ReadFloat(col++);
-                data.EndDuration = ReadFloat(col++);
-
-				kvDic.Add(data.Kid, data);
-				NextLine();
-			}
+                    col = 0;
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.Speed = StaticReader.ReadFloat(GetContent(col++));
+                    data.Radius = StaticReader.ReadFloat(GetContent(col++));
+                    data.EndDuration = StaticReader.ReadFloat(GetContent(col++));
+                    
+                    kvDic.Add(data.Kid, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
         }
     }
 }

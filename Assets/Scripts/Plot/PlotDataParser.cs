@@ -18,15 +18,15 @@ namespace StaticData
                 SegmentData data = new SegmentData();
 
                 data.Step = step++;
-                data.StartTime = ReadFloat(col++);
-                data.EndTime = ReadFloat(col++);
-                data.Type = ReadEnum<SegmentType>(col++);
-                data.Target = ReadString(col++);
-                data.Position = ReadVector3(col++);
-                data.Orientation = ReadVector3(col++);
-                data.Param1 = ReadString(col++);
-                data.Param2 = ReadString(col++);
-                data.Param3 = ReadString(col++);
+                data.StartTime = StaticReader.ReadFloat(GetContent(col++));
+                data.EndTime = StaticReader.ReadFloat(GetContent(col++));
+                data.Type = StaticReader.ReadEnum<SegmentType>(GetContent(col++));
+                data.Target = StaticReader.ReadString(GetContent(col++));
+                data.Position = StaticReader.ReadVector3(GetContent(col++));
+                data.Orientation = StaticReader.ReadVector3(GetContent(col++));
+                data.Param1 = StaticReader.ReadString(GetContent(col++));
+                data.Param2 = StaticReader.ReadString(GetContent(col++));
+                data.Param3 = StaticReader.ReadString(GetContent(col++));
 
                 dataList.Add(data);
                 NextLine();

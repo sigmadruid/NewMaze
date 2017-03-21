@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
 	public class HeroDataParser : BaseParser
@@ -11,31 +13,40 @@ namespace StaticData
 
 			kvDic = new Dictionary<int, HeroData>();
 
-			while (!EndOfRow)
-			{
-				int col = 0;
-				HeroData data = new HeroData();
+            int col = 0;
+            try
+            {
+                while (!EndOfRow)
+                {
+                    col = 0;
+                    HeroData data = new HeroData();
 
-				data.Kid = ReadInt(col++);
-                data.Name = ReadString(col++);
-                data.Res2D = ReadString(col++);
-				data.Res3D = ReadString(col++);
-				data.HP = ReadInt(col++);
-				data.Attack = ReadInt(col++);
-				data.Defense = ReadInt(col++);
-				data.Critical = ReadInt(col++);
-				data.Dodge = ReadInt(col++);
-                data.MoveSpeed = ReadFloat(col++);
-                data.AttackSpeed = ReadFloat(col++);
-				data.AttackType = ReadEnum<AttackType>(col++);
-                data.SkillList = ReadIntList(col++);
-                data.Trigger = ReadString(col++);
-                data.LeftWeapon = ReadInt(col++);
-                data.RightWeapon = ReadInt(col++);
-				
-				kvDic.Add(data.Kid, data);
-				NextLine();
-			}
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.Res2D = StaticReader.ReadString(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.HP = StaticReader.ReadInt(GetContent(col++));
+                    data.Attack = StaticReader.ReadInt(GetContent(col++));
+                    data.Defense = StaticReader.ReadInt(GetContent(col++));
+                    data.Critical = StaticReader.ReadInt(GetContent(col++));
+                    data.Dodge = StaticReader.ReadInt(GetContent(col++));
+                    data.MoveSpeed = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackSpeed = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackType = StaticReader.ReadEnum<AttackType>(GetContent(col++));
+                    data.SkillList = StaticReader.ReadIntList(GetContent(col++));
+                    data.Trigger = StaticReader.ReadString(GetContent(col++));
+                    data.LeftWeapon = StaticReader.ReadInt(GetContent(col++));
+                    data.RightWeapon = StaticReader.ReadInt(GetContent(col++));
+
+                    kvDic.Add(data.Kid, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
     }
 }

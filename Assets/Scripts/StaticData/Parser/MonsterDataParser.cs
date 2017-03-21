@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class MonsterDataParser : BaseParser
@@ -12,37 +14,46 @@ namespace StaticData
 			kvDic = new Dictionary<int, MonsterData>();
 			dataList = new List<MonsterData>();
 			
-			while(!EndOfRow)
-			{
-				int col = 0;
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    col = 0;
 
-				MonsterData data = new MonsterData();
-				data.Kid = ReadInt(col++);
-                data.Name = ReadString(col++);
-                data.Res2D = ReadString(col++);
-				data.Res3D = ReadString(col++);
-				data.HP = ReadInt(col++);
-				data.Attack = ReadInt(col++);
-				data.Defense = ReadInt(col++);
-				data.Critical = ReadInt(col++);
-				data.Dodge = ReadInt(col++);
-                data.MoveSpeed = ReadFloat(col++);
-                data.AttackSpeed = ReadFloat(col++);
-				data.AttackType = ReadEnum<AttackType>(col++);
-                data.SkillList = ReadIntList(col++);
-                data.DetectRange = ReadFloat(col++);
-				data.AttackDelay = ReadFloat(col++);
-				data.AttackRange = ReadFloat(col++);
-				data.DodgeDelay = ReadFloat(col++);
-				data.DodgeRange = ReadFloat(col++);
-				data.AppearWeight = ReadInt(col++);
-                data.DropKid = ReadInt(col++);
+                    MonsterData data = new MonsterData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.Res2D = StaticReader.ReadString(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.HP = StaticReader.ReadInt(GetContent(col++));
+                    data.Attack = StaticReader.ReadInt(GetContent(col++));
+                    data.Defense = StaticReader.ReadInt(GetContent(col++));
+                    data.Critical = StaticReader.ReadInt(GetContent(col++));
+                    data.Dodge = StaticReader.ReadInt(GetContent(col++));
+                    data.MoveSpeed = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackSpeed = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackType = StaticReader.ReadEnum<AttackType>(GetContent(col++));
+                    data.SkillList = StaticReader.ReadIntList(GetContent(col++));
+                    data.DetectRange = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackDelay = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackRange = StaticReader.ReadFloat(GetContent(col++));
+                    data.DodgeDelay = StaticReader.ReadFloat(GetContent(col++));
+                    data.DodgeRange = StaticReader.ReadFloat(GetContent(col++));
+                    data.AppearWeight = StaticReader.ReadInt(GetContent(col++));
+                    data.DropKid = StaticReader.ReadInt(GetContent(col++));
 
-				kvDic.Add(data.Kid, data);
-				dataList.Add(data);
-				
-				NextLine();
-			}
+                    kvDic.Add(data.Kid, data);
+                    dataList.Add(data);
+
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
         }
     }
 }

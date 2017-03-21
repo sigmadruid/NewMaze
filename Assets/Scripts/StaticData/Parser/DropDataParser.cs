@@ -13,22 +13,31 @@ namespace StaticData
 			
 			kvDic = new Dictionary<int, DropData>();
 			
-			while (!EndOfRow)
-			{
-				int col = 0;
-				
-				DropData data = new DropData();
-                data.Kid = ReadInt(col++);
-                data.MaxNum = ReadInt(col++);
-                data.ItemKidList = ReadIntList(col++);
-                data.MinCountList = ReadIntList(col++);
-                data.MaxCountList = ReadIntList(col++);
-                data.WeightList = ReadIntList(col++);
+            int col = 0;
+            try
+            {
+                while (!EndOfRow)
+                {
+                    col = 0;
 
-				kvDic.Add(data.Kid, data);
-				
-				NextLine();
-			}
+                    DropData data = new DropData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.MaxNum = StaticReader.ReadInt(GetContent(col++));
+                    data.ItemKidList = StaticReader.ReadIntList(GetContent(col++));
+                    data.MinCountList = StaticReader.ReadIntList(GetContent(col++));
+                    data.MaxCountList = StaticReader.ReadIntList(GetContent(col++));
+                    data.WeightList = StaticReader.ReadIntList(GetContent(col++));
+
+                    kvDic.Add(data.Kid, data);
+
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
         }
     }
 }

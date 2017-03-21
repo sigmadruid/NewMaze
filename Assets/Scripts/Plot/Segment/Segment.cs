@@ -80,12 +80,12 @@ namespace GamePlot
 
     public class MoveSegment : Segment
     {
-        private Vector3 endPos = new Vector3(-7.32f, 0, 11.06f);
         public override void Start()
         {
             base.Start();
             Vector3 startPos = Data.Position;
             Vector3 startDir = Data.Orientation;
+            Vector3 endPos = StaticReader.ReadVector3(Data.Param1);
             if(startPos != Vector3.zero)
                 Actor.SetPosition(startPos);
             if(startDir != Vector3.zero)
@@ -99,6 +99,7 @@ namespace GamePlot
         public override void End()
         {
             base.End();
+            Vector3 endPos = StaticReader.ReadVector3(Data.Param1);
             Actor.SetPosition(endPos);
         }
     }

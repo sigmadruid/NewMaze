@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class BuffDataParser : BaseParser
@@ -13,21 +15,30 @@ namespace StaticData
 
             kvDic = new Dictionary<int, BuffData>();
 
-            while(!EndOfRow)
+            int col = 0;
+            try
             {
-                int col = 0;
-                BuffData data = new BuffData();
+                while(!EndOfRow)
+                {
+                    col = 0;
+                    BuffData data = new BuffData();
 
-                data.Kid = ReadInt(col++);
-                data.Type = ReadEnum<BuffType>(col++);
-                data.SpecialType = ReadEnum<BuffSpecialType>(col++);
-                data.Duration = ReadFloat(col++);
-                data.AttributeRatioDic = ReadDictionary<int, float>(col++);
-                data.AttributeRaiseDic = ReadDictionary<int, int>(col++);
-                data.EmissionColor = ReadColor(col++);
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Type = StaticReader.ReadEnum<BuffType>(GetContent(col++));
+                    data.SpecialType = StaticReader.ReadEnum<BuffSpecialType>(GetContent(col++));
+                    data.Duration = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttributeRatioDic = StaticReader.ReadDictionary<int, float>(GetContent(col++));
+                    data.AttributeRaiseDic = StaticReader.ReadDictionary<int, int>(GetContent(col++));
+                    data.EmissionColor = StaticReader.ReadColor(GetContent(col++));
 
-                kvDic.Add(data.Kid, data);
-                NextLine();
+                    kvDic.Add(data.Kid, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
             }
         }
     }

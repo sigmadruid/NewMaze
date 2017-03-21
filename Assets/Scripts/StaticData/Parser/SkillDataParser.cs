@@ -13,24 +13,33 @@ namespace StaticData
 
             kvDic = new Dictionary<int, SkillData>();
 
-            while (!EndOfRow)
+            int col = 0;
+            try
             {
-                int col = 0;
+                while (!EndOfRow)
+                {
+                    col = 0;
 
-                SkillData data = new SkillData();
-                data.Kid = ReadInt(col++);
-                data.CD = ReadFloat(col++);
-                data.IsDamage = ReadBool(col++);
-                data.Ratio = ReadFloat(col++);
-                data.CanMove = ReadBool(col++);
-                data.AreaKid = ReadInt(col++);
-                data.NeedTarget = ReadBool(col++);
-                data.Range = ReadFloat(col++);
-                data.BulletKid = ReadInt(col++);
+                    SkillData data = new SkillData();
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.CD = StaticReader.ReadFloat(GetContent(col++));
+                    data.IsDamage = StaticReader.ReadBool(GetContent(col++));
+                    data.Ratio = StaticReader.ReadFloat(GetContent(col++));
+                    data.CanMove = StaticReader.ReadBool(GetContent(col++));
+                    data.AreaKid = StaticReader.ReadInt(GetContent(col++));
+                    data.NeedTarget = StaticReader.ReadBool(GetContent(col++));
+                    data.Range = StaticReader.ReadFloat(GetContent(col++));
+                    data.BulletKid = StaticReader.ReadInt(GetContent(col++));
 
-                kvDic.Add(data.Kid, data);
+                    kvDic.Add(data.Kid, data);
 
-                NextLine();
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
             }
         }
     }

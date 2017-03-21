@@ -15,18 +15,27 @@ namespace StaticData
 
             kvDic = new Dictionary<int, KeyboardData>();
 
-            while(!EndOfRow)
+            int col = 0;
+            try
             {
-                int col = 0;
-                KeyboardData data = new KeyboardData();
+                while(!EndOfRow)
+                {
+                    col = 0;
+                    KeyboardData data = new KeyboardData();
 
-                data.Type = ReadEnum<KeyboardActionType>(col++);
-                data.Key = ReadEnum<KeyCode>(col++);
-                data.Name = ReadString(col++);
-                data.ActiveWhenPause = ReadBool(col++);
+                    data.Type = StaticReader.ReadEnum<KeyboardActionType>(GetContent(col++));
+                    data.Key = StaticReader.ReadEnum<KeyCode>(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.ActiveWhenPause = StaticReader.ReadBool(GetContent(col++));
 
-                kvDic.Add((int)data.Type, data);
-                NextLine();
+                    kvDic.Add((int)data.Type, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
             }
         }
     }

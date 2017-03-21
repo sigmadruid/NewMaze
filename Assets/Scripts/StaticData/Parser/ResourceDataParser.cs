@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class ResourceDataParser : BaseParser
@@ -11,25 +13,34 @@ namespace StaticData
 
 			typeDic = new Dictionary<int, List<ResourceData>>();
 
-			while(!EndOfRow)
-			{
-				int col = 0;
+            int col = 0;
+            try
+            {
+                while(!EndOfRow)
+                {
+                    col = 0;
 
-				ResourceData data = new ResourceData();
-				data.MazeKid = ReadInt(col++);
-                data.EntityKid = ReadInt(col++);
-                data.Path = ReadString(col++);
-				data.Life = ReadInt(col++);
-				data.PreloadCount = ReadInt(col++);
+                    ResourceData data = new ResourceData();
+                    data.MazeKid = StaticReader.ReadInt(GetContent(col++));
+                    data.EntityKid = StaticReader.ReadInt(GetContent(col++));
+                    data.Path = StaticReader.ReadString(GetContent(col++));
+                    data.Life = StaticReader.ReadInt(GetContent(col++));
+                    data.PreloadCount = StaticReader.ReadInt(GetContent(col++));
 
-				if (!typeDic.ContainsKey(data.MazeKid))
-				{
-					typeDic.Add(data.MazeKid, new List<ResourceData>());
-				}
-				typeDic[data.MazeKid].Add(data);
+                    if (!typeDic.ContainsKey(data.MazeKid))
+                    {
+                        typeDic.Add(data.MazeKid, new List<ResourceData>());
+                    }
+                    typeDic[data.MazeKid].Add(data);
 
-				NextLine();
-			}
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
+            }
 		}
     }
 }

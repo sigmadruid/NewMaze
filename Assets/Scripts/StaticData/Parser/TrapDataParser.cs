@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Base;
+
 namespace StaticData
 {
     public class TrapDataParser : BaseParser
@@ -11,18 +13,28 @@ namespace StaticData
 
             kvDic = new Dictionary<int, TrapData>();
 
-            while(!EndOfRow)
+
+            int col = 0;
+            try
             {
-                int col = 0;
-                TrapData data = new TrapData();
+                while(!EndOfRow)
+                {
+                    col = 0;
+                    TrapData data = new TrapData();
 
-                data.Kid = ReadInt(col++);
-                data.Name = ReadString(col++);
-                data.Res3D = ReadString(col++);
-                data.Attack = ReadFloat(col++);
+                    data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Name = StaticReader.ReadString(GetContent(col++));
+                    data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.Attack = StaticReader.ReadFloat(GetContent(col++));
 
-                kvDic.Add(data.Kid, data);
-                NextLine();
+                    kvDic.Add(data.Kid, data);
+                    NextLine();
+                }
+            }
+            catch(Exception e)
+            {
+                col--;
+                BaseLogger.LogFormat("WRONG FORMAT IN CONFIG!! str={0},row={1},col={2},file={3}", GetContent(col), RowIndex, col, this.ToString());
             }
         }
     }
