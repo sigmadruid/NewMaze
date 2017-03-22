@@ -237,6 +237,11 @@ namespace GameLogic
             return priority == currentAnimatorData.Priority && currentAnimatorData.IsLoop || (int)priority > (int)currentAnimatorData.Priority;
         }
 
+        public void PlayAnimation(int hash)
+        {
+            animator.SetTrigger(hash);
+        }
+
     	#endregion
 
         #region Renderering 

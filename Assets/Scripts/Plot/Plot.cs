@@ -9,6 +9,14 @@ using StaticData;
 
 namespace GamePlot
 {
+    public enum PlotState
+    {
+        NotReady,
+        Initialized,
+        Prepared,
+        Playing,
+        Ended,
+    }
     public class Plot
     {
         public Action CallbackEnd;
@@ -35,6 +43,7 @@ namespace GamePlot
             Data.Actors.Add(actorData);
             PlotDataParser dataParser = new PlotDataParser();
             dataParser.Parse(Data.Name + ".csv", out Data.Segments);
+
         }
         public void Dispose()
         {
@@ -43,7 +52,7 @@ namespace GamePlot
 
         public void Update(float deltaTime)
         {
-            if(IsPlaying)
+            if(state == PlotState.Playing)
             {
                 int i = minStep;
                 while(i < segmentList.Count)
@@ -69,7 +78,7 @@ namespace GamePlot
                             {
                                 Debug.Log("plot end: " + Data.Name);
                                 CallbackEnd();
-                                IsPlaying = false;
+                                state = PlotState.Ended;
                             }
                             minStep++;
                         }
@@ -79,15 +88,17 @@ namespace GamePlot
             }
         }
 
-        public bool IsPlaying { get; private set; }
+        private PlotState state = PlotState.NotReady;
+        public PlotState State { get { return state; } }
 
-        public void Play()
+        public void Prepare()
         {
-            Debug.Log("plot play: " + Data.Name);
-            IsPlaying = true;
-            minStep = 0;
-            timer = 0;
-
+            Debug.Log("plot prepare: " + Data.Name);
+            for(int i = 0; i < Data.Segments.Count; ++i)
+            {
+                Segment segment = Segment.Create(Data.Segments[i]);
+                segmentList.Add(segment);
+            }
             for(int i = 0; i < Data.Actors.Count; ++i)
             {
                 ActorData data = Data.Actors[i];
@@ -111,12 +122,15 @@ namespace GamePlot
                 if (data.StartOrientation != Vector3.zero)
                     actor.SetRotation(data.StartOrientation);
             }
+            state = PlotState.Prepared;
+        }
 
-            for(int i = 0; i < Data.Segments.Count; ++i)
-            {
-                Segment segment = Segment.Create(Data.Segments[i]);
-                segmentList.Add(segment);
-            }
+        public void Play()
+        {
+            Debug.Log("plot play: " + Data.Name);
+            state = PlotState.Playing;
+            minStep = 0;
+            timer = 0;
         }
 
     }

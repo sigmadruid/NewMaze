@@ -65,6 +65,8 @@ namespace GameLogic
 		}
         public void PlayAnimation(string trigger)
         {
+            int hash = Animator.StringToHash(trigger);
+            Script.PlayAnimation(hash);
         }
 
         #endregion

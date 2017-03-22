@@ -62,11 +62,8 @@ namespace GamePlot
         public override void Start()
         {
             base.Start();
-            int trigger = Animator.StringToHash(Data.Param1);
-            if(trigger == AnimatorDataManager.Instance.ParamDoSkill)
-            {
-                Actor.Skill(0);
-            }
+            Actor.Idle();
+            Actor.PlayAnimation(Data.Param1);
         }
         public override void Update(float deltaTime)
         {

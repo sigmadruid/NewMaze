@@ -11,9 +11,6 @@ namespace GamePlot
         void Idle();
         void Move(Vector3 destination);
         void LookAt(Vector3 destPos);
-        void Skill(int skillIndex);
-        void Hit();
-        void Die();
         void PlayAnimation(string trigger);
     }
 }

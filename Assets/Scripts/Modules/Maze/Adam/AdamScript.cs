@@ -162,6 +162,10 @@ namespace GameLogic
             return false;
 //            return RandomUtils.Value() > 0.8f;
         }
+        public void PlayAnimation(int hash)
+        {
+            animator.SetTrigger(hash);
+        }
 
         #endregion
 

@@ -37,6 +37,17 @@ namespace GamePlot
         {
             get { return currentPlot != null; }
         }
+        public void Prepare(string plotName)
+        {
+            if(IsPlaying)
+                return;
+            if(!plotDic.ContainsKey(plotName))
+            {
+                BaseLogger.Log("Can't find plot: " + plotName);
+            }
+            Plot plot = plotDic[plotName];
+            plot.Prepare();
+        }
         public void Play(string plotName)
         {
             if(IsPlaying)

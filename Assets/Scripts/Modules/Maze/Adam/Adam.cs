@@ -257,6 +257,8 @@ namespace GameLogic
         }
         public void PlayAnimation(string trigger)
         {
+            int hash = Animator.StringToHash(trigger);
+            Script.PlayAnimation(hash);
         }
         public void Switch(int eliteHash)
         {
