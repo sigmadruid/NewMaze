@@ -59,14 +59,10 @@ namespace GamePlot
 
             currentPlot = plotDic[plotName];
             currentPlot.Play();
-
-            Game.Instance.InputManager.Enable = false;
         }
         private void OnEnd()
         {
             currentPlot = null;
-
-            Game.Instance.InputManager.Enable = true;
         }
     }
 }

@@ -41,7 +41,17 @@ namespace GameLogic
 			startTicks = DateTime.Now.Ticks;
 			Data = MazeDataManager.Instance.CurrentMazeData;
             Main main = GameObject.FindObjectOfType<Main>();
-            if(main.Seed != 0)
+            int seed;
+            if(main == null)
+            {
+                MazeMain mazeMain = GameObject.FindObjectOfType<MazeMain>();
+                seed = mazeMain.Seed;
+            }
+            else
+            {
+                seed = main.Seed;
+            }
+            if(seed != 0)
             {
                 Seed = main.Seed;
             }

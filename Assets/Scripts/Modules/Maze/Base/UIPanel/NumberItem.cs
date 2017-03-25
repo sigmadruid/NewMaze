@@ -99,7 +99,7 @@ public class NumberItem : BaseScreenItem
 		}
 		else
 		{
-			BaseLogger.Log("Recyle a null HPBar!");
+            BaseLogger.Log("Recyle a null NumberItem!");
 		}
 	}
 }

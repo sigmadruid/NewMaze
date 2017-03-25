@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 using Base;
 using GameLogic;
+using GameUI;
 using StaticData;
 
 namespace GamePlot
@@ -50,7 +51,9 @@ namespace GamePlot
                 case SegmentType.Move:
                     segment = new MoveSegment();
                     break;
-
+                case SegmentType.Dialog:
+                    segment = new DialogSegment();
+                    break;
             }
             segment.Data = data;
             return segment;
@@ -98,6 +101,26 @@ namespace GamePlot
             base.End();
             Vector3 endPos = StaticReader.ReadVector3(Data.Param1);
             Actor.SetPosition(endPos);
+        }
+    }
+
+    public class DialogSegment: Segment
+    {
+        private BubbleItem item;
+        public override void Start()
+        {
+            base.Start();
+            Entity entity = (Entity)Actor;
+            item = BubbleItem.Create(entity.WorldPosition, Data.Param1, Data.Param2);
+        }
+        public override void Update(float deltaTime)
+        {
+            base.Update(deltaTime);
+        }
+        public override void End()
+        {
+            base.End();
+            BubbleItem.Recycle(item);
         }
     }
 }

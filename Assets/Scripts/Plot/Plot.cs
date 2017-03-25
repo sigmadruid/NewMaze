@@ -15,6 +15,7 @@ namespace GamePlot
         Initialized,
         Prepared,
         Playing,
+        Blocked,
         Ended,
     }
     public class Plot
@@ -60,9 +61,13 @@ namespace GamePlot
                     Segment segment = segmentList[i++];
                     if(!segment.IsPlaying)
                     {
-                        if(timer >= segment.Data.StartTime && timer <= segment.Data.EndTime)
+                        if(timer >= segment.Data.StartTime)
                         {
                             segment.Start();
+                            if(segment.Data.Type == SegmentType.Dialog)
+                            {
+                                state = PlotState.Blocked;
+                            }
                         }
                     }
                     else
@@ -86,6 +91,10 @@ namespace GamePlot
                 }
                 timer += deltaTime;
             }
+            else if(state == PlotState.Blocked)
+            {
+                Wait();
+            }
         }
 
         private PlotState state = PlotState.NotReady;
@@ -99,6 +108,10 @@ namespace GamePlot
                 Segment segment = Segment.Create(Data.Segments[i]);
                 segmentList.Add(segment);
             }
+            segmentList.Sort((Segment x, Segment y) =>
+                {
+                    return Mathf.CeilToInt(x.Data.StartTime - y.Data.StartTime);
+                });
             for(int i = 0; i < Data.Actors.Count; ++i)
             {
                 ActorData data = Data.Actors[i];
@@ -133,6 +146,12 @@ namespace GamePlot
             timer = 0;
         }
 
+
+        private void Wait()
+        {
+            if(Game.Instance.InputManager.MouseHitObject != null)
+                state = PlotState.Playing;
+        }
     }
 }
 

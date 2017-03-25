@@ -3,6 +3,7 @@ int,int,string,int,int
 ,π œÁ≥°æ∞,,,
 10000,50001,,-1,1
 10000,0,NewUI/Items/HUDIcon,-1,1
+10000,0,NewUI/Items/BubbleItem,-1,1
 10000,30001,,-1,1
 ,√‘π¨≥°æ∞,,,
 10001,20001,,-1,10
@@ -39,8 +40,8 @@ int,int,string,int,int
 10001,110001,,-1,1
 10001,110002,,-1,1
 10001,0,NewUI/Items/HeroItem,-1,5
-10001,0,NewUI/Items/BarItem,-1,20
-10001,0,NewUI/Items/NumberItem,-1,20
+10001,0,NewUI/Items/BarItem,-1,10
+10001,0,NewUI/Items/NumberItem,-1,10
 10001,0,NewUI/Items/HUDIcon,-1,5
 10001,0,NewUI/Items/ExplorationIcon,-1,5
 10001,0,MazeBlocks/Mock/MockPassage,-1,20

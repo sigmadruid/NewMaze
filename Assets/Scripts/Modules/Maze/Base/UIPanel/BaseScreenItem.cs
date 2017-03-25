@@ -8,13 +8,13 @@ using GameLogic;
 public class BaseScreenItem : MonoBehaviour
 {
     [HideInInspector]
-    public RectTransform RectTransform;
+    protected RectTransform rectTransform;
 
     protected Camera mainCamera;
 
     protected virtual void Awake()
     {
-        RectTransform = transform as RectTransform;
+        rectTransform = transform as RectTransform;
         mainCamera = Camera.main;
     }
 
@@ -23,7 +23,7 @@ public class BaseScreenItem : MonoBehaviour
         CanvasScaler scaler = PopupManager.Instance.Scaler;
         float ratio = Screen.width / scaler.referenceResolution.x;
         Vector3 screenPos = mainCamera.WorldToScreenPoint(position) / ratio;
-        RectTransform.anchoredPosition = screenPos;
+        rectTransform.anchoredPosition = screenPos;
 	}
 }
 
