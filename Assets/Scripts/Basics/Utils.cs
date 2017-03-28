@@ -32,7 +32,7 @@ namespace Base
 			{
 				if (diffuseShader == null)
 				{
-					diffuseShader = Shader.Find("Mobile/Diffuse");
+					diffuseShader = Shader.Find("Mobile/Bumped Specular");
 				}
 				return diffuseShader;
 			}

@@ -49,6 +49,9 @@ namespace GameUI
     		{
                 HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(LayoutHeroes.transform);
     			HeroData data = dataList[i];
+                int id = IDManager.Instance.GetID(data.Kid);
+                if(id == 0)
+                    continue;
     			item.Data = data;
                 item.ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, data.Res2D);
                 item.TextName.text = TextDataManager.Instance.GetData(data.Name);

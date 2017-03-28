@@ -18,7 +18,7 @@ namespace CinemaDirector
         /// <param name="actor">The actor with a NavMeshAgent to set a new destination for.</param>
         public override void Trigger(GameObject actor)
         {
-            NavMeshAgent agent = actor.GetComponent<NavMeshAgent>();
+            UnityEngine.AI.NavMeshAgent agent = actor.GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (agent != null)
             {
                 agent.SetDestination(target);
