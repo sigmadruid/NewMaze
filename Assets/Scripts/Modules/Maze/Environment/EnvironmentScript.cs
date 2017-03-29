@@ -14,6 +14,8 @@ public class EnvironmentScript : MonoBehaviour
 	public LightScript MainLightScript;
     public Light MazeMapLight;
 
+    public GuideEffect GuideEffect;
+
 	void Update()
 	{
         if (CallbackUpdate != null)

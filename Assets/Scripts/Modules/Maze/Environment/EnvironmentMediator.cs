@@ -29,6 +29,7 @@ namespace GameLogic
 			{
                 NotificationEnum.ENVIRONMENT_INIT,
                 NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP,
+                NotificationEnum.MOUSE_HIT_OBJECT,
 			};
 		}
 		
@@ -42,6 +43,9 @@ namespace GameLogic
                 case NotificationEnum.ENVIRONMENT_SHOW_MAZE_MAP:
                     bool show = (bool)notification.Body;
                     HandleEnvironmentShowMazeMap(show);
+                    break;
+                case NotificationEnum.MOUSE_HIT_OBJECT:
+                    HandleMouseClick();
                     break;
 			}
 		}
@@ -59,6 +63,11 @@ namespace GameLogic
         private void HandleEnvironmentShowMazeMap(bool show)
         {
             script.MazeMapLight.enabled = show;
+        }
+        private void HandleMouseClick()
+        {
+            if (InputManager.Instance.MouseHitObject != null && 1 << InputManager.Instance.MouseHitObject.layer == Layers.LayerWalkSurface)
+                script.GuideEffect.StartEffect(InputManager.Instance.MouseHitPosition);
         }
 
 		private void OnUpdate()

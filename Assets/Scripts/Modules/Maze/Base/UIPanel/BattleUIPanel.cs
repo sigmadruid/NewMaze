@@ -47,11 +47,11 @@ namespace GameUI
 
     		for (int i = 0; i < dataList.Count; ++i)
     		{
-                HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(LayoutHeroes.transform);
-    			HeroData data = dataList[i];
+                HeroData data = dataList[i];
                 int id = IDManager.Instance.GetID(data.Kid);
                 if(id == 0)
                     continue;
+                HeroItem item = PopupManager.Instance.CreateItem<HeroItem>(LayoutHeroes.transform);
     			item.Data = data;
                 item.ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, data.Res2D);
                 item.TextName.text = TextDataManager.Instance.GetData(data.Name);
