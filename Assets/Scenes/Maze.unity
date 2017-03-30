@@ -885,7 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4220531f755784c26b8f8d0dc68502dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Seed: 123456
+  Seed: 0
   CurrentStageType: 1
 --- !u!4 &1371846223
 Transform:
