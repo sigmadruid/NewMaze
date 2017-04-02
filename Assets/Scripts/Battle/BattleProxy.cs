@@ -126,7 +126,7 @@ namespace Battle
                 return;
             }
             AttackResult result = monster.Info.HurtBy(attackContext);
-            NumberItem.Create(monster.WorldPosition, result);
+            NumberItem.Create(monster.Script.TopPosTransform.position, result);
             if (monster.Info.HP > 0)
             {
                 monster.Hit();

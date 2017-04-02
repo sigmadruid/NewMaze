@@ -87,7 +87,7 @@ public class NumberItem : BaseScreenItem
 	private static NumberItem DoCreate(Vector3 worldPosition)
 	{
         NumberItem numberItem = PopupManager.Instance.CreateItem<NumberItem>(RootTransform.Instance.UIIconRoot);
-        numberItem.UpdatePosition(worldPosition + Vector3.up * 2.5f);
+        numberItem.UpdatePosition(worldPosition + Vector3.up * 0.5f);
 		return numberItem;
     }
 	

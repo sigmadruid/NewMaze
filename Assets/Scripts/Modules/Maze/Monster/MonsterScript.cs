@@ -13,7 +13,8 @@ public class MonsterScript : CharacterScript
 
 	public Transform EmitTransform;
 
-	protected BarItem hpBar;
+    public BarItem LifeBar;
+
     protected Highlighter highlighter;
 	
 	protected override void Awake () 
@@ -25,32 +26,29 @@ public class MonsterScript : CharacterScript
 	protected override void OnEnable () 
 	{
 		base.OnEnable();
-		hpBar = BarItem.CreateHPBar();
 	}
 
 	protected override void OnDisable()
 	{
 		base.OnDisable();
-		if (hpBar != null)
-		{
-			BarItem.RecycleHPBar(hpBar);
-			hpBar = null;
-		}
 	}
 
     protected override void Update()
     {
         base.Update();
 
+        if (LifeBar != null)
+            LifeBar.UpdatePosition(TopPosTransform.position);
+
         if(InputManager.Instance.MouseHoverObject == gameObject)
         {
+            highlighter.ReinitMaterials();
             highlighter.ConstantOnImmediate(Color.white);
         }
         else
         {
             highlighter.ConstantOffImmediate();
         }
-        highlighter.ReinitMaterials();
     }
 
     void OnTriggerEnter(Collider other)
@@ -65,17 +63,16 @@ public class MonsterScript : CharacterScript
 	protected override void OnDieStarts ()
 	{
 		base.OnDieStarts ();
-		if (hpBar != null)
+		if (LifeBar != null)
 		{
-			BarItem.RecycleHPBar(hpBar);
-			hpBar = null;
+			BarItem.Recycle(LifeBar);
+			LifeBar = null;
 		}
 	}
 
 	public void UpdateHPBar(int hp, int maxHP)
 	{
-		hpBar.UpdatePosition(TopPosTransform.position);
-		hpBar.UpdateHP(hp, maxHP);
+		LifeBar.UpdateHP(hp, maxHP);
 	}
 }
 

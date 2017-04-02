@@ -72,14 +72,19 @@ namespace GameLogic
 			panel.CallbackUpdate = OnUpdate;
             EventTriggerListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
             EventTriggerListener.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
+
+            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
+            panel.UpdateLifeBar(hpVal, false);
 		}
 		private void HandleUpdateHP(AttackResult ar)
 		{
 			panel.UpdateHPNumber(ar);
+            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
+            panel.UpdateLifeBar(hpVal, true);
 		}
 		private void HandleUpdateMP(int value)
 		{
-			panel.UpdateMPNumber(value);
+            panel.UpdateMagicBar(value);
 		}
         private void HandlePause()
         {
@@ -93,9 +98,7 @@ namespace GameLogic
 		}
 		private void OnUpdate()
 		{
-            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
 			float mpVal = 1f;
-			panel.UpdateSliderBar(hpVal, mpVal);
 		}
         private void OnPauseGame(GameObject go)
 		{

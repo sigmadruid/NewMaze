@@ -43,14 +43,14 @@ namespace GameLogic
 
             PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
 
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
             if (Adam.Instance.Info.IsInHall)
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallProxy.Record);
             else
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
 
 			Game.Instance.TaskManager.SetAllActive(true);
 

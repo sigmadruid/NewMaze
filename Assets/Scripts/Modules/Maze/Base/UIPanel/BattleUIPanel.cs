@@ -21,7 +21,7 @@ namespace GameUI
         public Button ButtonPause;
         public Button ButtonPack;
         public VerticalLayoutGroup LayoutHeroes;
-        public Slider HPBar;
+        public TransitionProgressBar HPBar;
         public Slider MPBar;
     	public NumberItem HPNumber;
     	public NumberItem MPNumber;
@@ -69,11 +69,14 @@ namespace GameUI
     			item.gameObject.SetActive(isShow);
     		}
     	}
-    	public void UpdateSliderBar(float hpVal, float mpVal)
+        public void UpdateLifeBar(float hpVal, bool isAnim)
     	{
-    		HPBar.value = hpVal;
-    		MPBar.value = mpVal;
+            HPBar.SetValue(hpVal, isAnim);
     	}
+        public void UpdateMagicBar(float mpVal)
+        {
+            MPBar.value = mpVal;
+        }
     	public void UpdateHPNumber(AttackResult ar)
     	{
     		HPNumber.Show(ar);

@@ -4,8 +4,17 @@ using Base;
 
 namespace StaticData
 {
+    public enum MonsterSize
+    {
+        Small,
+        Medium,
+        Big,
+    }
+
 	public class MonsterData : CharacterData
 	{
+        public MonsterSize Size;
+
 		public int AppearWeight;
 
 		public int DropKid;
