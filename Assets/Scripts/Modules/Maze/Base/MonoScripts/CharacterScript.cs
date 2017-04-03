@@ -18,6 +18,7 @@ namespace GameLogic
     {
     	public Transform TopPosTransform;
     	public Transform BottomPosTransform;
+        public Transform EmitTransform;
 
         public Action CallbackUpdate;
         public Action CallbackSlowUpdate;
@@ -119,6 +120,24 @@ namespace GameLogic
     			yield return SLOW_UPDATE_DELAY;
     		}
     	}
+
+        public Vector3 TopPosition
+        {
+            get { return TopPosTransform.position; }
+        }
+        public Vector3 BottomPosition
+        {
+            get { return BottomPosTransform.position; }
+        }
+        public Vector3 CenterPosition
+        {
+            get { return (TopPosTransform.position + BottomPosTransform.position) * 0.5f; }
+        }
+        public Vector3 EmitPosition
+        {
+            get { return EmitTransform.position; }
+        }
+
 
     	#region Behavior
 

@@ -31,10 +31,10 @@ namespace GameLogic
         private bool isHit;
 		private float timeCounter;
 
-		public void Start(Transform trans)
+        public void Start(Vector3 emitPosition, Vector3 targetPosition)
 		{
-			Script.transform.position = trans.position;
-			Script.transform.localRotation = Quaternion.LookRotation(trans.forward);
+			Script.transform.position = emitPosition;
+            Script.transform.localRotation = Quaternion.LookRotation(targetPosition - emitPosition);
             Script.SetState(BulletState.Normal);
             isHit = false;
             timeCounter = 0f;

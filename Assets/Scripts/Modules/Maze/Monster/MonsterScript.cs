@@ -11,8 +11,6 @@ public class MonsterScript : CharacterScript
 {
     public Action<int> CallbackTrapAttack;
 
-	public Transform EmitTransform;
-
     public BarItem LifeBar;
 
     protected Highlighter highlighter;
@@ -38,7 +36,7 @@ public class MonsterScript : CharacterScript
         base.Update();
 
         if (LifeBar != null)
-            LifeBar.UpdatePosition(TopPosTransform.position);
+            LifeBar.UpdatePosition(TopPosition);
 
         if(InputManager.Instance.MouseHoverObject == gameObject)
         {

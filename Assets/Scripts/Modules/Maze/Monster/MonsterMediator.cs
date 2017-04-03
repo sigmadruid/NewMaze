@@ -128,7 +128,6 @@ namespace GameLogic
 			for (int i = 0; i < toDeleteMonsterList.Count; ++i)
 			{
 				Monster monster = toDeleteMonsterList[i];
-				battleProxy.RemoveMonster(monster.Uid);
 
 				if (monster.Info.IsAlive)
 				{
@@ -178,7 +177,6 @@ namespace GameLogic
             for (int i = 0; i < toDeleteMonsterList.Count; ++i)
             {
                 Monster monster = toDeleteMonsterList[i];
-                battleProxy.RemoveMonster(monster.Uid);
 
                 if (monster.Info.IsAlive)
                 {
@@ -197,7 +195,6 @@ namespace GameLogic
             monster.SetAtNight(isNight);
             monster.SetPosition(position);
             monsterProxy.AddMonster(monster);
-            battleProxy.AddMonster(monster);
         }
 
         private void HandleEnvironmentChange(bool isNight)

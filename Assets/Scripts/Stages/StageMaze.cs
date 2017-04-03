@@ -40,6 +40,7 @@ namespace GameLogic
 			npcProxy = ApplicationFacade.Instance.RetrieveProxy<NPCProxy>();
 			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            battleProxy.Init();
 
             PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
 

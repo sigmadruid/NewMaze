@@ -13,11 +13,11 @@ namespace Battle
 	public class BattleProxy : Proxy
 	{
         private Adam adam;
-		private Dictionary<string, Monster> monsterDic;
+        private MonsterProxy monsterProxy;
 
-		public BattleProxy () : base()
+        public void Init ()
 		{
-			monsterDic = new Dictionary<string, Monster>();
+            monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
 		}
 
         public void SetAdam(Adam adam)
@@ -25,27 +25,12 @@ namespace Battle
 			this.adam = adam;
 		}
 
-		public void AddMonster(Monster monster)
-		{
-			if (!monsterDic.ContainsKey(monster.Uid))
-			{
-				monsterDic.Add(monster.Uid, monster);
-			}
-		}
-		public void RemoveMonster(string uid)
-		{
-			if (monsterDic.ContainsKey(uid))
-			{
-				monsterDic.Remove(uid);
-			}
-		}
 		public void Dispose()
 		{
 			adam = null;
-			monsterDic.Clear();
+            monsterProxy = null;
 		}
 
-        //TODO: set skill instead of paramDic
         public void AttackMonster(Skill skill)
 		{
             AttackContext context = new AttackContext();
@@ -53,31 +38,27 @@ namespace Battle
             context.Attack = adam.Info.GetAttribute(BattleAttribute.Attack) * skill.Data.Ratio;
             context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
 
-			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
             if(adam.Data.AttackType == AttackType.Range)
             {
                 Bullet bullet = Bullet.Create(skill.Data.BulletKid);
                 bullet.AttackContext = context;
-                bullet.Start(adam.Script.EmitTransform);
-
+                bullet.Start(adam.Script.EmitPosition, monsterProxy.TargetMonster.Script.CenterPosition);
             }
             else if (adam.Data.AttackType == AttackType.Melee)
             {
-                while(enumerator.MoveNext())
-                {
-                    Monster monster = enumerator.Current.Value;
-                    AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
-                    bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
-                    if (inArea)
+                monsterProxy.IterateActives((Monster monster) =>
                     {
-                        DoAttackMonster(monster, context);
-                    }
-                }
+                        AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
+                        bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
+                        if(inArea)
+                        {
+                            DoAttackMonster(monster, context);
+                        }
+                    });
             }
 
 		}
 
-        //TODO: set skill instead of paramDic
         public void AttackHero(Monster monster, Skill skill)
 		{
 			AttackContext ac = new AttackContext();
@@ -89,7 +70,7 @@ namespace Battle
 			{
                 Bullet bullet = Bullet.Create(skill.Data.BulletKid);
 				bullet.AttackContext = ac;
-				bullet.Start(monster.Script.EmitTransform);
+                bullet.Start(monster.Script.EmitPosition, adam.Script.CenterPosition);
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
@@ -126,7 +107,7 @@ namespace Battle
                 return;
             }
             AttackResult result = monster.Info.HurtBy(attackContext);
-            NumberItem.Create(monster.Script.TopPosTransform.position, result);
+            NumberItem.Create(monster.Script.TopPosition, result);
             if (monster.Info.HP > 0)
             {
                 monster.Hit();

@@ -59,29 +59,32 @@ namespace GameLogic
             if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(0))
             {
                 Skill skill = Info.GetSkill(0);
-                GameObject target = inputManager.MouseHitObject;
-                if(target == null)
+                GameObject goTarget = inputManager.MouseHitObject;
+                Monster target = null;
+                if(goTarget != null)
+                {
+                    MonsterScript monsterScript = goTarget.GetComponent<MonsterScript>();
+                    target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+                }
+                else
                 {
                     MonsterScript monsterScript = farTarget.GetComponent<MonsterScript>();
-                    if(monsterScript != null)
+                    target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+                    if(target.Info.IsAlive)
                     {
-                        Monster monster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
-                        if(monster.Info.IsAlive)
-                        {
-                            target = farTarget;
-                        }
+                        goTarget = farTarget;
                     }
                 }
                 
                 if(Data.AttackType == AttackType.Melee)
                 {
-                    UpdateMelee(target, skill);
+                    UpdateMelee(goTarget, skill);
                 }
                 else
                 {
-                    UpdateRange(target, skill);
+                    UpdateRange(goTarget, skill);
                 }
-                    
+                ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().TargetMonster = target;
             }
             else
             {
