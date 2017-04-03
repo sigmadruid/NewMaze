@@ -62,7 +62,7 @@ namespace GameLogic
 		{
 			Script.Die();
             SetAtNight(false);
-			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
+//			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
 		}
         public void PlayAnimation(string trigger)
         {
@@ -191,7 +191,8 @@ namespace GameLogic
 			if (monster != null)
 			{
 				monster.Data = null;
-                BarItem.Recycle(monster.Script.LifeBar);
+                if (monster.Script.LifeBar != null)
+                    BarItem.Recycle(monster.Script.LifeBar);
 				monster.Script.StopAllCoroutines();
 				ResourceManager.Instance.RecycleAsset(monster.Script.gameObject);
 				monster.Script = null;
