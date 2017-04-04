@@ -216,7 +216,7 @@ namespace GameLogic
         }
         public void OnSkillStart(string state)
         {
-//            MeleeTrail.Emit = true;
+            RightWeapon.TrailEnabled = true;
         }
         public void OnSkillMiddle(string state)
         {
@@ -225,7 +225,7 @@ namespace GameLogic
         }
         public void OnSkillEnd(string state)
         {
-//            MeleeTrail.Emit = false;
+            RightWeapon.TrailEnabled = false;
             animator.speed = 1f;
             if (CallbackSkillEnd != null)
                 CallbackSkillEnd();

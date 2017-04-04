@@ -1,6 +1,6 @@
 Kid,CD,IsDamage,Ratio,CanMove,AreaKid,NeedTarget,Range,BulletKid
 int,float,bool,float,bool,int,bool,float,int
-150001,0,TRUE,1,FALSE,160001,TRUE,3,0
+150001,0,TRUE,1,FALSE,160001,TRUE,2.5,0
 150002,0,TRUE,1,FALSE,160002,TRUE,3,0
 150003,0,TRUE,1.5,FALSE,0,TRUE,10,80001
 ,,,,,,,,
