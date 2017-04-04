@@ -40,9 +40,12 @@ namespace Battle
 
             if(adam.Data.AttackType == AttackType.Range)
             {
+                //The monster can be just killed by your bullet when you are preparing for the next shot
+                if(Adam.Instance.TargetMonster == null)
+                    return;
                 Bullet bullet = Bullet.Create(skill.Data.BulletKid);
                 bullet.AttackContext = context;
-                bullet.Start(adam.Script.EmitPosition, monsterProxy.TargetMonster.Script.CenterPosition);
+                bullet.Start(adam.Script.EmitPosition, Adam.Instance.TargetMonster.Script.CenterPosition);
             }
             else if (adam.Data.AttackType == AttackType.Melee)
             {
@@ -115,6 +118,10 @@ namespace Battle
             else
             {
                 monster.Die();
+                if(monster == adam.TargetMonster)
+                {
+                    adam.ClearTarget();
+                }
             }
         }
 

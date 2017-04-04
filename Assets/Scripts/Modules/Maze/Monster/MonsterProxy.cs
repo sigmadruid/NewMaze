@@ -46,8 +46,6 @@ namespace GameLogic
             return monsterDic[uid];
         }
 
-        public Monster TargetMonster { get; set; }
-
         public Monster GetNearestMonster(Vector3 position, float maxSqrDistance)
         {
             Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
@@ -97,8 +95,8 @@ namespace GameLogic
 				recordList.Add(monster.ToRecord());
 				monsterDic.Remove(uid);
 
-                if(TargetMonster == monster)
-                    TargetMonster = null;
+                if(Adam.Instance.TargetMonster == monster)
+                    Adam.Instance.ClearTarget();
 			}
 		}
 		
@@ -123,8 +121,8 @@ namespace GameLogic
 				}
 				monsterDic.Remove(uid);
 
-                if(TargetMonster == monster)
-                    TargetMonster = null;
+                if(Adam.Instance.TargetMonster == monster)
+                    Adam.Instance.ClearTarget();
 			}
 		}
         public void ClearMonsters()

@@ -37,7 +37,8 @@ namespace GameLogic
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
-        private GameObject farTarget;
+        public Monster TargetMonster { get; private set; }
+        public Vector3 TargetPosition { get; private set; }
 
         private InputManager inputManager;
         private BattleProxy battleProxy;
@@ -56,53 +57,70 @@ namespace GameLogic
             if(!IsUpdating || Game.Instance.PlotRunner.IsPlaying)
                 return;
 
-            if((inputManager.CheckMouseHitLayer(Layers.LayerMonster) || farTarget != null) && Info.CanCastSkill(0))
+            //Select target
+            if(inputManager.MouseHitPosition != Vector3.zero)
             {
-                Skill skill = Info.GetSkill(0);
-                GameObject goTarget = inputManager.MouseHitObject;
-                Monster target = null;
-                if(goTarget != null)
+                TargetPosition = inputManager.MouseHitPosition;
+                if(inputManager.CheckMouseHitLayer(Layers.LayerMonster))
                 {
-                    MonsterScript monsterScript = goTarget.GetComponent<MonsterScript>();
-                    target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
-                }
-                else
-                {
-                    MonsterScript monsterScript = farTarget.GetComponent<MonsterScript>();
-                    target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+                    MonsterScript monsterScript = inputManager.MouseHitObject.GetComponent<MonsterScript>();
+                    Monster target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+
                     if(target.Info.IsAlive)
                     {
-                        goTarget = farTarget;
-                    }
-                }
-                
-                if(Data.AttackType == AttackType.Melee)
-                {
-                    UpdateMelee(goTarget, skill);
-                }
-                else
-                {
-                    UpdateRange(goTarget, skill);
-                }
-                ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().TargetMonster = target;
-            }
-            else
-            {
-                if(inputManager.MouseHitPosition != Vector3.zero)
-                {
-                    if(Info.CanMove() && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
-                    {
-                        Move(inputManager.MouseHitPosition);
+                        TargetMonster = target;
                     }
                     else
                     {
-                        Move(Vector3.zero);
+                        TargetMonster = null;
                     }
+                }
+                else
+                {
+                    TargetMonster = null;
+                }
+            }
+
+            if(TargetMonster != null)
+            {
+                //Choose the skill
+                Skill skill = Info.GetSkill(0);
+
+                //Cast skill
+                if(Info.CanCastSkill(0))
+                {
+                    if(MathUtils.XZSqrDistance(WorldPosition, TargetMonster.WorldPosition) < skill.Data.Range * skill.Data.Range)
+                    {
+                        Move(Vector3.zero);
+                        Skill(0);
+                    }
+                    else
+                    {
+                        if(Info.CanMove())
+                        {
+                            Move(TargetPosition);
+                        }
+                        else
+                        {
+                            Move(Vector3.zero);
+                        }
+                    }
+                }
+            }
+            else if(TargetPosition != Vector3.zero)
+            {
+                if(Info.CanMove() && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                {
+                    Move(TargetPosition);
                 }
                 else
                 {
                     Move(Vector3.zero);
                 }
+            }
+            else
+            {
+                Move(Vector3.zero);
             }
         }
         protected override void SlowUpdate()
@@ -126,6 +144,12 @@ namespace GameLogic
 
             int hash = Animator.StringToHash(newData.Trigger);
             Switch(hash);
+        }
+
+        public void ClearTarget()
+        {
+            TargetMonster = null;
+            TargetPosition = Vector3.zero;
         }
 
         #endregion
@@ -164,55 +188,6 @@ namespace GameLogic
 
         #endregion
 
-        #region AI
-
-        private void UpdateMelee(GameObject target, Skill skill)
-        {
-            if(MathUtils.XZSqrDistance(WorldPosition, target.transform.position) < skill.Data.Range * skill.Data.Range)
-            {
-                Skill(0);
-                farTarget = null;
-            }
-            else
-            {
-                if (inputManager.MouseHitObject != null)
-                    farTarget = inputManager.MouseHitObject;
-                if(Info.CanMove())
-                {
-                    Move(inputManager.MouseHitPosition);
-                }
-                else
-                {
-                    Move(Vector3.zero);
-                }
-            }
-        }
-        private void UpdateRange(GameObject target, Skill skill)
-        {
-            
-            if(MathUtils.XZSqrDistance(WorldPosition, target.transform.position) < skill.Data.Range * skill.Data.Range)
-            {
-                Skill(0);
-                farTarget = null;
-                //TODO: Try to detect and avoid obstalces
-            }
-            else
-            {
-                if (inputManager.MouseHitObject != null)
-                    farTarget = inputManager.MouseHitObject;
-                if(Info.CanMove())
-                {
-                    Move(inputManager.MouseHitPosition);
-                }
-                else
-                {
-                    Move(Vector3.zero);
-                }
-            }
-        }
-
-        #endregion
-
         #region Animations
 
         public void Idle()
@@ -232,12 +207,9 @@ namespace GameLogic
             Info.CurrentSkill = Info.GetSkill(skillIndex);
             if(Info.CurrentSkill.Data.NeedTarget)
             {
-                GameObject target = farTarget;
-                if (target == null)
-                    target = inputManager.MouseHitObject;
-                if(target != null && target.CompareTag(Tags.Monster))
+                if(TargetMonster != null)
                 {
-                    Vector3 direction = MathUtils.XZDirection(WorldPosition, target.transform.position);
+                    Vector3 direction = MathUtils.XZDirection(WorldPosition, TargetMonster.WorldPosition);
                     SetRotation(direction);
                     Info.CurrentSkill.Cast();
                     Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));

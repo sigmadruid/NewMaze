@@ -232,7 +232,7 @@ namespace Battle
                 return false;
 
             Skill skill = SkillList[index];
-            return skill.CD <= 0;
+            return skill.CD <= 0 && CurrentSkill == null;
         }
 
         #endregion

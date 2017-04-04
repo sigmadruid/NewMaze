@@ -98,14 +98,14 @@ namespace Base
 			if (!Enable) return;
 
             MouseHitObject = null;
+            MouseHitPosition = Vector3.zero;
             if(!IsPause)
             {
                 float xOffset = Input.GetAxisRaw("Horizontal");
                 float zOffset = Input.GetAxisRaw("Vertical");
                 DirectionVector = Quaternion.Euler(Vector3.up * (-45f)) * new Vector3(xOffset, 0, zOffset);
                 DirectionVector.Normalize();
-                if(DirectionVector != Vector3.zero)
-                    MouseHitPosition = Vector3.zero;
+//                if(DirectionVector != Vector3.zero)
 
                 if(Input.GetMouseButtonDown(0))
                 {
