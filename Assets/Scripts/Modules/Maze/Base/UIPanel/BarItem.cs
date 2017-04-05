@@ -63,6 +63,7 @@ public class BarItem : BaseScreenItem
 	{
 		if (bar != null)
 		{
+            bar.UpdateHP(1, 1);
             PopupManager.Instance.RemoveItem(bar.gameObject);
 		}
 		else

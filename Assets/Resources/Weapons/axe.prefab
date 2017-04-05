@@ -29,6 +29,52 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1084441131298494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4845929418742580}
+  m_Layer: 10
+  m_Name: start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1342857026429180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4871110771950264}
+  - component: {fileID: 114856490667175398}
+  m_Layer: 10
+  m_Name: trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1584888622694440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4989817352988910}
+  m_Layer: 10
+  m_Name: end
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4000010888836464
 Transform:
   m_ObjectHideFlags: 1
@@ -38,10 +84,52 @@ Transform:
   m_LocalRotation: {x: 0.15751545, y: 0.8671883, z: 0.15663774, w: 0.44568828}
   m_LocalPosition: {x: -0.174, y: 0.059, z: -0.154}
   m_LocalScale: {x: 0.7000009, y: 0.7000006, z: 0.69999844}
-  m_Children: []
+  m_Children:
+  - {fileID: 4989817352988910}
+  - {fileID: 4845929418742580}
+  - {fileID: 4871110771950264}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -7.543, y: 123.951004, z: 24.609001}
+--- !u!4 &4845929418742580
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1084441131298494}
+  m_LocalRotation: {x: 0.024035625, y: 0.024047554, z: -0.9968118, w: 0.07218252}
+  m_LocalPosition: {x: -0.19, y: -0, z: -0.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000010888836464}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4871110771950264
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1342857026429180}
+  m_LocalRotation: {x: 0.024035625, y: 0.024047554, z: -0.9968118, w: 0.07218252}
+  m_LocalPosition: {x: -0.3042656, y: -0.016690606, z: 0.124658085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000010888836464}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4989817352988910
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1584888622694440}
+  m_LocalRotation: {x: 0.024035625, y: 0.024047568, z: -0.9968118, w: 0.072182536}
+  m_LocalPosition: {x: -0.46, y: 0.02, z: 2.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000010888836464}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23000011513131158
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -91,3 +179,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d2744987b6d8d4e85c19398035c9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Trail: {fileID: 114856490667175398}
+--- !u!114 &114856490667175398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1342857026429180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c2c9828fec98747a1b0680f47bed80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseWith2D: 0
+  SortingLayerName: 
+  SortingOrder: 0
+  PointStart: {fileID: 4845929418742580}
+  PointEnd: {fileID: 4989817352988910}
+  MaxFrame: 30
+  Granularity: 10
+  MyColor: {r: 0.5955882, g: 0.017517317, b: 0.017517317, a: 1}
+  MyMaterial: {fileID: 2100000, guid: df6824c830605f14dbb2163a12036b7c, type: 2}
