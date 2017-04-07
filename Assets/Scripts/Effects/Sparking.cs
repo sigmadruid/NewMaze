@@ -22,7 +22,6 @@ namespace Effects
         void Start()
         {
             material = GetComponentInChildren<Renderer>().material;
-            material.EnableKeyword("_EMISSION");
 
             timer = 0f;
             t = 0f;
@@ -47,7 +46,7 @@ namespace Effects
                 t = 0f;
             }
             float val = Mathf.Lerp(MinEmission, MaxEmission, t);
-            material.SetColor("_EmissionColor", Color.white * val);
+            material.SetColor("_Emission", Color.white * val);
         }
     }
 }
