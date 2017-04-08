@@ -123,6 +123,7 @@ namespace GameLogic
 		{
 			if (currentStage != null)
 			{
+                BaseLogger.LogFormat("stage end: {0}", currentStage.Type);
 				currentStage.End();
 			}
 			LoadingStageEnum = stageEnum;
@@ -132,6 +133,7 @@ namespace GameLogic
 		public void SwitchStageComplete()
 		{
 			currentStage = BaseStage.CreateStage(LoadingStageEnum);
+            BaseLogger.LogFormat("stage start: {0}", currentStage.Type);
 			currentStage.Start();
 		}
 

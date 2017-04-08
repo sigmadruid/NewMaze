@@ -19,6 +19,8 @@ public class RootTransform : MonoBehaviour
 	public Transform BulletRoot;
     public Transform DropRoot;
 
+    public Transform PoolRoot;
+
 	void Awake()
 	{
 		Instance = this;

@@ -5,7 +5,7 @@ namespace Base
 {
 	public class AssetInfo : MonoBehaviour
 	{
-		public string assetName;
+		public string path;
 
 		public ObjectType type;
 

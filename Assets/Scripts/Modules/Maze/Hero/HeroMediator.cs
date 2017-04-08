@@ -77,9 +77,6 @@ namespace GameLogic
 
         private void HandleHeroInit(HeroRecord record)
 		{
-			//Preload resources
-			ResourceManager.Instance.PreloadAsset(ObjectType.GameObject, "Effects/ConversionEffect");
-
 			//Init
             if(record == null)
             {

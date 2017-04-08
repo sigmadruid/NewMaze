@@ -24,7 +24,6 @@ namespace StaticData
                     data.MazeKid = StaticReader.ReadInt(GetContent(col++));
                     data.EntityKid = StaticReader.ReadInt(GetContent(col++));
                     data.Path = StaticReader.ReadString(GetContent(col++));
-                    data.Life = StaticReader.ReadInt(GetContent(col++));
                     data.PreloadCount = StaticReader.ReadInt(GetContent(col++));
 
                     if (!typeDic.ContainsKey(data.MazeKid))

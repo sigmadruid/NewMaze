@@ -37,6 +37,7 @@ namespace GameLogic
             List<ResourceData> resourceDataList = ResourceDataManager.Instance.GetResourceDataList(mazeKid);
 
             ResourceManager resManager = ResourceManager.Instance;
+            resManager.InitAssets();
             for(int i = 0; i < resourceDataList.Count; ++i)
             {
                 ResourceData resourceData = resourceDataList[i];
@@ -49,11 +50,11 @@ namespace GameLogic
                     {
                         BaseLogger.LogFormat("Can't find data {0}", resourceData.EntityKid);
                     }
-                    resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
+                    resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.PreloadCount);
                 }
                 else
                 {
-                    resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.Life, resourceData.PreloadCount);
+                    resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.PreloadCount);
                 }
             }
         }

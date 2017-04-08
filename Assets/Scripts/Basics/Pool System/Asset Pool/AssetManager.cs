@@ -7,77 +7,75 @@ namespace Base
 {
 	public class AssetManager
 	{
-		public float tickInterval = 1f;
-		private WaitForSeconds secondDelay;
+        public const float TICK_INTERVAL = 1f;
+        private readonly WaitForSeconds TICK_SECONDS = new WaitForSeconds(TICK_INTERVAL);
 
-		private Dictionary<ObjectType, AssetPool> assetPoolDic;
+        private Dictionary<ObjectType, AssetPool> assetPoolDic = new Dictionary<ObjectType, AssetPool>();
 
-		public AssetManager ()
+        public void Init ()
 		{
-			secondDelay = new WaitForSeconds(1f);
-			assetPoolDic = new Dictionary<ObjectType, AssetPool>();
-			assetPoolDic.Add(ObjectType.GameObject, new AssetPool());
+            AssetPool goPool = new AssetPool();
+            goPool.Init(ObjectType.GameObject);
+            assetPoolDic.Add(ObjectType.GameObject, goPool);
 		}
 
 		public void Dispose ()
 		{
-			foreach (AssetPool pool in assetPoolDic.Values)
-			{
-				pool.Dispose();
-			}
+            var enumerator = assetPoolDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                enumerator.Current.Value.Dispose();
+            }
 			assetPoolDic.Clear();
 		}
 
-		public void PreloadAsset (ObjectType type, string path, float life, int maxPreloadCount, int growth)
+		public void PreloadAsset (ObjectType type, string path, int preloadCount, int growth)
 		{
-			AssetPool pool = null;
-			assetPoolDic.TryGetValue(type, out pool);
-			
-			if (pool == null)
-			{
-				pool = new AssetPool();
-			}
-			pool.Preload(type, path, life, maxPreloadCount, growth);
-			assetPoolDic[type] = pool;
+            if(assetPoolDic.ContainsKey(type))
+            {
+                AssetPool pool = assetPoolDic[type];
+                pool.Preload(path, preloadCount, growth);
+            }
+            else
+            {
+                BaseLogger.LogFormat("Can't find asset pool:{0}", type);
+            }
 		}
 
-		public GameObject LoadAsset(ObjectType type, string assetName)
+		public GameObject Get(ObjectType type, string assetName)
 		{
-			AssetPool pool = null;
-			assetPoolDic.TryGetValue(type, out pool);
-			
-			if (pool != null)
+            if(assetPoolDic.ContainsKey(type))
 			{
-				GameObject asset = pool.Shift(assetName);
+                AssetPool pool = assetPoolDic[type];
+				GameObject asset = pool.Get(assetName);
 				return asset;
 			}
 			else
 			{
+                BaseLogger.LogFormat("Can't find asset pool:{0}", type);
 				return null;
 			}
 		}
 
-		public void RecycleAsset (GameObject asset)
+		public void Recycle (GameObject asset)
 		{
 			AssetInfo assetInfo = asset.GetComponent<AssetInfo>();
 
 			if (assetInfo != null)
 			{
-				AssetPool pool = null;
-				assetPoolDic.TryGetValue(assetInfo.type, out pool);
-
-				if (pool != null)
+                if(assetPoolDic.ContainsKey(assetInfo.type))
+                {
+                    AssetPool pool = assetPoolDic[assetInfo.type];
+                    pool.Recycle(assetInfo);
+                }
+                else
 				{
-					pool.Add(assetInfo);
-				}
-				else
-				{
-					Debug.LogError("Asset can't find its pool: " + asset.ToString() + " of type: " + assetInfo.type);
+                    BaseLogger.LogFormat("Asset:{0} can't find its pool:{1} of type: ", assetInfo.path, assetInfo.type);
 				}
 			}
 			else
 			{
-				Debug.LogError("Wrong asset to recycle: " + asset.ToString());
+                BaseLogger.LogFormat("Wrong asset to recycle: {0}", asset);
 			}
 		}
 
@@ -85,12 +83,13 @@ namespace Base
 		{
 			while (true)
 			{
-				yield return secondDelay;
+                yield return TICK_SECONDS;
 
-				foreach (AssetPool pool in assetPoolDic.Values)
-				{
-					pool.Tick(tickInterval);
-				}
+                var enumerator = assetPoolDic.GetEnumerator();
+                while(enumerator.MoveNext())
+                {
+                    enumerator.Current.Value.Tick(TICK_INTERVAL);
+                }
 			}
 		}
 	}

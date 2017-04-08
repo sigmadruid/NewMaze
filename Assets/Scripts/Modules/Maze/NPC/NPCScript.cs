@@ -41,21 +41,19 @@ public class NPCScript : EntityScript
 	{
 		if (!CheckNPC()) return;
 
-		hud.gameObject.SetActive(true);
+        if (hud != null)
+		    hud.gameObject.SetActive(true);
 		if (callbackEnter != null)
-		{
 			callbackEnter();
-		}
 	}
 	void OnTriggerExit(Collider other)
 	{
 		if (!CheckNPC()) return;
 
-		hud.gameObject.SetActive(false);
+        if (hud != null)
+		    hud.gameObject.SetActive(false);
 		if (callbackExit != null)
-		{
 			callbackExit();
-		}
 	}
 
     public void Init(string uid, Action click, Action enter, Action exit)

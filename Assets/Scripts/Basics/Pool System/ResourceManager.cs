@@ -28,11 +28,6 @@ namespace Base
 			}
 		}
 
-		/// <summary>
-		/// 载入一个AssetBundle
-		/// </summary>
-		/// <param name="path">路径</param>
-		/// <param name="objectCallback">对获得的Asset的回调</param>
 //		public void LoadAssetBundle(string path, AssetBundleManager.AssetBundleCompleteCallback callback, bool autoDestroy = true)
 //		{
 //			assetBundleManager.Load(path, callback, autoDestroy);
@@ -68,25 +63,17 @@ namespace Base
 		{
 			GameObject.Destroy(go);
 		}
+
+        public void InitAssets()
+        {
+            assetManager.Init();
+        }
 		
-		/// <summary>
-		/// 对指定游戏对象进行预加载
-		/// </summary>
-		/// <param name="type">类型.</param>
-		/// <param name="path">指定的对象路径.</param>
-		/// <param name="life">生存时间.</param>
-		/// <param name="maxPreloadCount">最大预加载数量.</param>
-		/// <param name="growth">对象数量不足时，一次的增长量.</param>
-		public void PreloadAsset (ObjectType type, string path, float life = -1f, int maxPreloadCount = 1, int growth = 1)
+		public void PreloadAsset (ObjectType type, string path, int maxPreloadCount = 1, int growth = 1)
 		{
-			assetManager.PreloadAsset(type, path, life, maxPreloadCount, growth);
+			assetManager.PreloadAsset(type, path, maxPreloadCount, growth);
 		}
 		
-		/// <summary>
-		/// 载入游戏对象
-		/// </summary>
-		/// <param name="type">游戏对象类型.</param>
-		/// <param name="assetName">游戏对象名.</param>
 		public T LoadAsset<T> (ObjectType type, string assetName) where T : MonoBehaviour
 		{
 			GameObject go = LoadGameObject(type, assetName);
@@ -100,7 +87,7 @@ namespace Base
 
 		public GameObject LoadGameObject (ObjectType type, string assetName)
 		{
-			GameObject go = assetManager.LoadAsset(type, assetName);
+			GameObject go = assetManager.Get(type, assetName);
 			if (go == null)
 			{
 				BaseLogger.LogFormat("Cannot load prefab: {0} - {1}", type, assetName);
@@ -108,13 +95,9 @@ namespace Base
 			return go;
 		}
 		
-		/// <summary>
-		/// 回收游戏对象
-		/// </summary>
-		/// <param name="asset">游戏对象.</param>
 		public void RecycleAsset (GameObject asset)
 		{
-			assetManager.RecycleAsset(asset);
+			assetManager.Recycle(asset);
 		}
 
 		public void DisposeAssets()
@@ -122,21 +105,11 @@ namespace Base
 			assetManager.Dispose();
 		}
 		
-		/// <summary>
-		/// 预加载缓存对象
-		/// </summary>
-		/// <param name="cache">缓存对象.</param>
-		/// <param name="life">缓存时间.</param>
 		public void SaveCache (UnityEngine.Object cache, float remainLife = -1f)
 		{
 			cacheManager.SaveCache(cache, remainLife);
 		}
 		
-		/// <summary>
-		/// 检索缓存对象
-		/// </summary>
-		/// <param name="type">缓存类型.</param>
-		/// <param name="cacheName">缓存名.</param>
 		public UnityEngine.Object RetrieveCache (ObjectType type, string cacheName)
 		{
 			return cacheManager.RetrieveCache(type, cacheName);

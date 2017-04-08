@@ -22,7 +22,6 @@ public class Loading : MonoBehaviour
     {
         if(operation.progress < 0.9f)
         {
-            Debug.LogError(operation.progress);
             SliderProgress.value = operation.progress;
         }
         else

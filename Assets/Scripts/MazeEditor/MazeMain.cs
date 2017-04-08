@@ -60,11 +60,11 @@ public class MazeMain : MonoBehaviour
                 IDType idType = IDManager.Instance.GetIDType(resourceData.EntityKid);
                 EntityManager manager = GlobalConfig.Instance.GetManager(idType);
                 EntityData data = manager.GetData(resourceData.EntityKid);
-                resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.Life, resourceData.PreloadCount);
+                resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.PreloadCount);
             }
             else
             {
-                resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.Life, resourceData.PreloadCount);
+                resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.PreloadCount);
             }
         }
     }
