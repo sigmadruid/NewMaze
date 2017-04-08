@@ -54,7 +54,6 @@ namespace GameLogic
 			}
 
             framework.Init();
-
 			ConfigManager.InitAllData();
 
             framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
@@ -121,13 +120,13 @@ namespace GameLogic
 
 		public void SwitchStage(StageEnum stageEnum)
 		{
+            Loading.Instance.Begin(stageEnum.ToString());
 			if (currentStage != null)
 			{
                 BaseLogger.LogFormat("stage end: {0}", currentStage.Type);
 				currentStage.End();
 			}
-			LoadingStageEnum = stageEnum;
-            SceneManager.LoadSceneAsync("Loading");
+            Loading.Instance.SetProgress(LoadingState.LoadScene, 0);
 		}
 
 		public void SwitchStageComplete()

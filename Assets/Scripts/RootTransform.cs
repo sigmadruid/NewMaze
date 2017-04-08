@@ -2,6 +2,8 @@ using UnityEngine;
 
 using System;
 
+using GameLogic;
+
 public class RootTransform : MonoBehaviour
 {
 	public static RootTransform Instance { get; private set;}
@@ -24,6 +26,11 @@ public class RootTransform : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
+        UIPanelRoot.parent.GetComponent<Canvas>().worldCamera = CameraUIScript.Instance.Camera;
 	}
+    void OnDestroy()
+    {
+        Instance = null;
+    }
 }
 

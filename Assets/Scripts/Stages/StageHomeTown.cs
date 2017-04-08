@@ -17,6 +17,7 @@ namespace GameLogic
                 facade.RegisterMediator(new TownHeroMediator());
 
             PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
+            Loading.Instance.SetProgress(LoadingState.StartStage, 10);
 
             facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
@@ -29,9 +30,12 @@ namespace GameLogic
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
 
+            Loading.Instance.SetProgress(LoadingState.StartStage, 100);
 		}
 		public override void End ()
 		{
+            Loading.Instance.SetProgress(LoadingState.EndStage, 0);
+
 			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
 
             PopupManager.Instance.Clear();
@@ -41,8 +45,10 @@ namespace GameLogic
 
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
+            Loading.Instance.SetProgress(LoadingState.EndStage, 20);
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();
+            Loading.Instance.SetProgress(LoadingState.EndStage, 30);
 		}
 
 	}

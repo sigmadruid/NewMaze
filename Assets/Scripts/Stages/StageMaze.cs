@@ -43,6 +43,7 @@ namespace GameLogic
             battleProxy.Init();
 
             PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
+            Loading.Instance.SetProgress(LoadingState.StartStage, 10);
 
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
             if (Adam.Instance.Info.IsInHall)
@@ -63,9 +64,11 @@ namespace GameLogic
 
             //For test
             ApplicationFacade.Instance.RetrieveProxy<PackProxy>().Init();
+            Loading.Instance.SetProgress(LoadingState.StartStage, 100);
 		}
 		public override void End ()
 		{
+            Loading.Instance.SetProgress(LoadingState.EndStage, 0);
 			Game.Instance.TaskManager.SetAllActive(false);
 
             PopupManager.Instance.Clear();
@@ -81,11 +84,14 @@ namespace GameLogic
 			npcProxy.Dispose();
 			explorationProxy.Dispose();
 			battleProxy.Dispose();
+            Loading.Instance.SetProgress(LoadingState.EndStage, 10);
 			
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
+            Loading.Instance.SetProgress(LoadingState.EndStage, 20);
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();
+            Loading.Instance.SetProgress(LoadingState.EndStage, 30);
 		}
 
 	}

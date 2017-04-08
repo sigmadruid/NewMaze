@@ -196,7 +196,6 @@ namespace GameLogic
             if (CallbackDie != null)
             {
                 AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                Debug.LogError(currentStateInfo.normalizedTime);
                 CallbackDie();
             }
         }

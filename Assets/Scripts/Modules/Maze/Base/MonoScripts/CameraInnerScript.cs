@@ -18,6 +18,7 @@ namespace GameLogic
         {
             Instance = this;
             Camera = GetComponent<Camera>();
+            Camera.pixelRect = new Rect();
         }
         void OnDestroy()
         {
