@@ -13,6 +13,12 @@ using StaticData;
 
 namespace Base
 {
+    public enum MouseHitType
+    {
+        None,
+        Left,
+        Right,
+    }
 	public class InputManager 
 	{
         private Dictionary<int, KeyboardAction> keyboardActionDic = new Dictionary<int, KeyboardAction>();
@@ -43,6 +49,7 @@ namespace Base
 
         public bool IsPause { get; set; }
         public Vector3 DirectionVector { get; private set; }
+        public MouseHitType MouseLeft { get; private set; }
         public Vector3 MouseHitPosition { get; private set; }
         public GameObject MouseHitObject { get; private set; }
         public Vector3 MouseHoverPosition { get; private set; }
@@ -108,6 +115,13 @@ namespace Base
 //                if(DirectionVector != Vector3.zero)
 
                 if(Input.GetMouseButtonDown(0))
+                    MouseLeft = MouseHitType.Left;
+                else if(Input.GetMouseButtonDown(1))
+                    MouseLeft = MouseHitType.Right;
+                else
+                    MouseLeft = MouseHitType.None;
+
+                if(MouseLeft != MouseHitType.None)
                 {
                     PointerEventData eventData = new PointerEventData(InputSystem);
                     eventData.pressPosition = Input.mousePosition;

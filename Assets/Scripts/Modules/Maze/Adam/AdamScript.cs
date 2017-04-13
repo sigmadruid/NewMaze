@@ -141,7 +141,12 @@ namespace GameLogic
         }
         public void Skill(int skillID, float attackSpeed)
         {
-            int skillTrigger = AnimatorDataManager.Instance.ParamDoSkill;
+            int skillTrigger = 0;
+            if (skillID == 1)
+                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_1;
+            else if (skillID == 2)
+                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_2;
+
             movementScript.SetDestination(Vector3.zero, 0);
             animator.speed = attackSpeed;
             animator.SetTrigger(skillTrigger);
@@ -188,10 +193,59 @@ namespace GameLogic
 
         #region Animation Event Handlers
 
-        private void OnDieStart(string state)
+        public void OnAnimatorStart(AnimatorEventType type)
         {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                OnSkillStart();
+                break;
+                case AnimatorEventType.UNSHEATH:
+                break;
+                case AnimatorEventType.SHEATH:
+                break;
+                case AnimatorEventType.DIE:
+                break;
+            }
         }
-        private void OnDieEnd(string state)
+        public void OnAnimatorMiddle(AnimatorEventType type, int index)
+        {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                OnSkillMiddle(index);
+                break;
+                case AnimatorEventType.UNSHEATH:
+                OnUnsheath(0);
+                break;
+                case AnimatorEventType.SHEATH:
+                OnSheath(0);
+                break;
+                case AnimatorEventType.DIE:
+                break;
+            }
+        }
+        public void OnAnimatorEnd(AnimatorEventType type)
+        {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                OnSkillEnd();
+                break;
+                case AnimatorEventType.UNSHEATH:
+                break;
+                case AnimatorEventType.SHEATH:
+                break;
+                case AnimatorEventType.DIE:
+                OnDieEnd();
+                break;
+            }
+        }
+
+        private void OnDieEnd()
         {
             if (CallbackDie != null)
             {
@@ -199,32 +253,32 @@ namespace GameLogic
                 CallbackDie();
             }
         }
-        public void OnUnsheath(string state)
+        public void OnUnsheath(int index)
         {
-            int hash = Animator.StringToHash(state);
             if (CallbackUnsheath != null)
                 CallbackUnsheath();
         }
-        public void OnSheath(string state)
+        public void OnSheath(int index)
         {
-            int hash = Animator.StringToHash(state);
             if (LeftWeapon != null)
                 ResourceManager.Instance.RecycleAsset(LeftWeapon.gameObject);
             if (RightWeapon != null)
                 ResourceManager.Instance.RecycleAsset(RightWeapon.gameObject);
         }
-        public void OnSkillStart(string state)
+        public void OnSkillStart()
         {
-            RightWeapon.TrailEnabled = true;
+            if (RightWeapon != null)
+                RightWeapon.TrailEnabled = true;
         }
-        public void OnSkillMiddle(string state)
+        public void OnSkillMiddle(int index)
         {
             if (CallbackSkill != null)
                 CallbackSkill();
         }
-        public void OnSkillEnd(string state)
+        public void OnSkillEnd()
         {
-            RightWeapon.TrailEnabled = false;
+            if (RightWeapon != null)
+                RightWeapon.TrailEnabled = false;
             animator.speed = 1f;
             if (CallbackSkillEnd != null)
                 CallbackSkillEnd();

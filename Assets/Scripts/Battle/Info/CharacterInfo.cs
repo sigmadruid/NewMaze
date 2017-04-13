@@ -218,11 +218,11 @@ namespace Battle
 
         public Skill GetSkill(int index)
         {
-            if(index < 0 || index >= SkillList.Count)
+            if(index < 1 || index > SkillList.Count)
             {
                 BaseLogger.LogFormat("skill index out of range: {0}", index);
             }
-            Skill skill = SkillList[index];
+            Skill skill = SkillList[index - 1];
             return skill;
         }
 
@@ -231,7 +231,7 @@ namespace Battle
             if (!IsAlive)
                 return false;
 
-            Skill skill = SkillList[index];
+            Skill skill = SkillList[index - 1];
             return skill.CD <= 0 && CurrentSkill == null;
         }
 

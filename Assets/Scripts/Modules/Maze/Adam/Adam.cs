@@ -37,6 +37,7 @@ namespace GameLogic
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
+        public int SkillIndex { get; private set; }
         public Monster TargetMonster { get; private set; }
         public Vector3 TargetPosition { get; private set; }
 
@@ -57,9 +58,9 @@ namespace GameLogic
             if(!IsUpdating || Game.Instance.PlotRunner.IsPlaying)
                 return;
 
-            //Select target
             if(inputManager.MouseHitPosition != Vector3.zero)
             {
+                //Select target
                 TargetPosition = inputManager.MouseHitPosition;
                 if(inputManager.CheckMouseHitLayer(Layers.LayerMonster))
                 {
@@ -79,20 +80,28 @@ namespace GameLogic
                 {
                     TargetMonster = null;
                 }
-            }
 
+                //Select skill
+                if(inputManager.MouseLeft == MouseHitType.Left)
+                    SkillIndex = 1;
+                else if(inputManager.MouseLeft == MouseHitType.Right)
+                    SkillIndex = 2;
+                else
+                    SkillIndex = 0;
+            }
+            
             if(TargetMonster != null)
             {
                 //Choose the skill
-                Skill skill = Info.GetSkill(0);
+                Skill skill = Info.GetSkill(SkillIndex);
 
                 //Cast skill
-                if(Info.CanCastSkill(0))
+                if(Info.CanCastSkill(SkillIndex))
                 {
                     if(MathUtils.XZSqrDistance(WorldPosition, TargetMonster.WorldPosition) < skill.Data.Range * skill.Data.Range)
                     {
                         Move(Vector3.zero);
-                        Skill(0);
+                        Skill(SkillIndex);
                     }
                     else
                     {

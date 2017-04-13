@@ -12,14 +12,16 @@ namespace StaticData
         public int NullHash;
 		public int IdleHash;
 		public int MoveHash;
-        public int SkillHash;
+        public int SkillHash_1;
+        public int SkillHash_2;
 		public int Attack1Hash;
 		public int Attack2Hash;
 		public int HitHash;
         public int DieHash;
 
 		public int ParamIsMoving;
-        public int ParamDoSkill;
+        public int ParamDoSkill_1;
+        public int ParamDoSkill_2;
 		public int ParamDoAttack;
 		public int ParamAttackRandomValue;
 		public int ParamDoHit;
@@ -47,14 +49,16 @@ namespace StaticData
             NullHash = Animator.StringToHash("Base.null");
 			IdleHash = Animator.StringToHash("Base.idle");
 			MoveHash = Animator.StringToHash("Base.move");
-            SkillHash = Animator.StringToHash("Base.skill_1");
+            SkillHash_1 = Animator.StringToHash("Base.skill_1");
+            SkillHash_2 = Animator.StringToHash("Base.skill_2");
 			Attack1Hash = Animator.StringToHash("Base.attack01");
 			Attack2Hash = Animator.StringToHash("Base.attack02");
 			HitHash = Animator.StringToHash("Base.hit");
 			DieHash = Animator.StringToHash("Base.die");
 
 			ParamIsMoving = Animator.StringToHash("IsMoving");
-            ParamDoSkill = Animator.StringToHash("DoSkill_1");
+            ParamDoSkill_1 = Animator.StringToHash("DoSkill_1");
+            ParamDoSkill_2 = Animator.StringToHash("DoSkill_2");
 			ParamDoAttack = Animator.StringToHash("DoAttack");
 			ParamAttackRandomValue = Animator.StringToHash("AttackRandomValue");
 			ParamDoHit = Animator.StringToHash("DoHit");
