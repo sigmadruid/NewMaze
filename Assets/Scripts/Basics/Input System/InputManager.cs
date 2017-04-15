@@ -206,6 +206,7 @@ namespace Base
             if(Input.GetKeyDown(KeyCode.F1))
             {
                 Adam.Instance.IsVisible = !Adam.Instance.IsVisible;
+//                Camera3DScript.Instance.Vibrate();
             }
 		}
 

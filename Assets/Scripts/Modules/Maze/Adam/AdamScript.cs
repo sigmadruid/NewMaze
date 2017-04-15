@@ -85,7 +85,7 @@ namespace GameLogic
             {
                 cameraController = mainCamera.gameObject.AddComponent<Camera3DScript>();
             }
-            cameraController.playerTransofrm = transform;
+            cameraController.playerTransofrm = BottomPosTransform;
 
 //            MeleeTrail.Emit = false;
         }
@@ -276,6 +276,7 @@ namespace GameLogic
         {
             if (CallbackSkillMiddle != null)
                 CallbackSkillMiddle(effectIndex++);
+            Camera3DScript.Instance.Vibrate();
         }
         public void OnSkillEnd()
         {

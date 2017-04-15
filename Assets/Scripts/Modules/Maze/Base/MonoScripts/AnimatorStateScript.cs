@@ -28,7 +28,7 @@ namespace GameLogic
         private AdamScript adamScript;
         private int startIndex;
 
-        public virtual void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             startIndex = 0;
             if(adamScript == null)
@@ -37,12 +37,12 @@ namespace GameLogic
                 adamScript.OnAnimatorStart(StartEvent);
             
         }
-        public virtual void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (EndEvent != AnimatorEventType.NONE)
                 adamScript.OnAnimatorEnd(EndEvent);
         }
-        public virtual void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             for(int i = startIndex; i < EventTimes.Length; ++i)
             {

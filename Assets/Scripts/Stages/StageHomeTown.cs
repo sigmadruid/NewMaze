@@ -23,6 +23,7 @@ namespace GameLogic
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			facade.DispatchNotification(NotificationEnum.NPC_INIT);
 			facade.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
+            facade.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
 
 			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, true);
 

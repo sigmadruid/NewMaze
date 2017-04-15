@@ -295,6 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   height: 10
   distance: 6
+  vibrationScope: 0.1
   playerTransofrm: {fileID: 0}
   Camera: {fileID: 0}
 --- !u!114 &114977037643038682

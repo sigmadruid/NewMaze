@@ -270,6 +270,7 @@ namespace GameLogic
         }
         private void OnSkillEnd()
         {
+            ClearTarget();
             Info.CurrentSkill = null;
         }
         private void OnUnsheath()

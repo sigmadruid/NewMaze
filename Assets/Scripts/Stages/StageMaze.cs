@@ -51,7 +51,6 @@ namespace GameLogic
             else
                 ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
 
 			Game.Instance.TaskManager.SetAllActive(true);
