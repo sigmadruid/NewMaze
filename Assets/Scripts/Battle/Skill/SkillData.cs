@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace StaticData
 {
@@ -10,17 +11,14 @@ namespace StaticData
 
         public bool IsDamage;
 
-        public float Ratio;
+        public bool NeedTarget;
 
         public bool CanMove;
 
-        public int AreaKid;
-
-        public bool NeedTarget;
-
         public float Range;
 
-        public int BulletKid;
+        public List<int> EffectList;
+
     }
 }
 

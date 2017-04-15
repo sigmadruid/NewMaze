@@ -53,7 +53,7 @@ namespace GameLogic
             }
         }
 
-        protected override void Update()
+        protected override void Update(float deltaTime)
         {
             if(!IsUpdating || Game.Instance.PlotRunner.IsPlaying)
                 return;
@@ -131,6 +131,9 @@ namespace GameLogic
             {
                 Move(Vector3.zero);
             }
+
+            Info.UpdateBuff(deltaTime);
+            Info.UpdateSkill(deltaTime);
         }
         protected override void SlowUpdate()
         {
@@ -220,7 +223,7 @@ namespace GameLogic
                 {
                     Vector3 direction = MathUtils.XZDirection(WorldPosition, TargetMonster.WorldPosition);
                     SetRotation(direction);
-                    Info.CurrentSkill.Cast();
+                    Info.CurrentSkill.Cast(Info);
                     Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));
                     inputManager.PreventMouseAction();
                 }
@@ -253,12 +256,17 @@ namespace GameLogic
 
         #region Event Handlers
 
-        private void OnSkill()
+        private void OnSkillMiddle(int index)
         {
             if(Info.CurrentSkill != null)
-                battleProxy.AttackMonster(Info.CurrentSkill);
+            {
+                SkillEffect effect = Info.CurrentSkill.GetEffect(index);
+                battleProxy.AttackMonster(effect);
+            }
             else
+            {
                 Debug.LogError("null");
+            }
         }
         private void OnSkillEnd()
         {
@@ -283,7 +291,7 @@ namespace GameLogic
         private void OnTrapAttack(int trapKid)
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
-            AttackContext context = new AttackContext();
+            SkillEffect context = new SkillEffect();
             context.CasterSide = Side.Neutral;
             context.Attack = data.Attack;
             context.Critical = 0;
@@ -305,7 +313,7 @@ namespace GameLogic
             adam.Script.CallbackUpdate = adam.Update;
             adam.Script.CallbackSlowUpdate = adam.SlowUpdate;
             adam.Script.CallbackDie = adam.OnDie;
-            adam.Script.CallbackSkill = adam.OnSkill;
+            adam.Script.CallbackSkillMiddle = adam.OnSkillMiddle;
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackUnsheath = adam.OnUnsheath;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;

@@ -21,9 +21,9 @@ namespace GameLogic
         public WeaponScript LeftWeapon;
         public WeaponScript RightWeapon;
 
-        public Action CallbackUpdate;
+        public Action<float> CallbackUpdate;
         public Action CallbackSlowUpdate;
-        public Action CallbackSkill;
+        public Action<int> CallbackSkillMiddle;
         public Action CallbackSkillEnd;
         public Action CallbackDie;
         public Action CallbackUnsheath;
@@ -57,7 +57,7 @@ namespace GameLogic
 
             if (CallbackUpdate != null)
             {
-                CallbackUpdate();
+                CallbackUpdate(Time.deltaTime);
             }
         }
         private IEnumerator SlowUpdate()
@@ -209,19 +209,19 @@ namespace GameLogic
                 break;
             }
         }
-        public void OnAnimatorMiddle(AnimatorEventType type, int index)
+        public void OnAnimatorMiddle(AnimatorEventType type)
         {
             switch(type)
             {
                 case AnimatorEventType.SKILL_1:
                 case AnimatorEventType.SKILL_2:
-                OnSkillMiddle(index);
+                OnSkillMiddle();
                 break;
                 case AnimatorEventType.UNSHEATH:
-                OnUnsheath(0);
+                OnUnsheath();
                 break;
                 case AnimatorEventType.SHEATH:
-                OnSheath(0);
+                OnSheath();
                 break;
                 case AnimatorEventType.DIE:
                 break;
@@ -253,27 +253,29 @@ namespace GameLogic
                 CallbackDie();
             }
         }
-        public void OnUnsheath(int index)
+        public void OnUnsheath()
         {
             if (CallbackUnsheath != null)
                 CallbackUnsheath();
         }
-        public void OnSheath(int index)
+        public void OnSheath()
         {
             if (LeftWeapon != null)
                 ResourceManager.Instance.RecycleAsset(LeftWeapon.gameObject);
             if (RightWeapon != null)
                 ResourceManager.Instance.RecycleAsset(RightWeapon.gameObject);
         }
+        private int effectIndex;
         public void OnSkillStart()
         {
+            effectIndex = 1;
             if (RightWeapon != null)
                 RightWeapon.TrailEnabled = true;
         }
-        public void OnSkillMiddle(int index)
+        public void OnSkillMiddle()
         {
-            if (CallbackSkill != null)
-                CallbackSkill();
+            if (CallbackSkillMiddle != null)
+                CallbackSkillMiddle(effectIndex++);
         }
         public void OnSkillEnd()
         {

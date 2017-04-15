@@ -54,7 +54,7 @@ namespace StaticData
         }
         public static T ReadEnum<T>(string content)
         {
-            return ParseKey<T>(content);
+            return (T)ParseEnum(content, typeof(T));
         }
         private static Vector3 ParseVector3(string content)
         {
@@ -112,7 +112,7 @@ namespace StaticData
                 for (int i = 0; i < strList.Length; ++i)
                 {
                     string str = strList[i];
-                    list.Add(ParseKey<T>(str));
+                    list.Add((T)ParseEnum(str, typeof(T)));
                 }
             }
             return list;
@@ -135,8 +135,32 @@ namespace StaticData
             }
             return dic;
         }
+        public static Dictionary<int, V> ReadIntDictionary<K, V>(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return new Dictionary<int, V>();
+            }
+            string[] valList = content.Split('#');
+            Dictionary<int, V> dic = new Dictionary<int, V>();
+            for(int i = 0; i < valList.Length; ++i)
+            {
+                string[] pairList = valList[i].Split(':');
+                int k = (int)ParseEnum(pairList[0].Trim(), typeof(K));
+                V v = ParseValue<V>(pairList[1].Trim());
+                dic.Add(k, v);
+            }
+            return dic;
+        }
 
-
+        private static object ParseEnum(string content, Type type)
+        {
+            if(!Enum.IsDefined(type, content))
+            {
+                throw new Exception();
+            }
+            return Enum.Parse(type, content);
+        }
         private static T ParseKey<T>(string content)
         {
             object resultKey = null;
@@ -146,11 +170,7 @@ namespace StaticData
             }
             else
             {
-                if(!Enum.IsDefined(typeof(T), content))
-                {
-                    throw new Exception();
-                }
-                resultKey = Enum.Parse(typeof(T), content);
+                resultKey = ParseEnum(content, typeof(T));
             }
             return (T)resultKey;
         }
@@ -178,11 +198,11 @@ namespace StaticData
         {
             if (string.IsNullOrEmpty(content))
             {
-                return Color.white;
+                return Color.clear;
             }
 
             string[] colorList = content.Split('#');
-            Color color = new Color();
+            Color color = Color.clear;
             color.r = ParseFloat(colorList[0]);
             color.g = ParseFloat(colorList[1]);
             color.b = ParseFloat(colorList[2]);

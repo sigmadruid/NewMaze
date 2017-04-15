@@ -55,6 +55,8 @@ namespace Battle
 
         protected void SearchForHero()
         {
+            if(currentMonster.Info.IsStunned)
+                return;
             destPosition = Adam.Instance.WorldPosition;
             currentMonster.Move(destPosition);
         }
@@ -64,6 +66,7 @@ namespace Battle
             Vector3 origin = currentMonster.WorldPosition + Vector3.up * h;
             Vector3 direction = Adam.Instance.WorldPosition + Vector3.up * h - currentMonster.WorldPosition;
             SkillData skillData = SkillDataManager.Instance.GetData(currentData.SkillList[0]) as SkillData;
+            SkillEffectData effectData = SkillEffectDataManager.Instance.GetData(skillData.EffectList[0]) as SkillEffectData;
             bool result = Physics.Raycast(origin, direction, skillData.Range, Layers.LayerBlock);
             return result;
         }

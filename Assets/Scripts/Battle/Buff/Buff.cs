@@ -21,9 +21,9 @@ namespace Battle
 
         public virtual void Start(CharacterScript script)
         {
-            RemainTime = 0;
             this.script = script;
-            script.SetEmissionColor(Data.EmissionColor, GlobalConfig.BattleConfig.BuffTransitionDuration);
+            if (Data.EmissionColor != Color.clear)
+                script.SetEmissionColor(Data.EmissionColor, GlobalConfig.BattleConfig.BuffTransitionDuration);
         }
 
         public virtual void End()
@@ -34,14 +34,7 @@ namespace Battle
 
         public virtual void Update(float deltaTime)
         {
-            if(Data.Duration < 0)
-                return;
-
-            RemainTime += deltaTime;
-            if(RemainTime > Data.Duration)
-            {
-                End();
-            }
+            RemainTime -= deltaTime;
         }
 
         public float GetAttributeRatio(BattleAttribute attribute)
@@ -65,10 +58,20 @@ namespace Battle
 
         public static Buff Create(int kid, float remainTime)
         {
-            Buff buff = new Buff();
+            BuffData data = BuffDataManager.Instance.GetData(kid);
+            Buff buff = null;
+            switch(data.SpecialType)
+            {
+                case BuffSpecialType.HitBack:
+                    buff = new HitBackBuff();
+                    break;
+                default:
+                    buff = new Buff();
+                    break;
+            }
             buff.Uid = Guid.NewGuid().ToString();
-            buff.Data = BuffDataManager.Instance.GetData(kid);
-            buff.RemainTime = remainTime;
+            buff.Data = data;
+            buff.RemainTime = remainTime > 0 ? remainTime : data.Duration;
             return buff;
         }
 

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using StaticData;
+
+using Base;
 
 namespace Battle
 {
@@ -12,9 +15,27 @@ namespace Battle
 
         public float CD;
 
-        public void Cast()
+        public List<SkillEffect> EffectList = new List<SkillEffect>();
+
+        public void Cast(ICharacterInfoAgent infoAgent)
         {
             CD = Data.CD;
+            EffectList.Clear();
+            for(int i = 0; i < Data.EffectList.Count; ++i)
+            {
+                SkillEffect effect = SkillEffect.Create(Data.EffectList[i], infoAgent);
+                EffectList.Add(effect);
+            }
+        }
+
+        public SkillEffect GetEffect(int index)
+        {
+            if(index < 1 || index > EffectList.Count)
+            {
+                BaseLogger.LogFormat("effect index out of range: {0}", index);
+            }
+            SkillEffect effect = EffectList[index - 1];
+            return effect;
         }
 
         public static Skill Create(int kid, float cd)

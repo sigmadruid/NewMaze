@@ -13,7 +13,7 @@ public enum BulletState
 
 public class BulletScript : EntityScript 
 {
-    public System.Action CallbackUpdate;
+    public System.Action<float> CallbackUpdate;
     public System.Action<Collider> CallbackHit;
     public System.Action CallbackDestroy;
 
@@ -35,7 +35,7 @@ public class BulletScript : EntityScript
 		if (Game.Instance.IsPause) return;
 
 		if (CallbackUpdate != null)
-			CallbackUpdate();
+            CallbackUpdate(Time.deltaTime);
 	}
 
 	void OnTriggerEnter(Collider other)

@@ -194,7 +194,6 @@ namespace GameLogic
             bool isNight = ApplicationFacade.Instance.RetrieveProxy<EnvironmentProxy>().IsNight;
             monster.SetAtNight(isNight);
             monster.SetPosition(position);
-            monsterProxy.AddMonster(monster);
         }
 
         private void HandleEnvironmentChange(bool isNight)

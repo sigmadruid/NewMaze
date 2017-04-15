@@ -31,62 +31,52 @@ namespace Battle
             monsterProxy = null;
 		}
 
-        public void AttackMonster(Skill skill)
+        public void AttackMonster(SkillEffect effect)
 		{
-            AttackContext context = new AttackContext();
-            context.CasterSide = Side.Hero;
-            context.Attack = adam.Info.GetAttribute(BattleAttribute.Attack) * skill.Data.Ratio;
-            context.Critical = (int)adam.Info.GetAttribute(BattleAttribute.Critical);
-
             if(adam.Data.AttackType == AttackType.Range)
             {
                 //The monster can be just killed by your bullet when you are preparing for the next shot
                 if(Adam.Instance.TargetMonster == null)
                     return;
-                Bullet bullet = Bullet.Create(skill.Data.BulletKid);
-                bullet.AttackContext = context;
+                Bullet bullet = Bullet.Create(effect.Data.BulletKid);
+                bullet.SkillEffect = effect;
                 bullet.Start(adam.Script.EmitPosition, Adam.Instance.TargetMonster.Script.CenterPosition);
             }
             else if (adam.Data.AttackType == AttackType.Melee)
             {
                 monsterProxy.IterateActives((Monster monster) =>
                     {
-                        AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
+                        AreaData areaData = AreaDataManager.Instance.GetData(effect.Data.AreaKid) as AreaData;
                         bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
                         if(inArea)
                         {
-                            DoAttackMonster(monster, context);
+                            DoAttackMonster(monster, effect);
                         }
                     });
             }
 
 		}
 
-        public void AttackHero(Monster monster, Skill skill)
+        public void AttackHero(Monster monster, SkillEffect effect)
 		{
-			AttackContext ac = new AttackContext();
-			ac.CasterSide = Side.Monster;
-            ac.Attack = monster.Info.GetAttribute(BattleAttribute.Attack) * skill.Data.Ratio;
-            ac.Critical = (int)monster.Info.GetAttribute(BattleAttribute.Critical);
-
 			if (monster.Data.AttackType == AttackType.Range)
 			{
-                Bullet bullet = Bullet.Create(skill.Data.BulletKid);
-				bullet.AttackContext = ac;
+                Bullet bullet = Bullet.Create(effect.Data.BulletKid);
+                bullet.SkillEffect = effect;
                 bullet.Start(monster.Script.EmitPosition, adam.Script.CenterPosition);
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
-                AreaData areaData = AreaDataManager.Instance.GetData(skill.Data.AreaKid) as AreaData;
+                AreaData areaData = AreaDataManager.Instance.GetData(effect.Data.AreaKid) as AreaData;
                 bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
 				if (inArea)
 				{
-					DoAttackHero(ac);
+                    DoAttackHero(effect);
 				}
 			}
 		}
 
-		public void DoAttackHero(AttackContext attackContext)
+        public void DoAttackHero(SkillEffect attackContext)
 		{
 			if (adam.Info.IsConverting) return;
 
@@ -103,7 +93,7 @@ namespace Battle
 			DispatchNotification(NotificationEnum.BATTLE_UI_UPDATE_HP, result);
 		}
 
-        public void DoAttackMonster(Monster monster, AttackContext attackContext)
+        public void DoAttackMonster(Monster monster, SkillEffect attackContext)
         {
             if (!monster.Info.IsAlive)
             {
@@ -114,6 +104,13 @@ namespace Battle
             if (monster.Info.HP > 0)
             {
                 monster.Hit();
+                if(attackContext.Data != null)//Can be trap
+                {
+                    for(int i = 0; i < attackContext.Data.BuffKidList.Count; ++i)
+                    {
+                        monster.AddBuff(attackContext.Data.BuffKidList[i]);
+                    }
+                }
             }
             else
             {

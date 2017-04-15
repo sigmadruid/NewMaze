@@ -15,6 +15,7 @@ namespace StaticData
     {
         None,
         Invisible,
+        HitBack,
     }
 
     public class BuffData
@@ -31,6 +32,8 @@ namespace StaticData
         public Dictionary<int, int> AttributeRaiseDic = new Dictionary<int, int>();
 
         public Color EmissionColor;
+
+        public string Param1;
 
     }
 }

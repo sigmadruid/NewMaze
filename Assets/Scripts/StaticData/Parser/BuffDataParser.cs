@@ -27,9 +27,10 @@ namespace StaticData
                     data.Type = StaticReader.ReadEnum<BuffType>(GetContent(col++));
                     data.SpecialType = StaticReader.ReadEnum<BuffSpecialType>(GetContent(col++));
                     data.Duration = StaticReader.ReadFloat(GetContent(col++));
-                    data.AttributeRatioDic = StaticReader.ReadDictionary<int, float>(GetContent(col++));
-                    data.AttributeRaiseDic = StaticReader.ReadDictionary<int, int>(GetContent(col++));
+                    data.AttributeRatioDic = StaticReader.ReadIntDictionary<BattleAttribute, float>(GetContent(col++));
+                    data.AttributeRaiseDic = StaticReader.ReadIntDictionary<BattleAttribute, int>(GetContent(col++));
                     data.EmissionColor = StaticReader.ReadColor(GetContent(col++));
+                    data.Param1 = StaticReader.ReadString(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
                     NextLine();

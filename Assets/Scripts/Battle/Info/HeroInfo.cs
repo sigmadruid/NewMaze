@@ -29,6 +29,7 @@ namespace Battle
 
 		public HeroInfo (HeroData data, HeroInfo info) : base(data)
 		{
+            Side = Side.Hero;
 			Data = data;
 			if (info != null)
 			{

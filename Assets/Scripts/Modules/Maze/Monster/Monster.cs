@@ -51,7 +51,9 @@ namespace GameLogic
 		}
         private void OnAttack()
 		{
-            battleProxy.AttackHero(this, Info.SkillList[0]);
+            Skill skill = Info.GetSkill(1);
+            skill.Cast(Info);
+            battleProxy.AttackHero(this, skill.GetEffect(1));
 		}
 		public void Hit()
 		{
@@ -77,7 +79,7 @@ namespace GameLogic
         private void OnTrapAttack(int trapKid)
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
-            AttackContext context = new AttackContext();
+            SkillEffect context = new SkillEffect();
             context.CasterSide = Side.Neutral;
             context.Attack = data.Attack;
             context.Critical = 0;
@@ -87,10 +89,12 @@ namespace GameLogic
 
 		#endregion
 
-		protected override void Update()
+        protected override void Update(float deltaTime)
 		{
 			if (!Info.IsAlive)
 				return;
+            Info.UpdateBuff(deltaTime);
+            Info.UpdateSkill(deltaTime);
 		}
 
         public void AddBuff(int kid, float remainTime = 0f)
@@ -182,6 +186,7 @@ namespace GameLogic
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
             monster.Script.CallbackTrapAttack = monster.OnTrapAttack;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().AddMonster(monster);
 
             Game.Instance.AICore.AddAI(monster);
         }

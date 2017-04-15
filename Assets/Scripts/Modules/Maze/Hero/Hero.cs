@@ -48,7 +48,7 @@ namespace GameLogic
 			}
 		}
 
-        protected override void Update()
+        protected override void Update(float deltaTime)
         {
             if(!IsUpdating)
                 return;
@@ -192,7 +192,7 @@ namespace GameLogic
         private void OnTrapAttack(int trapKid)
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
-            AttackContext context = new AttackContext();
+            SkillEffect context = new SkillEffect();
             context.CasterSide = Side.Neutral;
             context.Attack = data.Attack;
             context.Critical = 0;

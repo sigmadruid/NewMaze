@@ -20,7 +20,7 @@ namespace GameLogic
     	public Transform BottomPosTransform;
         public Transform EmitTransform;
 
-        public Action CallbackUpdate;
+        public Action<float> CallbackUpdate;
         public Action CallbackSlowUpdate;
         public Action CallbackDie;
     	
@@ -103,7 +103,7 @@ namespace GameLogic
 
     		if (CallbackUpdate != null)
     		{
-    			CallbackUpdate();
+                CallbackUpdate(Time.deltaTime);
     		}
     	}
     	private IEnumerator SlowUpdate()
@@ -140,6 +140,12 @@ namespace GameLogic
 
 
     	#region Behavior
+
+        public void SimpleMove(Vector3 velocity)
+        {
+            movementScript.SetDestination(Vector3.zero, 0f);
+            transform.position += velocity;
+        }
 
     	public void Move(Vector3 destination, float speed)
     	{

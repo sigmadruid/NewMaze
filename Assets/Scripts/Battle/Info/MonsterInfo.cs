@@ -16,6 +16,7 @@ namespace Battle
 		
 		public MonsterInfo (MonsterData data) : base(data)
 		{
+            Side = Side.Monster;
 			Data = data;
             InitSkillList();
 		}

@@ -42,7 +42,7 @@ namespace StaticData
                     }
 
 					char firstChar = line[0];
-					if (firstChar == ',')
+                    if (firstChar == ',' || firstChar == '/')
 					{
 						continue;
 					}

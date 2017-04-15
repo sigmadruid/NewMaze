@@ -11,12 +11,12 @@ namespace StaticData
     public enum BattleAttribute
     {
         HP = 1,
-        Attack,
-        Defense,
-        Critical,
-        Dodge,
-        MoveSpeed,
-        AttackSpeed,
+        Attack = 2,
+        Defense = 3,
+        Critical = 4,
+        Dodge = 5,
+        MoveSpeed = 6,
+        AttackSpeed = 7,
     }
     public enum Side
     {

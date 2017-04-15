@@ -19,12 +19,12 @@ namespace Battle
 
 		public override void SlowUpdate ()
 		{
-			if (!currentMonster.Info.IsAlive)
-			{
-				return;
-			}
-
 			base.SlowUpdate();
+
+            if(!currentMonster.Info.IsAlive)
+                return;
+            if(currentMonster.Info.IsStunned)
+                return;
 
             Adam adam = Adam.Instance;
 			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);

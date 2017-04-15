@@ -24,7 +24,7 @@ namespace GameLogic
 			protected set { script = value; }
 		}
 
-		public AttackContext AttackContext;
+        public SkillEffect SkillEffect;
 
 		private BattleProxy battleProxy;
 
@@ -40,7 +40,7 @@ namespace GameLogic
             timeCounter = 0f;
 		}
 
-		protected override void Update()
+        protected override void Update(float deltaTime)
 		{
             if(isHit) return;
 
@@ -58,7 +58,7 @@ namespace GameLogic
 		{
             if(isHit) return;
 
-            if(AttackContext.CasterSide == Side.Hero)
+            if(SkillEffect.CasterSide == Side.Hero)
             {
                 if (!other.CompareTag(Tags.Hero))
                 {
@@ -67,19 +67,19 @@ namespace GameLogic
                     {
                         string uid = other.GetComponent<MonsterScript>().Uid;
                         Monster monster = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(uid);
-                        battleProxy.DoAttackMonster(monster, AttackContext);
+                        battleProxy.DoAttackMonster(monster, SkillEffect);
                     }
                     Script.SetState(BulletState.After, Data.EndDuration);
                 }
             }
-            else if(AttackContext.CasterSide == Side.Monster)
+            else if(SkillEffect.CasterSide == Side.Monster)
             {
                 if (!other.CompareTag(Tags.Monster))
                 {
                     isHit = true;
                     if (other.CompareTag(Tags.Hero))
                     {
-                        battleProxy.DoAttackHero(AttackContext);
+                        battleProxy.DoAttackHero(SkillEffect);
                     }
                     Script.SetState(BulletState.After, Data.EndDuration);
                 }

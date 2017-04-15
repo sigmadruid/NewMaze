@@ -71,7 +71,7 @@ namespace GameLogic
             Script.Pause(isPause);
 		}
 
-		protected virtual void Update()
+        protected virtual void Update(float deltaTime)
 		{
 		}
 

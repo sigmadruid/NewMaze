@@ -9,7 +9,7 @@ using StaticData;
 
 namespace Battle
 {
-    public struct AttackContext
+    public class AttackContext
     {
         public Side CasterSide;
         public float Attack;
@@ -23,11 +23,12 @@ namespace Battle
         public bool IsDodge;
     }
 
-    public class CharacterInfo : EntityInfo
+    public class CharacterInfo : EntityInfo, ICharacterInfoAgent
 	{
         protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
         protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
 
+        public Side Side;
         public List<Skill> SkillList = new List<Skill>();
         public Skill CurrentSkill;
 		
@@ -40,7 +41,6 @@ namespace Battle
 		public CharacterInfo (CharacterData data)
 		{
 			Data = data;
-			
 			Init();
 		}
 		
@@ -64,6 +64,12 @@ namespace Battle
 			Data = null;
 		}
 
+        #region State
+
+        public bool IsStunned;
+
+        #endregion
+
         #region Attribute
 
 		protected int hp;
@@ -71,6 +77,11 @@ namespace Battle
 		public float HPRatio { get { return hp * 1f / Data.HP; } }
 
 		public bool IsAlive { get{ return hp > 0; } }
+
+        public Side GetSide()
+        {
+            return Side;
+        }
 
         public float GetAttribute(BattleAttribute attribute)
         {
@@ -91,7 +102,7 @@ namespace Battle
 			hp = Mathf.Clamp(hp + value, 0, maxHP);
 		}
 
-		public AttackResult HurtBy(AttackContext attackContext)
+        public AttackResult HurtBy(SkillEffect attackContext)
 		{
 			float randomValue = UnityEngine.Random.value;
 			AttackResult result = new AttackResult();
@@ -160,15 +171,19 @@ namespace Battle
             while (enumerator.MoveNext())
             {
                 Buff buff = enumerator.Current.Value;
-                buff.Update(deltaTime);
+                if(buff.RemainTime > 0)
+                {
+                    buff.Update(deltaTime);
+                    if(buff.RemainTime <= 0)
+                    {
+                        buff.End();
+                    }
+                }
             }
         }
         public void AddBuff(Buff buff)
         {
-            if(!buffDic.ContainsKey(buff.Data.Kid))
-            {
-                buffDic.Add(buff.Data.Kid, buff);
-            }
+            buffDic[buff.Data.Kid] = buff;
         }
         public void RemoveBuff(int kid)
         {
@@ -185,7 +200,8 @@ namespace Battle
             while (enumerator.MoveNext())
             {
                 Buff buff = enumerator.Current.Value;
-                recordDic.Add(buff.Data.Kid, buff.RemainTime);
+                if (buff.RemainTime > 0)
+                    recordDic.Add(buff.Data.Kid, buff.RemainTime);
             }
             return recordDic;
         }

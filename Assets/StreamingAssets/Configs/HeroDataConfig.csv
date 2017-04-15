@@ -2,5 +2,5 @@ Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,Atta
 int,string,string,string,int,int,int,int,int,float,float,AttackType,List<int>,string,int,int
 30000,hero.name.Edward,portrait_1,Adam,1000,100,10,20,10,3.5,1,Melee,,DoUnarmed,0,0
 30001,hero.name.Edward,portrait_1,Adam,1000,100,10,20,10,3.5,1,Melee,150001#150002,DoSword,170004,170001
-30002,hero.name.Thomas,portrait_2,Adam,5000,200,20,50,0,3,1,Melee,150011,DoAxe,0,170002
+30002,hero.name.Thomas,portrait_2,Adam,5000,200,20,50,0,3,1,Melee,150011#150012,DoAxe,0,170002
 30003,hero.name.Sally,portrait_3,Adam,2000,150,10,70,30,4,1.5,Range,150021#150022,DoBow,170003,0

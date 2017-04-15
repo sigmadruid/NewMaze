@@ -4,7 +4,7 @@ using UnityEditor;
 using System;
 using System.Collections;
 
-[CustomEditor(typeof(Main))]
+[CustomEditor(typeof(Entry))]
 public class MainToolEditor : Editor
 {
     public override void OnInspectorGUI()

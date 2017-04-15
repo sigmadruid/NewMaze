@@ -22,6 +22,7 @@ namespace StaticData
         Skill = 15,
         Area = 16,
         Weapon = 17,
+        SkillEffect = 18,
 	}
 
     public class IDManager

@@ -49,7 +49,7 @@ namespace GameLogic
                 float time = EventTimes[i];
                 if(stateInfo.normalizedTime > time)
                 {
-                    adamScript.OnAnimatorMiddle(MiddleEvents[i], i);
+                    adamScript.OnAnimatorMiddle(MiddleEvents[i]);
                     startIndex++;
                 }
             }

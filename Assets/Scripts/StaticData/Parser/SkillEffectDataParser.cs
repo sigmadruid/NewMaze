@@ -5,13 +5,13 @@ using Base;
 
 namespace StaticData
 {
-    public class SkillDataParser : BaseParser
+    public class SkillEffectDataParser : BaseParser
     {
-        public void Parse(string name, out Dictionary<int, SkillData> kvDic)
+        public void Parse(string name, out Dictionary<int, SkillEffectData> kvDic)
         {
             LoadFile(CONFIG_PATH + name);
 
-            kvDic = new Dictionary<int, SkillData>();
+            kvDic = new Dictionary<int, SkillEffectData>();
 
             int col = 0;
             try
@@ -20,14 +20,12 @@ namespace StaticData
                 {
                     col = 0;
 
-                    SkillData data = new SkillData();
+                    SkillEffectData data = new SkillEffectData();
                     data.Kid = StaticReader.ReadInt(GetContent(col++));
-                    data.CD = StaticReader.ReadFloat(GetContent(col++));
-                    data.IsDamage = StaticReader.ReadBool(GetContent(col++));
-                    data.NeedTarget = StaticReader.ReadBool(GetContent(col++));
-                    data.CanMove = StaticReader.ReadBool(GetContent(col++));
-                    data.Range = StaticReader.ReadFloat(GetContent(col++));
-                    data.EffectList = StaticReader.ReadIntList(GetContent(col++));
+                    data.Ratio = StaticReader.ReadFloat(GetContent(col++));
+                    data.AreaKid = StaticReader.ReadInt(GetContent(col++));
+                    data.BulletKid = StaticReader.ReadInt(GetContent(col++));
+                    data.BuffKidList = StaticReader.ReadIntList(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
 
