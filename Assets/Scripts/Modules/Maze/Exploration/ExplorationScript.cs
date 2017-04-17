@@ -22,7 +22,7 @@ namespace GameLogic
 		{
 			highlighter = GetComponent<Highlighter>();
 		}
-        void Update()
+        void LateUpdate()
         {
             if (hud != null && hud.gameObject.activeSelf)
             {

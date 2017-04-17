@@ -276,7 +276,6 @@ namespace GameLogic
         {
             if (CallbackSkillMiddle != null)
                 CallbackSkillMiddle(effectIndex++);
-            Camera3DScript.Instance.Vibrate();
         }
         public void OnSkillEnd()
         {

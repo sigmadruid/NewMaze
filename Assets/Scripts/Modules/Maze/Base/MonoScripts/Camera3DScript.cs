@@ -12,7 +12,8 @@ namespace GameLogic
     {
     	public float height = 10f;
     	public float distance = 6f;
-        public float vibrationScope = 0.1f;
+        public float vibrationScope = 0.15f;
+        public float vibrationDuration = 0.15f;
 
     	public Transform playerTransofrm;
 
@@ -63,7 +64,7 @@ namespace GameLogic
         public void Vibrate()
         {
             isVibrating = true;
-            transform.DOShakePosition(0.15f, Vector3.up * 0.15f).OnComplete(() =>
+            transform.DOShakePosition(vibrationDuration, Vector3.up * vibrationScope).OnComplete(() =>
                 {
                     isVibrating = false;
                 });

@@ -120,6 +120,9 @@ namespace GameLogic
     			yield return SLOW_UPDATE_DELAY;
     		}
     	}
+        protected virtual void LateUpdate ()
+        {
+        }
 
         public Vector3 TopPosition
         {

@@ -23,6 +23,7 @@ namespace Battle
 
 		public MonsterInfo (MonsterData data, MonsterRecord record) : base(data)
 		{
+            Side = Side.Monster;
 			Data = data;
 			hp = record.HP;
             InitSkillList();

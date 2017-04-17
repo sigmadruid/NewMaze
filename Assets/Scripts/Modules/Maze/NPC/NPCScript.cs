@@ -23,10 +23,6 @@ public class NPCScript : EntityScript
 	}
 	void Update()
 	{
-		if (hud.gameObject.activeSelf)
-		{
-			hud.UpdatePosition(IconPos.position);
-		}
         if(InputManager.Instance.MouseHoverObject == gameObject)
         {
             highlighter.ConstantOnImmediate(Color.white);
@@ -36,6 +32,13 @@ public class NPCScript : EntityScript
             highlighter.ConstantOffImmediate();
         }
 	}
+    void LateUpdate()
+    {
+        if (hud.gameObject.activeSelf)
+        {
+            hud.UpdatePosition(IconPos.position);
+        }
+    }
 
 	void OnTriggerEnter(Collider other)
 	{

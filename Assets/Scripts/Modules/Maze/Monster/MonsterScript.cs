@@ -35,9 +35,6 @@ public class MonsterScript : CharacterScript
     {
         base.Update();
 
-        if (LifeBar != null)
-            LifeBar.UpdatePosition(TopPosition);
-
         if(InputManager.Instance.MouseHoverObject == gameObject)
         {
             highlighter.ReinitMaterials();
@@ -47,6 +44,13 @@ public class MonsterScript : CharacterScript
         {
             highlighter.ConstantOffImmediate();
         }
+    }
+
+    protected override void LateUpdate()
+    {
+        base.LateUpdate();
+        if (LifeBar != null)
+            LifeBar.UpdatePosition(TopPosition);
     }
 
     void OnTriggerEnter(Collider other)

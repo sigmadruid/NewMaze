@@ -46,6 +46,8 @@ public class NumberItem : BaseScreenItem
 		}
         timer = 0f;
         isPlaying = true;
+        if (result.IsCritical)
+            Camera3DScript.Instance.Vibrate();
 	}
 	public void Show(string text)
 	{
