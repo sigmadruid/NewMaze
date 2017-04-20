@@ -353,7 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsControllable: 1
   LerpRotation: 1
-  AngularSpeed: 5
+  AngularSpeed: 10
   StopDistance: 0.1
   EnableLog: 0
 --- !u!114 &114000012498105734
