@@ -1,6 +1,6 @@
 Kid,Name,Res3D
 int,string,string
-170001,sword,sword
-170002,axe,axe
-170003,bow,bow
-170004,shield,shield
+170001,sword,Sword_1
+170002,axe,Axe_1
+170003,bow,Bow_1
+170004,shield,Shield_1
