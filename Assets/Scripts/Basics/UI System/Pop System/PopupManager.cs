@@ -42,6 +42,7 @@ namespace Base
 
         public void Init()
         {
+            Scaler.referenceResolution = new Vector2(1920f, 1080f);
             actionList = new BasePopupAction[]
                 {
                     new AddMaskPopupAction(this),

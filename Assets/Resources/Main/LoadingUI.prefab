@@ -54,7 +54,6 @@ GameObject:
   - component: {fileID: 224335396453263468}
   - component: {fileID: 223751111947031302}
   - component: {fileID: 114572002347055194}
-  - component: {fileID: 114222780597442508}
   - component: {fileID: 114722456060657858}
   m_Layer: 5
   m_Name: LoadingPanel
@@ -107,7 +106,6 @@ GameObject:
   - component: {fileID: 224545146989420312}
   - component: {fileID: 223561286179164320}
   - component: {fileID: 114928842039406554}
-  - component: {fileID: 114633005468598894}
   m_Layer: 5
   m_Name: LoadingUI
   m_TagString: Untagged
@@ -115,22 +113,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114222780597442508
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1410683190394330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114344678764852718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,22 +209,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114633005468598894
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1728883528235798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114722456060657858
 MonoBehaviour:
   m_ObjectHideFlags: 1
