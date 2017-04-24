@@ -21,7 +21,9 @@ namespace Base
     }
 	public class InputManager 
 	{
+        private GraphicRaycaster[] uiRaycasters;
         private Dictionary<int, KeyboardAction> keyboardActionDic = new Dictionary<int, KeyboardAction>();
+
         private EventSystem eventSystem;
         public EventSystem InputSystem
         {
@@ -30,18 +32,6 @@ namespace Base
                 if (eventSystem == null) 
                     eventSystem = GameObject.FindObjectOfType<EventSystem>();
                 return eventSystem;
-            }
-        }
-        private GraphicRaycaster[] uiRaycasters;
-        public GraphicRaycaster[] UIRaycasters
-        {
-            get 
-            { 
-                if (uiRaycasters == null || uiRaycasters[0] == null)
-                {
-                    uiRaycasters = GameObject.FindObjectsOfType<GraphicRaycaster>();
-                }
-                return uiRaycasters;
             }
         }
 
@@ -128,9 +118,9 @@ namespace Base
                     eventData.position = Input.mousePosition;
 
                     List<RaycastResult> raycastList = new List<RaycastResult>();
-                    for(int i = 0; i < UIRaycasters.Length; ++i)
+                    for(int i = 0; i < uiRaycasters.Length; ++i)
                     {
-                        GraphicRaycaster raycaster = UIRaycasters[i];
+                        GraphicRaycaster raycaster = uiRaycasters[i];
                         raycaster.Raycast(eventData, raycastList);
                     }
 
@@ -184,6 +174,11 @@ namespace Base
         {
             MouseHitObject = null;
             MouseHitPosition = Vector3.zero;
+        }
+
+        public void UpdateRaycasters()
+        {
+            uiRaycasters = GameObject.FindObjectsOfType<GraphicRaycaster>();
         }
 
         public void SetKeyboardAction(KeyboardActionType type, Action callback)

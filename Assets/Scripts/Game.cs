@@ -56,11 +56,6 @@ namespace GameLogic
             framework.Init();
 			ConfigManager.InitAllData();
 
-            Debug.LogError("screen width: " + Screen.width.ToString());
-            Debug.LogError("screen height: " + Screen.height.ToString());
-            Debug.LogError("reference x: " + PopupManager.Instance.Scaler.referenceResolution.x.ToString());
-            Debug.LogError("reference y: " + PopupManager.Instance.Scaler.referenceResolution.y.ToString());
-
             framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
             framework.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, AICore.SlowUpdate);
 

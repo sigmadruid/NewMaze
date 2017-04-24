@@ -43,6 +43,7 @@ namespace Base
         public void Init()
         {
             Scaler.referenceResolution = new Vector2(1920f, 1080f);
+            InputManager.Instance.UpdateRaycasters();
             actionList = new BasePopupAction[]
                 {
                     new AddMaskPopupAction(this),
@@ -124,6 +125,7 @@ namespace Base
                     }
                 }
 	        }
+            InputManager.Instance.UpdateRaycasters();
 
 	        return view;
 	    }

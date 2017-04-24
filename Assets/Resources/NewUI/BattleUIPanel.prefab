@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 22434280}
   - component: {fileID: 11418968}
   - component: {fileID: 223798225596602518}
+  - component: {fileID: 114982077200978668}
   m_Layer: 5
   m_Name: BattleUIPanel
   m_TagString: Untagged
@@ -2125,6 +2126,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114982077200978668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 1
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!222 &222000010807281106
 CanvasRenderer:
   m_ObjectHideFlags: 1
