@@ -120,20 +120,26 @@ namespace GameLogic
 
 		public void SwitchStage(StageEnum stageEnum)
 		{
-            Loading.Instance.Begin(stageEnum.ToString());
-			if (currentStage != null)
-			{
-                BaseLogger.LogFormat("stage end: {0}", currentStage.Type);
-				currentStage.End();
-			}
-            Loading.Instance.SetProgress(LoadingState.LoadScene, 0);
+            Main main = GameObject.FindObjectOfType<Main>();
+            main.StartCoroutine(DoSwitch(stageEnum));
 		}
+        private IEnumerator DoSwitch(StageEnum stageEnum)
+        {
+            Loading.Instance.Begin(stageEnum.ToString());
+            if (currentStage != null)
+            {
+                BaseLogger.LogFormat("stage end: {0}", currentStage.Type);
+                yield return currentStage.End();
+            }
+            yield return Loading.Instance.SetProgress(LoadingState.LoadScene, 0);
+        }
 
 		public void SwitchStageComplete()
 		{
 			currentStage = BaseStage.CreateStage(LoadingStageEnum);
             BaseLogger.LogFormat("stage start: {0}", currentStage.Type);
-			currentStage.Start();
+            Main main = GameObject.FindObjectOfType<Main>();
+            main.StartCoroutine(currentStage.Start());
 		}
 
         #endregion

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Base;
@@ -10,14 +11,13 @@ namespace GameLogic
 	{
         public StageHomeTown () : base(StageEnum.HomeTown) {}
 
-		public override void Start ()
+        public override IEnumerator Start ()
 		{
             ApplicationFacade facade = ApplicationFacade.Instance;
             if(facade.RetrieveMediator<TownHeroMediator>() == null)
                 facade.RegisterMediator(new TownHeroMediator());
 
-            PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
-            Loading.Instance.SetProgress(LoadingState.StartStage, 10);
+            yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 
             facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
@@ -31,11 +31,11 @@ namespace GameLogic
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
             InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
 
-            Loading.Instance.SetProgress(LoadingState.StartStage, 100);
+            yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
-		public override void End ()
+        public override IEnumerator End ()
 		{
-            Loading.Instance.SetProgress(LoadingState.EndStage, 0);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 0);
 
 			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
 
@@ -46,10 +46,10 @@ namespace GameLogic
 
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
-            Loading.Instance.SetProgress(LoadingState.EndStage, 20);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 20);
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();
-            Loading.Instance.SetProgress(LoadingState.EndStage, 30);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);
 		}
 
 	}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Base;
@@ -18,9 +19,9 @@ namespace GameLogic
 
 		public StageEnum Type { get; protected set; }
 
-		public abstract void Start();
+        public abstract IEnumerator Start();
 
-		public abstract void End();
+        public abstract IEnumerator End();
 
 		public static BaseStage CreateStage(StageEnum stageEnum)
 		{
@@ -32,7 +33,7 @@ namespace GameLogic
 			}
 		}
 
-        protected void PreloadAssets(int mazeKid)
+        protected IEnumerator PreloadAssets(int mazeKid)
         {
             List<ResourceData> resourceDataList = ResourceDataManager.Instance.GetResourceDataList(mazeKid);
 
@@ -51,12 +52,15 @@ namespace GameLogic
                         BaseLogger.LogFormat("Can't find data {0}", resourceData.EntityKid);
                     }
                     resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.PreloadCount);
+                    yield return Loading.Instance.SetProgress(LoadingState.StartStage, 1);
                 }
                 else
                 {
                     resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.PreloadCount);
+                    yield return Loading.Instance.SetProgress(LoadingState.StartStage, 1);
                 }
             }
+            yield break;
         }
 	}
 }

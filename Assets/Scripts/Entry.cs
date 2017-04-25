@@ -12,7 +12,10 @@ public class Entry : MonoBehaviour
         CreateEternalGO("Astar");
         CreateEternalGO("Cameras");
         CreateEternalGO("LoadingUI");
+    }
 
+    void Start()
+    {
         SceneManager.LoadScene("HomeTown");
     }
 

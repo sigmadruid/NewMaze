@@ -11,6 +11,7 @@ public enum LoadingState
     EndStage,
     LoadScene,
     StartStage,
+    StartOver,
 }
 
 public class Loading : MonoBehaviour
@@ -19,6 +20,7 @@ public class Loading : MonoBehaviour
 	private AsyncOperation operation;
     private string sceneName;
     private LoadingState currentState;
+    private int totalProgress = 0;
 
     public static Loading Instance { get; private set; }
     void Awake()
@@ -32,7 +34,8 @@ public class Loading : MonoBehaviour
 
     void Update()
     {
-        SetProgress(LoadingState.LoadScene, (int)(operation.progress * 33));
+        if (operation != null)
+            SetProgress(LoadingState.LoadScene, (int)(operation.progress * 33));
     }
 
     public void Begin(string sceneName)
@@ -41,12 +44,11 @@ public class Loading : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void SetProgress(LoadingState state, int progress)
+    public IEnumerator SetProgress(LoadingState state, int progress)
     {
-        int totalProgress = 0;
         if(state == LoadingState.EndStage)
         {
-            totalProgress = Mathf.Min(0 + progress, 33);
+            totalProgress = Mathf.Min(0 + progress, 10);
         }
         else if(state == LoadingState.LoadScene)
         {
@@ -55,22 +57,29 @@ public class Loading : MonoBehaviour
                 SceneManager.LoadScene("Loading");
                 operation = SceneManager.LoadSceneAsync(sceneName);
                 operation.allowSceneActivation = false;
+                totalProgress = 10;
             }
-            totalProgress = Mathf.Min(33 + progress, 66);
+            totalProgress = Mathf.Min(totalProgress + progress, 30);
         }
         else if(state == LoadingState.StartStage)
         {
             if(currentState == LoadingState.LoadScene)
             {
                 operation.allowSceneActivation = true; 
+                totalProgress = 30;
             }
-            totalProgress = Mathf.Min(66 + progress, 100);
-            if(totalProgress >= 100)
-                gameObject.SetActive(false);
+            totalProgress = Mathf.Min(totalProgress + progress, 99);
+        }
+        else if(state == LoadingState.StartOver)
+        {
+            totalProgress = 100;
+            gameObject.SetActive(false);
         }
         currentState = state;
+        Debug.LogFormat("{0} progress {1}", currentState, totalProgress);
 
         SliderProgress.value = totalProgress * 1f / 100f;
+        yield return null;
     }
 
 }

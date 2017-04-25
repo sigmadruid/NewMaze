@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Base;
@@ -23,7 +24,7 @@ namespace GameLogic
 
         public StageMaze () : base(StageEnum.Maze) {}
 
-		public override void Start ()
+        public override IEnumerator Start ()
 		{
             DOTween.Init();
 
@@ -42,8 +43,7 @@ namespace GameLogic
 			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             battleProxy.Init();
 
-            PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
-            Loading.Instance.SetProgress(LoadingState.StartStage, 10);
+            yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
 
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
             if (Adam.Instance.Info.IsInHall)
@@ -63,11 +63,11 @@ namespace GameLogic
 
             //For test
             ApplicationFacade.Instance.RetrieveProxy<PackProxy>().Init();
-            Loading.Instance.SetProgress(LoadingState.StartStage, 100);
+            yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
-		public override void End ()
+        public override IEnumerator End ()
 		{
-            Loading.Instance.SetProgress(LoadingState.EndStage, 0);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 0);
 			Game.Instance.TaskManager.SetAllActive(false);
 
             PopupManager.Instance.Clear();
@@ -83,14 +83,15 @@ namespace GameLogic
 			npcProxy.Dispose();
 			explorationProxy.Dispose();
 			battleProxy.Dispose();
-            Loading.Instance.SetProgress(LoadingState.EndStage, 10);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 10);
 			
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
-            Loading.Instance.SetProgress(LoadingState.EndStage, 20);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 20);
 			UnityEngine.Resources.UnloadUnusedAssets();
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 25);
 			GC.Collect();
-            Loading.Instance.SetProgress(LoadingState.EndStage, 30);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);
 		}
 
 	}
