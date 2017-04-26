@@ -52,12 +52,12 @@ namespace GameLogic
                         BaseLogger.LogFormat("Can't find data {0}", resourceData.EntityKid);
                     }
                     resManager.PreloadAsset(ObjectType.GameObject, data.GetResPath(), resourceData.PreloadCount);
-                    yield return Loading.Instance.SetProgress(LoadingState.StartStage, 1);
+                    yield return Loading.Instance.SetProgress(LoadingState.LoadAssets, 1);
                 }
                 else
                 {
                     resManager.PreloadAsset(ObjectType.GameObject, resourceData.Path, resourceData.PreloadCount);
-                    yield return Loading.Instance.SetProgress(LoadingState.StartStage, 1);
+                    yield return Loading.Instance.SetProgress(LoadingState.LoadAssets, 1);
                 }
             }
             yield break;

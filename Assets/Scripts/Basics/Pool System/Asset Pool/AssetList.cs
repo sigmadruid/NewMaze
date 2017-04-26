@@ -73,7 +73,7 @@ namespace Base
 			for (int i = 0; i < count; ++i)
 			{
 				GameObject asset = GameObject.Instantiate(assetPrototype) as GameObject;
-                asset.transform.parent = RootTransform.Instance.PoolRoot;
+                asset.transform.SetParent(RootTransform.Instance.PoolRoot);
                 asset.SetActive(false);
 				
 				AssetInfo assetInfo = asset.AddComponent<AssetInfo>();

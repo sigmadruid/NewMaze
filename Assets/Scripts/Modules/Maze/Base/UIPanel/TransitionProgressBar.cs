@@ -23,12 +23,18 @@ public class TransitionProgressBar : MonoBehaviour
 
     public void SetValue(float targetValue, bool isAnim)
     {
+        Debug.LogError(targetValue);
         prevValue = ForeBar.value;
         ForeBar.value = targetValue;
         if(isAnim)
+        {
             timer = 0;
+        }
         else
+        {
+            prevValue = targetValue;
             TransitionBar.value = targetValue;
+        }
     }
 }
 

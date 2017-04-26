@@ -10,6 +10,7 @@ public enum LoadingState
 {
     EndStage,
     LoadScene,
+    LoadAssets,
     StartStage,
     StartOver,
 }
@@ -61,14 +62,22 @@ public class Loading : MonoBehaviour
             }
             totalProgress = Mathf.Min(totalProgress + progress, 30);
         }
+        else if(state == LoadingState.LoadAssets)
+        {
+            if(currentState == LoadingState.LoadScene)
+            {
+                totalProgress = 20;
+            }
+            totalProgress = Mathf.Min(totalProgress + progress, 80);
+        }
         else if(state == LoadingState.StartStage)
         {
             if(currentState == LoadingState.LoadScene)
             {
                 operation.allowSceneActivation = true; 
-                totalProgress = 30;
+                totalProgress = 80;
             }
-            totalProgress = Mathf.Min(totalProgress + progress, 99);
+            totalProgress = Mathf.Min(totalProgress + progress, 90);
         }
         else if(state == LoadingState.StartOver)
         {

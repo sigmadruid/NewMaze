@@ -30,28 +30,29 @@ namespace GameLogic
 
 			Maze.Instance.Init();
 
-            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
+            ApplicationFacade facade = ApplicationFacade.Instance;
+            heroProxy = facade.RetrieveProxy<HeroProxy>();
             heroProxy.Init();
-			blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+            blockProxy = facade.RetrieveProxy<BlockProxy>();
 			blockProxy.Init();
-            hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
-            monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
-            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
-			bulletProxy = ApplicationFacade.Instance.RetrieveProxy<BulletProxy>();
-			npcProxy = ApplicationFacade.Instance.RetrieveProxy<NPCProxy>();
-			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
-			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            hallProxy = facade.RetrieveProxy<HallProxy>();
+            monsterProxy = facade.RetrieveProxy<MonsterProxy>();
+            dropProxy = facade.RetrieveProxy<DropProxy>();
+            bulletProxy = facade.RetrieveProxy<BulletProxy>();
+            npcProxy = facade.RetrieveProxy<NPCProxy>();
+            explorationProxy = facade.RetrieveProxy<ExplorationProxy>();
+            battleProxy = facade.RetrieveProxy<BattleProxy>();
             battleProxy.Init();
 
             yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
 
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
+            yield return Loading.Instance.SetProgress(LoadingState.StartStage, 0);
+            facade.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
             if (Adam.Instance.Info.IsInHall)
-                ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallProxy.Record);
-            else
-                ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_INIT);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
+                facade.DispatchNotification(NotificationEnum.HALL_INIT, hallProxy.Record);
+            facade.DispatchNotification(NotificationEnum.BLOCK_INIT);
+            facade.DispatchNotification(NotificationEnum.NPC_INIT);
+            facade.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
 
 			Game.Instance.TaskManager.SetAllActive(true);
 
@@ -61,8 +62,11 @@ namespace GameLogic
                     ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
                 });
 
+            yield return Loading.Instance.SetProgress(LoadingState.StartStage, 5);
+            if (!Adam.Instance.Info.IsInHall)
+                facade.DispatchNotification(NotificationEnum.BLOCK_REFRESH, Adam.Instance.WorldPosition);
             //For test
-            ApplicationFacade.Instance.RetrieveProxy<PackProxy>().Init();
+            facade.RetrieveProxy<PackProxy>().Init();
             yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
         public override IEnumerator End ()
