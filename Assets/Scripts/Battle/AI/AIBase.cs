@@ -60,14 +60,27 @@ namespace Battle
             destPosition = Adam.Instance.WorldPosition;
             currentMonster.Move(destPosition);
         }
-        protected bool CheckCollision()
+        protected bool CheckCollision(bool toAdam)
         {
-            const float h = 0.3f;
-            Vector3 origin = currentMonster.WorldPosition + Vector3.up * h;
-            Vector3 direction = Adam.Instance.WorldPosition + Vector3.up * h - currentMonster.WorldPosition;
-            SkillData skillData = SkillDataManager.Instance.GetData(currentData.SkillList[0]) as SkillData;
-            SkillEffectData effectData = SkillEffectDataManager.Instance.GetData(skillData.EffectList[0]) as SkillEffectData;
-            bool result = Physics.Raycast(origin, direction, skillData.Range, Layers.LayerBlock);
+            Vector3 monsterPos = MathUtils.XZDirection(currentMonster.WorldPosition);
+            Vector3 adamPos = MathUtils.XZDirection(Adam.Instance.WorldPosition);
+
+            Vector3 origin =  monsterPos + Vector3.up * currentMonster.Script.EmitPosition.y;
+            Vector3 direction = Vector3.zero;
+            float distance = 0f;
+            if(toAdam)
+            {
+                direction = adamPos - monsterPos;
+                distance = direction.magnitude;
+            }
+            else
+            {
+                direction = currentMonster.Script.transform.forward;
+                SkillData skillData = SkillDataManager.Instance.GetData(currentData.SkillList[0]) as SkillData;
+                distance = skillData.Range;
+            }
+
+            bool result = Physics.Raycast(origin, direction, distance, Layers.LayerBlock);
             return result;
         }
 

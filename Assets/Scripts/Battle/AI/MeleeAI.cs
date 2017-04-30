@@ -35,7 +35,7 @@ namespace Battle
                 return;
             }
 
-			if (heroSqrDistance > sqrDetectDistance)
+            if (heroSqrDistance > sqrDetectDistance)
 			{
 				currentMonster.Idle();
 				return;
