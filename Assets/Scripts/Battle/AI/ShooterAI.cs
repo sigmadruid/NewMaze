@@ -28,6 +28,8 @@ namespace Battle
                 return;
             if(currentMonster.Info.IsStunned)
                 return;
+            if(currentMonster.Info.CurrentSkill != null)
+                return;
 
             Adam adam = Adam.Instance;
 			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);
@@ -67,7 +69,7 @@ namespace Battle
             }
 			else
 			{
-				if (Delay(currentData.AttackDelay) && adam.Info.IsAlive)
+                if (Delay(currentData.AttackDelay) && adam.Info.IsAlive)
 				{
                     currentMonster.Idle();
 					currentMonster.LookAt(adam.WorldPosition);

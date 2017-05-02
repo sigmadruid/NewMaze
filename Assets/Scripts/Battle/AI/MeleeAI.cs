@@ -25,6 +25,8 @@ namespace Battle
                 return;
             if(currentMonster.Info.IsStunned)
                 return;
+            if(currentMonster.Info.CurrentSkill != null)
+                return;
 
             Adam adam = Adam.Instance;
 			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);
