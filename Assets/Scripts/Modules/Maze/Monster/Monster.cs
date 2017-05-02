@@ -76,8 +76,9 @@ namespace GameLogic
         {
             if(Info.CurrentSkill != null)
             {
-                SkillEffect effect = Info.CurrentSkill.GetEffect(index);
-                battleProxy.AttackHero(this, effect);
+                SkillEffect skillEffect = Info.CurrentSkill.GetEffect(index);
+                skillEffect.Cast();
+                battleProxy.AttackHero(this, skillEffect);
             }
             else
             {

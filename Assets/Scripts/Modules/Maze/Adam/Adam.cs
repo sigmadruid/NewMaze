@@ -261,6 +261,7 @@ namespace GameLogic
             if(Info.CurrentSkill != null)
             {
                 SkillEffect skillEffect = Info.CurrentSkill.GetEffect(index);
+                skillEffect.Cast();
                 battleProxy.AttackMonster(skillEffect);
             }
             else
