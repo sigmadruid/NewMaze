@@ -24,6 +24,24 @@ namespace StaticData
         Monster,
         Neutral,
     }
+    public class CameraVibration
+    {
+        public enum Type
+        {
+            None = 0,
+            Light,
+            Normal,
+            Heavy,
+        }
+        public float duration;
+        public float scope;
+        public CameraVibration(float duration, float scope)
+        {
+
+            this.duration = duration;
+            this.scope = scope;
+        }
+    }
 
     public class HeroConfig
     {

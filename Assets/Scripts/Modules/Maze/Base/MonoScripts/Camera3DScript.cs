@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 using Base;
 using StaticData;
@@ -16,6 +17,14 @@ namespace GameLogic
         public float vibrationDuration = 0.15f;
 
     	public Transform playerTransofrm;
+
+        private Dictionary<int, CameraVibration> vibrationDic = new Dictionary<int, CameraVibration>()
+        {
+            {0, null},
+            {1, new CameraVibration(0.15f, 0.15f)},
+            {2, new CameraVibration(0.2f, 0.2f)},
+            {3, new CameraVibration(0.3f, 0.3f)},
+        };
 
         [HideInInspector]
         public Camera Camera;
@@ -61,13 +70,17 @@ namespace GameLogic
     		}
     	}
 
-        public void Vibrate()
+        public void Vibrate(CameraVibration.Type type)
         {
             isVibrating = true;
-            transform.DOShakePosition(vibrationDuration, Vector3.up * vibrationScope).OnComplete(() =>
-                {
-                    isVibrating = false;
-                });
+            var vibration = vibrationDic[(int)type];
+            if(vibration != null)
+            {
+                transform.DOShakePosition(vibration.duration, Vector3.up * vibration.scope).OnComplete(() =>
+                    {
+                        isVibrating = false;
+                    });
+            }
         }
 
     	#region Check Obstacle

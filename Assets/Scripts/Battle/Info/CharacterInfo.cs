@@ -9,13 +9,6 @@ using StaticData;
 
 namespace Battle
 {
-    public class AttackContext
-    {
-        public Side CasterSide;
-        public float Attack;
-        public int Critical;
-    }
-
     public struct AttackResult
     {
         public int Damage;
@@ -102,7 +95,7 @@ namespace Battle
 			hp = Mathf.Clamp(hp + value, 0, maxHP);
 		}
 
-        public AttackResult HurtBy(SkillEffect attackContext)
+        public AttackResult HurtBy(SkillEffect skillEffect)
 		{
 			float randomValue = UnityEngine.Random.value;
 			AttackResult result = new AttackResult();
@@ -117,16 +110,17 @@ namespace Battle
 				return result;
 			}
 
-			float critical = attackContext.Critical / RandomUtils.RANDOM_BASE;
+			float critical = skillEffect.Critical / RandomUtils.RANDOM_BASE;
 			result.IsCritical = randomValue <= critical;
 
-            int attack = (int)attackContext.Attack;
+            int attack = (int)skillEffect.Attack;
             int defense = (int)GetAttribute(BattleAttribute.Defense);
 			int criticalRatio = result.IsCritical ? 2 : 1;
 			result.Damage = -(attack - defense) * criticalRatio;
 			AddHP(result.Damage);
 //			Debug.Log(string.Format("{0} was attacked. Damage = {1}", Data.Kid, result.damage));
 //			Debug.Log(string.Format("{0}'s HP: {1}", Data.Kid, hp));
+
 			return result;
 		}
 

@@ -13,6 +13,8 @@ namespace StaticData
 
         public int BulletKid;
 
+        public CameraVibration.Type CameraVibrationType;
+
         public List<int> BuffKidList;
     }
 }

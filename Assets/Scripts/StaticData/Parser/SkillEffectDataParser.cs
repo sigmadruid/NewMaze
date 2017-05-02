@@ -25,6 +25,7 @@ namespace StaticData
                     data.Ratio = StaticReader.ReadFloat(GetContent(col++));
                     data.AreaKid = StaticReader.ReadInt(GetContent(col++));
                     data.BulletKid = StaticReader.ReadInt(GetContent(col++));
+                    data.CameraVibrationType = StaticReader.ReadEnum<CameraVibration.Type>(GetContent(col++));
                     data.BuffKidList = StaticReader.ReadIntList(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);

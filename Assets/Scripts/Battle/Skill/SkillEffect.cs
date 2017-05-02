@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using GameLogic;
 using StaticData;
 
 namespace Battle
@@ -14,6 +15,14 @@ namespace Battle
         public Side CasterSide;
         public float Attack;
         public int Critical;
+
+        public void Cast()
+        {
+            if(Data.CameraVibrationType != CameraVibration.Type.None)
+            {
+                Camera3DScript.Instance.Vibrate(Data.CameraVibrationType);
+            }
+        }
 
         public static SkillEffect Create(int kid, ICharacterInfoAgent infoAgent)
         {
