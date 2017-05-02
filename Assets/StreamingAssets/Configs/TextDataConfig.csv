@@ -1,8 +1,13 @@
 ﻿Kid,Text
 int,string
 ,Common
+common.confirm,确认
+common.cancel,取消
+common.transporter,传送法阵
 common.daytitle,光明降临
 common.nighttitle,黑暗蔓延
+common.transporter.to,确认传送到未知的区域？
+common.transporter.from,确认回到迷宫？
 ,NPC
 npc.name.sage,贤者
 npc.name.wizard,巫师

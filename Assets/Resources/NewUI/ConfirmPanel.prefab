@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 22217342}
   - component: {fileID: 11451586}
   m_Layer: 5
-  m_Name: Text
+  m_Name: common.cancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 22238710}
   - component: {fileID: 11414330}
   m_Layer: 5
-  m_Name: Title
+  m_Name: textTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 22244946}
   - component: {fileID: 11439762}
   m_Layer: 5
-  m_Name: Text
+  m_Name: common.confirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 22285512}
   - component: {fileID: 11495452}
   m_Layer: 5
-  m_Name: Content
+  m_Name: textContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System;
 
 using Base;
+using GameLogic;
 
 namespace GameUI
 {
@@ -31,6 +32,8 @@ namespace GameUI
         {
             EventTriggerListener.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
             EventTriggerListener.Get(ButtonCancel.gameObject).onClick = OnCancel;
+
+            UILocalizer.Replace(transform);
         }
         
         private void OnConfirm(GameObject go)

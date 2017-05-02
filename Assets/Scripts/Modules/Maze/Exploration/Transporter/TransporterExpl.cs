@@ -19,13 +19,17 @@ namespace GameLogic
         {
             base.OnFunction();
 
+            string title = TextDataManager.Instance.GetData("common.transporter");
+            string content = null;
             if (Hall.Instance == null)
             {
-                ConfirmPanel.Show("Transporter", "Do you want to transport to somwhere unknown?", DoTransportForward, OnCancel);
+                content = TextDataManager.Instance.GetData("common.transporter.to");
+                ConfirmPanel.Show(title, content, DoTransportForward, OnCancel);
             }
             else
             {
-                ConfirmPanel.Show("Transporter", "Do you want to transport back to maze?", DoTransportBack, OnCancel);
+                content = TextDataManager.Instance.GetData("common.transporter.from");
+                ConfirmPanel.Show(title, content, DoTransportBack, OnCancel);
             }
             Game.Instance.SetPause(true);
         }
