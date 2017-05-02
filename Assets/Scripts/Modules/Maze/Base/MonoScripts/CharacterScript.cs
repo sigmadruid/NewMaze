@@ -22,84 +22,58 @@ namespace GameLogic
 
         public Action<float> CallbackUpdate;
         public Action CallbackSlowUpdate;
+        public Action<int> CallbackSkillMiddle;
+        public Action CallbackSkillEnd;
         public Action CallbackDie;
     	
-        private Action CallbackAnimatorStarts;
-        private Action<Dictionary<AnimatorParamKey, string>> CallbackAnimatorEffect;
-        private Action CallbackAnimatorEnds;
-
-        private Action CallbackAttackStarts;
-        private Action CallbackAttackEffect;
-        private Action CallbackAttackEnds;
-
-    	public Dictionary<int, AnimatorData> AnimatorDataDic;
-
         protected MovementScript movementScript;
-
     	protected Animator animator;
-    	protected bool transitionEnds;
-    	protected int currentNameHash;
-    	protected AnimatorData currentAnimatorData;
 
-		private readonly WaitForSeconds SLOW_UPDATE_DELAY = new WaitForSeconds(1f);
+        private readonly WaitForSeconds SLOW_UPDATE_DELAY = new WaitForSeconds(1f);
+
+        #region Anchor Position
     	
+        public Vector3 TopPosition
+        {
+            get { return TopPosTransform.position; }
+        }
+        public Vector3 BottomPosition
+        {
+            get { return BottomPosTransform.position; }
+        }
+        public Vector3 CenterPosition
+        {
+            get { return (TopPosTransform.position + BottomPosTransform.position) * 0.5f; }
+        }
+        public Vector3 EmitPosition
+        {
+            get { return EmitTransform.position; }
+        }
+
+        #endregion
+
+        #region Life Cycle
+
     	protected virtual void Awake()
     	{
             movementScript = GetComponent<MovementScript>();
-
     		animator = GetComponent<Animator>();
-    		currentNameHash = 0;
-
-    		GetComponent<Rigidbody>().isKinematic = true;
     	}
-
     	protected virtual void OnEnable()
     	{
     		GetComponent<Collider>().enabled = true;
     		StartCoroutine(SlowUpdate());
     	}
-
     	protected virtual void Start ()
     	{
-    		currentNameHash = AnimatorDataManager.Instance.IdleHash;
-    		currentAnimatorData = AnimatorDataDic[currentNameHash];
     	}
-
     	protected virtual void OnDisable()
     	{
     		StopAllCoroutines();
     	}
-    	
     	protected virtual void Update () 
     	{
     		if (Game.Instance.IsPause) { return; }
-
-    		AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-    		if (currentNameHash != currentStateInfo.fullPathHash)
-    		{
-    			currentNameHash = currentStateInfo.fullPathHash;
-    			currentAnimatorData = AnimatorDataDic[currentNameHash];
-    			transitionEnds = true;
-    		}
-
-    		if (transitionEnds)
-    		{
-                if(CallbackAnimatorStarts != null)
-                {
-                    CallbackAnimatorStarts();
-                    CallbackAnimatorStarts = null;
-                }
-    			if (CallbackAnimatorEffect != null && currentStateInfo.normalizedTime >= currentAnimatorData.NormalTime)
-    			{
-    				CallbackAnimatorEffect(currentAnimatorData.ParamDic);
-    				CallbackAnimatorEffect = null;
-    			}
-    			if (CallbackAnimatorEnds != null && currentStateInfo.normalizedTime >= 0.9f)
-    			{
-    				CallbackAnimatorEnds();
-    				CallbackAnimatorEnds = null;
-    			}
-    		}
 
     		if (CallbackUpdate != null)
     		{
@@ -123,160 +97,163 @@ namespace GameLogic
         protected virtual void LateUpdate ()
         {
         }
-
-        public Vector3 TopPosition
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            get { return TopPosTransform.position; }
-        }
-        public Vector3 BottomPosition
-        {
-            get { return BottomPosTransform.position; }
-        }
-        public Vector3 CenterPosition
-        {
-            get { return (TopPosTransform.position + BottomPosTransform.position) * 0.5f; }
-        }
-        public Vector3 EmitPosition
-        {
-            get { return EmitTransform.position; }
         }
 
+        #endregion
+
+        public virtual void Pause(bool isPause)
+        {
+            movementScript.IsControllable = !isPause;
+        }
 
     	#region Behavior
 
-        public void SimpleMove(Vector3 velocity)
+        public virtual void SimpleMove(Vector3 velocity)
         {
             movementScript.SetDestination(Vector3.zero, 0f);
             transform.position += velocity;
         }
-
-    	public void Move(Vector3 destination, float speed)
+        public virtual void Move(Vector3 destination, float speed)
     	{
     		if (Game.Instance.IsPause) { return; }
 
-            if(CanPlay(AnimatorPriorityEnum.Move))
-            {
-                movementScript.SetDestination(destination, speed);
-                animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
-            }
-            else
-            {
-                movementScript.SetDestination(Vector3.zero, 0f);
-            }
+            movementScript.SetDestination(destination, speed);
+            animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
     	}
-
-    	public void LookAt(Vector3 direction)
+        public virtual void LookAt(Vector3 direction)
     	{
             movementScript.LookAt(direction);
     	}
-
-        public void Attack(Action callbackStarts, Action callbackEffect, Action callbackEnds)
+        public virtual void Skill(int skillID, float attackSpeed)
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Skill))
-    		{
-    			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoAttack);
-    			animator.SetFloat(AnimatorDataManager.Instance.ParamAttackRandomValue, UnityEngine.Random.value);
-                transitionEnds = false;
-    			
-                CallbackAttackStarts = callbackStarts;
-                CallbackAttackEffect = callbackEffect;
-                CallbackAttackEnds = callbackEnds;
+            int skillTrigger = 0;
+            if (skillID == 1)
+                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_1;
+            else if (skillID == 2)
+                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_2;
 
-                CallbackAnimatorStarts = OnAttackStarts;
-                CallbackAnimatorEffect = OnAttackEffect;
-                CallbackAnimatorEnds = OnAttackEnds;
-
-    			OnAttackStarts();
-    		}
+            movementScript.SetDestination(Vector3.zero, 0);
+            animator.speed = attackSpeed;
+            animator.SetTrigger(skillTrigger);
     	}
-    	protected virtual void OnAttackStarts()
+        public virtual void Hit(bool forceStunned = false)
     	{
-            if (CallbackAttackStarts != null)
-                CallbackAttackStarts();
     	}
-        protected virtual void OnAttackEffect(Dictionary<AnimatorParamKey, string> paramDic)
-        {
-            if (CallbackAttackEffect != null)
-                CallbackAttackEffect();
-        }
-    	protected virtual void OnAttackEnds()
-    	{
-            if (CallbackAttackEnds != null)
-                CallbackAttackEnds();
-    	}
-
-        public void Hit(bool forceStunned = false)
+        public virtual void Die()
     	{
     		if (Game.Instance.IsPause) { return; }
 
-    		if (CanPlay(AnimatorPriorityEnum.Skill))
-    		{
-                if(forceStunned || JudgeHit())
-                {
-                    animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
-                    transitionEnds = false;
-                }
-    		}
+            movementScript.SetDestination(Vector3.zero, 0f);
+			GetComponent<Collider>().enabled = false;
+			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
     	}
 
-    	public void Die()
-    	{
-    		if (Game.Instance.IsPause) { return; }
-
-    		if (CanPlay(AnimatorPriorityEnum.Die))
-    		{
-                movementScript.SetDestination(Vector3.zero, 0f);
-    			GetComponent<Collider>().enabled = false;
-
-    			animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
-    			transitionEnds = false;
-
-    			CallbackAnimatorEnds = OnDieEnds;
-
-    			OnDieStarts();
-    		}
-    	}
-    	protected virtual void OnDieStarts()
-    	{
-    	}
-    	protected virtual void OnDieEnds()
-    	{
-    		if (CallbackDie != null)
-    		{
-                AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                Debug.LogError(currentStateInfo.normalizedTime);
-    			CallbackDie();
-    		}
-    	}
-
-    	public override void Pause(bool isPause)
-    	{
-    		movementScript.IsControllable = !isPause;
-    	}
-
-        protected bool JudgeHit()
-        {
-            return RandomUtils.Value() > 0.8f;
-        }
-        protected bool CanPlay(AnimatorPriorityEnum priority)
-        {
-            return priority == currentAnimatorData.Priority && currentAnimatorData.IsLoop || (int)priority > (int)currentAnimatorData.Priority;
-        }
-
-        public void PlayAnimation(int hash)
+        public virtual void PlayAnimation(int hash)
         {
             animator.SetTrigger(hash);
         }
 
     	#endregion
 
+        #region Animation Event Handlers
+
+        public void OnAnimatorStart(AnimatorEventType type)
+        {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                    OnSkillStart();
+                    break;
+                case AnimatorEventType.UNSHEATH:
+                    break;
+                case AnimatorEventType.SHEATH:
+                    break;
+                case AnimatorEventType.DIE:
+                    OnDieStart();
+                    break;
+            }
+        }
+        public void OnAnimatorMiddle(AnimatorEventType type)
+        {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                    OnSkillMiddle();
+                    break;
+                case AnimatorEventType.UNSHEATH:
+                    OnUnsheath();
+                    break;
+                case AnimatorEventType.SHEATH:
+                    OnSheath();
+                    break;
+                case AnimatorEventType.DIE:
+                    break;
+            }
+        }
+        public void OnAnimatorEnd(AnimatorEventType type)
+        {
+            switch(type)
+            {
+                case AnimatorEventType.SKILL_1:
+                case AnimatorEventType.SKILL_2:
+                    OnSkillEnd();
+                    break;
+                case AnimatorEventType.UNSHEATH:
+                    break;
+                case AnimatorEventType.SHEATH:
+                    break;
+                case AnimatorEventType.DIE:
+                    OnDieEnd();
+                    break;
+            }
+        }
+
+        private int effectIndex;
+        protected virtual void OnSkillStart()
+        {
+            effectIndex = 1;
+        }
+        protected virtual void OnSkillMiddle()
+        {
+            if (CallbackSkillMiddle != null)
+                CallbackSkillMiddle(effectIndex++);
+        }
+        protected virtual void OnSkillEnd()
+        {
+            animator.speed = 1f;
+            if (CallbackSkillEnd != null)
+                CallbackSkillEnd();
+        }
+        protected virtual void OnUnsheath()
+        {
+        }
+        protected virtual void OnSheath()
+        {
+        }
+        protected virtual void OnDieStart()
+        {
+        }
+        protected virtual void OnDieEnd()
+        {
+            if (CallbackDie != null)
+            {
+                CallbackDie();
+            }
+        }
+
+        #endregion
+
         #region Renderering 
 
         protected Material material;
 
-        public void SetTransparent(bool isTransparent, float alpha = 0.2f)
+        public virtual void SetTransparent(bool isTransparent, float alpha = 0.2f)
         {
             InitMaterial();
             if(isTransparent)

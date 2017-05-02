@@ -53,8 +53,9 @@ public class MonsterScript : CharacterScript
             LifeBar.UpdatePosition(TopPosition);
     }
 
-    void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if(other.CompareTag(Tags.Trap))
         {
             TrapScript trap = other.GetComponentInParent<TrapScript>();
@@ -62,9 +63,9 @@ public class MonsterScript : CharacterScript
         }
     }
 
-	protected override void OnDieStarts ()
+    protected override void OnDieStart ()
 	{
-		base.OnDieStarts ();
+        base.OnDieStart ();
 		if (LifeBar != null)
 		{
 			BarItem.Recycle(LifeBar);

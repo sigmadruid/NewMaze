@@ -9,75 +9,36 @@ using StaticData;
 
 namespace GameLogic
 {
-    public class AdamScript : EntityScript
+    public class AdamScript : CharacterScript
     {
-        public Transform TopPosTransform;
-        public Transform EmitTransform;
-        public Transform BottomPosTransform;
         public Transform LeftHandPosTransform;
         public Transform RightHandPosTransform;
-
-        public MeleeWeaponTrail MeleeTrail;
         public WeaponScript LeftWeapon;
         public WeaponScript RightWeapon;
 
-        public Action<float> CallbackUpdate;
-        public Action CallbackSlowUpdate;
-        public Action<int> CallbackSkillMiddle;
-        public Action CallbackSkillEnd;
-        public Action CallbackDie;
         public Action CallbackUnsheath;
         public Action<int> CallbackTrapAttack;
 
-        protected int currentNameHash;
-        protected AnimatorData currentAnimatorData;
-
-        protected MovementScript movementScript;
         protected EffectScript effectScript;
-        private Animator animator;
-
-        private readonly WaitForSeconds SLOW_UPDATE_DELAY = new WaitForSeconds(1f);
 
         #region Life Cycle
 
-        void Awake()
+        protected override void Awake()
         {
-            animator = GetComponent<Animator>();
+            base.Awake();
             animator.applyRootMotion = false;
-            movementScript = GetComponent<MovementScript>();
             effectScript = GetComponent<EffectScript>();
         }
 
-        protected virtual void Update ()
+        protected override void Update ()
         {
-            if(Game.Instance.IsPause)
-            {
-                return;
-            }
-
-            if (CallbackUpdate != null)
-            {
-                CallbackUpdate(Time.deltaTime);
-            }
-        }
-        private IEnumerator SlowUpdate()
-        {
-            while(true)
-            {
-                if (Game.Instance.IsPause) 
-                    yield return SLOW_UPDATE_DELAY;
-
-                if (CallbackSlowUpdate != null)
-                {
-                    CallbackSlowUpdate();
-                }
-                yield return SLOW_UPDATE_DELAY;
-            }
+            base.Update();
+            if (Game.Instance.IsPause) { return; }
         }
 
-        void OnEnable () 
+        protected override void OnEnable () 
         {
-            StartCoroutine(SlowUpdate());
+            base.OnEnable();
 
             Camera mainCamera = Camera.allCameras[0];
             Camera3DScript cameraController = mainCamera.GetComponent<Camera3DScript>();
@@ -86,17 +47,11 @@ namespace GameLogic
                 cameraController = mainCamera.gameObject.AddComponent<Camera3DScript>();
             }
             cameraController.playerTransofrm = BottomPosTransform;
-
-//            MeleeTrail.Emit = false;
         }
 
-        void OnDisable()
+        protected override void OnTriggerEnter(Collider other)
         {
-            StopCoroutine(SlowUpdate());
-        }
-
-        void OnTriggerEnter(Collider other)
-        {
+            base.OnTriggerEnter(other);
             if(other.CompareTag(Tags.Trap))
             {
                 TrapScript trap = other.GetComponentInParent<TrapScript>();
@@ -106,31 +61,9 @@ namespace GameLogic
 
         #endregion
 
-        public Vector3 TopPosition
-        {
-            get { return TopPosTransform.position; }
-        }
-        public Vector3 BottomPosition
-        {
-            get { return BottomPosTransform.position; }
-        }
-        public Vector3 CenterPosition
-        {
-            get { return (TopPosTransform.position + BottomPosTransform.position) * 0.5f; }
-        }
-        public Vector3 EmitPosition
-        {
-            get { return EmitTransform.position; }
-        }
-
-        public override void Pause(bool isPause)
-        {
-            movementScript.IsControllable = !isPause;
-        }
-
         #region Animation States
 
-        public void Move(Vector3 destination, float speed)
+        public override void Move(Vector3 destination, float speed)
         {
             if (Game.Instance.IsPause) { return; }
 
@@ -139,30 +72,21 @@ namespace GameLogic
                 animator.speed = speed / 3f;
             animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
         }
-        public void Skill(int skillID, float attackSpeed)
+        public override void Skill(int skillID, float attackSpeed)
         {
-            int skillTrigger = 0;
-            if (skillID == 1)
-                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_1;
-            else if (skillID == 2)
-                skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_2;
-
-            movementScript.SetDestination(Vector3.zero, 0);
-            animator.speed = attackSpeed;
-            animator.SetTrigger(skillTrigger);
+            base.Skill(skillID, attackSpeed);
         }
-        public void Hit(bool forceStunned = false)
+        public override void Hit(bool forceStunned = false)
         {
+            return;
+
             if (Game.Instance.IsPause) { return; }
 
-            if(forceStunned || JudgeHit())
-            {
-                movementScript.SetDestination(Vector3.zero, 0f);
-                animator.speed = 1f;
-                animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
-            }
+            movementScript.SetDestination(Vector3.zero, 0f);
+            animator.speed = 1f;
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
         }
-        public void Die()
+        public override void Die()
         {
             if (Game.Instance.IsPause) { return; }
 
@@ -179,12 +103,7 @@ namespace GameLogic
                 animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
             animator.SetTrigger(eliteHash);
         }
-        protected bool JudgeHit()
-        {
-            return false;
-//            return RandomUtils.Value() > 0.8f;
-        }
-        public void PlayAnimation(int hash)
+        public override void PlayAnimation(int hash)
         {
             animator.SetTrigger(hash);
         }
@@ -193,106 +112,40 @@ namespace GameLogic
 
         #region Animation Event Handlers
 
-        public void OnAnimatorStart(AnimatorEventType type)
+        protected override void OnUnsheath()
         {
-            switch(type)
-            {
-                case AnimatorEventType.SKILL_1:
-                case AnimatorEventType.SKILL_2:
-                OnSkillStart();
-                break;
-                case AnimatorEventType.UNSHEATH:
-                break;
-                case AnimatorEventType.SHEATH:
-                break;
-                case AnimatorEventType.DIE:
-                break;
-            }
-        }
-        public void OnAnimatorMiddle(AnimatorEventType type)
-        {
-            switch(type)
-            {
-                case AnimatorEventType.SKILL_1:
-                case AnimatorEventType.SKILL_2:
-                OnSkillMiddle();
-                break;
-                case AnimatorEventType.UNSHEATH:
-                OnUnsheath();
-                break;
-                case AnimatorEventType.SHEATH:
-                OnSheath();
-                break;
-                case AnimatorEventType.DIE:
-                break;
-            }
-        }
-        public void OnAnimatorEnd(AnimatorEventType type)
-        {
-            switch(type)
-            {
-                case AnimatorEventType.SKILL_1:
-                case AnimatorEventType.SKILL_2:
-                OnSkillEnd();
-                break;
-                case AnimatorEventType.UNSHEATH:
-                break;
-                case AnimatorEventType.SHEATH:
-                break;
-                case AnimatorEventType.DIE:
-                OnDieEnd();
-                break;
-            }
-        }
-
-        private void OnDieEnd()
-        {
-            if (CallbackDie != null)
-            {
-                AnimatorStateInfo currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                CallbackDie();
-            }
-        }
-        public void OnUnsheath()
-        {
+            base.OnUnsheath();
             if (CallbackUnsheath != null)
                 CallbackUnsheath();
         }
-        public void OnSheath()
+        protected override void OnSheath()
         {
+            base.OnSheath();
             if (LeftWeapon != null)
                 ResourceManager.Instance.RecycleAsset(LeftWeapon.gameObject);
             if (RightWeapon != null)
                 ResourceManager.Instance.RecycleAsset(RightWeapon.gameObject);
         }
-        private int effectIndex;
-        public void OnSkillStart()
+        protected override void OnSkillStart()
         {
-            effectIndex = 1;
+            base.OnSkillStart();
             if (RightWeapon != null)
                 RightWeapon.TrailEnabled = true;
         }
-        public void OnSkillMiddle()
+        protected override void OnSkillEnd()
         {
-            if (CallbackSkillMiddle != null)
-                CallbackSkillMiddle(effectIndex++);
-        }
-        public void OnSkillEnd()
-        {
+            base.OnSkillEnd();
             if (RightWeapon != null)
                 RightWeapon.TrailEnabled = false;
-            animator.speed = 1f;
-            if (CallbackSkillEnd != null)
-                CallbackSkillEnd();
         }
 
         #endregion
 
         #region Effect
 
-        public void SetTransparent(bool isTransparent)
+        public override void SetTransparent(bool isTransparent, float alpha = 0.2f)
         {
-            effectScript.SetTransparent(isTransparent);
+            effectScript.SetTransparent(isTransparent, alpha);
         }
 
         #endregion

@@ -25,22 +25,22 @@ namespace GameLogic
         public float[] EventTimes;
         public AnimatorEventType[] MiddleEvents;
 
-        private AdamScript adamScript;
+        private CharacterScript script;
         private int startIndex;
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             startIndex = 0;
-            if(adamScript == null)
-                adamScript = animator.gameObject.GetComponent<AdamScript>();
+            if(script == null)
+                script = animator.gameObject.GetComponent<CharacterScript>();
             if (StartEvent != AnimatorEventType.NONE)
-                adamScript.OnAnimatorStart(StartEvent);
+                script.OnAnimatorStart(StartEvent);
             
         }
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (EndEvent != AnimatorEventType.NONE)
-                adamScript.OnAnimatorEnd(EndEvent);
+                script.OnAnimatorEnd(EndEvent);
         }
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -49,7 +49,7 @@ namespace GameLogic
                 float time = EventTimes[i];
                 if(stateInfo.normalizedTime > time)
                 {
-                    adamScript.OnAnimatorMiddle(MiddleEvents[i]);
+                    script.OnAnimatorMiddle(MiddleEvents[i]);
                     startIndex++;
                 }
             }

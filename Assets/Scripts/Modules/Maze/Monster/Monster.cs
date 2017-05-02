@@ -47,13 +47,9 @@ namespace GameLogic
 		}
         public void Skill(int skillIndex)
 		{
-			Script.Attack(null, OnAttack, null);
-		}
-        private void OnAttack()
-		{
-            Skill skill = Info.GetSkill(1);
-            skill.Cast(Info);
-            battleProxy.AttackHero(this, skill.GetEffect(1));
+            Info.CurrentSkill = Info.GetSkill(skillIndex);
+            Info.CurrentSkill.Cast(Info);
+            Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));
 		}
 		public void Hit()
 		{
@@ -75,6 +71,23 @@ namespace GameLogic
         #endregion
 
         #region Event Handlers
+
+        private void OnSkillMiddle(int index)
+        {
+            if(Info.CurrentSkill != null)
+            {
+                SkillEffect effect = Info.CurrentSkill.GetEffect(index);
+                battleProxy.AttackHero(this, effect);
+            }
+            else
+            {
+                Debug.LogError("null");
+            }
+        }
+        private void OnSkillEnd()
+        {
+            Info.CurrentSkill = null;
+        }
 
         private void OnTrapAttack(int trapKid)
         {
@@ -178,12 +191,13 @@ namespace GameLogic
         public static void Init(Monster monster)
         {
             monster.Script = ResourceManager.Instance.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
-            monster.Script.AnimatorDataDic = AnimatorDataManager.Instance.GetDataDic(monster.Data.Kid);
             monster.Script.Uid = monster.Uid;
             monster.Script.LifeBar = BarItem.Create(monster.Data.Size);
             monster.Script.transform.parent = RootTransform.Instance.MonsterRoot; 
             monster.Script.CallbackUpdate = monster.Update;
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
+            monster.Script.CallbackSkillMiddle = monster.OnSkillMiddle;
+            monster.Script.CallbackSkillEnd = monster.OnSkillEnd;
             monster.Script.CallbackTrapAttack = monster.OnTrapAttack;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().AddMonster(monster);

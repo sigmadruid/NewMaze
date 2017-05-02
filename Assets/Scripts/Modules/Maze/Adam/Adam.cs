@@ -297,7 +297,6 @@ namespace GameLogic
             context.Attack = data.Attack;
             context.Critical = 0;
             battleProxy.DoAttackHero(context);
-//            Script.Hit(true);
         }
 
         #endregion

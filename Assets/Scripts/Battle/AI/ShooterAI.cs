@@ -71,7 +71,7 @@ namespace Battle
 				{
                     currentMonster.Idle();
 					currentMonster.LookAt(adam.WorldPosition);
-					currentMonster.Skill(0);
+					currentMonster.Skill(1);
 				}
 				else
 				{

@@ -76,8 +76,6 @@ namespace GameLogic
 
             PopupManager.Instance.Clear();
 
-			Hero.Recycle();
-
             heroProxy.Dispose();
             blockProxy.Dispose();
             hallProxy.Dispose();
