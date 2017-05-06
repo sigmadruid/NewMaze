@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Base;
+using StaticData;
 using Battle;
 
 namespace GameLogic
@@ -194,6 +195,20 @@ namespace GameLogic
         }
 
         #endregion
+
+        public static float GetMonsterRadius(MonsterSize size)
+        {
+            switch(size)
+            {
+                case MonsterSize.Small:
+                    return GlobalConfig.MonsterConfig.SmallRadius;
+                case MonsterSize.Medium:
+                    return GlobalConfig.MonsterConfig.MediumRadius;
+                case MonsterSize.Big:
+                    return GlobalConfig.MonsterConfig.BigRadius;
+            }
+            return GlobalConfig.MonsterConfig.SmallRadius;
+        }
 
 	}
 }

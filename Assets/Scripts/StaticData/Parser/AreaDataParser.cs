@@ -23,6 +23,7 @@ namespace StaticData
                     AreaData data = new AreaData();
                     data.Kid = StaticReader.ReadInt(GetContent(col++));
                     data.AreaType = StaticReader.ReadEnum<AreaType>(GetContent(col++));
+                    data.CenterBased = StaticReader.ReadBool(GetContent(col++));
                     data.Param1 = StaticReader.ReadFloat(GetContent(col++));
                     data.Param2 = StaticReader.ReadFloat(GetContent(col++));
 

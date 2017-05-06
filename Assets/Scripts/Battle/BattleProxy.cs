@@ -47,7 +47,9 @@ namespace Battle
                 monsterProxy.IterateActives((Monster monster) =>
                     {
                         AreaData areaData = AreaDataManager.Instance.GetData(effect.Data.AreaKid) as AreaData;
-                        bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
+                        float adamRadius = GlobalConfig.HeroConfig.AdamRadius;
+                        float monsterRadius = MonsterProxy.GetMonsterRadius(monster.Data.Size);
+                        bool inArea = JudgeInArea(adam.Script.transform, adamRadius, monster.Script.transform, monsterRadius, areaData);
                         if(inArea)
                         {
                             DoAttackMonster(monster, effect);
@@ -68,7 +70,9 @@ namespace Battle
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
                 AreaData areaData = AreaDataManager.Instance.GetData(effect.Data.AreaKid) as AreaData;
-                bool inArea = JudgeInArea(adam.Script.transform, monster.Script.transform, areaData);
+                float adamRadius = GlobalConfig.HeroConfig.AdamRadius;
+                float monsterRadius = MonsterProxy.GetMonsterRadius(monster.Data.Size);
+                bool inArea = JudgeInArea(monster.Script.transform, monsterRadius, adam.Script.transform, adamRadius, areaData);
 				if (inArea)
 				{
                     DoAttackHero(effect);
@@ -122,22 +126,48 @@ namespace Battle
             }
         }
 
-        private bool JudgeInArea(Transform attackerTrans, Transform defenderTrans, AreaData areaData)
+        private bool JudgeInArea(Transform attackerTrans, float attackerRadius, Transform defenderTrans, float defenderRadius, AreaData areaData)
 		{
 			bool inArea = false;
             AreaType areaType = areaData.AreaType;
+            if(areaType == AreaType.Circle)
+            {
+                Vector3 basePosition = Vector3.zero;
+                if(areaData.CenterBased)
+                {
+                    basePosition = MathUtils.XZDirection(attackerTrans.position);
+                }
+                else
+                {
+                    basePosition = MathUtils.XZDirection(attackerTrans.position) + MathUtils.XZDirection(attackerTrans.forward) * attackerRadius;
+                }
+                float radius = attackerRadius + areaData.Param1 + defenderRadius;
+                Vector3 testPosition = MathUtils.XZDirection(defenderTrans.position);
+                inArea = MathUtils.CircleContains(basePosition, radius, testPosition);
+            }
 			if (areaType == AreaType.Fan)
 			{
-                float range = areaData.Param1;
+                Vector3 basePosition = Vector3.zero;
+                Vector3 direction = MathUtils.XZDirection(attackerTrans.forward);
+                if(areaData.CenterBased)
+                {
+                    basePosition = MathUtils.XZDirection(attackerTrans.position);
+                }
+                else
+                {
+                    basePosition = MathUtils.XZDirection(attackerTrans.position) + direction * attackerRadius;
+                }
+                float range = attackerRadius + areaData.Param1 + defenderRadius;
                 float angle = areaData.Param2;
-				inArea = MathUtils.FanContains(attackerTrans.position, attackerTrans.forward, defenderTrans.position, range, angle);
+                Vector3 testPosition = MathUtils.XZDirection(defenderTrans.position);
+                inArea = MathUtils.FanContains(basePosition, direction, range, angle, testPosition);
 			}
-			else if (areaType == AreaType.Rectangle)
-			{
-                float length = areaData.Param1;
-                float width = areaData.Param2;
-				inArea = MathUtils.RectContains(attackerTrans.position, attackerTrans.forward, width, length, defenderTrans.position);
-			}
+//			else if (areaType == AreaType.Rect)
+//			{
+//                float length = areaData.Param1;
+//                float width = areaData.Param2;
+//				inArea = MathUtils.RectContains(attackerTrans.position, attackerTrans.forward, width, length, defenderTrans.position);
+//			}
 			return inArea;
 		}
 	}

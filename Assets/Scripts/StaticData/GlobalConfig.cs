@@ -45,9 +45,16 @@ namespace StaticData
 
     public class HeroConfig
     {
+        public readonly float AdamRadius = 0.5f;
         public readonly float MonsterClickSearchDistance = 1f;
-        public readonly float AttackDistance = 2.5f; //For temp use.
         public readonly float TownAdamWalkSpeed = 3f;
+    }
+
+    public class MonsterConfig
+    {
+        public readonly float SmallRadius = 0.5f;
+        public readonly float MediumRadius = 0.7f;
+        public readonly float BigRadius = 1f;
     }
 
 	public class BattleConfig
@@ -124,6 +131,7 @@ namespace StaticData
     public class GlobalConfig
     {
         public static HeroConfig HeroConfig = new HeroConfig();
+        public static MonsterConfig MonsterConfig = new MonsterConfig();
         public static BlockConfig BlockConfig = new BlockConfig();
 		public static BattleConfig BattleConfig = new BattleConfig();
         public static DropConfig DropConfig = new DropConfig();

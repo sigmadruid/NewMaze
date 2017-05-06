@@ -39,12 +39,10 @@ namespace StaticData
 			}
 			return kvDic[kid];
 		}
-		
 		public List<MonsterData> GetAllMonsterData()
 		{
 			return dataList;
 		}
-		
 		public MonsterData GetRandomMonsterData()
 		{
 			if (weightList == null)

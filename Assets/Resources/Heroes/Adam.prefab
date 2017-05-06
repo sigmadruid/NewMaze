@@ -2254,11 +2254,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Uid: 
   TopPosTransform: {fileID: 4621129742711762}
-  EmitTransform: {fileID: 4005214033510752}
   BottomPosTransform: {fileID: 4560232823243562}
+  EmitTransform: {fileID: 4005214033510752}
   LeftHandPosTransform: {fileID: 4645257164139324}
   RightHandPosTransform: {fileID: 4734858832519912}
-  MeleeTrail: {fileID: 0}
   LeftWeapon: {fileID: 0}
   RightWeapon: {fileID: 0}
 --- !u!114 &114492059810245232

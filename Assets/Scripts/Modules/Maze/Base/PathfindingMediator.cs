@@ -128,6 +128,7 @@ namespace GameLogic
                 graph.editorTileSize = 10;
                 graph.cellSize = 0.4f;
                 graph.maxSlope = 60f;
+                graph.characterRadius = GlobalConfig.MonsterConfig.BigRadius;
                 graph.forcedBoundsCenter = new Vector3((mazeData.StartCol * 1f - 0.5f) * mazeData.BlockSize, 0, (mazeData.StartRow * 1f - 0.5f) * mazeData.BlockSize);
                 graph.forcedBoundsSize = new Vector3(mazeData.Cols * mazeData.BlockSize, 10, mazeData.Rows * mazeData.BlockSize);
                 AstarPath.active.Scan();

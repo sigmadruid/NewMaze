@@ -6,7 +6,7 @@ namespace StaticData
     {
         Circle = 1,
         Fan,
-        Rectangle,
+        Rect,
     }
 
     public class AreaData
@@ -15,6 +15,7 @@ namespace StaticData
 
         public AreaType AreaType;
 
+        public bool CenterBased;
         public float Param1;    
         public float Param2;
     }

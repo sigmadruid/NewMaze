@@ -1,7 +1,10 @@
-Kid,AreaType,Param1,Param2
-int,AreaType,float,float
-160001,Rectangle,3,1
-160002,Fan,3,360
-,,,
-165001,Fan,3,360
-165002,Fan,4,360
+Kid,AreaType,CenterBased,Param1,Param2
+int,AreaType,bool,float,float
+//Adam,,,,
+160001,Fan,TRUE,1.5,120
+//Thomas,,,,
+160002,Circle,FALSE,1,360
+160003,Fan,TRUE,1.5,150
+//Monsters,,,,
+165001,Circle,FALSE,0.5,360
+165002,Circle,FALSE,1,360

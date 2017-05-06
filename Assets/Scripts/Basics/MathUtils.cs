@@ -25,7 +25,7 @@ namespace Base
 
 		public static bool CircleContains(Vector3 basePos, float radius, Vector3 testPos)
 		{
-			return XZSqrDistance(testPos, basePos) <= radius * radius;
+            return Vector3.SqrMagnitude(testPos - basePos) <= radius * radius;
 		}
 		public static bool RectContains(Vector3 basePos, Vector3 direction, float width, float length, Vector3 testPos)
 		{
@@ -52,14 +52,13 @@ namespace Base
 
 			return true;
 		}
-		public static bool FanContains(Vector3 basePos, Vector3 forward, Vector3 testPos, float distance, float angle)
+        public static bool FanContains(Vector3 basePos, Vector3 forward, float range, float angle, Vector3 testPos)
 		{
-			if (Vector3.SqrMagnitude(testPos - basePos) <= distance * distance)
+            if (CircleContains(basePos, range, testPos))
 			{
-				return Vector3.Angle(forward, testPos - basePos) < angle;
+				return Vector3.Angle(forward, testPos - basePos) < angle * 0.5f;
 			}
 			return false;
-			
 		}
 
 		public static Vector3 RandomOffset(float distance)
