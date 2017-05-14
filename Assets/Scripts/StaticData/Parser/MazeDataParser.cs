@@ -33,6 +33,8 @@ namespace StaticData
                     data.NPCMaxCount = StaticReader.ReadInt(GetContent(col++));
                     data.ExplorationMaxCount = StaticReader.ReadInt(GetContent(col++));
                     data.GlobalExplorationCountDic = StaticReader.ReadDictionary<ExplorationType, int>(GetContent(col++));
+                    data.LimitedLevel = StaticReader.ReadInt(GetContent(col++));
+                    data.MaxLevel = StaticReader.ReadInt(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
                     NextLine();

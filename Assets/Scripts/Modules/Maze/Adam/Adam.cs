@@ -362,6 +362,8 @@ namespace GameLogic
             record.IsVisible = IsVisible;
             record.IsInHall = Info.IsInHall;
             record.HP = Info.HP;
+            record.Level = Info.Level;
+            record.Exp = Info.Exp;
             return record;
         }
     }

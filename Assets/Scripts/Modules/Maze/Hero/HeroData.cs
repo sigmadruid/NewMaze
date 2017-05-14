@@ -7,6 +7,14 @@ namespace StaticData
 {
 	public class HeroData : CharacterData
 	{
+        public float HPRaise;
+        public float AttackRaise;
+        public float DefenseRaise;
+        public float CriticalRaise;
+        public float DodgeRaise;
+        public float MoveSpeedRaise;
+        public float AttackSpeedRaise;
+
         public string Trigger;
 
         public int LeftWeapon;

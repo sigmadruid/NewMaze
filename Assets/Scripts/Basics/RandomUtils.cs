@@ -6,7 +6,7 @@ namespace Base
 {
 	public class RandomUtils
 	{
-		public const float RANDOM_BASE = 100f;
+		public const float RANDOM_BASE = 1000f;
 
         private static int seed = 0;
 		public static int Seed

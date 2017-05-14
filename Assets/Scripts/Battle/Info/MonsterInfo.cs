@@ -25,7 +25,7 @@ namespace Battle
 		{
             Side = Side.Monster;
 			Data = data;
-			hp = record.HP;
+            HP = record.HP;
             InitSkillList();
 		}
 	}

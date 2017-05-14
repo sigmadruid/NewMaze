@@ -24,7 +24,7 @@ namespace Battle
         public Side Side;
         public List<Skill> SkillList = new List<Skill>();
         public Skill CurrentSkill;
-		
+
         public new CharacterData Data
         {
             get { return data as CharacterData; }
@@ -41,7 +41,7 @@ namespace Battle
 		{
 			attrDic.Clear();
 
-			hp = Data.HP;
+            HP = Data.HP;
 
 			attrDic.Add((int)BattleAttribute.HP, Data.HP);
 			attrDic.Add((int)BattleAttribute.Attack, Data.Attack);
@@ -65,15 +65,25 @@ namespace Battle
 
         #region Attribute
 
-		protected int hp;
-		public int HP { get{ return hp; }}
-		public float HPRatio { get { return hp * 1f / Data.HP; } }
+        public int HP { get; protected set; }
+        public float HPRatio { get { return HP * 1f / Data.HP; } }
 
-		public bool IsAlive { get{ return hp > 0; } }
+        public bool IsAlive { get{ return HP > 0; } }
 
         public Side GetSide()
         {
             return Side;
+        }
+
+        public virtual float GetBaseAttribute(BattleAttribute attribute)
+        {
+            int attrID = (int)attribute;
+            if (!attrDic.ContainsKey(attrID))
+            {
+                BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
+                return -1;
+            }
+            return attrDic[attrID];
         }
 
         public float GetAttribute(BattleAttribute attribute)
@@ -84,15 +94,16 @@ namespace Battle
                 BaseLogger.LogFormat("attributeDic has no attribute: {0}", attribute);
                 return -1;
             }
+            float baseVal = GetBaseAttribute(attribute);
             float ratio = GetBuffRatioAttribute(attribute);
             int raise = GetBuffRaiseAttribute(attribute);
-            return attrDic[attrID] * ratio + raise;
+            return baseVal * ratio + raise;
         }
 
 		public void AddHP(int value)
 		{
             int maxHP = (int)GetAttribute(BattleAttribute.HP);
-			hp = Mathf.Clamp(hp + value, 0, maxHP);
+            HP = Mathf.Clamp(HP + value, 0, maxHP);
 		}
 
         public AttackResult HurtBy(SkillEffect skillEffect)

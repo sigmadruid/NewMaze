@@ -13,10 +13,12 @@ namespace Battle
 	public class BattleProxy : Proxy
 	{
         private Adam adam;
+        private HeroProxy heroProxy;
         private MonsterProxy monsterProxy;
 
         public void Init ()
 		{
+            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
 		}
 
@@ -28,6 +30,7 @@ namespace Battle
 		public void Dispose()
 		{
 			adam = null;
+            heroProxy = null;
             monsterProxy = null;
 		}
 
@@ -123,6 +126,8 @@ namespace Battle
                 {
                     adam.ClearTarget();
                 }
+                heroProxy.AddExp(monster.Data.Exp);
+                Debug.LogErrorFormat("lv.{0}, exp:{1}", adam.Info.Level, adam.Info.Exp);
             }
         }
 

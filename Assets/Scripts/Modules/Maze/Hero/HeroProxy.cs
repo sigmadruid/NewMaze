@@ -31,6 +31,28 @@ namespace GameLogic
 			}
 			return heroDataList;
 		}
+
+        public void AddExp(int exp)
+        {
+            Adam adam = Adam.Instance;
+            int newExp = adam.Info.Exp + exp;
+            int deltaLevel = 0;
+            while(true)
+            {
+                int maxExp = HeroLevelUpDataManager.Instance.GetExp(adam.Info.Level);
+                if(newExp >= maxExp)
+                {
+                    deltaLevel++;
+                    newExp -= maxExp;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            adam.Info.Level += deltaLevel;
+            adam.Info.Exp = newExp;
+        }
     }
 }
 

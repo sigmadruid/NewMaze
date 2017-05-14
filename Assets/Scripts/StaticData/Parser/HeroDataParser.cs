@@ -34,6 +34,15 @@ namespace StaticData
                     data.AttackSpeed = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackType = StaticReader.ReadEnum<AttackType>(GetContent(col++));
                     data.SkillList = StaticReader.ReadIntList(GetContent(col++));
+
+                    data.HPRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.DefenseRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.CriticalRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.DodgeRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.MoveSpeedRaise = StaticReader.ReadFloat(GetContent(col++));
+                    data.AttackSpeedRaise = StaticReader.ReadFloat(GetContent(col++));
+
                     data.Trigger = StaticReader.ReadString(GetContent(col++));
                     data.LeftWeapon = StaticReader.ReadInt(GetContent(col++));
                     data.RightWeapon = StaticReader.ReadInt(GetContent(col++));

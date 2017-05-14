@@ -35,6 +35,8 @@ namespace StaticData
                     data.AttackSpeed = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackType = StaticReader.ReadEnum<AttackType>(GetContent(col++));
                     data.SkillList = StaticReader.ReadIntList(GetContent(col++));
+
+                    data.Exp = StaticReader.ReadInt(GetContent(col++));
                     data.Size = StaticReader.ReadEnum<MonsterSize>(GetContent(col++));
                     data.DetectRange = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackDelay = StaticReader.ReadFloat(GetContent(col++));

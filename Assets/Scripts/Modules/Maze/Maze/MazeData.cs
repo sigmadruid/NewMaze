@@ -24,6 +24,9 @@ namespace StaticData
 		public int ExplorationMaxCount;
 
         public Dictionary<ExplorationType, int> GlobalExplorationCountDic;
+
+        public int LimitedLevel;
+        public int MaxLevel;
 	}
 }
 
