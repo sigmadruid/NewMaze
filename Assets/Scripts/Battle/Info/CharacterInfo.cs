@@ -19,7 +19,12 @@ namespace Battle
     public class CharacterInfo : EntityInfo, ICharacterInfoAgent
 	{
         protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
-        protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
+        protected Dictionary<int, Buff> selfBuffDic = new Dictionary<int, Buff>();
+        protected virtual Dictionary<int, Buff> buffDic
+        {
+            get { return selfBuffDic; }
+            set { selfBuffDic = value; }
+        }
 
         public Side Side;
         public List<Skill> SkillList = new List<Skill>();
@@ -53,7 +58,8 @@ namespace Battle
 		}
 		public void Dispose()
 		{
-			attrDic.Clear();
+            attrDic.Clear();
+            buffDic.Clear();
 			Data = null;
 		}
 
@@ -137,7 +143,7 @@ namespace Battle
 
         private float GetBuffRatioAttribute(BattleAttribute attribute)
         {
-            Dictionary<int, Buff>.Enumerator attrEnum = buffDic.GetEnumerator();
+            var attrEnum = buffDic.GetEnumerator();
             float resultVal = 1f;
             while(attrEnum.MoveNext())
             {
@@ -148,7 +154,7 @@ namespace Battle
         }
         private int GetBuffRaiseAttribute(BattleAttribute attribute)
         {
-            Dictionary<int, Buff>.Enumerator attrEnum = buffDic.GetEnumerator();
+            var attrEnum = buffDic.GetEnumerator();
             int resultVal = 0;
             while(attrEnum.MoveNext())
             {
@@ -172,7 +178,7 @@ namespace Battle
         }
         public void UpdateBuff(float deltaTime)
         {
-            Dictionary<int, Buff>.Enumerator enumerator = buffDic.GetEnumerator();
+            var enumerator = buffDic.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Buff buff = enumerator.Current.Value;
@@ -201,7 +207,7 @@ namespace Battle
         public Dictionary<int, float> RecordBuff()
         {
             Dictionary<int, float> recordDic = new Dictionary<int, float>();
-            Dictionary<int, Buff>.Enumerator enumerator = buffDic.GetEnumerator();
+            var enumerator = buffDic.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Buff buff = enumerator.Current.Value;

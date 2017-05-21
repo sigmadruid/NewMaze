@@ -17,7 +17,7 @@ namespace GameLogic
             packProxy = ApplicationFacade.Instance.RetrieveProxy<PackProxy>();
         }
 
-        public override System.Collections.Generic.IList<Enum> ListNotificationInterests()
+        public override IList<Enum> ListNotificationInterests()
         {
             return new Enum[]
             {

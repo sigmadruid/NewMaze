@@ -21,6 +21,8 @@ public class RootTransform : MonoBehaviour
 	public Transform BulletRoot;
     public Transform DropRoot;
 
+    public Camera TargetCamera;
+
     public Transform PoolRoot;
 
 	void Awake()

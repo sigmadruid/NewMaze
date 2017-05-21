@@ -14,8 +14,8 @@ namespace GameUI
 {
     public class BattleUIPanel : BasePopupView 
     {
-    	public Action CallbackUpdate;
-    	public Action CallbackItemClick;
+        public Action CallbackHeroItemClick;
+    	public Action CallbackProfileClick;
 
         public Image ImageHero;
         public Button ButtonPause;
@@ -29,25 +29,26 @@ namespace GameUI
     	[HideInInspector]
     	public HeroItem CurrentItem;
 
-    	private List<HeroItem> heroItemList;
+        private List<HeroItem> heroItemList = new List<HeroItem>();
 
-    	void Awake () 
-    	{
-    		heroItemList = new List<HeroItem>();
+        public override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            EventTriggerListener.Get(ImageHero.gameObject).onClick = OnProfileClicked;
     	}
+        public override void OnDispose()
+        {
+            base.OnDispose();
+        }
 
-    	void Update()
-    	{
-    		CallbackUpdate();
-    	}
-
-    	public void Init(List<HeroData> dataList)
+        public void SetData(List<HeroInfo> infoList)
     	{
     		PanelUtils.ClearChildren(LayoutHeroes.transform);
 
-    		for (int i = 0; i < dataList.Count; ++i)
+    		for (int i = 0; i < infoList.Count; ++i)
     		{
-                HeroData data = dataList[i];
+                HeroData data = infoList[i].Data;
                 int id = IDManager.Instance.GetID(data.Kid);
                 if(id == 0)
                     continue;
@@ -55,7 +56,7 @@ namespace GameUI
     			item.Data = data;
                 item.ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, data.Res2D);
                 item.TextName.text = TextDataManager.Instance.GetData(data.Name);
-                EventTriggerListener.Get(item.gameObject).onClick = OnItemClick;
+                EventTriggerListener.Get(item.gameObject).onClick = OnHeroItemClick;
 
     			heroItemList.Add(item);
     		}
@@ -86,13 +87,16 @@ namespace GameUI
     		MPNumber.Show(value.ToString());
         }
 
-    	private void OnItemClick(GameObject go)
+    	private void OnHeroItemClick(GameObject go)
     	{
     		CurrentItem = go.GetComponent<HeroItem>();
             ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, CurrentItem.Data.Res2D);
 
-            CallbackItemClick();
+            CallbackHeroItemClick();
     	}
-
+        private void OnProfileClicked(GameObject go)
+        {
+            CallbackProfileClick();
+        }
     }
 }

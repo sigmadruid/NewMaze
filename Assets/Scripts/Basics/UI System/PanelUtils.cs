@@ -23,6 +23,10 @@ namespace Base
         public static Sprite CreateSprite(string atlas, string name)
         {
             Texture2D texture = Resources.Load<Texture2D>(atlas + name);
+            if(texture == null)
+            {
+                BaseLogger.LogFormat("Can't load Texture2d: {0}-{1}", atlas, name);
+            }
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             return sprite;
         }

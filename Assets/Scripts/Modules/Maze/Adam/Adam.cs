@@ -308,7 +308,7 @@ namespace GameLogic
 
             adam.Uid = Guid.NewGuid().ToString();
             adam.Data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-            adam.Info = new HeroInfo(adam.Data, info);
+            adam.Info = new HeroInfo(adam.Data);
             adam.Script = ResourceManager.Instance.LoadAsset<AdamScript>(ObjectType.GameObject, adam.Data.GetResPath());
             adam.Script.Uid = adam.Uid;
             adam.Script.CallbackUpdate = adam.Update;

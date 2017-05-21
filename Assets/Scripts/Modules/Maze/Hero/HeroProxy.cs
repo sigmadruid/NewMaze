@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Base;
+using Battle;
 using StaticData;
 
 namespace GameLogic
@@ -13,7 +14,7 @@ namespace GameLogic
     {
         public HeroRecord Record;
 
-		private List<HeroData> heroDataList;
+        private List<HeroInfo> heroInfoList;
 
         public void Init()
         {
@@ -23,13 +24,30 @@ namespace GameLogic
         {
         }
 
-		public List<HeroData> GetUnlockHeroList()
+        public List<HeroInfo> GetInitialHeroInfoList()
+        {
+            HeroData data;
+            HeroInfo info;
+
+            List<int> kids = GlobalConfig.DemoConfig.InitialHeroKids;
+            List<HeroInfo> infoList = new List<HeroInfo>();
+            for(int i = 0; i < kids.Count; ++i)
+            {
+                int kid = kids[i];
+                data = HeroDataManager.Instance.GetData(kid) as HeroData;
+                info = new HeroInfo(data);
+                infoList.Add(info);
+            }
+            return infoList;
+        }
+
+        public List<HeroInfo> GetUnlockedHeroInfoList()
 		{
-			if (heroDataList == null)
+            if (heroInfoList == null)
 			{
-                heroDataList = HeroDataManager.Instance.GetAllData();
+                heroInfoList = GetInitialHeroInfoList();
 			}
-			return heroDataList;
+			return heroInfoList;
 		}
 
         public void AddExp(int exp)

@@ -64,12 +64,12 @@ namespace GameLogic
 
 		private void HandleUIInit()
         {
-			List<HeroData> dataList = heroProxy.GetUnlockHeroList();
+            List<HeroInfo> infoList = heroProxy.GetUnlockedHeroInfoList();
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
-			panel.Init(dataList);
-			panel.CallbackItemClick = OnItemClick;
-			panel.CallbackUpdate = OnUpdate;
+			panel.SetData(infoList);
+            panel.CallbackHeroItemClick = OnHeroItemClick;
+            panel.CallbackProfileClick = OnProfileClicked;
             EventTriggerListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
             EventTriggerListener.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
@@ -91,15 +91,15 @@ namespace GameLogic
             panel.ShowHeroItems(!Game.Instance.IsPause);
         }
 
-		private void OnItemClick()
+		private void OnHeroItemClick()
 		{
 			HeroData data = panel.CurrentItem.Data;
 			DispatchNotification(NotificationEnum.HERO_CONVERT, data.Kid);
 		}
-		private void OnUpdate()
-		{
-			float mpVal = 1f;
-		}
+        private void OnProfileClicked()
+        {
+            DispatchNotification(NotificationEnum.PROFILE_SHOW);
+        }
         private void OnPauseGame(GameObject go)
 		{
             PopupManager.Instance.CreateAndAddPopup<PausePanel>();

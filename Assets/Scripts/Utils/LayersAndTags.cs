@@ -1,9 +1,10 @@
 using UnityEngine;
 using System;
-namespace GameLogic
+namespace Base
 {
 	public static class Layers
 	{
+        public static readonly int LayerRenderTexture = LayerMask.GetMask("LayerRenderTexture");
         public static readonly int LayerHero = LayerMask.GetMask("LayerHero");
         public static readonly int LayerMonster = LayerMask.GetMask("LayerMonster");
         public static readonly int LayerNPC = LayerMask.GetMask("LayerNPC");

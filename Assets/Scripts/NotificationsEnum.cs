@@ -63,18 +63,17 @@ namespace GameLogic
         MOUSE_HIT_OBJECT,
 
         #region Pack
-
         PACK_SHOW,
         PACK_REFRESH,
+        #endregion
 
+        #region Profile
+        PROFILE_SHOW,
         #endregion
 
         #region Pathfinding
-
         PATHFINDING_INIT,
         PATHFINDING_DISPOSE,
-
-
         #endregion
 	}
 }

@@ -128,6 +128,12 @@ namespace StaticData
         public readonly bool CheckType = true;
     }
 
+    public class DemoConfig
+    {
+        public int InitLevel = 10;
+        public List<int> InitialHeroKids = new List<int>(){30000, 30001, 30002, 30003};
+    }
+
     public class GlobalConfig
     {
         public static HeroConfig HeroConfig = new HeroConfig();
@@ -142,6 +148,9 @@ namespace StaticData
 		public static HallConfig HallConfig = new HallConfig();
         public static PathfindingConfig PathfindingConfig = new PathfindingConfig();
         public static StaticDataConfig StaticDataConfig = new StaticDataConfig();
+
+        public static DemoConfig DemoConfig = new DemoConfig();
+
 
 		private Dictionary<IDType, EntityManager> managerDic;
 

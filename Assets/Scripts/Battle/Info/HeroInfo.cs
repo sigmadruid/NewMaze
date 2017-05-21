@@ -8,6 +8,7 @@ using StaticData;
 
 namespace Battle
 {
+    //For heroes, they have seperate level, skills, but they share buffs. In other word, they are one!
 	public class HeroInfo : CharacterInfo
 	{
         public new HeroData Data
@@ -16,32 +17,56 @@ namespace Battle
             set { data = value; }
         }
 
+        protected static Dictionary<int, Buff> heroBuffDic = new Dictionary<int, Buff>();
+        protected override Dictionary<int, Buff> buffDic
+        {
+            get
+            {
+                return heroBuffDic;
+            }
+            set
+            {
+                heroBuffDic = value;
+            }
+        }
+
         public int Level;
         public int Exp;
 
 		public bool IsConverting;
         public bool IsInHall;
 
-		public float LastHitTime = -1000f;
+		public float LastHitTime;
 
         private Dictionary<int, float> attrRaiseDic = new Dictionary<int, float>();
 
+        public HeroInfo (HeroData data) : base(data)
+        {
+            Side = Side.Hero;
+            Data = data;
+            InitRaise();
+            InitSkillList();
+
+            Level = GlobalConfig.DemoConfig.InitLevel;
+            Exp = 0;
+            HP = (int)(GetBaseAttribute(BattleAttribute.HP));
+            IsConverting = false;
+            IsInHall = false;
+            LastHitTime = -1000f;
+        }
 		public HeroInfo (HeroData data, HeroInfo info) : base(data)
 		{
             Side = Side.Hero;
 			Data = data;
-			if (info != null)
-			{
-                HP = (int)(data.HP * info.HPRatio);
-                Level = info.Level;
-                Exp = info.Exp;
-				IsConverting = info.IsConverting;
-                IsInHall = info.IsInHall;
-				LastHitTime = info.LastHitTime;
-			}
-
             InitRaise();
             InitSkillList();
+
+            Level = info.Level;
+            Exp = info.Exp;
+            HP = (int)(GetBaseAttribute(BattleAttribute.HP) * info.HPRatio);
+            IsConverting = info.IsConverting;
+            IsInHall = info.IsInHall;
+            LastHitTime = info.LastHitTime;
 		}
         public HeroInfo (HeroData data, HeroRecord record) : base(data)
         {

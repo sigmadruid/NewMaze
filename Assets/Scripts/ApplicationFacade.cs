@@ -41,12 +41,13 @@ namespace GameLogic
 			RegisterMediator(new BulletMediator());
 			RegisterMediator(new NPCMediator());
 			RegisterMediator(new ExplorationMediator());
-			RegisterMediator(new BattleUIMediator());
+            RegisterMediator(new BattleUIMediator());
 			RegisterMediator(new DropMediator());
             RegisterMediator(new EnvironmentMediator());
             RegisterMediator(new RecordMediator());
             RegisterMediator(new PackMediator());
             RegisterMediator(new PathfindingMediator());
+            RegisterMediator(new ProfileMediator());
 		}
 	}
 }
