@@ -147,14 +147,12 @@ namespace GameLogic
 
         #region Interfaces
 
-        public void Convert(int heroKid)
+        public void Convert(HeroInfo newInfo)
         {
-            HeroData newData = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-            Data = newData;
-            HeroInfo newInfo = new HeroInfo(newData, Info);
+            Data = newInfo.Data;
             Info = newInfo;
 
-            int hash = Animator.StringToHash(newData.Trigger);
+            int hash = Animator.StringToHash(newInfo.Data.Trigger);
             Switch(hash);
         }
 
@@ -167,14 +165,6 @@ namespace GameLogic
         #endregion
 
         #region States
-
-        public bool InBattle 
-        { 
-            get 
-            { 
-                return Time.time - Info.LastHitTime <= GlobalConfig.BattleConfig.OutBattleDelay; 
-            }
-        }
 
         public bool IsVisible
         {

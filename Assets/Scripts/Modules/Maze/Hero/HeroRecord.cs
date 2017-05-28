@@ -13,9 +13,9 @@ namespace GameLogic
 
         public int Exp;
 
-        public bool IsVisible;
-
+        public bool IsConverting;
         public bool IsInHall;
+        public bool IsVisible;
 
     }
 }

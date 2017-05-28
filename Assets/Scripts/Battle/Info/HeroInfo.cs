@@ -51,24 +51,11 @@ namespace Battle
             Level = GlobalConfig.DemoConfig.InitLevel;
             Exp = 0;
             HP = (int)(GetBaseAttribute(BattleAttribute.HP));
+
             IsConverting = false;
             IsInHall = false;
-            LastHitTime = -1000f;
+            IsVisible = true;
         }
-		public HeroInfo (HeroData data, HeroInfo info) : base(data)
-		{
-            Side = Side.Hero;
-			Data = data;
-            InitRaise();
-            InitSkillList();
-
-            Level = info.Level;
-            Exp = info.Exp;
-            HP = (int)(GetBaseAttribute(BattleAttribute.HP) * info.HPRatio);
-            IsConverting = info.IsConverting;
-            IsInHall = info.IsInHall;
-            LastHitTime = info.LastHitTime;
-		}
         public HeroInfo (HeroData data, HeroRecord record) : base(data)
         {
             Data = data;
@@ -76,7 +63,9 @@ namespace Battle
             Level = record.Level;
             Exp = record.Exp;
 
+            IsConverting = record.IsConverting;
             IsInHall = record.IsInHall;
+            IsVisible = record.IsVisible;
 
             InitRaise();
             InitSkillList();
@@ -89,6 +78,7 @@ namespace Battle
             record.HP = HP;
             record.Level = Level;
             record.Exp = Exp;
+            record.IsConverting = IsConverting;
             record.IsInHall = IsInHall;
             record.IsVisible = IsVisible;
             return record;

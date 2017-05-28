@@ -137,7 +137,8 @@ namespace GameLogic
 			InputManager.Instance.Enable = false;
 
             adam.Info.IsConverting = true;
-            adam.Convert(heroKid);
+            HeroInfo info = heroProxy.GetHeroInfo(heroKid);
+            adam.Convert(info);
 		}
 
 		private void HandleBattlePause(bool isPause)
