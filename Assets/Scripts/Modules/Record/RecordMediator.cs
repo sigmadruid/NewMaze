@@ -11,6 +11,7 @@ namespace GameLogic
 {
     public class RecordMediator : Mediator
     {
+        private AdamProxy adamProxy;
         private HeroProxy heroProxy;
         private MonsterProxy monsterProxy;
         private HallProxy hallProxy;
@@ -21,6 +22,7 @@ namespace GameLogic
         public override void OnRegister()
         {
             base.OnRegister();
+            adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
@@ -59,13 +61,16 @@ namespace GameLogic
             
             if(Adam.Instance != null && Adam.Instance.Info.IsAlive)
             {
+                adamProxy.DoRecord();
+                heroProxy.DoRecord();
                 monsterProxy.DoRecord();
                 hallProxy.DoRecord();
                 dropProxy.DoRecord();
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
-                gameRecord.Hero = Adam.Instance.ToRecord();
+                gameRecord.Adam = adamProxy.AdamRecord;
+                gameRecord.Heroes = heroProxy.RecordDic;
                 gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = hallProxy.Record;
                 gameRecord.Items = dropProxy.RecordDic;
@@ -100,7 +105,8 @@ namespace GameLogic
             if(gameRecord != null)
             {
                 Maze.Instance.Seed = gameRecord.RandomSeed;
-                heroProxy.Record = gameRecord.Hero;
+                adamProxy.AdamRecord = gameRecord.Adam;
+                heroProxy.RecordDic = gameRecord.Heroes;
                 monsterProxy.RecordDic = gameRecord.Monsters;
                 hallProxy.Record = gameRecord.Hall;
                 dropProxy.RecordDic = gameRecord.Items;

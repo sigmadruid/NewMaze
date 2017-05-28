@@ -19,6 +19,8 @@ namespace GameLogic
 
             yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 
+            facade.RetrieveProxy<HeroProxy>().Init();
+
             facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			facade.DispatchNotification(NotificationEnum.NPC_INIT);
@@ -47,6 +49,7 @@ namespace GameLogic
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 20);
+
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);

@@ -8,7 +8,9 @@ namespace GameLogic
     {
         public int RandomSeed;
 
-        public HeroRecord Hero;
+        public AdamRecord Adam;
+
+        public Dictionary<int, HeroRecord> Heroes = new Dictionary<int, HeroRecord>();
 
         public Dictionary<int, List<MonsterRecord>> Monsters = new Dictionary<int, List<MonsterRecord>>();
 

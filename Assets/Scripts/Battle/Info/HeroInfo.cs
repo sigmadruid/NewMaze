@@ -35,6 +35,7 @@ namespace Battle
 
 		public bool IsConverting;
         public bool IsInHall;
+        public bool IsVisible;
 
 		public float LastHitTime;
 
@@ -79,6 +80,18 @@ namespace Battle
 
             InitRaise();
             InitSkillList();
+        }
+
+        public HeroRecord ToRecord()
+        {
+            HeroRecord record = new HeroRecord();
+            record.Kid = Data.Kid;
+            record.HP = HP;
+            record.Level = Level;
+            record.Exp = Exp;
+            record.IsInHall = IsInHall;
+            record.IsVisible = IsVisible;
+            return record;
         }
 
         public void InitRaise()

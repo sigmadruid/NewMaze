@@ -18,10 +18,12 @@ namespace GameLogic
 
         private ParticleScript convertEffect;
 
+        private AdamProxy adamProxy;
 		private HeroProxy heroProxy;
 		
 		public override void OnRegister ()
 		{
+            adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
 			heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
 		}
 
@@ -43,8 +45,7 @@ namespace GameLogic
 			{
 				case NotificationEnum.HERO_INIT:
 				{
-                    HeroRecord record = notification.Body as HeroRecord;
-                    HandleHeroInit(record);
+                    HandleHeroInit();
 					break;
 				}
                 case NotificationEnum.MOUSE_HIT_OBJECT:
@@ -75,25 +76,25 @@ namespace GameLogic
 
 		#region Notification Handlers
 
-        private void HandleHeroInit(HeroRecord record)
+        private void HandleHeroInit()
 		{
 			//Init
-            if(record == null)
-            {
-                int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
-                adam = Adam.Create(heroKid, null);
+            int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
+            HeroInfo info = heroProxy.GetHeroInfo(heroKid);
+            adam = Adam.Create(info);
 
-                MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-                Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
-                adam.SetPosition(startPosition);
+            AdamRecord record = adamProxy.AdamRecord;
+            if(record != null)
+            {
+                adam.SetPosition(record.WorldPosition.ToVector3());
+                adam.SetRotation(record.WorldAngle);
             }
             else
             {
-                adam = Adam.Create(record);
-                adam.SetPosition(record.WorldPosition.ToVector3());
-                adam.SetRotation(record.WorldAngle);
-                adam.Info.IsInHall = record.IsInHall;
-                adam.IsVisible = record.IsVisible;
+                MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+                Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
+                adam.SetPosition(startPosition);
+                adam.SetRotation(0);
             }
 			adam.CallbackDie = OnHeroDie;
 

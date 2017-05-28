@@ -176,17 +176,16 @@ namespace GameLogic
             }
         }
 
-        private bool isVisible = true;
         public bool IsVisible
         {
             get
             {
-                return isVisible;
+                return Info.IsVisible;
             }
             set
             {
-                isVisible = value;
-                Script.SetTransparent(!isVisible);
+                Info.IsVisible = value;
+                Script.SetTransparent(!Info.IsVisible);
             }
         }
 
@@ -302,13 +301,13 @@ namespace GameLogic
 
         #endregion
 
-        public static Adam Create(int heroKid, HeroInfo info)
+        public static Adam Create(HeroInfo info)
         {
             Adam adam = new Adam();
 
             adam.Uid = Guid.NewGuid().ToString();
-            adam.Data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-            adam.Info = new HeroInfo(adam.Data);
+            adam.Data = info.Data;
+            adam.Info = info;
             adam.Script = ResourceManager.Instance.LoadAsset<AdamScript>(ObjectType.GameObject, adam.Data.GetResPath());
             adam.Script.Uid = adam.Uid;
             adam.Script.CallbackUpdate = adam.Update;
@@ -325,12 +324,6 @@ namespace GameLogic
             instance = adam;
 
             return adam;
-        }
-        public static Adam Create(HeroRecord record)
-        {
-            HeroData data = HeroDataManager.Instance.GetData(record.Kid) as HeroData;
-            HeroInfo info = new HeroInfo(data, record);
-            return Create(record.Kid, info);
         }
         public static void Recycle()
         {
@@ -352,18 +345,11 @@ namespace GameLogic
             }
         }
 
-        public new HeroRecord ToRecord()
+        public new AdamRecord ToRecord()
         {
-            HeroRecord record = new HeroRecord();
-            record.Uid = Uid;
-            record.Kid = Data.Kid;
+            AdamRecord record = new AdamRecord();
             record.WorldPosition = new Vector3Record(WorldPosition);
             record.WorldAngle = WorldAngle;
-            record.IsVisible = IsVisible;
-            record.IsInHall = Info.IsInHall;
-            record.HP = Info.HP;
-            record.Level = Info.Level;
-            record.Exp = Info.Exp;
             return record;
         }
     }

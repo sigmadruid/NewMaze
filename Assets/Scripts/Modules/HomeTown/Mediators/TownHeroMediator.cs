@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using Battle;
 using StaticData;
 
 namespace GameLogic
@@ -13,11 +14,13 @@ namespace GameLogic
 	{
         private Adam adam;
 
+        private HeroProxy heroProxy;
 		private InputManager inputManager;
 
 		public override void OnRegister ()
 		{
 			inputManager = InputManager.Instance;
+            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
 		}
 
 		public override IList<Enum> ListNotificationInterests ()
@@ -45,7 +48,8 @@ namespace GameLogic
 		private void HandleTownHeroInit()
 		{
             int heroKid = IDManager.Instance.GetKid(IDType.Hero, 0);
-            adam = Adam.Create(heroKid, null);
+            HeroInfo info = heroProxy.GetHeroInfo(heroKid);
+            adam = Adam.Create(info);
             adam.SetPosition(new Vector3(-1.77f, 0, 13.02f));
             adam.Switch(AnimatorDataManager.Instance.ParamDoUnarmed);
 		}

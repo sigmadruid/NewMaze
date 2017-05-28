@@ -22,6 +22,7 @@ namespace GameLogic
 			RegisterProxy(new MazeProxy());
 			RegisterProxy(new BlockProxy());
 			RegisterProxy(new HallProxy());
+            RegisterProxy(new AdamProxy());
 			RegisterProxy(new HeroProxy());
 			RegisterProxy(new MonsterProxy());
 			RegisterProxy(new BulletProxy());

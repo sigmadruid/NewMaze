@@ -12,16 +12,6 @@ namespace GameLogic
 {
 	public class StageMaze : BaseStage
 	{
-        private HeroProxy heroProxy;
-		private BlockProxy blockProxy;
-        private HallProxy hallProxy;
-        private MonsterProxy monsterProxy;
-        private DropProxy dropProxy;
-		private BulletProxy bulletProxy;
-		private NPCProxy npcProxy;
-		private ExplorationProxy explorationProxy;
-		private BattleProxy battleProxy;
-
         public StageMaze () : base(StageEnum.Maze) {}
 
         public override IEnumerator Start ()
@@ -31,25 +21,16 @@ namespace GameLogic
 			Maze.Instance.Init();
 
             ApplicationFacade facade = ApplicationFacade.Instance;
-            heroProxy = facade.RetrieveProxy<HeroProxy>();
-            heroProxy.Init();
-            blockProxy = facade.RetrieveProxy<BlockProxy>();
-			blockProxy.Init();
-            hallProxy = facade.RetrieveProxy<HallProxy>();
-            monsterProxy = facade.RetrieveProxy<MonsterProxy>();
-            dropProxy = facade.RetrieveProxy<DropProxy>();
-            bulletProxy = facade.RetrieveProxy<BulletProxy>();
-            npcProxy = facade.RetrieveProxy<NPCProxy>();
-            explorationProxy = facade.RetrieveProxy<ExplorationProxy>();
-            battleProxy = facade.RetrieveProxy<BattleProxy>();
-            battleProxy.Init();
+            facade.RetrieveProxy<BlockProxy>().Init();
+            facade.RetrieveProxy<BattleProxy>().Init();
+            facade.RetrieveProxy<PackProxy>().Init();
 
             yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 1));
-
             yield return Loading.Instance.SetProgress(LoadingState.StartStage, 0);
-            facade.DispatchNotification(NotificationEnum.HERO_INIT, heroProxy.Record);
+
+            facade.DispatchNotification(NotificationEnum.HERO_INIT);
             if (Adam.Instance.Info.IsInHall)
-                facade.DispatchNotification(NotificationEnum.HALL_INIT, hallProxy.Record);
+                facade.DispatchNotification(NotificationEnum.HALL_INIT,  facade.RetrieveProxy<HallProxy>().Record);
             facade.DispatchNotification(NotificationEnum.BLOCK_INIT);
             facade.DispatchNotification(NotificationEnum.NPC_INIT);
             facade.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
@@ -61,12 +42,10 @@ namespace GameLogic
                 {
                     ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
                 });
-
             yield return Loading.Instance.SetProgress(LoadingState.StartStage, 5);
+
             if (!Adam.Instance.Info.IsInHall)
                 facade.DispatchNotification(NotificationEnum.BLOCK_REFRESH, Adam.Instance.WorldPosition);
-            //For test
-            facade.RetrieveProxy<PackProxy>().Init();
             yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
         public override IEnumerator End ()
@@ -76,22 +55,22 @@ namespace GameLogic
 
             PopupManager.Instance.Clear();
 
-            heroProxy.Dispose();
-            blockProxy.Dispose();
-            hallProxy.Dispose();
-            monsterProxy.Dispose();
-            dropProxy.Dispose();
-            bulletProxy.Dispose();
-			npcProxy.Dispose();
-			explorationProxy.Dispose();
-			battleProxy.Dispose();
+            ApplicationFacade facade = ApplicationFacade.Instance;
+            facade.RetrieveProxy<BlockProxy>().Dispose();
+            facade.RetrieveProxy<HallProxy>().Dispose();
+            facade.RetrieveProxy<MonsterProxy>().Dispose();
+            facade.RetrieveProxy<DropProxy>().Dispose();
+            facade.RetrieveProxy<BulletProxy>().Dispose();
+            facade.RetrieveProxy<NPCProxy>().Dispose();
+            facade.RetrieveProxy<ExplorationProxy>().Dispose();
+            facade.RetrieveProxy<BattleProxy>().Dispose();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 10);
 			
             InputManager.Instance.Enable = false;
 			ResourceManager.Instance.DisposeAssets();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 20);
+
 			UnityEngine.Resources.UnloadUnusedAssets();
-            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 25);
 			GC.Collect();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);
 		}
