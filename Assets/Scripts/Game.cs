@@ -49,23 +49,26 @@ namespace GameLogic
 		public void Init()
 		{
 			if (hasInit)
-			{
 				return;
-			}
+
+            Application.targetFrameRate = 60;
 
             framework.Init();
 			ConfigManager.InitAllData();
 
-            framework.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, AICore.Update);
-            framework.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, AICore.SlowUpdate);
-
 			ApplicationFacade.Instance.Startup();
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
 
+            AICore.Init();
             PlotRunner.Init();
 
 			hasInit = true;
 		}
+
+        public void Dispose()
+        {
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.SERIALIZE_GAME);
+        }
 
 		public void Update(float deltaTime)
 		{
@@ -81,11 +84,6 @@ namespace GameLogic
 			LoadingStageEnum = stageEnum;
 			SwitchStageComplete();
 		}
-
-        public void ApplicationQuit()
-        {
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.SERIALIZE_GAME);
-        }
 
         #region Managers
 

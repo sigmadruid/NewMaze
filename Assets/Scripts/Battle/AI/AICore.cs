@@ -15,12 +15,13 @@ namespace Battle
 	{
 		public const float AI_UPDATE_INTERVAL = 0.2f;
 
-		private Dictionary<string, AIBase> aiDic;
+        private Dictionary<string, AIBase> aiDic = new Dictionary<string, AIBase>();
 
-		public AICore ()
-		{
-			aiDic = new Dictionary<string, AIBase>();
-		}
+        public void Init()
+        {
+            Game.Instance.TaskManager.AddTask(TaskEnum.AI_UPDATE, -1f, -1, Update);
+            Game.Instance.TaskManager.AddTask(TaskEnum.AI_HEART_BEAT, AICore.AI_UPDATE_INTERVAL, -1, SlowUpdate);
+        }
 
 		public void Update()
 		{

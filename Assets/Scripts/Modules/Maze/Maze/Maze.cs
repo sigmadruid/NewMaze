@@ -23,7 +23,6 @@ namespace GameLogic
     {
 		public MazeData Data;
 
-
 		private long startTicks;
 
 		private static Maze instance;

@@ -63,7 +63,7 @@ namespace Battle
             Level = record.Level;
             Exp = record.Exp;
 
-            IsConverting = record.IsConverting;
+            IsConverting = false;
             IsInHall = record.IsInHall;
             IsVisible = record.IsVisible;
 

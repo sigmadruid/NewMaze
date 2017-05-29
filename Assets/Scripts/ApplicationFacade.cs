@@ -34,6 +34,7 @@ namespace GameLogic
             RegisterProxy(new PackProxy());
             RegisterProxy(new GamePlot.ActorProxy());
 
+            RegisterMediator(new TownHeroMediator());
 			RegisterMediator(new BlockMediator());
 			RegisterMediator(new MazeMapMediator());
 			RegisterMediator(new HeroMediator());

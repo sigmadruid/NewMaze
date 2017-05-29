@@ -15,8 +15,6 @@ public class Main : MonoBehaviour
 
 	void Awake()
 	{
-		Application.targetFrameRate = 60;
-
 		game = Game.Instance;
 		game.Init();
 
@@ -38,7 +36,7 @@ public class Main : MonoBehaviour
     void OnApplicationQuit()
     {
         Debug.Log("Game ended");
-        game.ApplicationQuit();
+        game.Dispose();
     }
 
 	private void Test()

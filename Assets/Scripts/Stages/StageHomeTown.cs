@@ -14,24 +14,24 @@ namespace GameLogic
         public override IEnumerator Start ()
 		{
             ApplicationFacade facade = ApplicationFacade.Instance;
-            if(facade.RetrieveMediator<TownHeroMediator>() == null)
-                facade.RegisterMediator(new TownHeroMediator());
 
+            //Resources
             yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 
-            facade.RetrieveProxy<HeroProxy>().Init();
+            //Framework
+            InputManager.Instance.Init();
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
 
+            //Logic
+            facade.RetrieveProxy<HeroProxy>().Init();
+            facade.RetrieveProxy<PackProxy>().Init();
             facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			facade.DispatchNotification(NotificationEnum.NPC_INIT);
 			facade.DispatchNotification(NotificationEnum.TOWN_NPC_SPAWN);
             facade.DispatchNotification(NotificationEnum.ENVIRONMENT_INIT);
-
-			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, true);
-
-            InputManager.Instance.Init();
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
+            Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, true);
 
             yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
@@ -39,20 +39,25 @@ namespace GameLogic
 		{
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 0);
 
-			Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
-
-            PopupManager.Instance.Clear();
-
+            //Logic
+            Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_DISPOSE);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DISPOSE);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 10);
 
+            //Framework
+            PopupManager.Instance.Clear();
             InputManager.Instance.Enable = false;
-			ResourceManager.Instance.DisposeAssets();
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 20);
 
+            //Resources
+			ResourceManager.Instance.DisposeAssets();
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);
+
+            //GC
 			UnityEngine.Resources.UnloadUnusedAssets();
 			GC.Collect();
-            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 30);
+            yield return Loading.Instance.SetProgress(LoadingState.EndStage, 40);
 		}
 
 	}

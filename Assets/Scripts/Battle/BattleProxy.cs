@@ -21,18 +21,17 @@ namespace Battle
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
 		}
-
-        public void SetAdam(Adam adam)
-		{
-			this.adam = adam;
-		}
-
 		public void Dispose()
 		{
 			adam = null;
             heroProxy = null;
             monsterProxy = null;
 		}
+
+        public void SetAdam(Adam adam)
+        {
+            this.adam = adam;
+        }
 
         public void AttackMonster(SkillEffect effect)
 		{

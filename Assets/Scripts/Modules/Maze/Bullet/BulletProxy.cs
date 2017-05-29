@@ -13,12 +13,20 @@ namespace GameLogic
     {
 		public delegate void IterateFunc(Bullet bullet);
 		
-		private Dictionary<string, Bullet> bulletDic;
+        private Dictionary<string, Bullet> bulletDic = new Dictionary<string, Bullet>();
 
-		public BulletProxy()
-		{
-			bulletDic = new Dictionary<string, Bullet>();
-		}
+        public void Init()
+        {
+        }
+        public void Dispose()
+        {
+            Dictionary<string, Bullet>.Enumerator enumerator = bulletDic.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Bullet.Recycle(enumerator.Current.Value);
+            }
+            bulletDic.Clear();
+        }
 
 		public void IterateMonsters(IterateFunc func)
 		{
@@ -46,16 +54,7 @@ namespace GameLogic
 				bulletDic.Remove(uid);
 			}
 		}
-		
-		public void Dispose()
-		{
-			Dictionary<string, Bullet>.Enumerator enumerator = bulletDic.GetEnumerator();
-			while (enumerator.MoveNext())
-			{
-				Bullet.Recycle(enumerator.Current.Value);
-			}
-			bulletDic.Clear();
-		}
+
     }
 }
 

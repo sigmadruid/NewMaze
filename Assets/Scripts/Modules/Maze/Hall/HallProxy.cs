@@ -13,6 +13,9 @@ namespace GameLogic
     {
         public HallRecord Record;
 
+        public void Init()
+        {
+        }
         public void Dispose()
         {
             Record = null;

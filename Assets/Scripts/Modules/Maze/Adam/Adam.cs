@@ -183,7 +183,7 @@ namespace GameLogic
         {
             get
             {
-                return Info.IsAlive && !Info.IsConverting && IsVisible;
+                return Info.IsAlive && IsVisible;
             }
         }
 

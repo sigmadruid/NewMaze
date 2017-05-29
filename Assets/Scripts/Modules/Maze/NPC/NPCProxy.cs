@@ -13,6 +13,18 @@ namespace GameLogic
 	{
         private Dictionary<string, NPC> npcDic = new Dictionary<string, NPC>();
 
+        public void Init()
+        {
+        }
+        public void Dispose()
+        {
+            foreach(NPC npc in npcDic.Values)
+            {
+                NPC.Recycle(npc);
+            }
+            npcDic.Clear();
+        }
+
         public void IterateActives(Action<NPC> func)
         {
             if(func == null)
@@ -44,16 +56,6 @@ namespace GameLogic
 			}
 		}
 		
-		public void Dispose()
-		{
-			List<NPC> list = npcDic.Values.ToList();
-			int count = list.Count;
-			for (int i = 0; i < count; ++i)
-			{
-				NPC.Recycle(list[i]);
-			}
-			npcDic.Clear();
-		}
 	}
 }
 

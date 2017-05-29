@@ -17,10 +17,12 @@ namespace GameLogic
 
         private Dictionary<string, Exploration> explorationDic = new Dictionary<string, Exploration>();
 		
+        public void Init()
+        {
+        }
         public void Dispose()
         {
             ClearExpls();
-
             enteredExplorationSet.Clear();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 
 namespace Base
 {
@@ -29,6 +30,8 @@ namespace Base
 
         public void Init()
         {
+            DOTween.Init();
+
             PopupManager.Init();
 
             TaskManager.AddTask(TaskEnum.RESOURCE_UPDATE, ResourceManager.RESOURCE_UPDATE_INTERVAL, -1, ResourceManager.Tick);

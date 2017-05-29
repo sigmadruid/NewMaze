@@ -25,6 +25,9 @@ namespace GameLogic
             set { recordDic = value; }
         }
 
+        public void Init()
+        {
+        }
 		public void Dispose()
 		{
             ClearMonsters();
