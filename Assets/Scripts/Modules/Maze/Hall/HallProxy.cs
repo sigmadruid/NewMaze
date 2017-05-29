@@ -21,10 +21,11 @@ namespace GameLogic
             Record = null;
         }
 
-        public void DoRecord()
+        public HallRecord GetRecord()
         {
             if(Hall.Instance != null)
                 Record = Hall.Instance.ToRecord();
+            return Record;
         }
     }
 }

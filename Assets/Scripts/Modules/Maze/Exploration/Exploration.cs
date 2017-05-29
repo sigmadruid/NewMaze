@@ -35,7 +35,10 @@ namespace GameLogic
 			return false;
 		}
 
-        public virtual void OnFunction() {}
+        public virtual void OnFunction() 
+        {
+            BaseLogger.Log(Script.name);
+        }
 
         protected virtual void OnEnter()
         {
@@ -47,6 +50,13 @@ namespace GameLogic
         {
             Script.HighlightOff();
             proxy.RemoveEnteredExploration(this);
+        }
+
+        public ExplorationRecord ToRecord()
+        {
+            ExplorationRecord record = new ExplorationRecord();
+            record.Uid = Uid;
+            return record;
         }
 
         public static void Init(Exploration exploration, ExplorationData data)

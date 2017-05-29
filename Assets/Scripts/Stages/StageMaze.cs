@@ -24,6 +24,10 @@ namespace GameLogic
                 {
                     ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
                 });
+            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, () =>
+                {
+                    ApplicationFacade.Instance.DispatchNotification(NotificationEnum.EXPLORATION_FUNCTION);
+                });
             yield return Loading.Instance.SetProgress(LoadingState.StartStage, 10);
 
             //Logic

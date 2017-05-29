@@ -169,7 +169,7 @@ namespace GameLogic
         /// <summary>
         /// Record all the active monsters in blocks. Other inactive monsters have been recorded when they hide.
         /// </summary>
-        public void DoRecord()
+        public Dictionary<int, List<MonsterRecord>> GetRecord()
         {
             int location;
             if(Hall.Instance != null)
@@ -195,6 +195,7 @@ namespace GameLogic
                     recordList.Add(monster.ToRecord());
                 }
             }
+            return recordDic;
         }
 
         #endregion

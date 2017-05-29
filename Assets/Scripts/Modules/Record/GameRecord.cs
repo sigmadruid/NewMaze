@@ -18,8 +18,9 @@ namespace GameLogic
 
         public Dictionary<int, List<ItemRecord>> Items = new Dictionary<int, List<ItemRecord>>();
 
+        public Dictionary<int, List<ExplorationRecord>> Explorations = new Dictionary<int, List<ExplorationRecord>>();
+
         //TODO:NPCs
-        //TODO:Explorations
 
     }
 }

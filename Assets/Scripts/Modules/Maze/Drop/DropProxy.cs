@@ -115,7 +115,7 @@ namespace GameLogic
             itemDic.Clear();
         }
 
-        public void DoRecord()
+        public Dictionary<int, List<ItemRecord>> GetRecord()
         {
             int location;
             if(Hall.Instance != null)
@@ -139,6 +139,7 @@ namespace GameLogic
                 List<ItemRecord> recordList = GetRecordList(location);
                 recordList.Add(item.ToRecord());
             }
+            return recordDic;
         }
 
         public Item FindNearbyItem(Vector3 position)

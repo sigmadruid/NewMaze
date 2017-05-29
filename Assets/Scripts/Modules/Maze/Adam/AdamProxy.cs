@@ -8,9 +8,9 @@ namespace GameLogic
     {
         public AdamRecord AdamRecord;
 
-        public void DoRecord()
+        public AdamRecord GetRecord()
         {
-            AdamRecord = Adam.Instance.ToRecord();
+            return Adam.Instance.ToRecord();
         }
     }
 }

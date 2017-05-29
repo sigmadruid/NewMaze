@@ -43,7 +43,6 @@ namespace GameLogic
 
         public void Dispose()
         {
-            RecordDic.Clear();
             infoDic.Clear();
         }
 
@@ -61,7 +60,7 @@ namespace GameLogic
             return infoDic[kid];
         }
 
-        public void DoRecord()
+        public Dictionary<int, HeroRecord> GetRecord()
         {
             RecordDic.Clear();
             foreach(int kid in infoDic.Keys)
@@ -70,6 +69,7 @@ namespace GameLogic
                 HeroRecord record = info.ToRecord();
                 RecordDic.Add(kid, record);
             }
+            return RecordDic;
         }
 
         public void AddExp(int exp)

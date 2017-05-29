@@ -11,22 +11,11 @@ namespace GameLogic
 {
     public class RecordMediator : Mediator
     {
-        private AdamProxy adamProxy;
-        private HeroProxy heroProxy;
-        private MonsterProxy monsterProxy;
-        private HallProxy hallProxy;
-        private DropProxy dropProxy;
-
         private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
 
         public override void OnRegister()
         {
             base.OnRegister();
-            adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
-            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
-            monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
-            hallProxy = ApplicationFacade.Instance.RetrieveProxy<HallProxy>();
-            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
         }
         public override IList<Enum> ListNotificationInterests ()
         {
@@ -61,19 +50,16 @@ namespace GameLogic
             
             if(Adam.Instance != null && Adam.Instance.Info.IsAlive)
             {
-                adamProxy.DoRecord();
-                heroProxy.DoRecord();
-                monsterProxy.DoRecord();
-                hallProxy.DoRecord();
-                dropProxy.DoRecord();
+                var facade = ApplicationFacade.Instance;
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
-                gameRecord.Adam = adamProxy.AdamRecord;
-                gameRecord.Heroes = heroProxy.RecordDic;
-                gameRecord.Monsters = monsterProxy.RecordDic;
-                gameRecord.Hall = hallProxy.Record;
-                gameRecord.Items = dropProxy.RecordDic;
+                gameRecord.Adam = facade.RetrieveProxy<AdamProxy>().GetRecord();
+                gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().GetRecord();
+                gameRecord.Monsters = facade.RetrieveProxy<MonsterProxy>().GetRecord();
+                gameRecord.Hall = facade.RetrieveProxy<HallProxy>().GetRecord();
+                gameRecord.Items = facade.RetrieveProxy<DropProxy>().GetRecord();
+                gameRecord.Explorations = facade.RetrieveProxy<ExplorationProxy>().GetRecord();
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
@@ -81,7 +67,7 @@ namespace GameLogic
                     formatter.Serialize(stream, gameRecord);
                 }
 
-                string json = LitJson.JsonMapper.ToJson(gameRecord);
+                string json = JsonUtility.ToJson(gameRecord);
                 Debug.Log(json);
             }
             else//If dead, delete the record.
@@ -104,12 +90,15 @@ namespace GameLogic
             }
             if(gameRecord != null)
             {
+                var facade = ApplicationFacade.Instance;
+
                 Maze.Instance.Seed = gameRecord.RandomSeed;
-                adamProxy.AdamRecord = gameRecord.Adam;
-                heroProxy.RecordDic = gameRecord.Heroes;
-                monsterProxy.RecordDic = gameRecord.Monsters;
-                hallProxy.Record = gameRecord.Hall;
-                dropProxy.RecordDic = gameRecord.Items;
+                facade.RetrieveProxy<AdamProxy>().AdamRecord = gameRecord.Adam;
+                facade.RetrieveProxy<HeroProxy>().RecordDic = gameRecord.Heroes;
+                facade.RetrieveProxy<MonsterProxy>().RecordDic = gameRecord.Monsters;
+                facade.RetrieveProxy<HallProxy>().Record = gameRecord.Hall;
+                facade.RetrieveProxy<DropProxy>().RecordDic = gameRecord.Items;
+                facade.RetrieveProxy<ExplorationProxy>().RecordDic = gameRecord.Explorations;
             }
         }
 
