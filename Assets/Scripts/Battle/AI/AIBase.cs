@@ -38,7 +38,7 @@ namespace Battle
 
         public virtual void End() {}
 
-		private float delayTimer = 0f;
+		private float delayTimer = 9999f;
 		protected bool Delay(float delay)
 		{
 			if (delayTimer < delay)

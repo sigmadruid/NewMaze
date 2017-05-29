@@ -79,7 +79,7 @@ namespace GameLogic
 		private void HandleUpdateHP(AttackResult ar)
 		{
 			panel.UpdateHPNumber(ar);
-            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
+            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Info.GetAttribute(BattleAttribute.HP);
             panel.UpdateLifeBar(hpVal, true);
 		}
 		private void HandleUpdateMP(int value)
