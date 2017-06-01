@@ -30,8 +30,8 @@ namespace GameUI
         
         void Awake()
         {
-            EventTriggerListener.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
-            EventTriggerListener.Get(ButtonCancel.gameObject).onClick = OnCancel;
+            ClickEventTrigger.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
+            ClickEventTrigger.Get(ButtonCancel.gameObject).onClick = OnCancel;
 
             UILocalizer.Replace(transform);
         }

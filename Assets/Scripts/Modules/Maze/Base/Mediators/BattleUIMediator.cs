@@ -70,8 +70,8 @@ namespace GameLogic
 			panel.SetData(infoList);
             panel.CallbackHeroItemClick = OnHeroItemClick;
             panel.CallbackProfileClick = OnProfileClicked;
-            EventTriggerListener.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
-            EventTriggerListener.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
+            ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
+            ClickEventTrigger.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
             float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
             panel.UpdateLifeBar(hpVal, false);

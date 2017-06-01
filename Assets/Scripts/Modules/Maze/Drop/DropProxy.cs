@@ -13,13 +13,7 @@ namespace GameLogic
         public delegate void IterateFunc(Item item);
 
         private Dictionary<string, Item> itemDic = new Dictionary<string, Item>();
-        private Dictionary<int, List<ItemRecord>> recordDic = new Dictionary<int, List<ItemRecord>>();
-
-        public Dictionary<int, List<ItemRecord>> RecordDic
-        {
-            get { return recordDic; }
-            set { recordDic = value; }
-        }
+        public Dictionary<int, List<ItemRecord>> RecordDic = new Dictionary<int, List<ItemRecord>>();
 
         public void Init()
         {
@@ -27,8 +21,37 @@ namespace GameLogic
 		public void Dispose()
 		{
             ClearItems();
-            recordDic.Clear();
 		}
+        public Dictionary<int, List<ItemRecord>> CreateRecord()
+        {
+            int location;
+            if(Hall.Instance != null)
+            {
+                location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
+                InitRecordList(Hall.Instance);
+            }
+            else
+            {
+                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+                blockProxy.Iterate((Block block) =>
+                    {
+                        InitRecordList(block);
+                    });
+            }
+            var enumerator = itemDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Item item = enumerator.Current.Value;
+                location = Maze.GetCurrentLocation(item.WorldPosition);
+                List<ItemRecord> recordList = GetRecordList(location);
+                recordList.Add(item.ToRecord());
+            }
+            return RecordDic;
+        }
+        public void SetRecord(Dictionary<int, List<ItemRecord>> recordDic)
+        {
+            RecordDic = recordDic;
+        }
 
         public static ItemInfo GenerateItemInfoByDrop(DropData dropData)
         {
@@ -115,33 +138,6 @@ namespace GameLogic
             itemDic.Clear();
         }
 
-        public Dictionary<int, List<ItemRecord>> GetRecord()
-        {
-            int location;
-            if(Hall.Instance != null)
-            {
-                location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
-                InitRecordList(Hall.Instance);
-            }
-            else
-            {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
-            }
-            var enumerator = itemDic.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                Item item = enumerator.Current.Value;
-                location = Maze.GetCurrentLocation(item.WorldPosition);
-                List<ItemRecord> recordList = GetRecordList(location);
-                recordList.Add(item.ToRecord());
-            }
-            return recordDic;
-        }
-
         public Item FindNearbyItem(Vector3 position)
 		{
             foreach(Item item in itemDic.Values)
@@ -161,24 +157,24 @@ namespace GameLogic
                 block.ForeachNode((MazePosition mazePos) =>
                     {
                         int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        recordDic[location] = new List<ItemRecord>();
+                        RecordDic[location] = new List<ItemRecord>();
                     });
             }
             else
             {
                 int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                recordDic[location] = new List<ItemRecord>();
+                RecordDic[location] = new List<ItemRecord>();
             }
         }
         public void InitRecordList(Hall hall)
         {
             int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            recordDic[location] = new List<ItemRecord>();
+            RecordDic[location] = new List<ItemRecord>();
         }
         public List<ItemRecord> GetRecordList(int location)
 		{
 			List<ItemRecord> recordList = null;
-            recordDic.TryGetValue(location, out recordList);
+            RecordDic.TryGetValue(location, out recordList);
 			return recordList;
 		}
     }

@@ -24,7 +24,7 @@ namespace StaticData
 		public void Init()
 		{
 			ExplorationDataParser parser = new ExplorationDataParser();
-			parser.Parse("ExplorationDataConfig.csv", out kvDic, out typeDic);
+            parser.Parse("Exploration/ExplorationDataConfig.csv", out kvDic, out typeDic);
 		}
 
 		public override EntityData GetData(int kid)

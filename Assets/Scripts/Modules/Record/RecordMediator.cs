@@ -54,12 +54,12 @@ namespace GameLogic
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
-                gameRecord.Adam = facade.RetrieveProxy<AdamProxy>().GetRecord();
-                gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().GetRecord();
-                gameRecord.Monsters = facade.RetrieveProxy<MonsterProxy>().GetRecord();
-                gameRecord.Hall = facade.RetrieveProxy<HallProxy>().GetRecord();
-                gameRecord.Items = facade.RetrieveProxy<DropProxy>().GetRecord();
-                gameRecord.Explorations = facade.RetrieveProxy<ExplorationProxy>().GetRecord();
+                gameRecord.Adam = facade.RetrieveProxy<AdamProxy>().CreateRecord();
+                gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().CreateRecord();
+                gameRecord.Monsters = facade.RetrieveProxy<MonsterProxy>().CreateRecord();
+                gameRecord.Hall = facade.RetrieveProxy<HallProxy>().CreateRecord();
+                gameRecord.Items = facade.RetrieveProxy<DropProxy>().CreateRecord();
+                gameRecord.Explorations = facade.RetrieveProxy<ExplorationProxy>().CreateRecord();
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
@@ -93,12 +93,12 @@ namespace GameLogic
                 var facade = ApplicationFacade.Instance;
 
                 Maze.Instance.Seed = gameRecord.RandomSeed;
-                facade.RetrieveProxy<AdamProxy>().AdamRecord = gameRecord.Adam;
-                facade.RetrieveProxy<HeroProxy>().RecordDic = gameRecord.Heroes;
-                facade.RetrieveProxy<MonsterProxy>().RecordDic = gameRecord.Monsters;
-                facade.RetrieveProxy<HallProxy>().Record = gameRecord.Hall;
-                facade.RetrieveProxy<DropProxy>().RecordDic = gameRecord.Items;
-                facade.RetrieveProxy<ExplorationProxy>().RecordDic = gameRecord.Explorations;
+                facade.RetrieveProxy<AdamProxy>().SetRecord(gameRecord.Adam);
+                facade.RetrieveProxy<HeroProxy>().SetRecord(gameRecord.Heroes);
+                facade.RetrieveProxy<MonsterProxy>().SetRecord(gameRecord.Monsters);
+                facade.RetrieveProxy<HallProxy>().SetRecord(gameRecord.Hall);
+                facade.RetrieveProxy<DropProxy>().SetRecord(gameRecord.Items);
+                facade.RetrieveProxy<ExplorationProxy>().SetRecord(gameRecord.Explorations);
             }
         }
 

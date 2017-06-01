@@ -1,5 +1,14 @@
-Kid,Name,Description,Type,Res2D,Res3D
-int,string,string,ItemType,string,string
-140001,gold_small,gold_small,Resource,coin_small,Coin_1
-140002,gold_medium,gold_medium,Resource,coin_medium,Coin_2
-140003,gold_large,gold_large,Resource,coin_large,Coin_3
+Kid,Name,Description,Type,Res2D,Res3D,Param1,Param2,Param3
+int,string,string,ItemType,string,string,string,string,string
+140001,gold_small,gold_small,Resource,coin_small,Coin_1,,,
+140002,gold_medium,gold_medium,Resource,coin_medium,Coin_2,,,
+140003,gold_large,gold_large,Resource,coin_large,Coin_3,,,
+//Rune,,,,,,,,
+//1.Rune type; 2.ElapseTime; 3.Percentage to raise in attribute,,,,,,,,
+141001,rune_life,rune_life,Rune,rune_1,Rune_1,Life,500,
+141002,rune_attack,rune_attack,Rune,rune_2,Rune_2,Attack,30,0.2
+141003,rune_defense,rune_defense,Rune,rune_3,Rune_3,Defense,30,0.2
+141004,rune_dexterity,rune_dexterity,Rune,rune_4,Rune_4,Dexterity,30,0.1
+141005,rune_evasion,rune_evasion,Rune,rune_5,Rune_5,Evasion,30,0.1
+141006,rune_speed,rune_speed,Rune,rune_6,Rune_6,Speed,30,0.2
+141007,rune_invisible,rune_invisible,Rune,rune_7,Rune_7,Invisible,30,

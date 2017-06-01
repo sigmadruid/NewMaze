@@ -9,6 +9,14 @@ namespace Base
 		{
 			UnityEngine.Debug.Log(str);
 		}
+        public static void LogWarning(string str)
+        {
+            UnityEngine.Debug.LogWarning(str);
+        }
+        public static void LogError(string str)
+        {
+            UnityEngine.Debug.LogError(str);
+        }
 
 		public static void LogFormat(string str, params object[] objList)
 		{

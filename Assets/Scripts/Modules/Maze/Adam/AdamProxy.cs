@@ -8,9 +8,20 @@ namespace GameLogic
     {
         public AdamRecord AdamRecord;
 
-        public AdamRecord GetRecord()
+        public AdamRecord CreateRecord()
         {
-            return Adam.Instance.ToRecord();
+            var facade = ApplicationFacade.Instance;
+
+            AdamRecord = Adam.Instance.ToRecord();
+            AdamRecord.PackItems = facade.RetrieveProxy<PackProxy>().GetRecord();
+            return AdamRecord;
+        }
+        public void SetRecord(AdamRecord record)
+        {
+            var facade = ApplicationFacade.Instance;
+
+            AdamRecord = record;
+            facade.RetrieveProxy<PackProxy>().SetRecord(AdamRecord.PackItems);
         }
     }
 }

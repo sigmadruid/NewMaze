@@ -65,6 +65,7 @@ namespace GameLogic
         #region Pack
         PACK_SHOW,
         PACK_REFRESH,
+        USE_ITEM,
         #endregion
 
         #region Profile

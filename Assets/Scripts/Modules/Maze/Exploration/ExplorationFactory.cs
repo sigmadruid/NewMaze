@@ -27,18 +27,22 @@ namespace GameLogic
             switch (data.Type)
             {
                 case ExplorationType.Transporter:   
-                {
-                    exploration = new TransporterExpl();
-                    TransporterExpl.Init(exploration, data);
-                    break;
-                }
+                    {
+                        exploration = new TransporterExpl();
+                        break;
+                    }
+                case ExplorationType.Chest:   
+                    {
+                        exploration = new ChestExpl();
+                        break;
+                    }
                 default:      
-                {
-                    exploration = new Exploration();
-                    Exploration.Init(exploration, data);
-                    break;
-                }
+                    {
+                        exploration = new Exploration();
+                        break;
+                    }
             }
+            Exploration.Init(exploration, data);
             return exploration;
         }
 

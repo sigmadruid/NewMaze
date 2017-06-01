@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 using System.Collections;
 using System.Collections.Generic;
 
@@ -34,13 +37,13 @@ public class MazeMapPanel : BasePopupView
     public override void OnEnter()
     {
         base.OnEnter();
-        EventTriggerListener.Get(innerWindow.gameObject).onDrag = OnDrag;
+        DragEventTrigger.Get(innerWindow.gameObject).onDrag = OnDrag;
     }
 
     public override void OnExit()
     {
         base.OnExit();
-        EventTriggerListener.Get(innerWindow.gameObject).onDrag = null;
+        DragEventTrigger.Get(innerWindow.gameObject).onDrag = null;
     }
 
     public void Show(bool show, Vector3 position, float angle)
@@ -58,9 +61,9 @@ public class MazeMapPanel : BasePopupView
         }
     }
 
-	private void OnDrag(GameObject go, Vector2 delta)
+    public void OnDrag(GameObject go, Vector2 delta)
 	{
-		Vector3 offset = new Vector3(-delta.x, 0, -delta.y) * DragSpeed;
+        Vector3 offset = new Vector3(-delta.x, 0, -delta.y) * DragSpeed;
 		offset = Quaternion.Euler(Vector3.up * (-45)) * offset;
 		innerWindow.CameraTransform.position += offset;
 	}

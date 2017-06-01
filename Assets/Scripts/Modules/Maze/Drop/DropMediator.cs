@@ -38,41 +38,41 @@ namespace GameLogic
             switch((NotificationEnum)notification.NotifyEnum)
             {
                 case NotificationEnum.BLOCK_SPAWN:
-                {
-					Block block = notification.Body as Block;
-                    HandleItemSpawn(block);
-                    break;
-                }
+                    {
+    					Block block = notification.Body as Block;
+                        HandleItemSpawn(block);
+                        break;
+                    }
                 case NotificationEnum.BLOCK_DESPAWN:
-				{
-					Block block = notification.Body as Block;
-                    HandleItemDespawn(block);
-					break;
-				}
+    				{
+    					Block block = notification.Body as Block;
+                        HandleItemDespawn(block);
+    					break;
+    				}
                 case NotificationEnum.HALL_SPAWN:
-                {
-                    Hall hall = notification.Body as Hall;
-                    HandleItemSpawn(hall);
-                    break;
-                }
+                    {
+                        Hall hall = notification.Body as Hall;
+                        HandleItemSpawn(hall);
+                        break;
+                    }
                 case NotificationEnum.HALL_DESPAWN:
-                {
-                    Hall hall = notification.Body as Hall;
-                    HandleItemDespawn(hall);
-                    break;
-                }
+                    {
+                        Hall hall = notification.Body as Hall;
+                        HandleItemDespawn(hall);
+                        break;
+                    }
 				case NotificationEnum.DROP_CREATED:
-				{
-					Monster monster = notification.Body as Monster;
-                    HandleItemSpawnSingle(monster);
-					break;
-				}
+				    {
+                        Tupple<int, Vector3> tupple = notification.Body as Tupple<int, Vector3>;
+                        HandleItemSpawnSingle(tupple.Item1, tupple.Item2);
+					    break;
+				    }
 				case NotificationEnum.DROP_PICKED_UP:
-                {
-                    ItemScript itemScript = notification.Body as ItemScript;
-                    HandleItemDespawnSingle(itemScript);
-                    break;
-                }
+                    {
+                        ItemScript itemScript = notification.Body as ItemScript;
+                        HandleItemDespawnSingle(itemScript);
+                        break;
+                    }
             }
         }
 
@@ -144,12 +144,16 @@ namespace GameLogic
                 dropProxy.HideItem(drop.Uid);
             }
         }
-		private void HandleItemSpawnSingle(Monster monster)
+        private void HandleItemSpawnSingle(int dropKid, Vector3 position)
 		{
-            DropData dropData = DropDataManager.Instance.GetData(monster.Data.DropKid) as DropData;
-            Item item = Item.Create(dropData, monster.WorldPosition);
-			dropProxy.AddItem(item);
-			item.StartFlying(monster.WorldPosition);
+            DropData dropData = DropDataManager.Instance.GetData(dropKid) as DropData;
+            int count = RandomUtils.Range(1, dropData.MaxNum);
+            for(int i = 0; i < count; ++i)
+            {
+                Item item = Item.Create(dropData, position);
+                dropProxy.AddItem(item);
+                item.StartFlying(position);
+            }
 		}
         private void HandleItemDespawnSingle(ItemScript itemScript)
 		{
@@ -160,7 +164,8 @@ namespace GameLogic
                 packProxy.ChangeCount(item.Data.Kid, item.Info.Count);
                 dropProxy.RemoveItem(item.Uid);
 			}
-
+            string title = itemScript.name;
+            TitlePanel.Show(title);
 		}
     }
 }

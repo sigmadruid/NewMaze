@@ -13,17 +13,11 @@ namespace GameLogic
     {
         public delegate void IterateFunc(Exploration expl);
 
-        private Dictionary<int, List<ExplorationRecord>> recordDic = new Dictionary<int, List<ExplorationRecord>>();
+        private Dictionary<int, List<ExplorationRecord>> RecordDic = new Dictionary<int, List<ExplorationRecord>>();
         private Dictionary<string, Exploration> explorationDic = new Dictionary<string, Exploration>();
 
         public HashSet<Exploration> enteredExplorationSet = new HashSet<Exploration>();
 		
-        public Dictionary<int, List<ExplorationRecord>> RecordDic
-        {
-            get { return recordDic; }
-            set { recordDic = value; }
-        }
-
         public void Init()
         {
         }
@@ -31,6 +25,35 @@ namespace GameLogic
         {
             ClearExpls();
             enteredExplorationSet.Clear();
+        }
+        public Dictionary<int, List<ExplorationRecord>> CreateRecord()
+        {
+            int location;
+            if(Hall.Instance != null)
+            {
+                InitRecordList(Hall.Instance);
+            }
+            else
+            {
+                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+                blockProxy.Iterate((Block block) =>
+                    {
+                        InitRecordList(block);
+                    });
+            }
+            var enumerator = explorationDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Exploration expl = enumerator.Current.Value;
+                location = Maze.GetCurrentLocation(expl.WorldPosition);
+                List<ExplorationRecord> recordList = GetRecordList(location);
+                recordList.Add(expl.ToRecord());
+            }
+            return RecordDic;
+        }
+        public void SetRecord(Dictionary<int, List<ExplorationRecord>> recordDic)
+        {
+            RecordDic = recordDic;
         }
 
         #region Add and Remove
@@ -80,50 +103,25 @@ namespace GameLogic
                 block.ForeachNode((MazePosition mazePos) =>
                     {
                         int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        recordDic[location] = new List<ExplorationRecord>();
+                        RecordDic[location] = new List<ExplorationRecord>();
                     });
             }
             else
             {
                 int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                recordDic[location] = new List<ExplorationRecord>();
+                RecordDic[location] = new List<ExplorationRecord>();
             }
         }
         public void InitRecordList(Hall hall)
         {
             int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            recordDic[location] = new List<ExplorationRecord>();
+            RecordDic[location] = new List<ExplorationRecord>();
         }
         public List<ExplorationRecord> GetRecordList(int location)
         {
             List<ExplorationRecord> recordList = null;
-            recordDic.TryGetValue(location, out recordList);
+            RecordDic.TryGetValue(location, out recordList);
             return recordList;
-        }
-        public Dictionary<int, List<ExplorationRecord>> GetRecord()
-        {
-            int location;
-            if(Hall.Instance != null)
-            {
-                InitRecordList(Hall.Instance);
-            }
-            else
-            {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
-            }
-            var enumerator = explorationDic.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                Exploration expl = enumerator.Current.Value;
-                location = Maze.GetCurrentLocation(expl.WorldPosition);
-                List<ExplorationRecord> recordList = GetRecordList(location);
-                recordList.Add(expl.ToRecord());
-            }
-            return recordDic;
         }
 
         #endregion

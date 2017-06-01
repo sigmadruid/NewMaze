@@ -48,11 +48,10 @@ namespace GameLogic
 
         private void HandleHallInit(object param)
 		{
-            if(param is HallRecord)
+            if(param == null)
             {
-                HallRecord record = param as HallRecord;
-                Hall.Create(record);
-                Hall.Instance.LeavePosition = record.LeavePosition.ToVector3();
+                Hall.Create(hallProxy.Record);
+                Hall.Instance.LeavePosition = hallProxy.Record.LeavePosition.ToVector3();
             }
             else
             {

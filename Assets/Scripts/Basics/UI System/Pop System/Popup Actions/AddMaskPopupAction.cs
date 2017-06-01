@@ -42,19 +42,19 @@ namespace Base
                 mask.gameObject.SetActive(true);
 				
 				if (maskParam.clickHide)
-                    EventTriggerListener.Get(mask.gameObject).onClick = onBlackMaskClick;
+                    ClickEventTrigger.Get(mask.gameObject).onClick = onBlackMaskClick;
 			}
 		}
 
 		public override void ExecuteHide (BasePopupView view, object param = null)
 		{
             mask.gameObject.SetActive(false);
-            EventTriggerListener.Get(mask.gameObject).onClick = null;
+            ClickEventTrigger.Get(mask.gameObject).onClick = null;
 		}
 
 		private void onBlackMaskClick(GameObject go)
 		{
-            EventTriggerListener.Get(go).onClick = null;
+            ClickEventTrigger.Get(go).onClick = null;
 			popupManagerDelegate.RemovePopup(currentPopup);
 		}
 

@@ -43,7 +43,7 @@ namespace GameLogic
             facade.RetrieveProxy<BattleProxy>().Init();
             facade.DispatchNotification(NotificationEnum.HERO_INIT);
             if (Adam.Instance.Info.IsInHall)
-                facade.DispatchNotification(NotificationEnum.HALL_INIT,  facade.RetrieveProxy<HallProxy>().Record);
+                facade.DispatchNotification(NotificationEnum.HALL_INIT);
             facade.DispatchNotification(NotificationEnum.BLOCK_INIT);
             facade.DispatchNotification(NotificationEnum.NPC_INIT);
             facade.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);

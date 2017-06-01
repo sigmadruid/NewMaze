@@ -13,7 +13,7 @@ public class MazeEditorPanel : MonoBehaviour
 
     void Awake()
     {
-        EventTriggerListener.Get(imgRegenerate.gameObject).onClick = OnRegenerateMaze;
+        ClickEventTrigger.Get(imgRegenerate.gameObject).onClick = OnRegenerateMaze;
     }
 
     private void OnRegenerateMaze(GameObject go)

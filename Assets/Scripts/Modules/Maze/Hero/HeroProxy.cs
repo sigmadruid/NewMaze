@@ -40,10 +40,24 @@ namespace GameLogic
                 }
             }
         }
-
         public void Dispose()
         {
             infoDic.Clear();
+        }
+        public Dictionary<int, HeroRecord> CreateRecord()
+        {
+            RecordDic.Clear();
+            foreach(int kid in infoDic.Keys)
+            {
+                HeroInfo info = infoDic[kid];
+                HeroRecord record = info.ToRecord();
+                RecordDic.Add(kid, record);
+            }
+            return RecordDic;
+        }
+        public void SetRecord(Dictionary<int, HeroRecord> recordDic)
+        {
+            RecordDic = recordDic; 
         }
 
         public List<HeroInfo> GetUnlockedHeroInfoList()
@@ -58,18 +72,6 @@ namespace GameLogic
                 BaseLogger.LogFormat("Can't load hero info: {0}", kid);
             }
             return infoDic[kid];
-        }
-
-        public Dictionary<int, HeroRecord> GetRecord()
-        {
-            RecordDic.Clear();
-            foreach(int kid in infoDic.Keys)
-            {
-                HeroInfo info = infoDic[kid];
-                HeroRecord record = info.ToRecord();
-                RecordDic.Add(kid, record);
-            }
-            return RecordDic;
         }
 
         public void AddExp(int exp)

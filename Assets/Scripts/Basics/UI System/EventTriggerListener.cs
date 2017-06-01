@@ -17,7 +17,6 @@ namespace Base
         public VoidDelegate onExit;
         public VoidDelegate onSelect;
         public VoidDelegate onUpdateSelect;
-        public VectorDelegate onDrag;
 
         static public EventTriggerListener Get (GameObject go)
         {
@@ -53,9 +52,6 @@ namespace Base
         {
             if(onUpdateSelect != null) onUpdateSelect(gameObject);
         }
-        public override void OnDrag(PointerEventData eventData)
-        {
-            if(onDrag != null) onDrag(gameObject, eventData.delta);
-        }
+
     }
 }

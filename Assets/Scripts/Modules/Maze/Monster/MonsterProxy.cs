@@ -17,13 +17,7 @@ namespace GameLogic
 		//Active monsters.
         private Dictionary<string, Monster> monsterDic = new Dictionary<string, Monster>();
 		//Inactive monsters. Record them.
-        private Dictionary<int, List<MonsterRecord>> recordDic = new Dictionary<int, List<MonsterRecord>>();
-
-        public Dictionary<int, List<MonsterRecord>> RecordDic
-        {
-            get { return recordDic; }
-            set { recordDic = value; }
-        }
+        public Dictionary<int, List<MonsterRecord>> RecordDic = new Dictionary<int, List<MonsterRecord>>();
 
         public void Init()
         {
@@ -33,13 +27,48 @@ namespace GameLogic
             ClearMonsters();
 
             Dictionary<int, List<MonsterRecord>>.Enumerator recordEnum;
-            recordEnum = recordDic.GetEnumerator();
+            recordEnum = RecordDic.GetEnumerator();
             while (recordEnum.MoveNext())
             {
                 recordEnum.Current.Value.Clear();
             }
-            recordDic.Clear();
+            RecordDic.Clear();
 		}
+        /// <summary>
+        /// Record all the active monsters in blocks. Other inactive monsters have been recorded when they hide.
+        /// </summary>
+        public Dictionary<int, List<MonsterRecord>> CreateRecord()
+        {
+            int location;
+            if(Hall.Instance != null)
+            {
+                InitRecordList(Hall.Instance);
+            }
+            else
+            {
+                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
+                blockProxy.Iterate((Block block) =>
+                    {
+                        InitRecordList(block);
+                    });
+            }
+            var enumerator = monsterDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Monster monster = enumerator.Current.Value;
+                if(monster.Info.IsAlive)
+                {
+                    location = Maze.GetCurrentLocation(monster.WorldPosition);
+                    List<MonsterRecord> recordList = GetRecordList(location);
+                    recordList.Add(monster.ToRecord());
+                }
+            }
+            return RecordDic;
+        }
+        public void SetRecord(Dictionary<int, List<MonsterRecord>> recordDic)
+        {
+            RecordDic = recordDic;
+        }
 
         public Monster GetMonster(string uid)
         {
@@ -146,57 +175,26 @@ namespace GameLogic
                 block.ForeachNode((MazePosition mazePos) =>
                     {
                         int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        recordDic[location] = new List<MonsterRecord>();
+                        RecordDic[location] = new List<MonsterRecord>();
                     });
             }
             else
             {
                 int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                recordDic[location] = new List<MonsterRecord>();
+                RecordDic[location] = new List<MonsterRecord>();
             }
         }
         public void InitRecordList(Hall hall)
 		{
             int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            recordDic[location] = new List<MonsterRecord>();
+            RecordDic[location] = new List<MonsterRecord>();
 		}
 		public List<MonsterRecord> GetRecordList(int location)
 		{
 			List<MonsterRecord> recordList = null;
-			recordDic.TryGetValue(location, out recordList);
+            RecordDic.TryGetValue(location, out recordList);
 			return recordList;
 		}
-        /// <summary>
-        /// Record all the active monsters in blocks. Other inactive monsters have been recorded when they hide.
-        /// </summary>
-        public Dictionary<int, List<MonsterRecord>> GetRecord()
-        {
-            int location;
-            if(Hall.Instance != null)
-            {
-                InitRecordList(Hall.Instance);
-            }
-            else
-            {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
-            }
-            var enumerator = monsterDic.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                Monster monster = enumerator.Current.Value;
-                if(monster.Info.IsAlive)
-                {
-                    location = Maze.GetCurrentLocation(monster.WorldPosition);
-                    List<MonsterRecord> recordList = GetRecordList(location);
-                    recordList.Add(monster.ToRecord());
-                }
-            }
-            return recordDic;
-        }
 
         #endregion
 

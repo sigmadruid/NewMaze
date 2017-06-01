@@ -33,9 +33,9 @@ namespace GameUI
 
             itemPool.Init(AttributeItemPrefab.gameObject, gridAttributes.transform);
 
-            EventTriggerListener.Get(buttonClose.gameObject).onClick = OnClose;
-            EventTriggerListener.Get(buttonLeft.gameObject).onClick = OnLeft;
-            EventTriggerListener.Get(buttonRight.gameObject).onClick = OnRight;
+            ClickEventTrigger.Get(buttonClose.gameObject).onClick = OnClose;
+            ClickEventTrigger.Get(buttonLeft.gameObject).onClick = OnLeft;
+            ClickEventTrigger.Get(buttonRight.gameObject).onClick = OnRight;
         }
 
         public override void OnDispose()

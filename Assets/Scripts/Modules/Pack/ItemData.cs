@@ -6,11 +6,8 @@ namespace StaticData
 {
     public enum ItemType
     {
-        Resource,
-        Rune,
-        Equipment,
-        SoulStone,
-        Other,
+        Resource = 0,
+        Rune = 1,
         None,
     }
 
@@ -22,6 +19,10 @@ namespace StaticData
 
         public string Res2D;
         public string Res3D;
+
+        public string Param1;
+        public string Param2;
+        public string Param3;
 
         public override string GetResPath()
         {

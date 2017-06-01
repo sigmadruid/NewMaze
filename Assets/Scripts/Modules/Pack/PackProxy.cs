@@ -14,27 +14,31 @@ namespace GameLogic
 
         public void Init()
         {
-            itemInfoDic.Clear();
-
-            //Mock data
-            ItemData data;
-            ItemInfo info;
-
-            data = ItemDataManager.Instance.GetData(140001) as ItemData;
-            info = new ItemInfo(data, 1234);
-            itemInfoDic.Add(140001, info);
-
-            data = ItemDataManager.Instance.GetData(140002) as ItemData;
-            info = new ItemInfo(data, 56);
-            itemInfoDic.Add(140002, info);
-
-            data = ItemDataManager.Instance.GetData(140003) as ItemData;
-            info = new ItemInfo(data, 234);
-            itemInfoDic.Add(140003, info);
+            
         }
 
         public void Dispose()
         {
+        }
+
+        public Dictionary<int, int> GetRecord()
+        {
+            Dictionary<int, int> recordDic = new Dictionary<int, int>();
+            foreach(int kid in itemInfoDic.Keys)
+            {
+                ItemInfo info = itemInfoDic[kid];
+                recordDic.Add(kid, info.Count);
+            }
+            return recordDic;
+        }
+        public void SetRecord(Dictionary<int, int> recordDic)
+        {
+            itemInfoDic.Clear();
+            foreach(int kid in recordDic.Keys)
+            {
+                int count = recordDic[kid];
+                ChangeCount(kid, count);
+            }
         }
 
         public ItemInfo GetItemInfo(int kid)
@@ -94,6 +98,19 @@ namespace GameLogic
                 }
             }
             return result;
+        }
+
+        public void Use(int kid)
+        {
+            if(HasCount(kid, 1))
+            {
+                ChangeCount(kid, -1);
+                DispatchNotification(NotificationEnum.USE_ITEM, kid);
+            }
+            else
+            {
+                BaseLogger.LogFormat("No item to use: kid={0}", kid);
+            }
         }
 
 

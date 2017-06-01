@@ -35,7 +35,7 @@ namespace GameUI
         {
             base.OnInitialize();
 
-            EventTriggerListener.Get(ImageHero.gameObject).onClick = OnProfileClicked;
+            ClickEventTrigger.Get(ImageHero.gameObject).onClick = OnProfileClicked;
     	}
         public override void OnDispose()
         {
@@ -56,7 +56,7 @@ namespace GameUI
     			item.Data = data;
                 item.ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, data.Res2D);
                 item.TextName.text = TextDataManager.Instance.GetData(data.Name);
-                EventTriggerListener.Get(item.gameObject).onClick = OnHeroItemClick;
+                ClickEventTrigger.Get(item.gameObject).onClick = OnHeroItemClick;
 
     			heroItemList.Add(item);
     		}

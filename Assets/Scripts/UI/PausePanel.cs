@@ -14,7 +14,7 @@ namespace GameUI
 
         void Awake()
         {
-            EventTriggerListener.Get(imageBackground.gameObject).onClick = OnBackgroundClick;
+            ClickEventTrigger.Get(imageBackground.gameObject).onClick = OnBackgroundClick;
         }
 
         private void OnBackgroundClick(GameObject go)

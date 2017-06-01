@@ -24,7 +24,7 @@ public class HUDIcon : BaseScreenItem
 		base.Awake();
 
         ImageIcon = GetComponent<Image>();
-        EventTriggerListener.Get(gameObject).onClick = OnIconClick;
+        ClickEventTrigger.Get(gameObject).onClick = OnIconClick;
 	}
 
 	private void OnIconClick(GameObject go)

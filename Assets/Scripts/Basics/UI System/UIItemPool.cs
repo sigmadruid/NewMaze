@@ -48,14 +48,13 @@ namespace Base
 			if(TempParent.childCount > 0)
 			{
 				item = TempParent.GetChild(0).GetComponent<T>();
-				item.gameObject.SetActive(true);
 			}
 			else
 			{
 				GameObject go = GameObject.Instantiate(itemPrefab.gameObject) as GameObject;
 				item = go.GetComponent<T>();
 			}
-			item.transform.parent = rootParent;
+            item.transform.SetParent(rootParent);
 			item.transform.localScale = Vector3.one;
             item.transform.localPosition = Vector3.zero;
             item.gameObject.SetActive(true);
@@ -66,8 +65,8 @@ namespace Base
 		{
             isDirty = true;
 
-			item.gameObject.SetActive(false);
-			item.transform.parent = TempParent;
+            item.transform.SetParent(TempParent);
+            item.transform.localPosition = Vector3.one * 99999f;
 			return item;
 		}
 
@@ -75,13 +74,12 @@ namespace Base
 		{
             isDirty = true;
 
-            for(int i = 0; i < rootParent.childCount; ++i)
-			{
-				Transform child = rootParent.GetChild(i);
-//				child.parent = TempParent;
-//                child.localPosition = Vector3.one * 99999f;
-				child.gameObject.SetActive(false);
-			}
+            while(rootParent.childCount > 0)
+            {
+                Transform child = rootParent.GetChild(0);
+                child.SetParent(TempParent);
+                child.localPosition = Vector3.one * 99999f;
+            }
 		}
 
 		private Transform tempParent;
@@ -94,7 +92,7 @@ namespace Base
 					GameObject go = new GameObject();
 					go.name = "__TempRoot";
 					tempParent = go.transform;
-                    tempParent.SetParent(rootParent);
+                    tempParent.SetParent(rootParent.parent);
                     tempParent.localScale = Vector3.one;
 				}
 				return tempParent;

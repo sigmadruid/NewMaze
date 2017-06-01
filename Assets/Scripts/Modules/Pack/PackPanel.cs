@@ -32,6 +32,8 @@ public class PackPanel : BasePopupView
     public GridLayoutGroup GridItems;
     public PackItem ItemTemplate;
 
+    private ItemInfo selectedInfo;
+
     private UIItemPool<Toggle> togglePool = new UIItemPool<Toggle>();
     private UIItemPool<PackItem> itemPool = new UIItemPool<PackItem>();
 
@@ -42,9 +44,9 @@ public class PackPanel : BasePopupView
         togglePool.Init(ToggleItemTypeTemplate.gameObject, GridItemType.transform);
         itemPool.Init(ItemTemplate.gameObject, GridItems.transform);
 
-        EventTriggerListener.Get(ButtonClose.gameObject).onClick = OnClose;
-        EventTriggerListener.Get(ButtonUse.gameObject).onClick = OnClose;
-        EventTriggerListener.Get(ButtonDiscard.gameObject).onClick = OnClose;
+        ClickEventTrigger.Get(ButtonClose.gameObject).onClick = OnClose;
+        ClickEventTrigger.Get(ButtonUse.gameObject).onClick = OnClose;
+        ClickEventTrigger.Get(ButtonDiscard.gameObject).onClick = OnClose;
     }
 
     public override void OnDispose()
@@ -61,6 +63,7 @@ public class PackPanel : BasePopupView
             PackItem item = itemPool.AddItem();
             item.Init();
             item.SetInfo(info);
+            ClickEventTrigger.Get(item.gameObject).onClick = OnSelect;
         }
     }
 
@@ -73,15 +76,26 @@ public class PackPanel : BasePopupView
     private void OnSwitchType(GameObject go)
     {
     }
+    private void OnSelect(GameObject go)
+    {
+        selectedInfo =  go.GetComponent<PackItem>().ItemInfo;
+        ImageItemIcon.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_ITEM, selectedInfo.Data.Res2D);
+        TextItemName.text = selectedInfo.Data.Name;
+        TextItemDesc.text = selectedInfo.Data.Description;
+    }
     private void OnUse(GameObject go)
     {
-        PackItem item = go.GetComponent<PackItem>();
-        CallbackUseItem(item.ItemInfo);
+        if(selectedInfo != null)
+        {
+            CallbackUseItem(selectedInfo);
+        }
     }
     private void OnDiscard(GameObject go)
     {
-        PackItem item = go.GetComponent<PackItem>();
-        CallbackDiscardItem(item.ItemInfo);
+        if(selectedInfo != null)
+        {
+            CallbackDiscardItem(selectedInfo);
+        }
     }
 }
 

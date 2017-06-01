@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameLogic
 {
@@ -8,6 +9,8 @@ namespace GameLogic
         public Vector3Record WorldPosition;
 
         public float WorldAngle;
+
+        public Dictionary<int, int> PackItems;
     }
 }
 

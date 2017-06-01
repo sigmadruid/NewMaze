@@ -24,7 +24,7 @@ namespace GameUI
 
 		void Awake () 
 		{
-            EventTriggerListener.Get(ImageClick.gameObject).onClick = OnDialogClick;
+            ClickEventTrigger.Get(ImageClick.gameObject).onClick = OnDialogClick;
 		}
 
         public void Init(string nameID, List<string> talkList)

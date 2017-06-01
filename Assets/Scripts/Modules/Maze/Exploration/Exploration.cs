@@ -37,7 +37,6 @@ namespace GameLogic
 
         public virtual void OnFunction() 
         {
-            BaseLogger.Log(Script.name);
         }
 
         protected virtual void OnEnter()
