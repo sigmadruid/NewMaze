@@ -110,6 +110,19 @@ namespace Base
             }
         }
 
+        public void SetDirection(Vector3 direction, float speed)
+        {
+            if(Destination == Vector3.zero)
+            {
+                IsMoving = direction != Vector3.zero;
+                if(IsMoving)
+                {
+                    controller.Move(direction * speed * Time.deltaTime);
+                    LookAt(direction);
+                }
+            }
+        }
+
         public void LookAt(Vector3 direction)
         {
             Vector3 lookDirection = MathUtils.XZDirection(direction);

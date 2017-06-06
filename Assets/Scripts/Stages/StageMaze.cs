@@ -41,14 +41,20 @@ namespace GameLogic
             facade.RetrieveProxy<NPCProxy>().Init();
             facade.RetrieveProxy<ExplorationProxy>().Init();
             facade.RetrieveProxy<BattleProxy>().Init();
+
             facade.DispatchNotification(NotificationEnum.HERO_INIT);
-            if (Adam.Instance.Info.IsInHall)
-                facade.DispatchNotification(NotificationEnum.HALL_INIT);
             facade.DispatchNotification(NotificationEnum.BLOCK_INIT);
+            if(facade.RetrieveProxy<AdamProxy>().IsInHall)
+            {
+                facade.DispatchNotification(NotificationEnum.HALL_INIT);
+                facade.DispatchNotification(NotificationEnum.HALL_SPAWN);
+            }
+            else
+            {
+                facade.DispatchNotification(NotificationEnum.BLOCK_SPAWN);
+            }
             facade.DispatchNotification(NotificationEnum.NPC_INIT);
             facade.DispatchNotification(NotificationEnum.BATTLE_UI_INIT);
-            if (!Adam.Instance.Info.IsInHall)
-                facade.DispatchNotification(NotificationEnum.BLOCK_REFRESH, Adam.Instance.WorldPosition);
             Game.Instance.TaskManager.SetAllActive(true);
             yield return Loading.Instance.SetProgress(LoadingState.StartOver, 100);
 		}
@@ -58,7 +64,19 @@ namespace GameLogic
 
             //Logic
 			Game.Instance.TaskManager.SetAllActive(false);
+
             ApplicationFacade facade = ApplicationFacade.Instance;
+            facade.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
+            if(facade.RetrieveProxy<AdamProxy>().IsInHall)
+            {
+                facade.DispatchNotification(NotificationEnum.HALL_DISPOSE);
+                facade.DispatchNotification(NotificationEnum.HALL_DESPAWN);
+            }
+            else
+            {
+                facade.DispatchNotification(NotificationEnum.BLOCK_DESPAWN);
+            }
+
             facade.RetrieveProxy<BlockProxy>().Dispose();
             facade.RetrieveProxy<HallProxy>().Dispose();
             facade.RetrieveProxy<MonsterProxy>().Dispose();

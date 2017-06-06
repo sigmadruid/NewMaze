@@ -5,10 +5,10 @@ int,string,string,ItemType,string,string,string,string,string
 140003,gold_large,gold_large,Resource,coin_large,Coin_3,,,
 //Rune,,,,,,,,
 //1.Rune type; 2.ElapseTime; 3.Percentage to raise in attribute,,,,,,,,
-141001,rune_life,rune_life,Rune,rune_1,Rune_1,Life,500,
-141002,rune_attack,rune_attack,Rune,rune_2,Rune_2,Attack,30,0.2
-141003,rune_defense,rune_defense,Rune,rune_3,Rune_3,Defense,30,0.2
-141004,rune_dexterity,rune_dexterity,Rune,rune_4,Rune_4,Dexterity,30,0.1
-141005,rune_evasion,rune_evasion,Rune,rune_5,Rune_5,Evasion,30,0.1
-141006,rune_speed,rune_speed,Rune,rune_6,Rune_6,Speed,30,0.2
-141007,rune_invisible,rune_invisible,Rune,rune_7,Rune_7,Invisible,30,
+141001,item.rune_life.name,item.rune_life.desc,Rune,rune_1,Rune_1,Life,500,
+141002,item.rune_attack.name,item.rune_attack.desc,Rune,rune_2,Rune_2,Attack,30,0.2
+141003,item.rune_defense.name,item.rune_defense.desc,Rune,rune_3,Rune_3,Defense,30,0.2
+141004,item.rune_dexterity.name,item.rune_dexterity.desc,Rune,rune_4,Rune_4,Dexterity,30,0.1
+141005,item.rune_evasion.name,item.rune_evasion.desc,Rune,rune_5,Rune_5,Evasion,30,0.1
+141006,item.rune_speed.name,item.rune_speed.desc,Rune,rune_6,Rune_6,Speed,30,0.2
+141007,item.rune_invisible.name,item.rune_invisible.desc,Rune,rune_7,Rune_7,Invisible,30,

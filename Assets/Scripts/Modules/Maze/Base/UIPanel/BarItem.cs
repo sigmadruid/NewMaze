@@ -36,8 +36,8 @@ public class BarItem : BaseScreenItem
 
     private void SetSizeStyle(float width, float height)
     {
-        (bar.TransitionBar.transform as RectTransform).sizeDelta = new Vector2(width, height);
-        (bar.TransitionBar.transform as RectTransform).sizeDelta = new Vector2(width, height);
+        (bar.BackBar.transform as RectTransform).sizeDelta = new Vector2(width, height);
+        (bar.BackBar.transform as RectTransform).sizeDelta = new Vector2(width, height);
         (bar.ForeBar.transform as RectTransform).sizeDelta = new Vector2(width, height);
     }
 

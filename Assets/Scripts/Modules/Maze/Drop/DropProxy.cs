@@ -33,7 +33,7 @@ namespace GameLogic
             else
             {
                 BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
+                blockProxy.ForeachBlocks((Block block) =>
                     {
                         InitRecordList(block);
                     });

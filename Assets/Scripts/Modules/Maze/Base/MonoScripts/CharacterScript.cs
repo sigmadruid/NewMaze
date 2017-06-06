@@ -16,15 +16,17 @@ namespace GameLogic
     [RequireComponent(typeof(Animator))]
     public class CharacterScript : EntityScript
     {
-    	public Transform TopPosTransform;
-    	public Transform BottomPosTransform;
-        public Transform EmitTransform;
-
         public Action<float> CallbackUpdate;
         public Action CallbackSlowUpdate;
         public Action<int> CallbackSkillMiddle;
         public Action CallbackSkillEnd;
         public Action CallbackDie;
+
+    	public Transform TopPosTransform;
+    	public Transform BottomPosTransform;
+        public Transform EmitTransform;
+
+        public bool UseMouse = false;
     	
         protected MovementScript movementScript;
     	protected Animator animator;
@@ -115,13 +117,20 @@ namespace GameLogic
             movementScript.SetDestination(Vector3.zero, 0f);
             transform.position += velocity;
         }
-        public virtual void Move(Vector3 destination, float speed)
+        public virtual void MoveByDestination(Vector3 destination, float speed)
     	{
     		if (Game.Instance.IsPause) { return; }
 
             movementScript.SetDestination(destination, speed);
             animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
     	}
+        public virtual void MoveByDirection(Vector3 direction, float speed)
+        {
+            if (Game.Instance.IsPause) { return; }
+
+            movementScript.SetDirection(direction, speed);
+            animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
+        }
         public virtual void LookAt(Vector3 direction)
     	{
             movementScript.LookAt(direction);

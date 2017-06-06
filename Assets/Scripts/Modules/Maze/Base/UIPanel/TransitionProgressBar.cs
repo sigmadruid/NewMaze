@@ -6,8 +6,11 @@ using System;
 public class TransitionProgressBar : MonoBehaviour
 {
     public Slider ForeBar;
-    public Slider TransitionBar;
+    public Slider BackBar;
     public float TransitionDuration;
+
+    private Slider instantBar;
+    private Slider transitionBar;
 
     private float timer;
     private float prevValue;
@@ -16,7 +19,7 @@ public class TransitionProgressBar : MonoBehaviour
     {
         if(timer < TransitionDuration)
         {
-            TransitionBar.value = ForeBar.value + (prevValue - ForeBar.value) * (1 - timer / TransitionDuration);
+            transitionBar.value = instantBar.value + (prevValue - instantBar.value) * (1 - timer / TransitionDuration);
             timer += Time.deltaTime;
         }
     }
@@ -24,7 +27,10 @@ public class TransitionProgressBar : MonoBehaviour
     public void SetValue(float targetValue, bool isAnim)
     {
         prevValue = ForeBar.value;
-        ForeBar.value = targetValue;
+        instantBar = targetValue > prevValue ? BackBar : ForeBar;
+        transitionBar = targetValue > prevValue ? ForeBar : BackBar;
+
+        instantBar.value = targetValue;
         if(isAnim)
         {
             timer = 0;
@@ -32,7 +38,7 @@ public class TransitionProgressBar : MonoBehaviour
         else
         {
             prevValue = targetValue;
-            TransitionBar.value = targetValue;
+            transitionBar.value = targetValue;
         }
     }
 }

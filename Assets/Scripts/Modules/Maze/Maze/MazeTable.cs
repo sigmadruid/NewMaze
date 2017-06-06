@@ -50,7 +50,7 @@ namespace GameLogic
         /// <summary>
         /// A digit to indicate whether the room has created/deleted.
         /// </summary>
-		public bool HasCreated;
+		public bool HasVisited;
 	}
 
     public class MazeTable
@@ -208,6 +208,37 @@ namespace GameLogic
 				callback(mazeNodesList[i]);
 			}
 		}
+        public void ForeachBlockNode(Action<MazeNode> callback)
+        {
+            if(callback == null)
+                return;
+            for (int i = 0; i < mazeNodesList.Count; ++i)
+            {
+                MazeNode node = mazeNodesList[i];
+                if(node is MazeRoom)
+                {
+                    MazeRoom room = node as MazeRoom;
+                    if(!room.HasVisited)
+                    {
+                        callback(node);
+                        room.HasVisited = true;
+                    }
+                }
+                else
+                {
+                    callback(node);
+                }
+            }
+            for(int i = 0; i < mazeNodesList.Count; ++i)
+            {
+                MazeNode node = mazeNodesList[i];
+                if(node is MazeRoom)
+                {
+                    MazeRoom room = node as MazeRoom;
+                    room.HasVisited = false;
+                }
+            }
+        }
     }
 }
 

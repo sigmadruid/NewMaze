@@ -12,14 +12,7 @@ namespace GameLogic
 {
 	public class BlockProxy : Proxy
 	{
-        public delegate void IterateFunc(Block block);
-
 		public MazeNode StartNode { get; private set; }
-
-        public List<MazeNode> ToDeleteNodeList = new List<MazeNode>();
-        public List<MazeNode> ToCreateNodeList = new List<MazeNode>();
-
-        private List<MazeNode> prevAroundList = new List<MazeNode>();
 
 		private MazeData mazeData;
 		private MazeTable mazeTable;
@@ -43,9 +36,6 @@ namespace GameLogic
 			mockNodeSet.Clear();
             globalExplorationNodeList.Clear();
 
-			ToDeleteNodeList.Clear();
-			ToCreateNodeList.Clear();
-			prevAroundList.Clear();
 			mazeTable = null;
 			StartNode = null;
 			mazeData = null;
@@ -53,14 +43,26 @@ namespace GameLogic
 
 		#region Creating and Remove Blocks
 
-        public void Iterate(IterateFunc func)
+        public void ForeachMazeNodes(Action<MazeNode> action)
         {
-            if (func == null) { return; }
+            if (action == null) { return; }
+
+            mazeTable.ForeachMazeNode(action);
+        }
+        public void ForeachBlockNodes(Action<MazeNode> action)
+        {
+            if (action == null) { return; }
+
+            mazeTable.ForeachBlockNode(action);
+        }
+        public void ForeachBlocks(Action<Block> action)
+        {
+            if (action == null) { return; }
 
             Dictionary<int, Block>.Enumerator enumerator = blockDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
-                func(enumerator.Current.Value);
+                action(enumerator.Current.Value);
             }
         }
 
@@ -69,13 +71,13 @@ namespace GameLogic
 			if (node is MazeRoom)
 			{
 				MazeRoom room = node as MazeRoom;
-				if (room.HasCreated)
+				if (room.HasVisited)
 				{
 					return null;
 				}
 				else
 				{
-					room.HasCreated = true;
+					room.HasVisited = true;
 				}
 			}
 
@@ -97,9 +99,9 @@ namespace GameLogic
 			{
 				MazeRoom room = node as MazeRoom;
 				//Prevent deleting same block twice.
-				if (room.HasCreated)
+				if (room.HasVisited)
 				{
-					room.HasCreated = false;
+					room.HasVisited = false;
 				}
 				else
 				{
@@ -128,47 +130,6 @@ namespace GameLogic
             blockDic.Clear();
         }
 
-        public void UpdateAroundMazeNode(int col, int row, int scope)
-        {
-            List<MazeNode> aroundList = mazeTable.GetAroundNode(col, row, scope);
-
-            ToDeleteNodeList.Clear();
-            ToCreateNodeList.Clear();
-
-            for (int i = 0; i < prevAroundList.Count; ++i)
-            {
-                MazeNode node = prevAroundList[i];
-                if (aroundList.IndexOf(node) == -1)
-                {
-                    ToDeleteNodeList.Add(node);
-                }
-            }
-            for (int i = 0; i < aroundList.Count; ++i)
-            {
-                MazeNode node = aroundList[i];
-                if (prevAroundList.IndexOf(node) == -1)
-                {
-                    ToCreateNodeList.Add(node);
-                }
-            }
-
-            prevAroundList = aroundList;
-        }
-
-        public void ShowAllMazeNodes()
-        {
-            ToCreateNodeList = mazeTable.GetAllNodes();
-            ToDeleteNodeList.Clear();
-            prevAroundList.Clear();
-        }
-        public void HideAllMazeNodes()
-        {
-            ToCreateNodeList.Clear();
-            ToDeleteNodeList = mazeTable.GetAllNodes();
-            prevAroundList.Clear();
-        }
-
-		//Room??
 		public Block GetBlockAtPosition(int col, int row)
 		{
 			if (mazeTable.CheckOccupied(col, row))
@@ -182,10 +143,6 @@ namespace GameLogic
 			}
 		}
 
-        public void ForeachNode(Action<MazeNode> func)
-        {
-            mazeTable.ForeachMazeNode(func);
-        }
 		public MazeNode GetNode(int col, int row)
 		{
 			return mazeTable.GetNode(col, row);
@@ -236,7 +193,6 @@ namespace GameLogic
 				}
 			}
 		}
-
 		public MazeNode FindNextSearchNode(int col, int row)
 		{
 			MazeNode startNode = mazeTable.GetNode(col, row);

@@ -10,6 +10,8 @@ namespace GameLogic
     {
 		public int HP;
 
+        public bool IsInHall;
+
         public Dictionary<int, float> buffRemainTimeDic = new Dictionary<int, float>();
     }
 }

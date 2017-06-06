@@ -35,11 +35,11 @@ namespace GameLogic
 
 		public void Idle()
 		{
-			Script.Move(Vector3.zero, 0f);
+			Script.MoveByDestination(Vector3.zero, 0f);
 		}
-		public void Move(Vector3 destination)
+        public void MoveByDestination(Vector3 destination)
 		{
-			Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
+			Script.MoveByDestination(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
 		}
 		public void LookAt(Vector3 destPos)
 		{
@@ -88,6 +88,10 @@ namespace GameLogic
         private void OnSkillEnd()
         {
             Info.CurrentSkill = null;
+        }
+        private void OnDieEnd()
+        {
+            ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().RemoveMonster(Uid);
         }
 
         private void OnTrapAttack(int trapKid)
@@ -149,6 +153,7 @@ namespace GameLogic
             record.WorldPosition =new Vector3Record(WorldPosition);
             record.WorldAngle = WorldAngle;
 			record.HP = Info.HP;
+            record.IsInHall = Hall.IsActive;
             record.buffRemainTimeDic = Info.RecordBuff();
 			return record;
 		}
@@ -189,21 +194,21 @@ namespace GameLogic
             Init(monster);
             return monster;
         }
-        public static void Init(Monster monster)
+        private static void Init(Monster monster)
         {
             monster.Script = ResourceManager.Instance.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
             monster.Script.Uid = monster.Uid;
             monster.Script.LifeBar = BarItem.Create(monster.Data.Size);
+            monster.Script.UpdateHPBar(monster.Info.HP, (int)monster.Info.GetAttribute(BattleAttribute.HP));
             monster.Script.transform.parent = RootTransform.Instance.MonsterRoot; 
             monster.Script.CallbackUpdate = monster.Update;
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
             monster.Script.CallbackSkillMiddle = monster.OnSkillMiddle;
             monster.Script.CallbackSkillEnd = monster.OnSkillEnd;
+            monster.Script.CallbackDie = monster.OnDieEnd;
             monster.Script.CallbackTrapAttack = monster.OnTrapAttack;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().AddMonster(monster);
-
-            Game.Instance.AICore.AddAI(monster);
         }
 
 		public static void Recycle(Monster monster)
@@ -217,8 +222,6 @@ namespace GameLogic
 				ResourceManager.Instance.RecycleAsset(monster.Script.gameObject);
 				monster.Script = null;
 				monster.battleProxy = null;
-
-				Game.Instance.AICore.RemoveAI(monster.Uid);
 			}
 			else
 			{

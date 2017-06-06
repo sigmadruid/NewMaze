@@ -38,15 +38,15 @@ namespace Battle
             if(adam.Data.AttackType == AttackType.Range)
             {
                 //The monster can be just killed by your bullet when you are preparing for the next shot
-                if(Adam.Instance.TargetMonster == null)
-                    return;
+//                if(Adam.Instance.TargetMonster == null)
+//                    return;
                 Bullet bullet = Bullet.Create(effect.Data.BulletKid);
                 bullet.SkillEffect = effect;
-                bullet.Start(adam.Script.EmitPosition, Adam.Instance.TargetMonster.Script.CenterPosition);
+                bullet.Start(adam.Script.EmitPosition, adam.Script.EmitPosition + adam.Script.EmitTransform.forward);
             }
             else if (adam.Data.AttackType == AttackType.Melee)
             {
-                monsterProxy.IterateActives((Monster monster) =>
+                monsterProxy.Foreach((Monster monster) =>
                     {
                         AreaData areaData = AreaDataManager.Instance.GetData(effect.Data.AreaKid) as AreaData;
                         float adamRadius = GlobalConfig.HeroConfig.AdamRadius;
@@ -84,8 +84,6 @@ namespace Battle
 
         public void DoAttackHero(SkillEffect attackContext)
 		{
-			if (adam.Info.IsConverting) return;
-
 			AttackResult result = adam.Info.HurtBy(attackContext);
 			if (adam.Info.HP > 0)
 			{
@@ -121,13 +119,20 @@ namespace Battle
             else
             {
                 monster.Die();
-                if(monster == adam.TargetMonster)
-                {
-                    adam.ClearTarget();
-                }
+//                if(monster == adam.TargetMonster)
+//                {
+//                    adam.ClearTarget();
+//                }
                 heroProxy.AddExp(monster.Data.Exp);
                 Debug.LogErrorFormat("lv.{0}, exp:{1}", adam.Info.Level, adam.Info.Exp);
             }
+        }
+
+        public void DoHealHero(int hp)
+        {
+            AttackResult result = adam.Info.HealBy(hp);
+            DispatchNotification(NotificationEnum.BATTLE_UI_UPDATE_HP, result);
+
         }
 
         private bool JudgeInArea(Transform attackerTrans, float attackerRadius, Transform defenderTrans, float defenderRadius, AreaData areaData)

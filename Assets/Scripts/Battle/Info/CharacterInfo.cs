@@ -106,7 +106,7 @@ namespace Battle
             return baseVal * ratio + raise;
         }
 
-		public void AddHP(int value)
+        public void AddHP(int value)
 		{
             int maxHP = (int)GetAttribute(BattleAttribute.HP);
             HP = Mathf.Clamp(HP + value, 0, maxHP);
@@ -140,6 +140,17 @@ namespace Battle
 
 			return result;
 		}
+
+        public AttackResult HealBy(int hp)
+        {
+            AddHP(hp);
+
+            AttackResult result = new AttackResult();
+            result.Damage = hp;
+            result.IsCritical = false;
+            result.IsDodge = false;
+            return result;
+        }
 
         private float GetBuffRatioAttribute(BattleAttribute attribute)
         {

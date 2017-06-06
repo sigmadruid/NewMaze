@@ -52,7 +52,7 @@ namespace Battle
 //                if(Delay(currentData.DodgeDelay))
                 {
                     Vector3 escapeDir = (currentMonster.WorldPosition - adam.WorldPosition).normalized;
-                    currentMonster.Move(currentMonster.WorldPosition + escapeDir);
+                    currentMonster.MoveByDestination(currentMonster.WorldPosition + escapeDir);
                 }
             }
 			//To far, run to the hero

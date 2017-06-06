@@ -33,10 +33,6 @@ namespace Battle
         public int Level;
         public int Exp;
 
-		public bool IsConverting;
-        public bool IsInHall;
-        public bool IsVisible;
-
 		public float LastHitTime;
 
         private Dictionary<int, float> attrRaiseDic = new Dictionary<int, float>();
@@ -51,10 +47,6 @@ namespace Battle
             Level = GlobalConfig.DemoConfig.InitLevel;
             Exp = 0;
             HP = (int)(GetBaseAttribute(BattleAttribute.HP));
-
-            IsConverting = false;
-            IsInHall = false;
-            IsVisible = true;
         }
         public HeroInfo (HeroData data, HeroRecord record) : base(data)
         {
@@ -62,10 +54,6 @@ namespace Battle
             HP = record.HP;
             Level = record.Level;
             Exp = record.Exp;
-
-            IsConverting = false;
-            IsInHall = record.IsInHall;
-            IsVisible = record.IsVisible;
 
             InitRaise();
             InitSkillList();
@@ -78,9 +66,6 @@ namespace Battle
             record.HP = HP;
             record.Level = Level;
             record.Exp = Exp;
-            record.IsConverting = IsConverting;
-            record.IsInHall = IsInHall;
-            record.IsVisible = IsVisible;
             return record;
         }
 
@@ -109,7 +94,7 @@ namespace Battle
         public bool CanMove()
         {
             return IsAlive 
-                && !IsConverting 
+                && !ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsConverting 
                 && (CurrentSkill == null || CurrentSkill.Data.CanMove);
         }
 
@@ -117,7 +102,7 @@ namespace Battle
 
         public override bool CanCastSkill(int index)
         {
-            if (IsConverting)
+            if (ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsConverting)
                 return false;
             return base.CanCastSkill(index);
         }

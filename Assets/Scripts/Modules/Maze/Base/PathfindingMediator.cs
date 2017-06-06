@@ -99,19 +99,14 @@ namespace GameLogic
             byte[] graphData = graphDataDic[PathfindingType.Maze];
             if(graphData == null)
             {
-                blockProxy.ForeachNode((MazeNode node) =>
+                blockProxy.ForeachBlockNodes((MazeNode node) =>
                     {
                         if(node.Data.BlockType == BlockType.Room)
                         {
-                            MazeRoom room = node as MazeRoom;
-                            if(!room.HasCreated)
-                            {
-                                GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
-                                surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                                surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
-                                surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
-                                room.HasCreated = true;
-                            }
+                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
+                            surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                            surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                            surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
                         }
                         else if(node.Data.BlockType == BlockType.Passage)
                         {
@@ -132,15 +127,6 @@ namespace GameLogic
                 graph.forcedBoundsCenter = new Vector3((mazeData.StartCol * 1f - 0.5f) * mazeData.BlockSize, 0, (mazeData.StartRow * 1f - 0.5f) * mazeData.BlockSize);
                 graph.forcedBoundsSize = new Vector3(mazeData.Cols * mazeData.BlockSize, 10, mazeData.Rows * mazeData.BlockSize);
                 AstarPath.active.Scan();
-
-                blockProxy.ForeachNode((MazeNode node) =>
-                    {
-                        if (node.Data.BlockType == BlockType.Room)
-                        {
-                            MazeRoom room = node as MazeRoom;
-                            room.HasCreated = false;
-                        }
-                    });
 
                 var settings = new Pathfinding.Serialization.SerializeSettings();
                 settings.nodes = true;

@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 114000011830027248}
   - component: {fileID: 114000012487833360}
   m_Layer: 5
-  m_Name: buttonUse
+  m_Name: buttonDiscard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 114000012248383930}
   - component: {fileID: 114000013875376020}
   m_Layer: 5
-  m_Name: buttonDelete
+  m_Name: buttonUse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,8 +1083,8 @@ MonoBehaviour:
   ImageItemIcon: {fileID: 114000013736513128}
   TextItemName: {fileID: 114000012301818796}
   TextItemDesc: {fileID: 114000013094217606}
-  ButtonUse: {fileID: 114000012487833360}
-  ButtonDiscard: {fileID: 114000013875376020}
+  ButtonUse: {fileID: 114000013875376020}
+  ButtonDiscard: {fileID: 114000012487833360}
   ScrollItems: {fileID: 114000010875737616}
   GridItems: {fileID: 114000010732753618}
   ItemTemplate: {fileID: 114000011933760628}
@@ -2181,8 +2181,8 @@ RectTransform:
   - {fileID: 224000011579511588}
   - {fileID: 224000013403690078}
   - {fileID: 224000012318151890}
-  - {fileID: 224000014142455614}
   - {fileID: 224000013710353908}
+  - {fileID: 224000014142455614}
   m_Father: {fileID: 224000013971607234}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2410,7 +2410,7 @@ RectTransform:
   m_Children:
   - {fileID: 224000011619011736}
   m_Father: {fileID: 224000011837483072}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -2471,7 +2471,7 @@ RectTransform:
   m_Children:
   - {fileID: 224000013025103124}
   m_Father: {fileID: 224000011837483072}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}

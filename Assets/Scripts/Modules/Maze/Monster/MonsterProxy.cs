@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,9 @@ namespace GameLogic
 {
 	public class MonsterProxy : Proxy
 	{
-		public delegate void IterateFunc(Monster monster);
-
 		//Active monsters.
-        private Dictionary<string, Monster> monsterDic = new Dictionary<string, Monster>();
+        private Dictionary<string, Monster> monsterBlockDic = new Dictionary<string, Monster>();
+        private Dictionary<string, Monster> monsterHallDic = new Dictionary<string, Monster>();
 		//Inactive monsters. Record them.
         public Dictionary<int, List<MonsterRecord>> RecordDic = new Dictionary<int, List<MonsterRecord>>();
 
@@ -24,54 +24,41 @@ namespace GameLogic
         }
 		public void Dispose()
 		{
-            ClearMonsters();
-
-            Dictionary<int, List<MonsterRecord>>.Enumerator recordEnum;
-            recordEnum = RecordDic.GetEnumerator();
-            while (recordEnum.MoveNext())
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            foreach(Monster monster in monsterDic.Values)
             {
-                recordEnum.Current.Value.Clear();
+                Game.Instance.AICore.RemoveAI(monster.Uid);
+                Monster.Recycle(monster);
             }
-            RecordDic.Clear();
+            monsterDic.Clear();
+            Adam.Instance.ClearTarget();
 		}
-        /// <summary>
-        /// Record all the active monsters in blocks. Other inactive monsters have been recorded when they hide.
-        /// </summary>
-        public Dictionary<int, List<MonsterRecord>> CreateRecord()
+        public void SaveRecord()
         {
-            int location;
-            if(Hall.Instance != null)
+            int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+
+            List<MonsterRecord> recordList = null;
+            if(RecordDic.ContainsKey(hallKid))
             {
-                InitRecordList(Hall.Instance);
+                recordList = RecordDic[hallKid];
+                recordList.Clear();
             }
             else
             {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
+                recordList = new List<MonsterRecord>();
+                RecordDic[hallKid] = recordList;
             }
-            var enumerator = monsterDic.GetEnumerator();
-            while(enumerator.MoveNext())
+            foreach(Monster monster in monsterDic.Values)
             {
-                Monster monster = enumerator.Current.Value;
-                if(monster.Info.IsAlive)
-                {
-                    location = Maze.GetCurrentLocation(monster.WorldPosition);
-                    List<MonsterRecord> recordList = GetRecordList(location);
+                if (monster.Info.IsAlive)
                     recordList.Add(monster.ToRecord());
-                }
             }
-            return RecordDic;
-        }
-        public void SetRecord(Dictionary<int, List<MonsterRecord>> recordDic)
-        {
-            RecordDic = recordDic;
         }
 
         public Monster GetMonster(string uid)
         {
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
             if(!monsterDic.ContainsKey(uid))
             {
                 BaseLogger.LogFormat("Can't find monster. uid={0}", uid);
@@ -81,119 +68,66 @@ namespace GameLogic
 
         public Monster GetNearestMonster(Vector3 position, float maxSqrDistance)
         {
-            Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
-            float sqrDistance = float.MaxValue;
-            Monster result = null;
-            while(enumerator.MoveNext())
-            {
-                Monster monster = enumerator.Current.Value;
-                float newSqrDistance = (monster.WorldPosition - position).sqrMagnitude;
-                if(newSqrDistance < sqrDistance && newSqrDistance < maxSqrDistance && monster.Info.IsAlive)
-                {
-                    sqrDistance = newSqrDistance;
-                    result = monster;
-                }
-            }
-            return result;
+            return null;
         }
 
         #region Block
 
-		public void IterateActives(IterateFunc func)
-		{
-			if (func == null) { return; }
+        public void Foreach(Action<Monster> action)
+        {
+            if (action == null) { return; }
 
-			Dictionary<string, Monster>.Enumerator enumerator = monsterDic.GetEnumerator();
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            var enumerator = monsterDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                action(enumerator.Current.Value);
+            }
+        }
+        public void ForeachInBlock(Action<Monster> action)
+		{
+			if (action == null) { return; }
+
+            var enumerator = monsterBlockDic.GetEnumerator();
 			while(enumerator.MoveNext())
 			{
-				func(enumerator.Current.Value);
+				action(enumerator.Current.Value);
 			}
 		}
+        public void ForeachInHall(Action<Monster> action)
+        {
+            if (action == null) { return; }
+
+            var enumerator = monsterHallDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                action(enumerator.Current.Value);
+            }
+        }
 
 		public void AddMonster(Monster monster)
 		{
-			if (!monsterDic.ContainsKey(monster.Uid))
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            if (!monsterDic.ContainsKey(monster.Uid))
 			{
-				monsterDic.Add(monster.Uid, monster);
+                monsterDic.Add(monster.Uid, monster);
 			}
+            Game.Instance.AICore.AddAI(monster);
 		}
 
-		public void HideMonster(string uid)
-		{
-			if (monsterDic.ContainsKey(uid))
-			{
-				Monster monster = monsterDic[uid];
-                int location = Maze.GetCurrentLocation(monster.WorldPosition);
-                List<MonsterRecord> recordList = GetRecordList(location);
-				recordList.Add(monster.ToRecord());
-				monsterDic.Remove(uid);
-
-                if(Adam.Instance.TargetMonster == monster)
-                    Adam.Instance.ClearTarget();
-			}
-		}
-		
 		public void RemoveMonster(string uid)
 		{
-			if (monsterDic.ContainsKey(uid))
+            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            if (monsterDic.ContainsKey(uid))
 			{
-				Monster monster = monsterDic[uid];
-                int location = Maze.GetCurrentLocation(monster.WorldPosition);
-                List<MonsterRecord> recordList = GetRecordList(location);
-				if (recordList != null)
-				{
-					for (int i = 0; i < recordList.Count; ++i)
-					{
-						MonsterRecord record = recordList[i];
-						if (record.Uid == uid)
-						{
-							recordList.RemoveAt(i);
-							break;
-						}
-					}
-				}
-				monsterDic.Remove(uid);
+                Monster monster = monsterDic[uid];
+                monsterDic.Remove(uid);
 
-                if(Adam.Instance.TargetMonster == monster)
-                    Adam.Instance.ClearTarget();
+                Game.Instance.AICore.RemoveAI(monster.Uid);
+
+//                if(Adam.Instance.TargetMonster == monster)
+//                    Adam.Instance.ClearTarget();
 			}
-		}
-        public void ClearMonsters()
-        {
-            Dictionary<string, Monster>.Enumerator monsterEnum = monsterDic.GetEnumerator();
-            while (monsterEnum.MoveNext())
-            {
-                Monster.Recycle(monsterEnum.Current.Value);
-            }
-            monsterDic.Clear();
-        }
-
-        public void InitRecordList(Block block)
-        {
-            if(block.IsRoom)
-            {
-                block.ForeachNode((MazePosition mazePos) =>
-                    {
-                        int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        RecordDic[location] = new List<MonsterRecord>();
-                    });
-            }
-            else
-            {
-                int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                RecordDic[location] = new List<MonsterRecord>();
-            }
-        }
-        public void InitRecordList(Hall hall)
-		{
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            RecordDic[location] = new List<MonsterRecord>();
-		}
-		public List<MonsterRecord> GetRecordList(int location)
-		{
-			List<MonsterRecord> recordList = null;
-            RecordDic.TryGetValue(location, out recordList);
-			return recordList;
 		}
 
         #endregion

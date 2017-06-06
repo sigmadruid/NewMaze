@@ -90,7 +90,7 @@ namespace GamePlot
                 Actor.SetPosition(startPos);
             if(startDir != Vector3.zero)
                 Actor.SetRotation(startDir);
-            Actor.Move(endPos);
+            Actor.MoveByDestination(endPos);
         }
         public override void Update(float deltaTime)
         {

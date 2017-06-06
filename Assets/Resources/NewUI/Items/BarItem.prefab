@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 224763849123663660}
   - component: {fileID: 114343627042505700}
   m_Layer: 5
-  m_Name: Transition
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForeBar: {fileID: 114037420686934942}
-  TransitionBar: {fileID: 114343627042505700}
+  BackBar: {fileID: 114343627042505700}
   TransitionDuration: 0.3
 --- !u!222 &222621216610079538
 CanvasRenderer:

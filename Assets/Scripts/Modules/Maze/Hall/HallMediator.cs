@@ -58,13 +58,11 @@ namespace GameLogic
                 int hallKid = (int)param;
                 Hall.Create(hallKid);
             }
-            DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.Hall);
-            DispatchNotification(NotificationEnum.HALL_SPAWN, Hall.Instance);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.Hall);
 		}
 		
 		private void HandleHallDispose()
 		{
-            DispatchNotification(NotificationEnum.HALL_DESPAWN, Hall.Instance);
             DispatchNotification(NotificationEnum.PATHFINDING_DISPOSE, true);
             Hall.Recycle(Hall.Instance);
 		}

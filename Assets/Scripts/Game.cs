@@ -17,6 +17,8 @@ namespace GameLogic
 	{
         public StageEnum LoadingStageEnum;
 
+        public bool IsNewGame = true;
+
 		public bool IsPause = false;
 
         public ConfigManager ConfigManager;

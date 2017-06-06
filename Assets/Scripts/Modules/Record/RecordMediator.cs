@@ -13,9 +13,14 @@ namespace GameLogic
     {
         private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
 
+        private MonsterProxy monsterProxy;
+        private ExplorationProxy explorationProxy;
+
         public override void OnRegister()
         {
             base.OnRegister();
+            monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
+            explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
         }
         public override IList<Enum> ListNotificationInterests ()
         {
@@ -52,14 +57,17 @@ namespace GameLogic
             {
                 var facade = ApplicationFacade.Instance;
 
+                monsterProxy.SaveRecord();
+                explorationProxy.SaveRecord();
+
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
                 gameRecord.Adam = facade.RetrieveProxy<AdamProxy>().CreateRecord();
                 gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().CreateRecord();
-                gameRecord.Monsters = facade.RetrieveProxy<MonsterProxy>().CreateRecord();
+                gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = facade.RetrieveProxy<HallProxy>().CreateRecord();
                 gameRecord.Items = facade.RetrieveProxy<DropProxy>().CreateRecord();
-                gameRecord.Explorations = facade.RetrieveProxy<ExplorationProxy>().CreateRecord();
+                gameRecord.Explorations = explorationProxy.RecordDic;
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
@@ -80,6 +88,7 @@ namespace GameLogic
             string persistPath = Application.persistentDataPath + "/GameData.bin";
             if(!File.Exists(persistPath))
             {
+                Game.Instance.IsNewGame = true;
                 return;
             }
             GameRecord gameRecord = null;
@@ -95,10 +104,12 @@ namespace GameLogic
                 Maze.Instance.Seed = gameRecord.RandomSeed;
                 facade.RetrieveProxy<AdamProxy>().SetRecord(gameRecord.Adam);
                 facade.RetrieveProxy<HeroProxy>().SetRecord(gameRecord.Heroes);
-                facade.RetrieveProxy<MonsterProxy>().SetRecord(gameRecord.Monsters);
+                monsterProxy.RecordDic = gameRecord.Monsters;
                 facade.RetrieveProxy<HallProxy>().SetRecord(gameRecord.Hall);
                 facade.RetrieveProxy<DropProxy>().SetRecord(gameRecord.Items);
-                facade.RetrieveProxy<ExplorationProxy>().SetRecord(gameRecord.Explorations);
+                explorationProxy.RecordDic = gameRecord.Explorations;
+
+                Game.Instance.IsNewGame = false;
             }
         }
 

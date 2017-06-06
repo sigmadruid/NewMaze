@@ -44,7 +44,6 @@ public class MazeMain : MonoBehaviour
 
         blockProxy.Init();
         ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
-        ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_SHOW_ALL);
     }
 
     protected void PreloadAssets(int mazeKid)

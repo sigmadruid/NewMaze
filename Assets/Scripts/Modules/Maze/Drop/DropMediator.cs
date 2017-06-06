@@ -24,10 +24,10 @@ namespace GameLogic
         {
             return new Enum[]
             {
-                NotificationEnum.BLOCK_SPAWN,
-                NotificationEnum.BLOCK_DESPAWN,
-                NotificationEnum.HALL_SPAWN,
-                NotificationEnum.HALL_DESPAWN,
+//                NotificationEnum.BLOCK_SPAWN,
+//                NotificationEnum.BLOCK_DESPAWN,
+//                NotificationEnum.HALL_SPAWN,
+//                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.DROP_CREATED,
                 NotificationEnum.DROP_PICKED_UP,
             };

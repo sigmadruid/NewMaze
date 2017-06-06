@@ -33,6 +33,9 @@ namespace GameLogic
 		HERO_CONVERT,
 		HERO_TRANSPORT,
 
+        MONSTER_INIT,
+        MONSTER_DISPOSE,
+
 		BULLET_SPAWN,
 		BULLET_DESPAWN,
 

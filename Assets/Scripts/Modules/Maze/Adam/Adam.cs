@@ -43,6 +43,7 @@ namespace GameLogic
 
         private InputManager inputManager;
         private BattleProxy battleProxy;
+        private AdamProxy adamProxy;
 
         private static Adam instance;
         public static Adam Instance
@@ -58,79 +59,15 @@ namespace GameLogic
             if(!IsUpdating || Game.Instance.PlotRunner.IsPlaying)
                 return;
 
-            if(inputManager.MouseHitPosition != Vector3.zero)
+            if(Script.UseMouse)
             {
-                //Select target
-                TargetPosition = inputManager.MouseHitPosition;
-                if(inputManager.CheckMouseHitLayer(Layers.LayerMonster))
-                {
-                    MonsterScript monsterScript = inputManager.MouseHitObject.GetComponent<MonsterScript>();
-                    Monster target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
-
-                    if(target.Info.IsAlive)
-                    {
-                        TargetMonster = target;
-                    }
-                    else
-                    {
-                        TargetMonster = null;
-                    }
-                }
-                else
-                {
-                    TargetMonster = null;
-                }
-
-                //Select skill
-                if(inputManager.MouseLeft == MouseHitType.Left)
-                    SkillIndex = 1;
-                else if(inputManager.MouseLeft == MouseHitType.Right)
-                    SkillIndex = 2;
-                else
-                    SkillIndex = 0;
-            }
-            
-            if(TargetMonster != null)
-            {
-                //Choose the skill
-                Skill skill = Info.GetSkill(SkillIndex);
-
-                //Cast skill
-                if(Info.CanCastSkill(SkillIndex))
-                {
-                    if(MathUtils.XZSqrDistance(WorldPosition, TargetMonster.WorldPosition) < skill.Data.Range * skill.Data.Range)
-                    {
-                        Move(Vector3.zero);
-                        Skill(SkillIndex);
-                    }
-                    else
-                    {
-                        if(Info.CanMove())
-                        {
-                            Move(TargetPosition);
-                        }
-                        else
-                        {
-                            Move(Vector3.zero);
-                        }
-                    }
-                }
-            }
-            else if(TargetPosition != Vector3.zero)
-            {
-                if(Info.CanMove() && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
-                {
-                    Move(TargetPosition);
-                }
-                else
-                {
-                    Move(Vector3.zero);
-                }
+                MouseControl();
             }
             else
             {
-                Move(Vector3.zero);
+                AxisControl();
             }
+
 
             Info.UpdateBuff(deltaTime);
             Info.UpdateSkill(deltaTime);
@@ -139,10 +76,6 @@ namespace GameLogic
         {
             if (!IsSlowUpdating)
                 return;
-            if(Game.Instance.CurrentStageType == StageEnum.Maze && !Info.IsInHall)
-            {
-                ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, WorldPosition);
-            }
         }
 
         #region Interfaces
@@ -170,12 +103,12 @@ namespace GameLogic
         {
             get
             {
-                return Info.IsVisible;
+                return adamProxy.IsVisible;
             }
             set
             {
-                Info.IsVisible = value;
-                Script.SetTransparent(!Info.IsVisible);
+                adamProxy.IsVisible = value;
+                Script.SetTransparent(!adamProxy.IsVisible);
             }
         }
 
@@ -189,32 +122,150 @@ namespace GameLogic
 
         #endregion
 
+        #region Control
+
+        private void MouseControl()
+        {
+            if(inputManager.MouseHitPosition != Vector3.zero)
+            {
+                //Select target
+                TargetPosition = inputManager.MouseHitPosition;
+                if(inputManager.CheckMouseHitLayer(Layers.LayerMonster))
+                {
+                    MonsterScript monsterScript = inputManager.MouseHitObject.GetComponent<MonsterScript>();
+                    Monster target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+
+                    if(target.Info.IsAlive)
+                    {
+                        TargetMonster = target;
+                    }
+                    else
+                    {
+                        TargetMonster = null;
+                    }
+                }
+                else
+                {
+                    TargetMonster = null;
+                }
+
+                //Select skill
+                if(inputManager.HitType == MouseHitType.Left)
+                    SkillIndex = 1;
+                else if(inputManager.HitType == MouseHitType.Right)
+                    SkillIndex = 2;
+                else
+                    SkillIndex = 0;
+            }
+
+            if(TargetMonster != null)
+            {
+                //Choose the skill
+                Skill skill = Info.GetSkill(SkillIndex);
+
+                //Cast skill
+                if(Info.CanCastSkill(SkillIndex))
+                {
+                    if(MathUtils.XZSqrDistance(WorldPosition, TargetMonster.WorldPosition) < skill.Data.Range * skill.Data.Range)
+                    {
+                        MoveByDestination(Vector3.zero);
+                        Skill(SkillIndex);
+                    }
+                    else
+                    {
+                        if(Info.CanMove())
+                        {
+                            MoveByDestination(TargetPosition);
+                        }
+                        else
+                        {
+                            MoveByDestination(Vector3.zero);
+                        }
+                    }
+                }
+            }
+            else if(TargetPosition != Vector3.zero)
+            {
+                if(Info.CanMove() && MathUtils.XZSqrDistance(WorldPosition, inputManager.MouseHitPosition) > GlobalConfig.InputConfig.NearSqrDistance)
+                {
+                    MoveByDestination(TargetPosition);
+                }
+                else
+                {
+                    MoveByDestination(Vector3.zero);
+                }
+            }
+            else
+            {
+                MoveByDestination(Vector3.zero);
+            }
+        }
+
+        private void AxisControl()
+        {
+            if(inputManager.MouseHitPosition != Vector3.zero)
+            {
+                TargetPosition = inputManager.MouseHitPosition;
+
+                if(inputManager.HitType == MouseHitType.Left)
+                    SkillIndex = 1;
+                else if(inputManager.HitType == MouseHitType.Right)
+                    SkillIndex = 2;
+                else
+                    SkillIndex = 0;
+                Skill skill = Info.GetSkill(SkillIndex);
+                if(Info.CanCastSkill(SkillIndex))
+                {
+                    Idle();
+                    LookAt(TargetPosition);
+                    Skill(SkillIndex);
+                }
+            }
+            else if(inputManager.DirectionVector != Vector3.zero)
+            {
+                if(Info.CanMove())
+                {
+                    MoveByDirection(inputManager.DirectionVector);
+                }
+            }
+            else
+            {
+                Idle();
+            }
+        }
+
+        #endregion
+
         #region Animations
 
         public void Idle()
         {
-            Script.Move(Vector3.zero, 0f);
+            Script.Idle();
         }
-        public void Move(Vector3 destination)
+        public void MoveByDestination(Vector3 destination)
         {
-            Script.Move(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
+            Script.MoveByDestination(destination, Info.GetAttribute(BattleAttribute.MoveSpeed));
+        }
+        public void MoveByDirection(Vector3 direction)
+        {
+            Script.MoveByDirection(direction, Info.GetAttribute(BattleAttribute.MoveSpeed));
         }
         public void LookAt(Vector3 destPos)
         {
-//            Script.LookAt(destPos - WorldPosition);
+            Script.LookAt(destPos - WorldPosition);
         }
         public void Skill(int skillIndex)
         {
             Info.CurrentSkill = Info.GetSkill(skillIndex);
-            if(Info.CurrentSkill.Data.NeedTarget)
+//            if(Info.CurrentSkill.Data.NeedTarget)
             {
-                if(TargetMonster != null)
+//                if(TargetMonster != null)
                 {
-                    Vector3 direction = MathUtils.XZDirection(WorldPosition, TargetMonster.WorldPosition);
-                    SetRotation(direction);
+//                    Vector3 direction = MathUtils.XZDirection(WorldPosition, TargetMonster.WorldPosition);
+//                    SetRotation(direction);
                     Info.CurrentSkill.Cast(Info);
                     Script.Skill(skillIndex, Info.GetAttribute(BattleAttribute.AttackSpeed));
-                    inputManager.PreventMouseAction();
+//                    inputManager.PreventMouseAction();
                 }
             }
 
@@ -309,6 +360,7 @@ namespace GameLogic
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
             adam.Script.Switch(Animator.StringToHash(adam.Data.Trigger), true);
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            adam.adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
             adam.inputManager = InputManager.Instance;
 
             instance = adam;
@@ -327,6 +379,7 @@ namespace GameLogic
                 ResourceManager.Instance.RecycleAsset(hero.Script.gameObject);
                 hero.Script = null;
                 hero.battleProxy = null;
+                hero.adamProxy = null;
                 instance = null;
             }
             else

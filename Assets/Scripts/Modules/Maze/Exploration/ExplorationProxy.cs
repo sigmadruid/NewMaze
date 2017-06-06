@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace GameLogic
 {
     public class ExplorationProxy : Proxy
     {
-        public delegate void IterateFunc(Exploration expl);
+        private Dictionary<string, Exploration> explorationBlockDic = new Dictionary<string, Exploration>();
+        private Dictionary<string, Exploration> explorationHallDic = new Dictionary<string, Exploration>();
 
-        private Dictionary<int, List<ExplorationRecord>> RecordDic = new Dictionary<int, List<ExplorationRecord>>();
-        private Dictionary<string, Exploration> explorationDic = new Dictionary<string, Exploration>();
+        public Dictionary<int, List<ExplorationRecord>> RecordDic = new Dictionary<int, List<ExplorationRecord>>();
 
         public HashSet<Exploration> enteredExplorationSet = new HashSet<Exploration>();
 		
@@ -23,106 +24,79 @@ namespace GameLogic
         }
         public void Dispose()
         {
-            ClearExpls();
+            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            foreach(Exploration exploration in explorationDic.Values)
+            {
+                Exploration.Recycle(exploration);
+            }
+            explorationDic.Clear();
+
             enteredExplorationSet.Clear();
         }
-        public Dictionary<int, List<ExplorationRecord>> CreateRecord()
+        public void SaveRecord()
         {
-            int location;
-            if(Hall.Instance != null)
+            int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
+            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+
+            List<ExplorationRecord> recordList = null;
+            if(RecordDic.ContainsKey(hallKid))
             {
-                InitRecordList(Hall.Instance);
+                recordList = RecordDic[hallKid];
+                recordList.Clear();
             }
             else
             {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.Iterate((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
+                recordList = new List<ExplorationRecord>();
+                RecordDic[hallKid] = recordList;
             }
-            var enumerator = explorationDic.GetEnumerator();
-            while(enumerator.MoveNext())
+            foreach(Exploration exploration in explorationDic.Values)
             {
-                Exploration expl = enumerator.Current.Value;
-                location = Maze.GetCurrentLocation(expl.WorldPosition);
-                List<ExplorationRecord> recordList = GetRecordList(location);
-                recordList.Add(expl.ToRecord());
+                recordList.Add(exploration.ToRecord());
             }
-            return RecordDic;
-        }
-        public void SetRecord(Dictionary<int, List<ExplorationRecord>> recordDic)
-        {
-            RecordDic = recordDic;
         }
 
         #region Add and Remove
 
-        public void IterateActiveExpl(IterateFunc func)
+        public void ForeachBlockExpl(Action<Exploration> action)
         {
-            if (func == null) { return; }
+            if (action == null) { return; }
 
-            var enumerator = explorationDic.GetEnumerator();
+            var enumerator = explorationBlockDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
-                func(enumerator.Current.Value);
+                action(enumerator.Current.Value);
+            }
+        }
+        public void ForeachHallExpl(Action<Exploration> action)
+        {
+            if (action == null) { return; }
+
+            var enumerator = explorationHallDic.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                action(enumerator.Current.Value);
             }
         }
 
 		public void AddExpl(Exploration exploration)
 		{
-			if (!explorationDic.ContainsKey(exploration.Uid))
+            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            if (!explorationDic.ContainsKey(exploration.Uid))
 			{
-				explorationDic.Add(exploration.Uid, exploration);
+                explorationDic.Add(exploration.Uid, exploration);
 			}
 		}
 		public void RemoveExpl(string uid)
 		{
-			if (explorationDic.ContainsKey(uid))
+            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            if (explorationDic.ContainsKey(uid))
 			{
-                Exploration expl = explorationDic[uid];
+                Exploration expl = explorationBlockDic[uid];
+                explorationBlockDic.Remove(uid);
+
                 RemoveEnteredExploration(expl);
-				explorationDic.Remove(uid);
 			}
 		}
-        public void ClearExpls()
-        {
-            Dictionary<string, Exploration>.Enumerator blockEnum = explorationDic.GetEnumerator();
-            while(blockEnum.MoveNext())
-            {
-                Exploration.Recycle(blockEnum.Current.Value);
-            }
-            explorationDic.Clear();
-            enteredExplorationSet.Clear();
-        }
-
-        public void InitRecordList(Block block)
-        {
-            if(block.IsRoom)
-            {
-                block.ForeachNode((MazePosition mazePos) =>
-                    {
-                        int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        RecordDic[location] = new List<ExplorationRecord>();
-                    });
-            }
-            else
-            {
-                int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                RecordDic[location] = new List<ExplorationRecord>();
-            }
-        }
-        public void InitRecordList(Hall hall)
-        {
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            RecordDic[location] = new List<ExplorationRecord>();
-        }
-        public List<ExplorationRecord> GetRecordList(int location)
-        {
-            List<ExplorationRecord> recordList = null;
-            RecordDic.TryGetValue(location, out recordList);
-            return recordList;
-        }
 
         #endregion
 
@@ -149,14 +123,14 @@ namespace GameLogic
             if (enteredExplorationSet.Contains(expl))
                 enteredExplorationSet.Remove(expl);
         }
-        public void IterateInEntered(IterateFunc func)
+        public void ForeachEntered(Action<Exploration> action)
         {
-            if (func == null) { return; }
+            if (action == null) { return; }
 
             var enumerator = enteredExplorationSet.GetEnumerator();
             while(enumerator.MoveNext())
             {
-                func(enumerator.Current);
+                action(enumerator.Current);
             }
         }
 
@@ -164,10 +138,8 @@ namespace GameLogic
 
         public void Claim(Exploration expl)
         {
-//            if(!recordDic.ContainsKey(expl.Uid))
-//            {
-//                recordDic.Add(expl.Uid, expl.ToRecord());
-//            }
+            RemoveExpl(expl.Uid);
+            Exploration.Recycle(expl);
         }
     }
 }

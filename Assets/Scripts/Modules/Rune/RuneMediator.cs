@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Base;
 using StaticData;
+using Battle;
 
 namespace GameLogic
 {
@@ -18,8 +19,11 @@ namespace GameLogic
     }
     public class RuneMediator : Mediator
     {
+        private BattleProxy battleProxy;
+
         public override void OnRegister()
         {
+            battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
         }
 
         public override IList<Enum> ListNotificationInterests()
@@ -54,13 +58,13 @@ namespace GameLogic
             }
 
             RuneType type = (RuneType)Enum.Parse(typeof(RuneType), itemData.Param1);
-            float param1 = float.Parse(itemData.Param2);
-            float param2 = float.Parse(itemData.Param3);
+            float param2 = !string.IsNullOrEmpty(itemData.Param2) ? float.Parse(itemData.Param2) : 0;
+            float param3 = !string.IsNullOrEmpty(itemData.Param3) ? float.Parse(itemData.Param3) : 0;
             switch(type)
             {
                 case RuneType.Life:
                     {
-                        Adam.Instance.Info.AddHP((int)param1);
+                        battleProxy.DoHealHero((int)param2);
                         break;
                     }
             }

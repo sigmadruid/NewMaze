@@ -21,8 +21,16 @@ namespace GameLogic
             return expl;
         }
 
-        private static Exploration DoCreate(ExplorationData data)
+        public static Exploration Create(ExplorationRecord record)
         {
+            ExplorationData data = ExplorationDataManager.Instance.GetData(record.Kid) as ExplorationData;
+            Exploration expl = DoCreate(data, record.Uid);
+            return expl;
+        }
+
+        private static Exploration DoCreate(ExplorationData data, string uid = null)
+        {
+            //Initialization
             Exploration exploration = null;
             switch (data.Type)
             {
@@ -42,9 +50,22 @@ namespace GameLogic
                         break;
                     }
             }
-            Exploration.Init(exploration, data);
+
+            Exploration.Init(exploration, data, uid);
+
+            //Post Process
+            switch(data.Type)
+            {
+                case ExplorationType.Chest:   
+                    {
+                        ChestExpl.PostCreate(exploration);
+                        break;
+                    }
+            }
+
             return exploration;
         }
+
 
     }
 }

@@ -55,10 +55,11 @@ namespace GameLogic
 
         private void OnTransportForward()
         {
-            Adam.Instance.Info.IsInHall = true;
+            ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsInHall = true;
             int hallKid = int.Parse(Data.Param1);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_HIDE_ALL);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DESPAWN);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_SPAWN);
             Hall.Instance.LeavePosition = Adam.Instance.WorldPosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
             AfterTransport();
@@ -66,11 +67,11 @@ namespace GameLogic
         private void OnTransportBack()
         {
             Vector3 leavePosition = Hall.Instance.LeavePosition;
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DESPAWN);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_REFRESH, leavePosition);
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_SPAWN);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, leavePosition);
-            Adam.Instance.Info.IsInHall = false;
+            ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsInHall = false;
             AfterTransport();
         }
 

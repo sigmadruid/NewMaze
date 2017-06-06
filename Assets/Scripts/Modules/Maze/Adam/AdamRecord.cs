@@ -7,9 +7,10 @@ namespace GameLogic
     public class AdamRecord
     {
         public Vector3Record WorldPosition;
-
         public float WorldAngle;
 
+        public bool IsInHall;
+        public bool IsVisible;
         public Dictionary<int, int> PackItems;
     }
 }

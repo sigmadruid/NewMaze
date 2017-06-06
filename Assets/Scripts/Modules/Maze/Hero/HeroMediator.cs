@@ -125,7 +125,7 @@ namespace GameLogic
 
 		private void HandleHeroConvert(int heroKid)
 		{
-            if (!adam.Info.IsAlive || adam.Info.IsConverting)
+            if (!adam.Info.IsAlive || adamProxy.IsConverting)
 			{
 				return;
 			}
@@ -136,7 +136,7 @@ namespace GameLogic
 
 			InputManager.Instance.Enable = false;
 
-            adam.Info.IsConverting = true;
+            adamProxy.IsConverting = true;
             HeroInfo info = heroProxy.GetHeroInfo(heroKid);
             adam.Convert(info);
 		}
@@ -170,7 +170,7 @@ namespace GameLogic
 			InputManager.Instance.Enable = true;
 			convertEffect.Deactive();
 			
-			adam.Info.IsConverting = false;
+            adamProxy.IsConverting = false;
 		}
 
 		#endregion

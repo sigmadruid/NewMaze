@@ -45,8 +45,8 @@ public class PackPanel : BasePopupView
         itemPool.Init(ItemTemplate.gameObject, GridItems.transform);
 
         ClickEventTrigger.Get(ButtonClose.gameObject).onClick = OnClose;
-        ClickEventTrigger.Get(ButtonUse.gameObject).onClick = OnClose;
-        ClickEventTrigger.Get(ButtonDiscard.gameObject).onClick = OnClose;
+        ClickEventTrigger.Get(ButtonUse.gameObject).onClick = OnUse;
+        ClickEventTrigger.Get(ButtonDiscard.gameObject).onClick = OnDiscard;
     }
 
     public override void OnDispose()
@@ -80,8 +80,8 @@ public class PackPanel : BasePopupView
     {
         selectedInfo =  go.GetComponent<PackItem>().ItemInfo;
         ImageItemIcon.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_ITEM, selectedInfo.Data.Res2D);
-        TextItemName.text = selectedInfo.Data.Name;
-        TextItemDesc.text = selectedInfo.Data.Description;
+        TextItemName.text = TextDataManager.Instance.GetData(selectedInfo.Data.Name);
+        TextItemDesc.text = TextDataManager.Instance.GetData(selectedInfo.Data.Description);
     }
     private void OnUse(GameObject go)
     {

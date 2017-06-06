@@ -11,10 +11,12 @@ namespace GameLogic
 {
     public class ExplorationMediator : Mediator
     {
+        private BlockProxy blockProxy;
         private ExplorationProxy explorationProxy;
 		
 		public override void OnRegister ()
 		{
+            blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 			explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 		}
 
@@ -36,26 +38,22 @@ namespace GameLogic
 			{
                 case NotificationEnum.BLOCK_SPAWN:
     				{
-					Block block = notification.Body as Block;
-					HandleBlockSpawn(block);
+					HandleBlockSpawn();
 					break;
 				}
                 case NotificationEnum.BLOCK_DESPAWN:
 				{
-					Block block = notification.Body as Block;
-					HandleBlockDespawn(block);
+					HandleBlockDespawn();
 					break;
 				}
                 case NotificationEnum.HALL_SPAWN:
                 {
-                    Hall hall = notification.Body as Hall;
-                    HandleHallSpawn(hall);
+                    HandleHallSpawn();
                     break;
                 }
                 case NotificationEnum.HALL_DESPAWN:
                 {
-                    Hall hall = notification.Body as Hall;
-                    HandleHallDespawn(hall);
+                    HandleHallDespawn();
                     break;
                 }
                 case NotificationEnum.EXPLORATION_FUNCTION:
@@ -66,65 +64,77 @@ namespace GameLogic
 			}
 		}
 
-		private void HandleBlockSpawn(Block block)
+		private void HandleBlockSpawn()
 		{
-            RandomUtils.Seed = block.RandomID;
-			int explorationCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.ExplorationMaxCount);
-            PositionScript birth = null;
-
-            if (block.ExplorationKid != 0)
+            if(explorationProxy.RecordDic.ContainsKey(0))
             {
-                birth = block.Script.GetGlobalPosition(PositionType.Exploration);
-                CreateExploration(block.ExplorationKid, birth);
-                explorationCount--;
-            }
-
-			for (int i = 0; i < explorationCount; ++i)
-			{
-				birth = block.Script.GetRandomPosition(PositionType.Exploration);
-                CreateExploration(ExplorationType.Common, birth);
-			}
-		}
-		private void HandleBlockDespawn(Block block)
-		{
-            List<Exploration> toDeleteList = new List<Exploration>();
-            explorationProxy.IterateActiveExpl((Exploration expl) => 
+                List<ExplorationRecord> recordList = explorationProxy.RecordDic[0];
+                for (int i = 0; i < recordList.Count; ++i)
                 {
-                    MazePosition pos = Maze.Instance.GetMazePosition(expl.WorldPosition);
-                    if (block.Contains(pos.Col, pos.Row))
-                    {
-                        toDeleteList.Add(expl);
-                    }
-                });
-
-            for (int i = 0; i < toDeleteList.Count; ++i)
+                    ExplorationRecord record = recordList[i];
+                    CreateExploration(record);
+                }
+            }
+            else
             {
-                Exploration expl = toDeleteList[i];
-                explorationProxy.RemoveExpl(expl.Uid);
-                Exploration.Recycle(expl);
-
+                blockProxy.ForeachBlocks((Block block) =>
+                    {
+                        RandomUtils.Seed = block.RandomID;
+                        int explorationCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.ExplorationMaxCount);
+                        PositionScript birth = null;
+                        if (block.ExplorationKid != 0)
+                        {
+                            birth = block.Script.GetGlobalPosition(PositionType.Exploration);
+                            CreateExploration(block.ExplorationKid, birth);
+                            explorationCount--;
+                        }
+                        
+                        for (int i = 0; i < explorationCount; ++i)
+                        {
+                            birth = block.Script.GetRandomPosition(PositionType.Exploration);
+                            CreateExploration(ExplorationType.Common, birth);
+                        }
+                    });
             }
 		}
-        private void HandleHallSpawn(Hall hall)
+		private void HandleBlockDespawn()
+		{
+            explorationProxy.SaveRecord();
+            explorationProxy.Dispose();
+		}
+        private void HandleHallSpawn()
         {
-            explorationProxy.ClearExpls();
-            PositionScript[] positionList = hall.Script.GetPositionList(PositionType.Exploration);
-            for(int i = 0; i < positionList.Length; ++i)
+            int hallKid = Hall.Instance.Data.Kid;
+            if(explorationProxy.RecordDic.ContainsKey(hallKid))
             {
-                PositionScript birth = positionList[i];
-                CreateExploration(birth.Kid, birth);
+                List<ExplorationRecord> recordList = explorationProxy.RecordDic[hallKid];
+                for (int i = 0; i < recordList.Count; ++i)
+                {
+                    ExplorationRecord record = recordList[i];
+                    CreateExploration(record);
+                }
+            }
+            else
+            {
+                PositionScript[] positionList = Hall.Instance.Script.GetPositionList(PositionType.Exploration);
+                for (int i = 0; i < positionList.Length; ++i)
+                {
+                    PositionScript birth = positionList[i];
+                    CreateExploration(birth.Kid, birth);
+                }
             }
         }
-        private void HandleHallDespawn(Hall hall)
+        private void HandleHallDespawn()
         {
-            explorationProxy.ClearExpls();
+            explorationProxy.SaveRecord();
+            explorationProxy.Dispose();
         }
         private void CreateExploration(ExplorationType type, PositionScript birth)
         {
             if (birth != null)
             {
                 Exploration expl = ExplorationFactory.Create(type);
-                DoCreate(expl, birth);
+                InitExploration(expl, birth.transform.position, birth.transform.localEulerAngles.y);
             }
         }
         private void CreateExploration(int kid, PositionScript birth)
@@ -132,13 +142,18 @@ namespace GameLogic
             if (birth != null)
             {
                 Exploration expl = ExplorationFactory.Create(kid);
-                DoCreate(expl, birth);
+                InitExploration(expl, birth.transform.position, birth.transform.localEulerAngles.y);
             }
         }
-        private void DoCreate(Exploration expl, PositionScript birth)
+        private void CreateExploration(ExplorationRecord record)
         {
-            expl.SetPosition(birth.transform.position);
-            expl.SetRotation(birth.transform.eulerAngles.y);
+            Exploration expl = ExplorationFactory.Create(record);
+            InitExploration(expl, record.WorldPosition.ToVector3(), record.WorldAngle);
+        }
+        private void InitExploration(Exploration expl, Vector3 position, float angle)
+        {
+            expl.SetPosition(position);
+            expl.SetRotation(angle);
             explorationProxy.AddExpl(expl);
         }
 
@@ -148,6 +163,7 @@ namespace GameLogic
             if (enteredExpl != null)
             {
                 enteredExpl.OnFunction();
+                explorationProxy.Claim(enteredExpl);
             }
         }
     }

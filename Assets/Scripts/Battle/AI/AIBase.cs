@@ -58,7 +58,7 @@ namespace Battle
             if(currentMonster.Info.IsStunned)
                 return;
             destPosition = Adam.Instance.WorldPosition;
-            currentMonster.Move(destPosition);
+            currentMonster.MoveByDestination(destPosition);
         }
         protected bool CheckCollision(bool toAdam)
         {

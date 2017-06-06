@@ -55,12 +55,15 @@ namespace GameLogic
         {
             ExplorationRecord record = new ExplorationRecord();
             record.Uid = Uid;
+            record.Kid = Data.Kid;
+            record.WorldPosition = new Vector3Record(WorldPosition);
+            record.WorldAngle = WorldAngle;
             return record;
         }
 
-        public static void Init(Exploration exploration, ExplorationData data)
+        public static void Init(Exploration exploration, ExplorationData data, string uid)
         {
-            exploration.Uid = Guid.NewGuid().ToString();
+            exploration.Uid = string.IsNullOrEmpty(uid) ? Guid.NewGuid().ToString() : uid;
             exploration.Data = data;
             exploration.Script = ResourceManager.Instance.LoadAsset<ExplorationScript>(ObjectType.GameObject, exploration.Data.GetResPath());
             exploration.Script.Init(exploration.Uid, exploration.OnFunction, exploration.OnEnter, exploration.OnExit);

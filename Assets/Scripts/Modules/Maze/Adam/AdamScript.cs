@@ -63,7 +63,13 @@ namespace GameLogic
 
         #region Animation States
 
-        public override void Move(Vector3 destination, float speed)
+        public void Idle()
+        {
+            movementScript.SetDestination(Vector3.zero, 0);
+            animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, false);
+        }
+
+        public override void MoveByDestination(Vector3 destination, float speed)
         {
             if (Game.Instance.IsPause) { return; }
 

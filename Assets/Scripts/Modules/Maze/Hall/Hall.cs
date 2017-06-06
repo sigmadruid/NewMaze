@@ -25,6 +25,8 @@ namespace GameLogic
             protected set { script = value; }
         }
 
+        public static bool IsActive { get { return instance != null; } }
+
 		private static Hall instance;
 		public static Hall Instance { get { return instance; } }
 

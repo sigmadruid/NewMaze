@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 22480740}
   - component: {fileID: 11499926}
   m_Layer: 5
-  m_Name: TransistionBar
+  m_Name: BackBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2049,7 +2049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForeBar: {fileID: 114536416174896016}
-  TransitionBar: {fileID: 11499926}
+  BackBar: {fileID: 11499926}
   TransitionDuration: 0.3
 --- !u!114 &114536416174896016
 MonoBehaviour:

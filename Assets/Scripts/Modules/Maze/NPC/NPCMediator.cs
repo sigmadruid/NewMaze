@@ -30,8 +30,8 @@ namespace GameLogic
 				NotificationEnum.NPC_INIT,
 				NotificationEnum.NPC_DISPOSE,
 				NotificationEnum.TOWN_NPC_SPAWN,
-                NotificationEnum.BLOCK_SPAWN,
-                NotificationEnum.BLOCK_DESPAWN,
+//                NotificationEnum.BLOCK_SPAWN,
+//                NotificationEnum.BLOCK_DESPAWN,
 				NotificationEnum.NPC_DIALOG_SHOW,
 			};
 		}
