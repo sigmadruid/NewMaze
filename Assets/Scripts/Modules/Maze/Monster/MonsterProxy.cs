@@ -24,7 +24,7 @@ namespace GameLogic
         }
 		public void Dispose()
 		{
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
             foreach(Monster monster in monsterDic.Values)
             {
                 Game.Instance.AICore.RemoveAI(monster.Uid);
@@ -36,7 +36,7 @@ namespace GameLogic
         public void SaveRecord()
         {
             int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
 
             List<MonsterRecord> recordList = null;
             if(RecordDic.ContainsKey(hallKid))
@@ -58,7 +58,7 @@ namespace GameLogic
 
         public Monster GetMonster(string uid)
         {
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
             if(!monsterDic.ContainsKey(uid))
             {
                 BaseLogger.LogFormat("Can't find monster. uid={0}", uid);
@@ -77,7 +77,7 @@ namespace GameLogic
         {
             if (action == null) { return; }
 
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
             var enumerator = monsterDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
@@ -107,7 +107,7 @@ namespace GameLogic
 
 		public void AddMonster(Monster monster)
 		{
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
             if (!monsterDic.ContainsKey(monster.Uid))
 			{
                 monsterDic.Add(monster.Uid, monster);
@@ -117,7 +117,7 @@ namespace GameLogic
 
 		public void RemoveMonster(string uid)
 		{
-            Dictionary<string, Monster> monsterDic = Hall.IsActive ? monsterHallDic : monsterBlockDic;
+            Dictionary<string, Monster> monsterDic = GetCurrentDic();
             if (monsterDic.ContainsKey(uid))
 			{
                 Monster monster = monsterDic[uid];
@@ -144,6 +144,11 @@ namespace GameLogic
                     return GlobalConfig.MonsterConfig.BigRadius;
             }
             return GlobalConfig.MonsterConfig.SmallRadius;
+        }
+
+        private Dictionary<string, Monster> GetCurrentDic()
+        {
+            return Hall.IsActive ? monsterHallDic : monsterBlockDic;
         }
 
 	}

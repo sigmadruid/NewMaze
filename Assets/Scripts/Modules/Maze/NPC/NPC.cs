@@ -7,18 +7,10 @@ using StaticData;
 
 namespace GameLogic
 {
-	public enum NPCState
-	{
-		Normal,
-		Wait,
-		End,
-	}
     public class NPC : Entity
     {
 		private const int PRE_CACHE_COUNT = 10;
 		
-		public NPCState State;
-
 		public new NPCData Data
 		{
 			get { return data as NPCData; }
@@ -44,7 +36,18 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DIALOG_SHOW, this);
 		}
 
-		public static NPC Create(int npcKid, int eventKid, NPCState state = NPCState.Normal)
+        public NPCRecord ToRecord()
+        {
+            NPCRecord record = new NPCRecord();
+            record.Uid = Uid;
+            record.Kid = Data.Kid;
+            record.WorldPosition = new Vector3Record(WorldPosition);
+            record.WorldAngle = WorldAngle;
+            record.EventKid = EventData.Kid;
+            return record;
+        }
+
+		public static NPC Create(int npcKid, int eventKid)
 		{
 			ResourceManager resManager = ResourceManager.Instance;
 			
@@ -63,9 +66,13 @@ namespace GameLogic
 			npc.EventData = NPCDataManager.Instance.GetEventDataByID(eventKid);
 			npc.Script = ResourceManager.Instance.LoadAsset<NPCScript>(ObjectType.GameObject, npc.Data.GetResPath());
             npc.Script.Init(npc.Uid, npc.OnNPCClick, npc.OnNPCEnter, npc.OnNPCExit);
-			npc.State = state;
 			return npc;
 		}
+
+        public static NPC Create(NPCRecord record)
+        {
+            return Create(record.Kid, record.EventKid);
+        }
 
 		public static void Recycle(NPC npc)
 		{

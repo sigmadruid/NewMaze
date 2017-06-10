@@ -14,12 +14,14 @@ namespace GameLogic
 	{
 		private DialogPanel panel;
 
+        private BlockProxy blockProxy;
 		private NPCProxy npcProxy;
 
 		private NPC currentNPC;
 
 		public NPCMediator () : base()
 		{
+            blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 			npcProxy = ApplicationFacade.Instance.RetrieveProxy<NPCProxy>();
 		}
 
@@ -30,8 +32,10 @@ namespace GameLogic
 				NotificationEnum.NPC_INIT,
 				NotificationEnum.NPC_DISPOSE,
 				NotificationEnum.TOWN_NPC_SPAWN,
-//                NotificationEnum.BLOCK_SPAWN,
-//                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.NPC_DIALOG_SHOW,
 			};
 		}
@@ -51,16 +55,24 @@ namespace GameLogic
 					break;
                 case NotificationEnum.BLOCK_SPAWN:
 				{
-					Block block = notification.Body as Block;
-					HandleNPCSpawn(block);
+					HandleBlockSpawn();
 					break;
 				}
                 case NotificationEnum.BLOCK_DESPAWN:
 				{
-					Block block = notification.Body as Block;
-					HandleNPCDespawn(block);
+					HandleBlockDespawn();
 					break;
 				}
+                case NotificationEnum.HALL_SPAWN:
+                {
+                    HandleHallSpawn();
+                    break;
+                }
+                case NotificationEnum.HALL_DESPAWN:
+                {
+                    HandleHallDespawn();
+                    break;
+                }
 				case NotificationEnum.NPC_DIALOG_SHOW:
 					NPC npc = notification.Body as NPC;
 					HandleDialogShow(npc);
@@ -84,45 +96,56 @@ namespace GameLogic
 			npc.SetPosition(new Vector3(-1.45f, -0.1f, 17));
 			npc.SetRotation(180f);
 		}
-		private void HandleNPCSpawn(Block block)
+		private void HandleBlockSpawn()
 		{
-            RandomUtils.Seed = block.RandomID;
-            int npcCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.NPCMaxCount);
-			
-			for (int i = 0; i < npcCount; ++i)
-			{
-				PositionScript birth = block.Script.GetRandomPosition(PositionType.NPC);
-
-				if (birth != null)
-				{
-					NPCData npcData = NPCDataManager.Instance.GetRandomNPCData(NPCAppearScene.Maze);
-					NPCEventData eventData = NPCDataManager.Instance.GetRandomEventData(NPCAppearScene.Maze);
-					NPC npc = NPC.Create(npcData.Kid, eventData.Kid);
-					npc.SetPosition(birth.transform.position);
-					npc.SetRotation(birth.transform.eulerAngles.y);
-					npcProxy.AddNPC(npc);
-				}
-			}
-		}
-		private void HandleNPCDespawn(Block block)
-		{
-            List<NPC> toDeleteList = new List<NPC>();
-            npcProxy.IterateActives((NPC npc) =>
-                {
-                    MazePosition mazePos = Maze.Instance.GetMazePosition(npc.WorldPosition);
-                    if (block.Contains(mazePos.Col, mazePos.Row))
-                    {
-                        toDeleteList.Add(npc);
-                    }
-                });
-
-            for(int i = 0; i < toDeleteList.Count; ++i)
+            if(npcProxy.RecordDic.ContainsKey(0))
             {
-                NPC npc = toDeleteList[i];
-                npcProxy.RemoveNPC(npc.Uid);
-                NPC.Recycle(npc);
+                List<NPCRecord> recordList = npcProxy.RecordDic[0];
+                for (int i = 0; i < recordList.Count; ++i)
+                {
+                    NPCRecord record = recordList[i];
+                    NPC npc = NPC.Create(record);
+                    InitNPC(npc, record.WorldPosition.ToVector3(), record.WorldAngle);
+                }
+            }
+            else
+            {
+                blockProxy.ForeachBlocks((Block block) =>
+                    {
+                        RandomUtils.Seed = block.RandomID;
+                        int npcCount = RandomUtils.Range(0, MazeDataManager.Instance.CurrentMazeData.NPCMaxCount);
+
+                        for (int i = 0; i < npcCount; ++i)
+                        {
+                            PositionScript birth = block.Script.GetRandomPosition(PositionType.NPC);
+                            if (birth != null)
+                            {
+                                NPCData npcData = NPCDataManager.Instance.GetRandomNPCData(NPCAppearScene.Maze);
+                                NPCEventData eventData = NPCDataManager.Instance.GetRandomEventData(NPCAppearScene.Maze);
+                                NPC npc = NPC.Create(npcData.Kid, eventData.Kid);
+                                InitNPC(npc, birth.transform.position, birth.transform.eulerAngles.y);
+                            }
+                        }
+                    });
             }
 		}
+		private void HandleBlockDespawn()
+		{
+            npcProxy.SaveRecord();
+            npcProxy.Dispose();
+		}
+        private void HandleHallSpawn()
+        {
+        }
+        private void HandleHallDespawn()
+        {
+        }
+        private void InitNPC(NPC npc, Vector3 position, float angle)
+        {
+            npc.SetPosition(position);
+            npc.SetRotation(angle);
+            npcProxy.AddNPC(npc);
+        }
 		private void HandleDialogShow(NPC npc)
 		{
 			currentNPC = npc;
@@ -135,20 +158,7 @@ namespace GameLogic
 
 			NPCData data = npc.Data;
 			NPCEventData eventData = npc.EventData;
-			if (eventData.Type == NPCEventType.Normal)
-			{
-				panel.Init(data.Name, eventData.FirstTalkList);
-			}
-			else if (eventData.Type == NPCEventType.Result)
-			{
-                List<string> talkList = npc.State == NPCState.Normal ? eventData.FirstTalkList : eventData.EndTalkList;
-				panel.Init(data.Name, talkList);
-			}
-			else if (eventData.Type == NPCEventType.Task)
-			{
-
-			}
-
+            panel.Init(data.Name, eventData.TalkList);
 		}
 
 		private void OnDialogClick()
@@ -159,7 +169,6 @@ namespace GameLogic
 				Game.Instance.SwitchStage(StageEnum.Maze);
 			}
 			currentNPC = null;
-			
 		}
 	}
 }

@@ -15,12 +15,14 @@ namespace GameLogic
 
         private MonsterProxy monsterProxy;
         private ExplorationProxy explorationProxy;
+        private DropProxy dropProxy;
 
         public override void OnRegister()
         {
             base.OnRegister();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
+            dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
         }
         public override IList<Enum> ListNotificationInterests ()
         {
@@ -59,6 +61,7 @@ namespace GameLogic
 
                 monsterProxy.SaveRecord();
                 explorationProxy.SaveRecord();
+                dropProxy.SaveRecord();
 
                 GameRecord gameRecord = new GameRecord();
                 gameRecord.RandomSeed = Maze.Instance.Seed;
@@ -66,7 +69,7 @@ namespace GameLogic
                 gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().CreateRecord();
                 gameRecord.Monsters = monsterProxy.RecordDic;
                 gameRecord.Hall = facade.RetrieveProxy<HallProxy>().CreateRecord();
-                gameRecord.Items = facade.RetrieveProxy<DropProxy>().CreateRecord();
+                gameRecord.Items = dropProxy.RecordDic;
                 gameRecord.Explorations = explorationProxy.RecordDic;
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
@@ -106,7 +109,7 @@ namespace GameLogic
                 facade.RetrieveProxy<HeroProxy>().SetRecord(gameRecord.Heroes);
                 monsterProxy.RecordDic = gameRecord.Monsters;
                 facade.RetrieveProxy<HallProxy>().SetRecord(gameRecord.Hall);
-                facade.RetrieveProxy<DropProxy>().SetRecord(gameRecord.Items);
+                dropProxy.RecordDic = gameRecord.Items;
                 explorationProxy.RecordDic = gameRecord.Explorations;
 
                 Game.Instance.IsNewGame = false;

@@ -28,10 +28,7 @@ namespace StaticData
                     data.Kid = StaticReader.ReadInt(GetContent(col++));
                     data.AppearScene = StaticReader.ReadEnum<NPCAppearScene>(GetContent(col++));
                     data.Type = StaticReader.ReadEnum<NPCEventType>(GetContent(col++));
-                    data.FirstTalkList = StaticReader.ReadStringList(GetContent(col++));
-                    data.InTaskTalkList = StaticReader.ReadStringList(GetContent(col++));
-                    data.FinishTalkList = StaticReader.ReadStringList(GetContent(col++));
-                    data.EndTalkList = StaticReader.ReadStringList(GetContent(col++));
+                    data.TalkList = StaticReader.ReadStringList(GetContent(col++));
 
                     typeDic[data.AppearScene].Add(data);
                     kvDic.Add(data.Kid, data);

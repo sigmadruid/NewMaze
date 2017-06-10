@@ -24,10 +24,10 @@ namespace GameLogic
         {
             return new Enum[]
             {
-//                NotificationEnum.BLOCK_SPAWN,
-//                NotificationEnum.BLOCK_DESPAWN,
-//                NotificationEnum.HALL_SPAWN,
-//                NotificationEnum.HALL_DESPAWN,
+                NotificationEnum.BLOCK_SPAWN,
+                NotificationEnum.BLOCK_DESPAWN,
+                NotificationEnum.HALL_SPAWN,
+                NotificationEnum.HALL_DESPAWN,
 				NotificationEnum.DROP_CREATED,
                 NotificationEnum.DROP_PICKED_UP,
             };
@@ -39,26 +39,22 @@ namespace GameLogic
             {
                 case NotificationEnum.BLOCK_SPAWN:
                     {
-    					Block block = notification.Body as Block;
-                        HandleItemSpawn(block);
+                        HandleBlockSpawn();
                         break;
                     }
                 case NotificationEnum.BLOCK_DESPAWN:
     				{
-    					Block block = notification.Body as Block;
-                        HandleItemDespawn(block);
+                        HandleBlockDespawn();
     					break;
     				}
                 case NotificationEnum.HALL_SPAWN:
                     {
-                        Hall hall = notification.Body as Hall;
-                        HandleItemSpawn(hall);
+                        HandleHallSpawn();
                         break;
                     }
                 case NotificationEnum.HALL_DESPAWN:
                     {
-                        Hall hall = notification.Body as Hall;
-                        HandleItemDespawn(hall);
+                        HandleHallDespawn();
                         break;
                     }
 				case NotificationEnum.DROP_CREATED:
@@ -76,50 +72,30 @@ namespace GameLogic
             }
         }
 
-		private void HandleItemSpawn(Block block)
+		private void HandleBlockSpawn()
 		{
-            block.ForeachNode((MazePosition mazePos) =>
+            if(dropProxy.RecordDic.ContainsKey(0))
+            {
+                List<ItemRecord> recordList = dropProxy.RecordDic[0];
+                for (int i = 0; i < recordList.Count; ++i)
                 {
-                    int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                    List<ItemRecord> recordList = dropProxy.GetRecordList(location);
-                    if (recordList != null)
-                    {
-                        for (int i = 0; i < recordList.Count; ++i)
-                        {
-                            ItemRecord record = recordList[i];
-                            Item item = Item.Create(record);
-                            dropProxy.AddItem(item);
-                        }
-                    }
-                });
-
+                    ItemRecord record = recordList[i];
+                    Item item = Item.Create(record);
+                    dropProxy.AddItem(item);
+                }
+            }
 		}
-		private void HandleItemDespawn(Block block)
+		private void HandleBlockDespawn()
 		{
-            List<Item> toHideItemList = new List<Item>();
-            dropProxy.IterateDrops((Item item) => 
-            {
-                MazePosition itemPos = Maze.Instance.GetMazePosition(item.WorldPosition);
-                if (block.Contains(itemPos.Col, itemPos.Row))
-				{
-					toHideItemList.Add(item);
-				}
-			});
-
-            dropProxy.InitRecordList(block);
-
-			for (int i = 0; i < toHideItemList.Count; ++i)
-			{
-                Item drop = toHideItemList[i];
-				dropProxy.HideItem(drop.Uid);
-			}
+            dropProxy.SaveRecord();
+            dropProxy.Dispose();
 		}
-        private void HandleItemSpawn(Hall hall)
+        private void HandleHallSpawn()
         {
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            List<ItemRecord> recordList = dropProxy.GetRecordList(location);
-            if (recordList != null)
+            int hallKid = Hall.Instance.Data.Kid;
+            if(dropProxy.RecordDic.ContainsKey(hallKid))
             {
+                List<ItemRecord> recordList = dropProxy.RecordDic[hallKid];
                 for (int i = 0; i < recordList.Count; ++i)
                 {
                     ItemRecord record = recordList[i];
@@ -128,21 +104,10 @@ namespace GameLogic
                 }
             }
         }
-        private void HandleItemDespawn(Hall hall)
+        private void HandleHallDespawn()
         {
-            List<Item> toHideItemList = new List<Item>();
-            dropProxy.IterateDrops((Item item) => 
-                {
-                    toHideItemList.Add(item);
-                });
-
-            dropProxy.InitRecordList(hall);
-
-            for (int i = 0; i < toHideItemList.Count; ++i)
-            {
-                Item drop = toHideItemList[i];
-                dropProxy.HideItem(drop.Uid);
-            }
+            dropProxy.SaveRecord();
+            dropProxy.Dispose();
         }
         private void HandleItemSpawnSingle(int dropKid, Vector3 position)
 		{
@@ -163,9 +128,10 @@ namespace GameLogic
                 item.PickedUp();
                 packProxy.ChangeCount(item.Data.Kid, item.Info.Count);
                 dropProxy.RemoveItem(item.Uid);
+                Item.Recycle(item);
+
 			}
-            string title = itemScript.name;
-            TitlePanel.Show(title);
+
 		}
     }
 }

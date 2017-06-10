@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,9 +11,9 @@ namespace GameLogic
 {
     public class DropProxy : Proxy
     {
-        public delegate void IterateFunc(Item item);
+        private Dictionary<string, Item> itemBlockDic = new Dictionary<string, Item>();
+        private Dictionary<string, Item> itemHallDic = new Dictionary<string, Item>();
 
-        private Dictionary<string, Item> itemDic = new Dictionary<string, Item>();
         public Dictionary<int, List<ItemRecord>> RecordDic = new Dictionary<int, List<ItemRecord>>();
 
         public void Init()
@@ -20,37 +21,34 @@ namespace GameLogic
         }
 		public void Dispose()
 		{
-            ClearItems();
-		}
-        public Dictionary<int, List<ItemRecord>> CreateRecord()
-        {
-            int location;
-            if(Hall.Instance != null)
+            Dictionary<string, Item> itemDic = GetCurrentDic();
+            var enumerator = itemDic.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                location = Maze.GetCurrentLocation(Hall.Instance.Data.Kid);
-                InitRecordList(Hall.Instance);
+                Item.Recycle(enumerator.Current.Value);
+            }
+            itemDic.Clear();
+		}
+        public void SaveRecord()
+        {
+            int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
+            Dictionary<string, Item> itemDic = GetCurrentDic();
+
+            List<ItemRecord> recordList = null;
+            if(RecordDic.ContainsKey(hallKid))
+            {
+                recordList = RecordDic[hallKid];
+                recordList.Clear();
             }
             else
             {
-                BlockProxy blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
-                blockProxy.ForeachBlocks((Block block) =>
-                    {
-                        InitRecordList(block);
-                    });
+                recordList = new List<ItemRecord>();
+                RecordDic[hallKid] = recordList;
             }
-            var enumerator = itemDic.GetEnumerator();
-            while(enumerator.MoveNext())
+            foreach(Item item in itemDic.Values)
             {
-                Item item = enumerator.Current.Value;
-                location = Maze.GetCurrentLocation(item.WorldPosition);
-                List<ItemRecord> recordList = GetRecordList(location);
                 recordList.Add(item.ToRecord());
             }
-            return RecordDic;
-        }
-        public void SetRecord(Dictionary<int, List<ItemRecord>> recordDic)
-        {
-            RecordDic = recordDic;
         }
 
         public static ItemInfo GenerateItemInfoByDrop(DropData dropData)
@@ -63,19 +61,21 @@ namespace GameLogic
             return info;
         }
 		
-		public void IterateDrops(IterateFunc func)
+        public void ForeachDrops(Action<Item> action)
 		{
-			if (func == null) { return; }
+			if (action == null) { return; }
 			
-            Dictionary<string, Item>.Enumerator enumerator = itemDic.GetEnumerator();
+            Dictionary<string, Item> itemDic = GetCurrentDic();
+            var enumerator = itemDic.GetEnumerator();
             while(enumerator.MoveNext())
             {
-                func(enumerator.Current.Value);
+                action(enumerator.Current.Value);
             }
 		}
 		
         public Item GetItemByUid(string uid)
         {
+            Dictionary<string, Item> itemDic = GetCurrentDic();
             if(!itemDic.ContainsKey(uid))
             {
                 BaseLogger.Log("can't find item with uid: " + uid);
@@ -85,61 +85,26 @@ namespace GameLogic
 
         public void AddItem(Item item)
 		{
+            Dictionary<string, Item> itemDic = GetCurrentDic();
 			if (!itemDic.ContainsKey(item.Uid))
 			{
 				itemDic.Add(item.Uid, item);
 			}
 		}
 
-		public void HideItem(string uid)
-		{
-			if (itemDic.ContainsKey(uid))
-			{
-                Item item = itemDic[uid];
-                int location = Maze.GetCurrentLocation(item.WorldPosition);
-                List<ItemRecord> recordList = GetRecordList(location);
-				recordList.Add(item.ToRecord() as ItemRecord);
-				itemDic.Remove(uid);
-                Item.Recycle(item);
-			}
-		}
-
 		public void RemoveItem(string uid)
 		{
+            Dictionary<string, Item> itemDic = GetCurrentDic();
 			if (itemDic.ContainsKey(uid))
 			{
                 Item item = itemDic[uid];
-                int location = Maze.GetCurrentLocation(item.WorldPosition);
-                List<ItemRecord> recordList = GetRecordList(location);
-				if (recordList != null)
-				{
-					for (int i = 0; i < recordList.Count; ++i)
-					{
-						ItemRecord record = recordList[i];
-						if (record.Uid == uid)
-						{
-							recordList.RemoveAt(i);
-							break;
-						}
-					}
-				}
 				itemDic.Remove(uid);
-                Item.Recycle(item);
 			}
 		}
-
-        public void ClearItems()
-        {
-            Dictionary<string, Item>.Enumerator enumerator = itemDic.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                Item.Recycle(enumerator.Current.Value);
-            }
-            itemDic.Clear();
-        }
 
         public Item FindNearbyItem(Vector3 position)
 		{
+            Dictionary<string, Item> itemDic = GetCurrentDic();
             foreach(Item item in itemDic.Values)
 			{
 				if (Vector3.SqrMagnitude(item.WorldPosition - position) < GlobalConfig.DropConfig.NearSqrDistance)
@@ -150,33 +115,10 @@ namespace GameLogic
 			return null;
 		}
 
-        public void InitRecordList(Block block)
-		{
-            if(block.IsRoom)
-            {
-                block.ForeachNode((MazePosition mazePos) =>
-                    {
-                        int location = Maze.GetCurrentLocation(mazePos.Col, mazePos.Row);
-                        RecordDic[location] = new List<ItemRecord>();
-                    });
-            }
-            else
-            {
-                int location = Maze.GetCurrentLocation(block.Col, block.Row);
-                RecordDic[location] = new List<ItemRecord>();
-            }
-        }
-        public void InitRecordList(Hall hall)
+        private Dictionary<string, Item> GetCurrentDic()
         {
-            int location = Maze.GetCurrentLocation(hall.Data.Kid);
-            RecordDic[location] = new List<ItemRecord>();
+            return Hall.IsActive ? itemHallDic : itemBlockDic;
         }
-        public List<ItemRecord> GetRecordList(int location)
-		{
-			List<ItemRecord> recordList = null;
-            RecordDic.TryGetValue(location, out recordList);
-			return recordList;
-		}
     }
 }
 

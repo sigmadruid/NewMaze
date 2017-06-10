@@ -1,6 +1,6 @@
-Kid,AppearScene,Type,FirstTalkList,InTaskTalkList,FinishTalkList,EndTalkList
-int,NPCAppearScene,NPCEventType,List<string>,List<string>,List<string>,List<string>
-60001,HomeTown,Normal,npc.dialog.1#npc.dialog.2,,,
-60002,Maze,Normal,npc.dialog.3,,,
-60003,Maze,Normal,npc.dialog.4,,,
-60004,Maze,Normal,npc.dialog.5#npc.dialog.6,,,
+Kid,AppearScene,Type,FirstTalkList
+int,NPCAppearScene,NPCEventType,List<string>
+60001,HomeTown,Normal,npc.dialog.1#npc.dialog.2
+60002,Maze,Normal,npc.dialog.3
+60003,Maze,Normal,npc.dialog.4
+60004,Maze,Normal,npc.dialog.5#npc.dialog.6

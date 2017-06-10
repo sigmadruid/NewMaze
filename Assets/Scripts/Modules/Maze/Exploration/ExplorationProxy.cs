@@ -24,7 +24,7 @@ namespace GameLogic
         }
         public void Dispose()
         {
-            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            Dictionary<string, Exploration> explorationDic = GetCurrentDic();
             foreach(Exploration exploration in explorationDic.Values)
             {
                 Exploration.Recycle(exploration);
@@ -36,7 +36,7 @@ namespace GameLogic
         public void SaveRecord()
         {
             int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
-            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            Dictionary<string, Exploration> explorationDic = GetCurrentDic();
 
             List<ExplorationRecord> recordList = null;
             if(RecordDic.ContainsKey(hallKid))
@@ -80,7 +80,7 @@ namespace GameLogic
 
 		public void AddExpl(Exploration exploration)
 		{
-            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            Dictionary<string, Exploration> explorationDic = GetCurrentDic();
             if (!explorationDic.ContainsKey(exploration.Uid))
 			{
                 explorationDic.Add(exploration.Uid, exploration);
@@ -88,7 +88,7 @@ namespace GameLogic
 		}
 		public void RemoveExpl(string uid)
 		{
-            Dictionary<string, Exploration> explorationDic = Hall.IsActive ? explorationHallDic : explorationBlockDic;
+            Dictionary<string, Exploration> explorationDic = GetCurrentDic();
             if (explorationDic.ContainsKey(uid))
 			{
                 Exploration expl = explorationBlockDic[uid];
@@ -140,6 +140,11 @@ namespace GameLogic
         {
             RemoveExpl(expl.Uid);
             Exploration.Recycle(expl);
+        }
+
+        private Dictionary<string, Exploration> GetCurrentDic()
+        {
+            return Hall.IsActive ? explorationHallDic : explorationBlockDic;
         }
     }
 }

@@ -75,7 +75,6 @@ namespace GameLogic
 			}
 		}
 
-		//When spawn a block, check if any monster already stores on this pos.
 		private void HandleBlockInit()
 		{
             if(monsterProxy.RecordDic.ContainsKey(0))

@@ -31,7 +31,7 @@ namespace GameLogic
 //            BaseLogger.LogFormat("Maze seed is: {0}", seed);
 
             //For test
-            Random.seed = 6332611;
+//            Random.seed = 6332611;
 			
 			mazeTable = new MazeTable();
 			mazeTable.Init(mazeData.Cols, mazeData.Rows);
