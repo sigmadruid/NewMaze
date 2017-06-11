@@ -5,6 +5,8 @@ using System;
 using Base;
 using GameLogic;
 
+using HighlightingSystem;
+
 public class ItemScript : EntityScript
 {
     private const float DURATION = 1f;
@@ -17,10 +19,12 @@ public class ItemScript : EntityScript
     private Vector3 midPosition;
 
     private Collider trigger;
+    private Highlighter highlighter;
 
     void Awake()
     {
         trigger = GetComponent<Collider>();
+        highlighter = GetComponent<Highlighter>();
     }
 
     void Update()
@@ -34,6 +38,15 @@ public class ItemScript : EntityScript
                 isFlying = false;
                 trigger.enabled = true;
             }
+        }
+
+        if(InputManager.Instance.MouseHoverObject == gameObject)
+        {
+            highlighter.ConstantOnImmediate(Color.white);
+        }
+        else
+        {
+            highlighter.ConstantOffImmediate();
         }
     }
 

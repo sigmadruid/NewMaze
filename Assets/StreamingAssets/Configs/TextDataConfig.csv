@@ -8,6 +8,7 @@ common.daytitle,光明降临
 common.nighttitle,黑暗蔓延
 common.transporter.to,确认传送到未知的区域？
 common.transporter.from,确认回到迷宫？
+common.talk.continue_tip,点击空格键继续...
 ,NPC
 npc.name.sage,贤者
 npc.name.wizard,巫师

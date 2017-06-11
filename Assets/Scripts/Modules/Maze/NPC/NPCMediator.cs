@@ -12,7 +12,7 @@ namespace GameLogic
 {
 	public class NPCMediator : Mediator
 	{
-		private DialogPanel panel;
+		private TalkPanel panel;
 
         private BlockProxy blockProxy;
 		private NPCProxy npcProxy;
@@ -179,7 +179,7 @@ namespace GameLogic
 		{
 			currentNPC = npc;
 
-			panel = PopupManager.Instance.CreateAndAddPopup<DialogPanel>();
+			panel = PopupManager.Instance.CreateAndAddPopup<TalkPanel>();
 			panel.CallbackDialogFinish = OnTalkFinished;
 
 			string npcName = TextDataManager.Instance.GetData(npc.Data.Name);

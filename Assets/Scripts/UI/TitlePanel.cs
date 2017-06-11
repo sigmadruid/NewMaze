@@ -23,7 +23,7 @@ public class TitlePanel : BasePopupView
         group.alpha = 0f;
 		LabelTitle.text = title;
 
-        Tweener tweener =  GetComponent<CanvasGroup>().DOFade(1f, duration).SetLoops(2, LoopType.Yoyo);
+        Tweener tweener =  group.DOFade(1f, duration).SetLoops(2, LoopType.Yoyo);
         tweener.OnComplete(OnFinished);
 	}
 

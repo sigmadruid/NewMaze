@@ -169,7 +169,8 @@ namespace GameLogic
                 if(expl != null)
                 {
                     expl.OnFunction();
-                    explorationProxy.Claim(expl);
+                    if (expl.Data.Type == ExplorationType.Chest)
+                        explorationProxy.Claim(expl);
                 }
             }
         }

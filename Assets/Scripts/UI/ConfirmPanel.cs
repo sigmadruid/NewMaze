@@ -33,7 +33,7 @@ namespace GameUI
             ClickEventTrigger.Get(ButtonConfirm.gameObject).onClick = OnConfirm;
             ClickEventTrigger.Get(ButtonCancel.gameObject).onClick = OnCancel;
 
-            UILocalizer.Replace(transform);
+            UILocalizer.LocalizeByName(transform);
         }
         
         private void OnConfirm(GameObject go)
