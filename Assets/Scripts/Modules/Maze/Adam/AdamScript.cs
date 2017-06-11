@@ -21,6 +21,8 @@ namespace GameLogic
 
         protected EffectScript effectScript;
 
+        private int currentEliteHash;
+
         #region Life Cycle
 
         protected override void Awake()
@@ -82,15 +84,11 @@ namespace GameLogic
         {
             base.Skill(skillID, attackSpeed);
         }
-        public override void Hit(bool forceStunned = false)
+        public override void Hit()
         {
-            return;
-
-            if (Game.Instance.IsPause) { return; }
-
-            movementScript.SetDestination(Vector3.zero, 0f);
+            base.Hit();
             animator.speed = 1f;
-            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
+            animator.SetTrigger(currentEliteHash);
         }
         public override void Die()
         {
@@ -107,6 +105,7 @@ namespace GameLogic
             animator.speed = 1f;
             if (!first)
                 animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
+            currentEliteHash = eliteHash;
             animator.SetTrigger(eliteHash);
         }
         public override void PlayAnimation(int hash)

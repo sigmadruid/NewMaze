@@ -281,10 +281,6 @@ namespace GameLogic
         {
             Script.Die();
         }
-        private void OnDie()
-        {
-            CallbackDie();
-        }
         public void PlayAnimation(string trigger)
         {
             int hash = Animator.StringToHash(trigger);
@@ -332,7 +328,18 @@ namespace GameLogic
                 Script.RightWeapon.Attach(Script.RightHandPosTransform);
             }
         }
-
+        private void OnHitStart()
+        {
+            Info.IsStunned = true;
+        }
+        private void OnHitEnd()
+        {
+            Info.IsStunned = false;
+        }
+        private void OnDieEnd()
+        {
+            CallbackDie();
+        }
         private void OnTrapAttack(int trapKid)
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
@@ -356,7 +363,9 @@ namespace GameLogic
             adam.Script.Uid = adam.Uid;
             adam.Script.CallbackUpdate = adam.Update;
             adam.Script.CallbackSlowUpdate = adam.SlowUpdate;
-            adam.Script.CallbackDie = adam.OnDie;
+            adam.Script.CallbackHitStart = adam.OnHitStart;
+            adam.Script.CallbackHitEnd = adam.OnHitEnd;
+            adam.Script.CallbackDieEnd = adam.OnDieEnd;
             adam.Script.CallbackSkillMiddle = adam.OnSkillMiddle;
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackUnsheath = adam.OnUnsheath;

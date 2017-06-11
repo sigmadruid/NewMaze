@@ -270,10 +270,11 @@ namespace Battle
                 return false;
 
             Skill skill = SkillList[index - 1];
-            return skill.CD <= 0 && CurrentSkill == null;
+            return !IsStunned && skill.CD <= 0 && CurrentSkill == null;
         }
 
         #endregion
+
 	}
 
 }

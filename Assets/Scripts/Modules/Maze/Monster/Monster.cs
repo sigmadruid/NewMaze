@@ -89,6 +89,14 @@ namespace GameLogic
         {
             Info.CurrentSkill = null;
         }
+        private void OnHitStart()
+        {
+            Info.IsStunned = true;
+        }
+        private void OnHitEnd()
+        {
+            Info.IsStunned = false;
+        }
         private void OnDieEnd()
         {
             ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().RemoveMonster(Uid);
@@ -102,7 +110,7 @@ namespace GameLogic
             context.Attack = data.Attack;
             context.Critical = 0;
             battleProxy.DoAttackMonster(this, context);
-            Script.Hit(true);
+            Script.Hit();
         }
 
 		#endregion
@@ -205,7 +213,9 @@ namespace GameLogic
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;
             monster.Script.CallbackSkillMiddle = monster.OnSkillMiddle;
             monster.Script.CallbackSkillEnd = monster.OnSkillEnd;
-            monster.Script.CallbackDie = monster.OnDieEnd;
+            monster.Script.CallbackHitStart = monster.OnHitStart;
+            monster.Script.CallbackHitEnd = monster.OnHitEnd;
+            monster.Script.CallbackDieEnd = monster.OnDieEnd;
             monster.Script.CallbackTrapAttack = monster.OnTrapAttack;
             monster.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().AddMonster(monster);

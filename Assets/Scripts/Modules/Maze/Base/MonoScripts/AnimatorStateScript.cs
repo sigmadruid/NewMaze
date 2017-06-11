@@ -15,6 +15,7 @@ namespace GameLogic
         UNSHEATH,
         SHEATH,
 
+        HIT,
         DIE,
     }
     public class AnimatorStateScript : StateMachineBehaviour

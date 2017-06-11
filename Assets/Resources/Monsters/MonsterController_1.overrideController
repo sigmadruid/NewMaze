@@ -7,4 +7,14 @@ AnimatorOverrideController:
   m_PrefabInternal: {fileID: 0}
   m_Name: MonsterController_1
   m_Controller: {fileID: 9100000, guid: 0abc32c98dfb94e5b8dc2befae50218f, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 1288c3ccdf03a4e2f8e74173a942cd21, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 1288c3ccdf03a4e2f8e74173a942cd21, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 0f725ad89e41444ee9753f93c056e141, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 0f725ad89e41444ee9753f93c056e141, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 96f00a1740e484698875726e06c04399, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 96f00a1740e484698875726e06c04399, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 01605c06200004e32a62414dba8197e4, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 01605c06200004e32a62414dba8197e4, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 08bfda8905393e1458c3459025eb5ba6, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 08bfda8905393e1458c3459025eb5ba6, type: 3}

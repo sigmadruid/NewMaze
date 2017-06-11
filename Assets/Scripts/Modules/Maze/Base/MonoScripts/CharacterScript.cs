@@ -20,7 +20,9 @@ namespace GameLogic
         public Action CallbackSlowUpdate;
         public Action<int> CallbackSkillMiddle;
         public Action CallbackSkillEnd;
-        public Action CallbackDie;
+        public Action CallbackHitStart;
+        public Action CallbackHitEnd;
+        public Action CallbackDieEnd;
 
     	public Transform TopPosTransform;
     	public Transform BottomPosTransform;
@@ -149,8 +151,12 @@ namespace GameLogic
             animator.speed = attackSpeed;
             animator.SetTrigger(skillTrigger);
     	}
-        public virtual void Hit(bool forceStunned = false)
+        public virtual void Hit()
     	{
+            if (Game.Instance.IsPause) { return; }
+
+            movementScript.SetDestination(Vector3.zero, 0f);
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
     	}
         public virtual void Die()
     	{
@@ -182,6 +188,9 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.SHEATH:
                     break;
+                case AnimatorEventType.HIT:
+                    OnHitStart();
+                    break;
                 case AnimatorEventType.DIE:
                     OnDieStart();
                     break;
@@ -201,6 +210,8 @@ namespace GameLogic
                 case AnimatorEventType.SHEATH:
                     OnSheath();
                     break;
+                case AnimatorEventType.HIT:
+                    break;
                 case AnimatorEventType.DIE:
                     break;
             }
@@ -217,6 +228,9 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.SHEATH:
                     break;
+                case AnimatorEventType.HIT:
+                    OnHitEnd();
+                    break;
                 case AnimatorEventType.DIE:
                     OnDieEnd();
                     break;
@@ -230,14 +244,12 @@ namespace GameLogic
         }
         protected virtual void OnSkillMiddle()
         {
-            if (CallbackSkillMiddle != null)
-                CallbackSkillMiddle(effectIndex++);
+            if (CallbackSkillMiddle != null) CallbackSkillMiddle(effectIndex++);
         }
         protected virtual void OnSkillEnd()
         {
             animator.speed = 1f;
-            if (CallbackSkillEnd != null)
-                CallbackSkillEnd();
+            if (CallbackSkillEnd != null) CallbackSkillEnd();
         }
         protected virtual void OnUnsheath()
         {
@@ -245,15 +257,20 @@ namespace GameLogic
         protected virtual void OnSheath()
         {
         }
+        protected virtual void OnHitStart()
+        {
+            if (CallbackHitStart != null) CallbackHitStart();
+        }
+        protected virtual void OnHitEnd()
+        {
+            if (CallbackHitEnd != null) CallbackHitEnd();
+        }
         protected virtual void OnDieStart()
         {
         }
         protected virtual void OnDieEnd()
         {
-            if (CallbackDie != null)
-            {
-                CallbackDie();
-            }
+            if (CallbackDieEnd != null) CallbackDieEnd();
         }
 
         #endregion
