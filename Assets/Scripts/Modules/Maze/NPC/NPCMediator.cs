@@ -36,7 +36,8 @@ namespace GameLogic
                 NotificationEnum.BLOCK_DESPAWN,
                 NotificationEnum.HALL_SPAWN,
                 NotificationEnum.HALL_DESPAWN,
-				NotificationEnum.NPC_DIALOG_SHOW,
+                NotificationEnum.KEY_DOWN,
+                NotificationEnum.NPC_DIALOG_SHOW,
 			};
 		}
 
@@ -73,6 +74,12 @@ namespace GameLogic
                     HandleHallDespawn();
                     break;
                 }
+                case NotificationEnum.KEY_DOWN:
+                    {
+                        KeyboardActionType actionType = (KeyboardActionType)notification.Body;
+                        HandleFunction(actionType);
+                        break;
+                    }
 				case NotificationEnum.NPC_DIALOG_SHOW:
 					NPC npc = notification.Body as NPC;
 					HandleDialogShow(npc);
@@ -93,8 +100,7 @@ namespace GameLogic
 			int npcID = IDManager.Instance.GetKid(IDType.NPC, 1);
 			int npcEventID = IDManager.Instance.GetKid(IDType.NPCEvent, 1);
 			NPC npc = NPC.Create(npcID, npcEventID);
-			npc.SetPosition(new Vector3(-1.45f, -0.1f, 17));
-			npc.SetRotation(180f);
+            InitNPC(npc, new Vector3(-1.45f, -0.1f, 17), 180f);
 		}
 		private void HandleBlockSpawn()
 		{
@@ -146,12 +152,35 @@ namespace GameLogic
             npc.SetRotation(angle);
             npcProxy.AddNPC(npc);
         }
+        private void HandleFunction(KeyboardActionType actionType)
+        {
+            if(actionType == KeyboardActionType.Function)
+            {
+                TriggerEntityScript triggerEntity = TriggerEntityScript.FindNearbyExploration(Adam.Instance.WorldPosition);
+                if(triggerEntity != null)
+                {
+                    NPC npc = npcProxy.GetNPC(triggerEntity.Uid);
+                    if(npc != null)
+                    {
+                        npc.OnFunction();
+                    }
+                }
+            }
+            else if(actionType == KeyboardActionType.Talk)
+            {
+                if(panel != null)
+                {
+                    panel.Continue();
+                }
+            }
+
+        }
 		private void HandleDialogShow(NPC npc)
 		{
 			currentNPC = npc;
 
 			panel = PopupManager.Instance.CreateAndAddPopup<DialogPanel>();
-			panel.CallbackDialogFinish = OnDialogClick;
+			panel.CallbackDialogFinish = OnTalkFinished;
 
 			string npcName = TextDataManager.Instance.GetData(npc.Data.Name);
 			panel.LabelTitle.text = npcName;
@@ -161,7 +190,7 @@ namespace GameLogic
             panel.Init(data.Name, eventData.TalkList);
 		}
 
-		private void OnDialogClick()
+		private void OnTalkFinished()
 		{
 			PopupManager.Instance.RemovePopup(panel);
 			if (currentNPC.Data.AppearScene == NPCAppearScene.HomeTown)

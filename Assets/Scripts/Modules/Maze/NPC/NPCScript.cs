@@ -7,7 +7,7 @@ using GameLogic;
 
 using HighlightingSystem;
 
-public class NPCScript : EntityScript
+public class NPCScript : TriggerEntityScript
 {
     public Transform IconPos;
 
@@ -48,6 +48,7 @@ public class NPCScript : EntityScript
 		    hud.gameObject.SetActive(true);
 		if (callbackEnter != null)
 			callbackEnter();
+        AddSelfTrigger();
 	}
 	void OnTriggerExit(Collider other)
 	{
@@ -57,6 +58,7 @@ public class NPCScript : EntityScript
 		    hud.gameObject.SetActive(false);
 		if (callbackExit != null)
 			callbackExit();
+        RemoveSelfTrigger();
 	}
 
     public void Init(string uid, Action click, Action enter, Action exit)
@@ -66,7 +68,7 @@ public class NPCScript : EntityScript
         callbackExit = exit;
         if(IconPos != null)
         {
-            hud = HUDIcon.Create(HUDIconType.NPC, click);
+            hud = HUDIcon.Create(HUDIconType.NPC);
             hud.gameObject.SetActive(false);
         }
         transform.parent = RootTransform.Instance.NPCRoot;

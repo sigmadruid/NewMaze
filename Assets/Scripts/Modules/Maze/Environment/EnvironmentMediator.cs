@@ -45,7 +45,7 @@ namespace GameLogic
                     HandleEnvironmentShowMazeMap(show);
                     break;
                 case NotificationEnum.MOUSE_HIT_OBJECT:
-                    HandleMouseClick();
+//                    HandleMouseClick();
                     break;
 			}
 		}

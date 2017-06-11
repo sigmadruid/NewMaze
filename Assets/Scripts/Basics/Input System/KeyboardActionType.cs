@@ -7,6 +7,7 @@ namespace Base
         Attack,
         Function,
         MazeMap,
+        Talk,
     }
 }
 

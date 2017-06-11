@@ -24,7 +24,6 @@ namespace GameUI
 
 		void Awake () 
 		{
-            ClickEventTrigger.Get(ImageClick.gameObject).onClick = OnDialogClick;
 		}
 
         public void Init(string nameID, List<string> talkList)
@@ -36,18 +35,19 @@ namespace GameUI
 
 			LabelPassage.text = TextDataManager.Instance.GetData(talkList[index++]);
 		}
+
+        public void Continue()
+        {
+            if (index < talkList.Count)
+            {
+                LabelPassage.text = TextDataManager.Instance.GetData(talkList[index++]);
+            }
+            else if (CallbackDialogFinish != null)
+            {
+                index = 0;
+                CallbackDialogFinish();
+            }
+        }
 		
-		private void OnDialogClick(GameObject go)
-		{
-			if (index < talkList.Count)
-			{
-				LabelPassage.text = TextDataManager.Instance.GetData(talkList[index++]);
-			}
-			else if (CallbackDialogFinish != null)
-			{
-				index = 0;
-				CallbackDialogFinish();
-			}
-		}
 	}
 }

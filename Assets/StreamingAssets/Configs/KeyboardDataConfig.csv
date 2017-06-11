@@ -3,3 +3,4 @@ KeyboardActionType,KeyCode,string,bool
 Attack,J,,FALSE
 Function,E,,FALSE
 MazeMap,Tab,,TRUE
+Talk,Space,,FALSE

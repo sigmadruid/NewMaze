@@ -206,6 +206,11 @@ namespace GameLogic
             if(inputManager.MouseHitPosition != Vector3.zero)
             {
                 TargetPosition = inputManager.MouseHitPosition;
+                Idle();
+                LookAt(TargetPosition);
+
+                if(Game.Instance.CurrentStageType == StageEnum.HomeTown)
+                    return;
 
                 if(inputManager.HitType == MouseHitType.Left)
                     SkillIndex = 1;
@@ -216,8 +221,6 @@ namespace GameLogic
                 Skill skill = Info.GetSkill(SkillIndex);
                 if(Info.CanCastSkill(SkillIndex))
                 {
-                    Idle();
-                    LookAt(TargetPosition);
                     Skill(SkillIndex);
                 }
             }

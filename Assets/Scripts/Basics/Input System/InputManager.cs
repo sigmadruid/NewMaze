@@ -151,18 +151,15 @@ namespace Base
 
             }
 
-            Dictionary<int, KeyboardAction>.Enumerator enumerator = keyboardActionDic.GetEnumerator();
-            while(enumerator.MoveNext())
+            if(Input.anyKeyDown)
             {
-                KeyboardAction action = enumerator.Current.Value;
-                if(Input.GetKeyDown(action.Data.Key))
+                Dictionary<int, KeyboardAction>.Enumerator enumerator = keyboardActionDic.GetEnumerator();
+                while(enumerator.MoveNext())
                 {
-                    if(!IsPause || action.Data.ActiveWhenPause)
+                    KeyboardAction action = enumerator.Current.Value;
+                    if(Input.GetKeyDown(action.Data.Key))
                     {
-                        if(action.Callback != null)
-                        {
-                            action.Callback();
-                        }
+                        ApplicationFacade.Instance.DispatchNotification(NotificationEnum.KEY_DOWN, action.Data.Type);
                     }
                 }
             }
@@ -181,13 +178,13 @@ namespace Base
             uiRaycasters = GameObject.FindObjectsOfType<GraphicRaycaster>();
         }
 
-        public void SetKeyboardAction(KeyboardActionType type, Action callback)
+        public void EnableKeyboardAction(KeyboardActionType type, bool state)
         {
             int typeID = (int)type;
             if(keyboardActionDic.ContainsKey(typeID))
             {
                 KeyboardAction action = keyboardActionDic[typeID];
-                action.Callback = callback;
+                action.IsEnabled = state;
             }
         }
 

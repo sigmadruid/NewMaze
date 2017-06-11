@@ -20,14 +20,9 @@ namespace GameLogic
 
             //Framework
             InputManager.Instance.Init();
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, () =>
-                {
-                    ApplicationFacade.Instance.DispatchNotification(NotificationEnum.MAZE_MAP_SHOW);
-                });
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, () =>
-                {
-                    ApplicationFacade.Instance.DispatchNotification(NotificationEnum.EXPLORATION_FUNCTION);
-                });
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.MazeMap, true);
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Function, true);
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Talk, true);
             yield return Loading.Instance.SetProgress(LoadingState.StartStage, 10);
 
             //Logic
@@ -64,6 +59,7 @@ namespace GameLogic
 
             //Logic
 			Game.Instance.TaskManager.SetAllActive(false);
+            TriggerEntityScript.ClearTriggers();
 
             ApplicationFacade facade = ApplicationFacade.Instance;
             facade.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);

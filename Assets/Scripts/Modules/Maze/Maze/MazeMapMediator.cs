@@ -34,7 +34,7 @@ namespace GameLogic
 		{
 			return new Enum[]
 			{
-				NotificationEnum.MAZE_MAP_SHOW,
+                NotificationEnum.KEY_DOWN,
 			};
 		}
 		
@@ -42,23 +42,20 @@ namespace GameLogic
 		{
             switch((NotificationEnum)notification.NotifyEnum)
 			{
-				case NotificationEnum.MAZE_MAP_SHOW:
+                case NotificationEnum.KEY_DOWN:
 				{
-					HandleMockBlockShow();
-					break;
-				}
-				case NotificationEnum.MAZE_MAP_RESET:
-				{
-					HandleMazeMapReset();
+                    KeyboardActionType actionType = (KeyboardActionType)notification.Body;
+                    HandleMockBlockShow(actionType);
 					break;
 				}
 			}
 		}
 
-		private void HandleMockBlockShow()
+        private void HandleMockBlockShow(KeyboardActionType actionType)
 		{
+            if(actionType != KeyboardActionType.MazeMap) return;
+
 			show = !show;
-            Game.Instance.SetPause(show);
 
 			if (show)
 			{

@@ -14,8 +14,6 @@ public enum HUDIconType
 
 public class HUDIcon : BaseScreenItem 
 {
-    public Action CallbackClick;
-
     [HideInInspector]
     public Image ImageIcon;
 
@@ -24,18 +22,9 @@ public class HUDIcon : BaseScreenItem
 		base.Awake();
 
         ImageIcon = GetComponent<Image>();
-        ClickEventTrigger.Get(gameObject).onClick = OnIconClick;
 	}
 
-	private void OnIconClick(GameObject go)
-	{
-		if (CallbackClick != null)
-		{
-			CallbackClick();
-		}
-	}
-
-    public static HUDIcon Create(HUDIconType type, Action callbackClick)
+    public static HUDIcon Create(HUDIconType type)
 	{
         HUDIcon icon = PopupManager.Instance.CreateItem<HUDIcon>(RootTransform.Instance.UIIconRoot);
         Sprite sprite = null;
@@ -49,7 +38,6 @@ public class HUDIcon : BaseScreenItem
                 break;
         }
         icon.ImageIcon.sprite = sprite;
-        icon.CallbackClick = callbackClick;
 		return icon;
 	}
 	
@@ -57,7 +45,6 @@ public class HUDIcon : BaseScreenItem
 	{
 		if (icon != null)
 		{
-            icon.CallbackClick = null;
             PopupManager.Instance.RemoveItem(icon.gameObject);
 		}
 		else

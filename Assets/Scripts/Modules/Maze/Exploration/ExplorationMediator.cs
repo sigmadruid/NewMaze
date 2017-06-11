@@ -28,7 +28,7 @@ namespace GameLogic
                 NotificationEnum.BLOCK_DESPAWN,
                 NotificationEnum.HALL_SPAWN,
                 NotificationEnum.HALL_DESPAWN,
-                NotificationEnum.EXPLORATION_FUNCTION,
+                NotificationEnum.KEY_DOWN,
 			};
 		}
 
@@ -56,9 +56,10 @@ namespace GameLogic
                     HandleHallDespawn();
                     break;
                 }
-                case NotificationEnum.EXPLORATION_FUNCTION:
+                case NotificationEnum.KEY_DOWN:
                 {
-                    HandleFunction();
+                    KeyboardActionType actionType = (KeyboardActionType)notification.Body;
+                    HandleFunction(actionType);
                     break;
                 }
 			}
@@ -157,15 +158,22 @@ namespace GameLogic
             explorationProxy.AddExpl(expl);
         }
 
-        private void HandleFunction()
+        private void HandleFunction(KeyboardActionType actionType)
         {
-            Exploration enteredExpl = explorationProxy.FindNearbyExploration(Adam.Instance.WorldPosition);
-            if (enteredExpl != null)
+            if(actionType != KeyboardActionType.Function) return;
+
+            TriggerEntityScript triggerEntity = TriggerEntityScript.FindNearbyExploration(Adam.Instance.WorldPosition);
+            if(triggerEntity != null)
             {
-                enteredExpl.OnFunction();
-                explorationProxy.Claim(enteredExpl);
+                Exploration expl = explorationProxy.GetExploration(triggerEntity.Uid);
+                if(expl != null)
+                {
+                    expl.OnFunction();
+                    explorationProxy.Claim(expl);
+                }
             }
         }
+
     }
 }
 

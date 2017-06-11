@@ -8,7 +8,7 @@ using HighlightingSystem;
 
 namespace GameLogic
 {
-    public class ExplorationScript : EntityScript
+    public class ExplorationScript : TriggerEntityScript
     {
         public Transform IconPos;
 
@@ -37,6 +37,7 @@ namespace GameLogic
                     hud.gameObject.SetActive(true);
                 if (callbackEnter != null) 
                     callbackEnter();
+                AddSelfTrigger();
 			}
 		}
 		void OnTriggerExit(Collider other)
@@ -47,17 +48,18 @@ namespace GameLogic
                     hud.gameObject.SetActive(false);
                 if (callbackExit != null) 
                     callbackExit();
+                RemoveSelfTrigger();
 			}
 		}
 
-        public void Init(string uid, Action click, Action enter, Action exit)
+        public void Init(string uid, Action enter, Action exit)
         {
             Uid = uid;
             callbackEnter = enter;
             callbackExit = exit;
             if(IconPos != null)
             {
-                hud = HUDIcon.Create(HUDIconType.Exploration, click);
+                hud = HUDIcon.Create(HUDIconType.Exploration);
                 hud.gameObject.SetActive(false);
             }
             transform.parent = RootTransform.Instance.ExplorationRoot;

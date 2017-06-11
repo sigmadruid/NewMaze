@@ -31,7 +31,7 @@ namespace GameLogic
 		private void OnNPCExit()
 		{
 		}
-		private void OnNPCClick()
+        public void OnFunction()
 		{
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DIALOG_SHOW, this);
 		}
@@ -65,7 +65,7 @@ namespace GameLogic
 			npc.Data = NPCDataManager.Instance.GetData(npcKid) as NPCData;
 			npc.EventData = NPCDataManager.Instance.GetEventDataByID(eventKid);
 			npc.Script = ResourceManager.Instance.LoadAsset<NPCScript>(ObjectType.GameObject, npc.Data.GetResPath());
-            npc.Script.Init(npc.Uid, npc.OnNPCClick, npc.OnNPCEnter, npc.OnNPCExit);
+            npc.Script.Init(npc.Uid, npc.OnFunction, npc.OnNPCEnter, npc.OnNPCExit);
 			return npc;
 		}
 

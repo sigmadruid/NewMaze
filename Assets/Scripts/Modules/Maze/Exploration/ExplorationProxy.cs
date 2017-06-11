@@ -57,6 +57,16 @@ namespace GameLogic
 
         #region Add and Remove
 
+        public Exploration GetExploration(string uid)
+        {
+            Dictionary<string, Exploration> explorationDic = GetCurrentDic();
+            if(explorationDic.ContainsKey(uid))
+            {
+                return explorationDic[uid];
+            }
+            return null;
+        }
+
         public void ForeachBlockExpl(Action<Exploration> action)
         {
             if (action == null) { return; }
@@ -94,45 +104,9 @@ namespace GameLogic
                 Exploration expl = explorationBlockDic[uid];
                 explorationBlockDic.Remove(uid);
 
-                RemoveEnteredExploration(expl);
+                TriggerEntityScript.RemoveTrigger(expl.Uid);
 			}
 		}
-
-        #endregion
-
-        #region Enter and Exit
-		
-        public Exploration FindNearbyExploration(Vector3 position)
-        {
-            foreach(Exploration expl in enteredExplorationSet)
-            {
-                if (Vector3.SqrMagnitude(expl.WorldPosition - position) < GlobalConfig.ExplorationConfig.NearSqrDistance)
-                {
-                    return expl;
-                }
-            }
-            return null;
-        }
-        public void AddEnteredExploration(Exploration expl)
-        {
-            if (!enteredExplorationSet.Contains(expl))
-                enteredExplorationSet.Add(expl);
-        }
-        public void RemoveEnteredExploration(Exploration expl)
-        {
-            if (enteredExplorationSet.Contains(expl))
-                enteredExplorationSet.Remove(expl);
-        }
-        public void ForeachEntered(Action<Exploration> action)
-        {
-            if (action == null) { return; }
-
-            var enumerator = enteredExplorationSet.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                action(enumerator.Current);
-            }
-        }
 
         #endregion
 

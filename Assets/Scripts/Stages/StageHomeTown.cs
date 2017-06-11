@@ -20,9 +20,8 @@ namespace GameLogic
 
             //Framework
             InputManager.Instance.Init();
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.MazeMap, null);
-            InputManager.Instance.SetKeyboardAction(KeyboardActionType.Function, null);
-
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.MazeMap, false);
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Function, true);
             //Logic
             facade.RetrieveProxy<HeroProxy>().Init();
             facade.RetrieveProxy<PackProxy>().Init();
@@ -41,6 +40,7 @@ namespace GameLogic
 
             //Logic
             Game.Instance.TaskManager.SetActive(TaskEnum.INPUT_UPDATE, false);
+            TriggerEntityScript.ClearTriggers();
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.TOWN_HERO_DISPOSE);
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DISPOSE);
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 10);

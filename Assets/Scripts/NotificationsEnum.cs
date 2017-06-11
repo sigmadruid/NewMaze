@@ -39,8 +39,6 @@ namespace GameLogic
 		BULLET_SPAWN,
 		BULLET_DESPAWN,
 
-        EXPLORATION_FUNCTION,
-
 		DROP_CREATED,
 		DROP_PICKED_UP,
 
@@ -64,6 +62,7 @@ namespace GameLogic
 
         //Input
         MOUSE_HIT_OBJECT,
+        KEY_DOWN,
 
         #region Pack
         PACK_SHOW,

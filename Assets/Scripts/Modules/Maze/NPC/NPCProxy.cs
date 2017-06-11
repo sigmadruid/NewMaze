@@ -62,6 +62,16 @@ namespace GameLogic
             }
         }
 
+        public NPC GetNPC(string uid)
+        {
+            Dictionary<string, NPC> npcDic = GetCurrentDic();
+            if(npcDic.ContainsKey(uid))
+            {
+                return npcDic[uid];
+            }
+            return null;
+        }
+
 		public void AddNPC(NPC npc)
 		{
             Dictionary<string, NPC> npcDic = GetCurrentDic();
