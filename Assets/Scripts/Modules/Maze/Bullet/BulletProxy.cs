@@ -28,7 +28,7 @@ namespace GameLogic
             bulletDic.Clear();
         }
 
-		public void IterateMonsters(IterateFunc func)
+		public void Foreach(IterateFunc func)
 		{
 			if (func == null) { return; }
 			

@@ -275,6 +275,13 @@ namespace Battle
 
         #endregion
 
+        public virtual bool CanMove()
+        {
+            return IsAlive
+                && !IsStunned
+                && (CurrentSkill == null || CurrentSkill.Data.CanMove);
+        }
+
 	}
 
 }

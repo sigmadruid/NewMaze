@@ -108,12 +108,7 @@ namespace Battle
             return attrDic[attrID] + attrRaiseDic[attrID] * (Level - 1);
         }
 
-        public bool CanMove()
-        {
-            return IsAlive 
-                && !IsConverting 
-                && (CurrentSkill == null || CurrentSkill.Data.CanMove);
-        }
+
 
         #region Skill
 
@@ -125,6 +120,11 @@ namespace Battle
         }
 
         #endregion
+
+        public override bool CanMove()
+        {
+            return base.CanMove() && !IsConverting;
+        }
 
         public void AddExp(int exp)
         {

@@ -52,34 +52,31 @@ namespace Battle
 				return true;
 			}
 		}
+        protected bool Guess(float possibility)
+        {
+            return UnityEngine.Random.value < possibility;
+        }
 
+        protected void Flee()
+        {
+            if(currentMonster.Info.CanMove())
+            {
+                Vector3 escapeDir = (currentMonster.WorldPosition - Adam.Instance.WorldPosition).normalized;
+                currentMonster.MoveByDestination(currentMonster.WorldPosition + escapeDir);
+            }
+        }
         protected void SearchForHero()
         {
-            if(currentMonster.Info.IsStunned)
-                return;
-            destPosition = Adam.Instance.WorldPosition;
-            currentMonster.MoveByDestination(destPosition);
+            if(currentMonster.Info.CanMove())
+            {
+                destPosition = Adam.Instance.WorldPosition;
+                currentMonster.MoveByDestination(destPosition);
+            }
         }
-        protected bool CheckCollision(bool toAdam)
+        protected bool CheckCollision(Vector3 direction, float distance)
         {
-            Vector3 monsterPos = MathUtils.XZDirection(currentMonster.WorldPosition);
-            Vector3 adamPos = MathUtils.XZDirection(Adam.Instance.WorldPosition);
-
-            Vector3 origin =  monsterPos + Vector3.up * currentMonster.Script.EmitPosition.y;
-            Vector3 direction = Vector3.zero;
-            float distance = 0f;
-            if(toAdam)
-            {
-                direction = adamPos - monsterPos;
-                distance = direction.magnitude;
-            }
-            else
-            {
-                direction = currentMonster.Script.transform.forward;
-                SkillData skillData = SkillDataManager.Instance.GetData(currentData.SkillList[0]) as SkillData;
-                distance = skillData.Range;
-            }
-
+            //TODO: Make it more precise when the bullet is not a point.
+            Vector3 origin =  currentMonster.WorldPosition + Vector3.up * currentMonster.Script.EmitPosition.y;
             bool result = Physics.Raycast(origin, direction, distance, Layers.LayerBlock);
             return result;
         }

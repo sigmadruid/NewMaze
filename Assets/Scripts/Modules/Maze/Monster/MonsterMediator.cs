@@ -148,7 +148,7 @@ namespace GameLogic
 
         private void HandleEnvironmentChange(bool isNight)
         {
-            monsterProxy.ForeachInBlock((Monster monster) => 
+            monsterProxy.Foreach((Monster monster) => 
                 {
                     monster.SetAtNight(isNight);
                 });
@@ -156,10 +156,11 @@ namespace GameLogic
 
 		private void HandleBattlePause(bool isPause)
 		{
-			monsterProxy.ForeachInBlock((Monster monster) => 
-			{
-				monster.Pause(isPause);
-			});
+            monsterProxy.Foreach((Monster monster) =>
+                {
+                    monster.Pause(isPause);
+                });
+
 		}
 
 	}

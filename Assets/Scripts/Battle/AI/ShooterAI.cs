@@ -9,14 +9,14 @@ namespace Battle
 {
 	public class ShooterAI : AIBase
 	{
-		private float sqrAvoidDistance;
+		private float sqrDodgeDistance;
 		private float sqrAttackDistance;
 		private float sqrDetectDistance;
 
 		public ShooterAI (Monster monster) : base(monster)
 		{
 			sqrAttackDistance = currentData.AttackRange * currentData.AttackRange;
-			sqrAvoidDistance = currentData.DodgeRange * currentData.DodgeRange;
+            sqrDodgeDistance = currentData.DodgeRange * currentData.DodgeRange;
 			sqrDetectDistance = currentData.DetectRange * currentData.DetectRange;
 		}
 
@@ -33,6 +33,7 @@ namespace Battle
 
             Adam adam = Adam.Instance;
 			float heroSqrDistance = MathUtils.XZSqrDistance(adam.WorldPosition, currentMonster.WorldPosition);
+            Vector3 heroDir = adam.WorldPosition - currentMonster.WorldPosition;
 
             if(!adam.CanBeAttacked)
             {
@@ -47,16 +48,12 @@ namespace Battle
 			}
 
 			//To near, run away
-            if(heroSqrDistance < sqrAvoidDistance)
+            if(heroSqrDistance < sqrDodgeDistance && Delay(currentData.DodgeDelay))
             {
-//                if(Delay(currentData.DodgeDelay))
-                {
-                    Vector3 escapeDir = (currentMonster.WorldPosition - adam.WorldPosition).normalized;
-                    currentMonster.MoveByDestination(currentMonster.WorldPosition + escapeDir);
-                }
+                Flee();
             }
 			//To far, run to the hero
-            else if(heroSqrDistance > sqrAttackDistance || CheckCollision(true))
+            else if(heroSqrDistance > sqrAttackDistance || CheckCollision(heroDir, heroDir.magnitude))
             {
                 if(adam.Script != null)
                 {
@@ -75,7 +72,7 @@ namespace Battle
 					currentMonster.LookAt(adam.WorldPosition);
 					currentMonster.Skill(1);
 				}
-				else
+                else
 				{
                     currentMonster.Idle();
                     currentMonster.LookAt(adam.WorldPosition);

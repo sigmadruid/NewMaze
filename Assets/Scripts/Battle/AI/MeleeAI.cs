@@ -59,7 +59,7 @@ namespace Battle
 			}
 			else
 			{
-                if (adam.Info.IsAlive)
+                if (adam.Info.IsAlive && currentMonster.Info.CanMove())
 				{
                     SearchForHero();
 				}

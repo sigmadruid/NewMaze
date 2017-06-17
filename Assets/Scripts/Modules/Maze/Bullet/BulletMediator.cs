@@ -61,7 +61,7 @@ namespace GameLogic
 		}
 		private void HandleBattlePause(bool isPause)
 		{
-			bulletProxy.IterateMonsters((Bullet bullet) =>
+			bulletProxy.Foreach((Bullet bullet) =>
 			{
 				bullet.Pause(isPause);
 			});
