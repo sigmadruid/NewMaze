@@ -67,7 +67,7 @@ namespace GameLogic
 
         public void Idle()
         {
-            movementScript.SetDestination(Vector3.zero, 0);
+            movementScript.SetDirection(Vector3.zero, 0);
             animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, false);
         }
 

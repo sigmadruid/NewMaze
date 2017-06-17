@@ -19,6 +19,8 @@ namespace Base
 
         public bool LerpRotation;
 
+        public float Gravity = 1f;
+
         public float AngularSpeed = 5;
 
         public float StopDistance = 0.1f;
@@ -32,6 +34,8 @@ namespace Base
         private Vector3 nextPosition;
         private Vector3 currentDirection;
         private Vector3 desiredDirection;
+
+        private Vector3 moveDirection;
 
         private Seeker seeker;
         private CharacterController controller;
@@ -49,41 +53,49 @@ namespace Base
 
         void Update()
         {
-            if (path == null || !IsControllable) return;
-
-            if (nextPathIndex < path.vectorPath.Count) 
+            if(!IsControllable)
+                return;
+            
+            if(path != null)
             {
-                nextPosition = path.vectorPath[nextPathIndex];
-                desiredDirection = (nextPosition - transform.position).normalized;
-                if(LerpRotation)
+                if (nextPathIndex < path.vectorPath.Count) 
                 {
-                    currentDirection = transform.forward;
-                    currentDirection = Vector3.Lerp(currentDirection, desiredDirection, Time.deltaTime * AngularSpeed);
-                    currentDirection.Normalize();
-                }
-                else
-                {
-                    currentDirection = desiredDirection;
-                }
-                LookAt(currentDirection);
-
-                controller.Move(desiredDirection * speed * Time.deltaTime);
-
-                if (MathUtils.XZDistance(transform.position, nextPosition) < StopDistance)
-                {
-                    nextPathIndex++;
-                    if (nextPathIndex == path.vectorPath.Count)
+                    nextPosition = path.vectorPath[nextPathIndex];
+                    desiredDirection = (nextPosition - transform.position).normalized;
+                    if(LerpRotation)
                     {
-                        transform.position = path.vectorPath[path.vectorPath.Count - 1];
-                        IsMoving = false;
-                        if (CallbackMoveEnd != null) CallbackMoveEnd();
-                        path = null;
+                        currentDirection = transform.forward;
+                        currentDirection = Vector3.Lerp(currentDirection, desiredDirection, Time.deltaTime * AngularSpeed);
+                        currentDirection.Normalize();
                     }
                     else
                     {
-                        if (CallbackMoveTurn != null) CallbackMoveTurn();
+                        currentDirection = desiredDirection;
+                    }
+                    LookAt(currentDirection);
+
+                    controller.Move(desiredDirection * speed * Time.deltaTime);
+                    
+                    if (MathUtils.XZDistance(transform.position, nextPosition) < StopDistance)
+                    {
+                        nextPathIndex++;
+                        if (nextPathIndex == path.vectorPath.Count)
+                        {
+                            transform.position = path.vectorPath[path.vectorPath.Count - 1];
+                            IsMoving = false;
+                            if (CallbackMoveEnd != null) CallbackMoveEnd();
+                            path = null;
+                        }
+                        else
+                        {
+                            if (CallbackMoveTurn != null) CallbackMoveTurn();
+                        }
                     }
                 }
+            }
+            else if (moveDirection != Vector3.zero)
+            {
+                controller.Move((moveDirection * speed + Vector3.down * Gravity) * Time.deltaTime);
             }
         }
 
@@ -115,10 +127,11 @@ namespace Base
         {
             if(Destination == Vector3.zero)
             {
+                this.speed = speed;
+                moveDirection = direction;
                 IsMoving = direction != Vector3.zero;
                 if(IsMoving)
                 {
-                    controller.Move(direction * speed * Time.deltaTime);
                     LookAt(direction);
                 }
             }
