@@ -123,7 +123,7 @@ namespace Battle
 //                {
 //                    adam.ClearTarget();
 //                }
-                heroProxy.AddExp(monster.Data.Exp);
+                adam.Info.AddExp(monster.Data.Exp);
                 Debug.LogErrorFormat("lv.{0}, exp:{1}", adam.Info.Level, adam.Info.Exp);
             }
         }

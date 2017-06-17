@@ -25,7 +25,7 @@ namespace GameLogic
             get { return data as HeroData; }
             protected set { data = value; }
         }
-        public new HeroInfo Info
+        public HeroInfo Info
         {
             get { return info as HeroInfo; }
             protected set { info = value; }
@@ -43,7 +43,6 @@ namespace GameLogic
 
         private InputManager inputManager;
         private BattleProxy battleProxy;
-        private AdamProxy adamProxy;
 
         private static Adam instance;
         public static Adam Instance
@@ -80,12 +79,12 @@ namespace GameLogic
 
         #region Interfaces
 
-        public void Convert(HeroInfo newInfo)
+        public void Convert(HeroData data)
         {
-            Data = newInfo.Data;
-            Info = newInfo;
+            Data = data;
+            Info.Convert(data);
 
-            int hash = Animator.StringToHash(newInfo.Data.Trigger);
+            int hash = Animator.StringToHash(data.Trigger);
             Switch(hash);
         }
 
@@ -103,12 +102,12 @@ namespace GameLogic
         {
             get
             {
-                return adamProxy.IsVisible;
+                return Info.IsVisible;
             }
             set
             {
-                adamProxy.IsVisible = value;
-                Script.SetTransparent(!adamProxy.IsVisible);
+                Info.IsVisible = value;
+                Script.SetTransparent(!Info.IsVisible);
             }
         }
 
@@ -360,6 +359,7 @@ namespace GameLogic
             adam.Data = info.Data;
             adam.Info = info;
             adam.Script = ResourceManager.Instance.LoadAsset<AdamScript>(ObjectType.GameObject, adam.Data.GetResPath());
+            adam.Script.transform.parent = null;
             adam.Script.Uid = adam.Uid;
             adam.Script.CallbackUpdate = adam.Update;
             adam.Script.CallbackSlowUpdate = adam.SlowUpdate;
@@ -372,7 +372,6 @@ namespace GameLogic
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
             adam.Script.Switch(Animator.StringToHash(adam.Data.Trigger), true);
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
-            adam.adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
             adam.inputManager = InputManager.Instance;
 
             instance = adam;
@@ -391,7 +390,6 @@ namespace GameLogic
                 ResourceManager.Instance.RecycleAsset(hero.Script.gameObject);
                 hero.Script = null;
                 hero.battleProxy = null;
-                hero.adamProxy = null;
                 instance = null;
             }
             else
@@ -400,9 +398,15 @@ namespace GameLogic
             }
         }
 
-        public new AdamRecord ToRecord()
+        public new HeroRecord ToRecord()
         {
-            AdamRecord record = new AdamRecord();
+            HeroRecord record = new HeroRecord();
+            record.Kid = Data.Kid;
+            record.HP = Info.HP;
+            record.Level = Info.Level;
+            record.Exp = Info.Exp;
+            record.IsInHall = Info.IsInHall;
+            record.IsVisible = Info.IsVisible;
             record.WorldPosition = new Vector3Record(WorldPosition);
             record.WorldAngle = WorldAngle;
             return record;

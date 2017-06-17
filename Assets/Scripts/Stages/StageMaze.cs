@@ -39,7 +39,7 @@ namespace GameLogic
 
             facade.DispatchNotification(NotificationEnum.HERO_INIT);
             facade.DispatchNotification(NotificationEnum.BLOCK_INIT);
-            if(facade.RetrieveProxy<AdamProxy>().IsInHall)
+            if(Adam.Instance.Info.IsInHall)
             {
                 facade.DispatchNotification(NotificationEnum.HALL_INIT);
                 facade.DispatchNotification(NotificationEnum.HALL_SPAWN);
@@ -63,7 +63,7 @@ namespace GameLogic
 
             ApplicationFacade facade = ApplicationFacade.Instance;
             facade.DispatchNotification(NotificationEnum.BLOCK_DISPOSE);
-            if(facade.RetrieveProxy<AdamProxy>().IsInHall)
+            if(Adam.Instance.Info.IsInHall)
             {
                 facade.DispatchNotification(NotificationEnum.HALL_DISPOSE);
                 facade.DispatchNotification(NotificationEnum.HALL_DESPAWN);

@@ -18,12 +18,10 @@ namespace GameLogic
 
         private ParticleScript convertEffect;
 
-        private AdamProxy adamProxy;
 		private HeroProxy heroProxy;
 		
 		public override void OnRegister ()
 		{
-            adamProxy = ApplicationFacade.Instance.RetrieveProxy<AdamProxy>();
 			heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
 		}
 
@@ -79,18 +77,25 @@ namespace GameLogic
         private void HandleHeroInit()
 		{
 			//Init
-            int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
-            HeroInfo info = heroProxy.GetHeroInfo(heroKid);
-            adam = Adam.Create(info);
-
-            AdamRecord record = adamProxy.AdamRecord;
+            HeroRecord record = heroProxy.Record;
             if(record != null)
             {
+                HeroData data = HeroDataManager.Instance.GetData(record.Kid) as HeroData;
+                HeroInfo info = new HeroInfo(data);
+                info.Init(record);
+
+                adam = Adam.Create(info);
                 adam.SetPosition(record.WorldPosition.ToVector3());
                 adam.SetRotation(record.WorldAngle);
             }
             else
             {
+                int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
+                HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+                HeroInfo info = new HeroInfo(data);
+                info.Init();
+
+                adam = Adam.Create(info);
                 MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
                 Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
                 adam.SetPosition(startPosition);
@@ -125,7 +130,7 @@ namespace GameLogic
 
 		private void HandleHeroConvert(int heroKid)
 		{
-            if (!adam.Info.IsAlive || adamProxy.IsConverting)
+            if (!adam.Info.IsAlive || adam.Info.IsConverting)
 			{
 				return;
 			}
@@ -136,9 +141,9 @@ namespace GameLogic
 
 			InputManager.Instance.Enable = false;
 
-            adamProxy.IsConverting = true;
-            HeroInfo info = heroProxy.GetHeroInfo(heroKid);
-            adam.Convert(info);
+            adam.Info.IsConverting = true;
+            HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+            adam.Convert(data);
 		}
 
 		private void HandleBattlePause(bool isPause)
@@ -170,7 +175,7 @@ namespace GameLogic
 			InputManager.Instance.Enable = true;
 			convertEffect.Deactive();
 			
-            adamProxy.IsConverting = false;
+            adam.Info.IsConverting = false;
 		}
 
 		#endregion

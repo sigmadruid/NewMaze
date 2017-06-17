@@ -29,9 +29,9 @@ public class BarItem : BaseScreenItem
         bar.SetValue(1, false);
 	}
 
-	public void UpdateHP(int hp, int maxHP)
+    public void UpdateHP(int hp, int maxHP, bool withAnim)
 	{
-        bar.SetValue(hp * 1f / maxHP, true);
+        bar.SetValue(hp * 1f / maxHP, withAnim);
 	}
 
     private void SetSizeStyle(float width, float height)
@@ -63,7 +63,7 @@ public class BarItem : BaseScreenItem
 	{
 		if (bar != null)
 		{
-            bar.UpdateHP(1, 1);
+            bar.UpdateHP(1, 1, false);
             PopupManager.Instance.RemoveItem(bar.gameObject);
 		}
 		else

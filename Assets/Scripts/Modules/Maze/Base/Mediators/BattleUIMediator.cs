@@ -64,23 +64,21 @@ namespace GameLogic
 
 		private void HandleUIInit()
         {
-            List<HeroInfo> infoList = heroProxy.GetUnlockedHeroInfoList();
+            List<int> kidList = heroProxy.GetUnlockedHeroKidList();
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
-			panel.SetData(infoList);
+            panel.SetData(kidList);
             panel.CallbackHeroItemClick = OnHeroItemClick;
             panel.CallbackProfileClick = OnProfileClicked;
             ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
             ClickEventTrigger.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
-            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Data.HP;
-            panel.UpdateLifeBar(hpVal, false);
+            panel.UpdateLifeBar(Adam.Instance.Info.HPRatio, false);
 		}
 		private void HandleUpdateHP(AttackResult ar)
 		{
 			panel.UpdateHPNumber(ar);
-            float hpVal = Adam.Instance.Info.HP * 1f / Adam.Instance.Info.GetAttribute(BattleAttribute.HP);
-            panel.UpdateLifeBar(hpVal, true);
+            panel.UpdateLifeBar(Adam.Instance.Info.HPRatio, true);
 		}
 		private void HandleUpdateMP(int value)
 		{

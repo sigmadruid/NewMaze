@@ -42,13 +42,13 @@ namespace GameUI
             base.OnDispose();
         }
 
-        public void SetData(List<HeroInfo> infoList)
+        public void SetData(List<int> kid)
     	{
     		PanelUtils.ClearChildren(LayoutHeroes.transform);
 
-    		for (int i = 0; i < infoList.Count; ++i)
+    		for (int i = 0; i < kid.Count; ++i)
     		{
-                HeroData data = infoList[i].Data;
+                HeroData data = HeroDataManager.Instance.GetData(kid[i]) as HeroData;
                 int id = IDManager.Instance.GetID(data.Kid);
                 if(id == 0)
                     continue;

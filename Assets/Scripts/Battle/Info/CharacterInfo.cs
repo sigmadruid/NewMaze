@@ -39,24 +39,22 @@ namespace Battle
 		public CharacterInfo (CharacterData data)
 		{
 			Data = data;
-			Init();
-		}
-		
-		public void Init()
-		{
-			attrDic.Clear();
+
+            attrDic[(int)BattleAttribute.HP] = Data.HP;
+            attrDic[(int)BattleAttribute.Attack] = Data.Attack;
+            attrDic[(int)BattleAttribute.Defense] = Data.Defense;
+            attrDic[(int)BattleAttribute.Critical] = Data.Critical;
+            attrDic[(int)BattleAttribute.Dodge] = Data.Dodge;
+            attrDic[(int)BattleAttribute.MoveSpeed] = Data.MoveSpeed;
+            attrDic[(int)BattleAttribute.AttackSpeed] = Data.AttackSpeed;
 
             HP = Data.HP;
-
-			attrDic.Add((int)BattleAttribute.HP, Data.HP);
-			attrDic.Add((int)BattleAttribute.Attack, Data.Attack);
-			attrDic.Add((int)BattleAttribute.Defense, Data.Defense);
-			attrDic.Add((int)BattleAttribute.Critical, Data.Critical);
-			attrDic.Add((int)BattleAttribute.Dodge, Data.Dodge);
-            attrDic.Add((int)BattleAttribute.MoveSpeed, Data.MoveSpeed);
-            attrDic.Add((int)BattleAttribute.AttackSpeed, Data.AttackSpeed);
 		}
-		public void Dispose()
+		
+        public virtual void Init()
+		{
+		}
+        public virtual void Dispose()
 		{
             attrDic.Clear();
             buffDic.Clear();
@@ -72,7 +70,8 @@ namespace Battle
         #region Attribute
 
         public int HP { get; protected set; }
-        public float HPRatio { get { return HP * 1f / Data.HP; } }
+
+        public float HPRatio { get { return HP * 1f / GetAttribute(BattleAttribute.HP); } }
 
         public bool IsAlive { get{ return HP > 0; } }
 
@@ -234,6 +233,7 @@ namespace Battle
 
         protected void InitSkillList()
         {
+            SkillList.Clear();
             for(int i = 0; i < Data.SkillList.Count; ++i)
             {
                 int skillKid = Data.SkillList[i];

@@ -54,7 +54,7 @@ namespace GameLogic
 		public void Hit()
 		{
 			Script.Hit();
-            Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP));
+            Script.UpdateHPBar(Info.HP, (int)Info.GetAttribute(BattleAttribute.HP), true);
 		}
 		public void Die()
 		{
@@ -207,7 +207,7 @@ namespace GameLogic
             monster.Script = ResourceManager.Instance.LoadAsset<MonsterScript>(ObjectType.GameObject, monster.Data.GetResPath());
             monster.Script.Uid = monster.Uid;
             monster.Script.LifeBar = BarItem.Create(monster.Data.Size);
-            monster.Script.UpdateHPBar(monster.Info.HP, (int)monster.Info.GetAttribute(BattleAttribute.HP));
+            monster.Script.UpdateHPBar(monster.Info.HP, (int)monster.Info.GetAttribute(BattleAttribute.HP), false);
             monster.Script.transform.parent = RootTransform.Instance.MonsterRoot; 
             monster.Script.CallbackUpdate = monster.Update;
             monster.Script.CallbackSlowUpdate = monster.SlowUpdate;

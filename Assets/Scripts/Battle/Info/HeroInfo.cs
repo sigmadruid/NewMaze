@@ -8,7 +8,6 @@ using StaticData;
 
 namespace Battle
 {
-    //For heroes, they have seperate level, skills, but they share buffs. In other word, they are one!
 	public class HeroInfo : CharacterInfo
 	{
         public new HeroData Data
@@ -16,6 +15,13 @@ namespace Battle
             get { return data as HeroData; }
             set { data = value; }
         }
+
+        public int Level;
+        public int Exp;
+        public bool IsConverting;
+        public bool IsInHall;
+        public bool IsVisible;
+        public float LastHitTime;
 
         protected static Dictionary<int, Buff> heroBuffDic = new Dictionary<int, Buff>();
         protected override Dictionary<int, Buff> buffDic
@@ -29,34 +35,35 @@ namespace Battle
                 heroBuffDic = value;
             }
         }
-
-        public int Level;
-        public int Exp;
-
-		public float LastHitTime;
-
         private Dictionary<int, float> attrRaiseDic = new Dictionary<int, float>();
 
         public HeroInfo (HeroData data) : base(data)
         {
             Side = Side.Hero;
-            Data = data;
-            InitRaise();
-            InitSkillList();
+            Convert(data);
+        }
+
+        public override void Init()
+        {
+            base.Init();
 
             Level = GlobalConfig.DemoConfig.InitLevel;
             Exp = 0;
             HP = (int)(GetBaseAttribute(BattleAttribute.HP));
+            IsConverting = false;
+            IsInHall = false;
+            IsVisible = true;
         }
-        public HeroInfo (HeroData data, HeroRecord record) : base(data)
+        public void Init(HeroRecord record)
         {
-            Data = data;
+            base.Init();
+
             HP = record.HP;
             Level = record.Level;
             Exp = record.Exp;
-
-            InitRaise();
-            InitSkillList();
+            IsConverting = false;
+            IsInHall = record.IsInHall;
+            IsVisible = record.IsVisible;
         }
 
         public HeroRecord ToRecord()
@@ -64,20 +71,30 @@ namespace Battle
             HeroRecord record = new HeroRecord();
             record.Kid = Data.Kid;
             record.HP = HP;
-            record.Level = Level;
-            record.Exp = Exp;
+            record.IsInHall = IsInHall;
+            record.IsVisible = IsVisible;
             return record;
         }
 
-        public void InitRaise()
+        public void Convert(HeroData data)
         {
-            attrRaiseDic.Add((int)BattleAttribute.HP, Data.HPRaise);
-            attrRaiseDic.Add((int)BattleAttribute.Attack, Data.AttackRaise);
-            attrRaiseDic.Add((int)BattleAttribute.Defense, Data.DefenseRaise);
-            attrRaiseDic.Add((int)BattleAttribute.Critical, Data.CriticalRaise);
-            attrRaiseDic.Add((int)BattleAttribute.Dodge, Data.DodgeRaise);
-            attrRaiseDic.Add((int)BattleAttribute.MoveSpeed, Data.MoveSpeedRaise);
-            attrRaiseDic.Add((int)BattleAttribute.AttackSpeed, Data.AttackSpeedRaise);
+            Data = data;
+
+            InitRaise();
+            InitSkillList();
+
+            HP = (int)(GetAttribute(BattleAttribute.HP) * HPRatio);
+        }
+
+        private void InitRaise()
+        {
+            attrRaiseDic[(int)BattleAttribute.HP] = Data.HPRaise;
+            attrRaiseDic[(int)BattleAttribute.Attack] = Data.AttackRaise;
+            attrRaiseDic[(int)BattleAttribute.Defense] = Data.DefenseRaise;
+            attrRaiseDic[(int)BattleAttribute.Critical] = Data.CriticalRaise;
+            attrRaiseDic[(int)BattleAttribute.Dodge] = Data.DodgeRaise;
+            attrRaiseDic[(int)BattleAttribute.MoveSpeed] = Data.MoveSpeedRaise;
+            attrRaiseDic[(int)BattleAttribute.AttackSpeed] = Data.AttackSpeedRaise;
         }
 
         public override float GetBaseAttribute(BattleAttribute attribute)
@@ -94,7 +111,7 @@ namespace Battle
         public bool CanMove()
         {
             return IsAlive 
-                && !ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsConverting 
+                && !IsConverting 
                 && (CurrentSkill == null || CurrentSkill.Data.CanMove);
         }
 
@@ -102,12 +119,34 @@ namespace Battle
 
         public override bool CanCastSkill(int index)
         {
-            if (ApplicationFacade.Instance.RetrieveProxy<AdamProxy>().IsConverting)
+            if (IsConverting)
                 return false;
             return base.CanCastSkill(index);
         }
 
         #endregion
+
+        public void AddExp(int exp)
+        {
+            Adam adam = Adam.Instance;
+            int newExp = adam.Info.Exp + exp;
+            int deltaLevel = 0;
+            while(true)
+            {
+                int maxExp = HeroLevelUpDataManager.Instance.GetExp(adam.Info.Level);
+                if(newExp >= maxExp)
+                {
+                    deltaLevel++;
+                    newExp -= maxExp;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            adam.Info.Level += deltaLevel;
+            adam.Info.Exp = newExp;
+        }
 	}
 }
 

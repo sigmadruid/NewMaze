@@ -73,9 +73,9 @@ public class MonsterScript : CharacterScript
 		}
 	}
 
-	public void UpdateHPBar(int hp, int maxHP)
+    public void UpdateHPBar(int hp, int maxHP, bool withAnim)
 	{
-		LifeBar.UpdateHP(hp, maxHP);
+        LifeBar.UpdateHP(hp, maxHP, withAnim);
 	}
 }
 

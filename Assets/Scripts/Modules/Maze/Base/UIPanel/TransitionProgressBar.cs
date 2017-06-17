@@ -13,31 +13,44 @@ public class TransitionProgressBar : MonoBehaviour
     private Slider transitionBar;
 
     private float timer;
+    private float nextValue;
+    private float currentValue;
     private float prevValue;
+
+    void Awake()
+    {
+        currentValue = 1f;
+    }
 
     void Update()
     {
-        if(timer < TransitionDuration)
+        if(timer > 0)
         {
-            transitionBar.value = instantBar.value + (prevValue - instantBar.value) * (1 - timer / TransitionDuration);
-            timer += Time.deltaTime;
+            currentValue = prevValue + (nextValue - prevValue) * (1 - timer / TransitionDuration);
+            transitionBar.value = currentValue;
+            timer -= Time.deltaTime;
         }
     }
 
     public void SetValue(float targetValue, bool isAnim)
     {
-        prevValue = ForeBar.value;
         instantBar = targetValue > prevValue ? BackBar : ForeBar;
         transitionBar = targetValue > prevValue ? ForeBar : BackBar;
 
-        instantBar.value = targetValue;
         if(isAnim)
         {
-            timer = 0;
+            timer = TransitionDuration;
+            prevValue = currentValue;
+            nextValue = targetValue;
+            instantBar.value = targetValue;
         }
         else
         {
+            timer = 0f;
+            currentValue = targetValue;
+            nextValue = targetValue;
             prevValue = targetValue;
+            instantBar.value = targetValue;
             transitionBar.value = targetValue;
         }
     }

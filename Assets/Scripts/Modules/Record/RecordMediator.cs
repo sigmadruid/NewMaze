@@ -13,13 +13,17 @@ namespace GameLogic
     {
         private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
 
+        private HeroProxy heroProxy;
         private MonsterProxy monsterProxy;
         private ExplorationProxy explorationProxy;
         private DropProxy dropProxy;
 
+        private GameRecord gameRecord;
+
         public override void OnRegister()
         {
             base.OnRegister();
+            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
             dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
@@ -57,27 +61,13 @@ namespace GameLogic
             
             if(Adam.Instance != null && Adam.Instance.Info.IsAlive)
             {
-                var facade = ApplicationFacade.Instance;
-
-                monsterProxy.SaveRecord();
-                explorationProxy.SaveRecord();
-                dropProxy.SaveRecord();
-
-                GameRecord gameRecord = new GameRecord();
-                gameRecord.RandomSeed = Maze.Instance.Seed;
-                gameRecord.Adam = facade.RetrieveProxy<AdamProxy>().CreateRecord();
-                gameRecord.Heroes = facade.RetrieveProxy<HeroProxy>().CreateRecord();
-                gameRecord.Monsters = monsterProxy.RecordDic;
-                gameRecord.Hall = facade.RetrieveProxy<HallProxy>().CreateRecord();
-                gameRecord.Items = dropProxy.RecordDic;
-                gameRecord.Explorations = explorationProxy.RecordDic;
+                SerializeGame();
 
                 using(Stream stream = new FileStream(RECORD_PATH, FileMode.Create, FileAccess.ReadWrite))
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(stream, gameRecord);
                 }
-
                 string json = JsonUtility.ToJson(gameRecord);
                 Debug.Log(json);
             }
@@ -94,31 +84,52 @@ namespace GameLogic
                 Game.Instance.IsNewGame = true;
                 return;
             }
-            GameRecord gameRecord = null;
+            gameRecord = null;
             using(Stream stream = new FileStream(persistPath, FileMode.Open, FileAccess.ReadWrite))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 gameRecord = (GameRecord)formatter.Deserialize(stream);
             }
+
+            Game.Instance.IsNewGame = gameRecord != null;
             if(gameRecord != null)
             {
-                var facade = ApplicationFacade.Instance;
-
-                Maze.Instance.Seed = gameRecord.RandomSeed;
-                facade.RetrieveProxy<AdamProxy>().SetRecord(gameRecord.Adam);
-                facade.RetrieveProxy<HeroProxy>().SetRecord(gameRecord.Heroes);
-                monsterProxy.RecordDic = gameRecord.Monsters;
-                facade.RetrieveProxy<HallProxy>().SetRecord(gameRecord.Hall);
-                dropProxy.RecordDic = gameRecord.Items;
-                explorationProxy.RecordDic = gameRecord.Explorations;
-
-                Game.Instance.IsNewGame = false;
+                DeserializeGame();
             }
         }
-
         public static void DeleteRecord()
         {
             File.Delete(RECORD_PATH);
+        }
+
+        private void SerializeGame()
+        {
+            var facade = ApplicationFacade.Instance;
+
+            heroProxy.SaveRecord();
+            monsterProxy.SaveRecord();
+            explorationProxy.SaveRecord();
+            dropProxy.SaveRecord();
+            facade.RetrieveProxy<HallProxy>().CreateRecord();
+
+            gameRecord = new GameRecord();
+            gameRecord.RandomSeed = Maze.Instance.Seed;
+            gameRecord.Hero = heroProxy.Record;
+            gameRecord.Monsters = monsterProxy.RecordDic;
+            gameRecord.Hall = facade.RetrieveProxy<HallProxy>().Record;
+            gameRecord.Items = dropProxy.RecordDic;
+            gameRecord.Explorations = explorationProxy.RecordDic;
+        }
+        private void DeserializeGame()
+        {
+            var facade = ApplicationFacade.Instance;
+
+            Maze.Instance.Seed = gameRecord.RandomSeed;
+            heroProxy.Record = gameRecord.Hero;
+            monsterProxy.RecordDic = gameRecord.Monsters;
+            facade.RetrieveProxy<HallProxy>().Record = gameRecord.Hall;
+            dropProxy.RecordDic = gameRecord.Items;
+            explorationProxy.RecordDic = gameRecord.Explorations;
         }
     }
 }

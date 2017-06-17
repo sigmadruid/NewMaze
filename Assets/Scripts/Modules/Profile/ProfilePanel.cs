@@ -25,7 +25,8 @@ namespace GameUI
         private UIItemPool<AttributeItem> itemPool = new UIItemPool<AttributeItem>();
 
         private int index;
-        private List<HeroInfo> infoList;
+        private List<int> kidList;
+        private HeroInfo heroInfo;
 
         public override void OnInitialize()
         {
@@ -43,27 +44,34 @@ namespace GameUI
             base.OnDispose();
         }
 
-        public void SetData(List<HeroInfo> infoList)
+        public void SetData(List<int> kidList)
         {
-            this.infoList = infoList;
+            this.kidList = kidList;
             index = 0;
-            SetSingleData(infoList[0]);
+
+            int kid = kidList[0];
+            HeroData data = HeroDataManager.Instance.GetData(kid) as HeroData;
+            heroInfo = new HeroInfo(data);
+            SetSingleData(kid);
         }
 
-        private void SetSingleData(HeroInfo info)
+        private void SetSingleData(int kid)
         {
+            HeroData data = HeroDataManager.Instance.GetData(kid) as HeroData;
+            heroInfo.Convert(data);
+
             GameObject hero = ResourceManager.Instance.CreateGameObject("Heroes/MazeMapHero");
             targetTexture.Set(hero);
 
-            textHeroName.text = TextDataManager.Instance.GetData(info.Data.Name);
-            textHeroLevel.text = "Lv." + info.Level.ToString();
+            textHeroName.text = TextDataManager.Instance.GetData(data.Name);
+            textHeroLevel.text = "Lv." + heroInfo.Level.ToString();
 
             itemPool.RemoveAll();
             Array attrs = Enum.GetValues(typeof(BattleAttribute));
             foreach(var obj in attrs)
             {
                 BattleAttribute attr = (BattleAttribute)obj;
-                itemPool.AddItem().SetData(attr, info.GetBaseAttribute(attr));
+                itemPool.AddItem().SetData(attr, heroInfo.GetBaseAttribute(attr));
             }
         }
 
@@ -73,13 +81,13 @@ namespace GameUI
         }
         private void OnLeft(GameObject go)
         {
-            index = index > 0 ? index - 1 : infoList.Count - 1;
-            SetSingleData(infoList[index]);
+            index = index > 0 ? index - 1 : kidList.Count - 1;
+            SetSingleData(kidList[index]);
         }
         private void OnRight(GameObject go)
         {
-            index = index < infoList.Count - 1 ? index + 1 : 0;
-            SetSingleData(infoList[index]);
+            index = index < kidList.Count - 1 ? index + 1 : 0;
+            SetSingleData(kidList[index]);
         }
     }
 }

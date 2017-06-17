@@ -107,8 +107,9 @@ namespace GameLogic
 
         #endregion
 
-        public virtual void Pause(bool isPause)
+        public override void Pause(bool isPause)
         {
+            base.Pause(isPause);
             movementScript.IsControllable = !isPause;
         }
 

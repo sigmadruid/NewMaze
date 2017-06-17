@@ -97,6 +97,7 @@ namespace Base
         {
             if (destPosition == Vector3.zero)
             {
+                Destination = Vector3.zero;
                 path = null;
                 IsMoving = false;
                 if (CallbackMoveEnd != null) CallbackMoveEnd();
