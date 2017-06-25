@@ -60,7 +60,7 @@ namespace GameUI
             HeroData data = HeroDataManager.Instance.GetData(kid) as HeroData;
             heroInfo.Convert(data);
 
-            GameObject hero = ResourceManager.Instance.CreateGameObject("Heroes/MazeMapHero");
+            GameObject hero = ResourceManager.Instance.CreateGameObject("Heroes/ProfileHero");
             targetTexture.Set(hero);
 
             textHeroName.text = TextDataManager.Instance.GetData(data.Name);
