@@ -25,9 +25,22 @@ namespace GameLogic
             Record = Adam.Instance.ToRecord();
         }
 
-        public List<int> GetUnlockedHeroKidList()
+        public List<HeroInfo> GetProfileHeroInfoList()
 		{
-            return GlobalConfig.DemoConfig.InitialHeroKids;
+            List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
+            HeroInfo adamInfo = Adam.Instance.Info;
+
+            List<HeroInfo> infoList = new List<HeroInfo>();
+            for(int i = 0; i < kidList.Count; ++i)
+            {
+                int kid = kidList[i];
+                HeroData data = HeroDataManager.Instance.GetData(kid) as HeroData;
+                HeroInfo info = new HeroInfo(data);
+                info.Level = adamInfo.Level;
+                info.Exp = adamInfo.Exp;
+                infoList.Add(info);
+            }
+            return infoList;
 		}
 
     }

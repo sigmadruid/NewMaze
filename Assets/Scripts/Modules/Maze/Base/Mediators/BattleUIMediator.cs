@@ -64,7 +64,7 @@ namespace GameLogic
 
 		private void HandleUIInit()
         {
-            List<int> kidList = heroProxy.GetUnlockedHeroKidList();
+            List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
             panel.SetData(kidList);

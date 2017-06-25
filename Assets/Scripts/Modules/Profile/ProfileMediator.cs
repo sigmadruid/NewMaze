@@ -37,10 +37,10 @@ namespace GameLogic
         }
         private void HandleProfileShow()
         {
-            List<int> kidList = heroProxy.GetUnlockedHeroKidList();
+            List<HeroInfo> infoList = heroProxy.GetProfileHeroInfoList();
 
             profilePanel = PopupManager.Instance.CreateAndAddPopup<ProfilePanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
-            profilePanel.SetData(kidList);
+            profilePanel.SetData(infoList);
         }
     }
 }
