@@ -76,7 +76,7 @@ namespace Battle
         protected bool CheckCollision(Vector3 direction, float distance)
         {
             //TODO: Make it more precise when the bullet is not a point.
-            Vector3 origin =  currentMonster.WorldPosition + Vector3.up * currentMonster.Script.EmitPosition.y;
+            Vector3 origin = currentMonster.WorldPosition + currentMonster.Script.EmitPosition;
             bool result = Physics.Raycast(origin, direction, distance, Layers.LayerBlock);
             return result;
         }

@@ -25,7 +25,7 @@ namespace GameLogic
             get { return data as HeroData; }
             protected set { data = value; }
         }
-        public HeroInfo Info
+        public new HeroInfo Info
         {
             get { return info as HeroInfo; }
             protected set { info = value; }
@@ -202,9 +202,10 @@ namespace GameLogic
 
         private void AxisControl()
         {
-            if(inputManager.MouseHitPosition != Vector3.zero)
+            if(inputManager.PlaneHitPosition != Vector3.zero)
             {
-                TargetPosition = inputManager.MouseHitPosition;
+                RefreshTarget();
+
                 Idle();
                 LookAt(TargetPosition);
 
@@ -217,7 +218,6 @@ namespace GameLogic
                     SkillIndex = 2;
                 else
                     SkillIndex = 0;
-                Skill skill = Info.GetSkill(SkillIndex);
                 if(Info.CanCastSkill(SkillIndex))
                 {
                     Skill(SkillIndex);
@@ -233,6 +233,47 @@ namespace GameLogic
             else
             {
                 Idle();
+            }
+        }
+        private void RefreshTarget()
+        {
+            TargetPosition = Vector3.zero;
+            if(inputManager.CheckMouseHitLayer(Layers.LayerWalkSurface))
+            {
+                TargetPosition = inputManager.PlaneHitPosition;
+//                RaycastHit hitinfo;
+//                Ray rayDown = new Ray(inputManager.PlaneHitPosition, Vector3.down);
+//                Ray rayUp = new Ray(inputManager.PlaneHitPosition, Vector3.up);
+//                if(Physics.Raycast(rayDown, out hitinfo, 9999f, Layers.LayerWalkSurface))
+//                {
+//                    TargetPosition = hitinfo.point + Script.EmitPosition;
+//                }
+//                else if(Physics.Raycast(rayUp, out hitinfo, 9999f, Layers.LayerWalkSurface))
+//                {
+//                    TargetPosition = hitinfo.point + Script.EmitPosition;
+//                }
+                TargetMonster = null;
+            }
+            else if(inputManager.CheckMouseHitLayer(Layers.LayerMonster))
+            {
+                MonsterScript monsterScript = inputManager.MouseHitObject.GetComponent<MonsterScript>();
+                Monster target = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().GetMonster(monsterScript.Uid);
+
+                if(target.Info.IsAlive)
+                {
+                    TargetPosition = target.WorldPosition + target.Script.CenterPosition;
+                    TargetMonster = target;
+                }
+                else
+                {
+                    TargetPosition = inputManager.MouseHitPosition + Script.EmitPosition;
+                    TargetMonster = null;
+                }
+            }
+            else
+            {
+                TargetPosition = inputManager.PlaneHitPosition;
+                TargetMonster = null;
             }
         }
 

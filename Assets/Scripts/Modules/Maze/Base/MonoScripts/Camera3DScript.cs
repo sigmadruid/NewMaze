@@ -31,7 +31,6 @@ namespace GameLogic
 
         private RaycastHit[] prevHitInfos;
 
-        private DOTweenAnimation tween;
         private bool isVibrating;
 
     	public static Camera3DScript Instance { get; private set; }
@@ -40,7 +39,6 @@ namespace GameLogic
     	{
     		Instance = this;
             Camera = GetComponent<Camera>();
-            tween = GetComponent<DOTweenAnimation>();
     	}
     	void Start () 
     	{

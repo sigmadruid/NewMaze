@@ -15,11 +15,8 @@ namespace GameLogic
     {
 		private BattleUIPanel panel;
 
-		private HeroProxy heroProxy;
-
         public override void OnRegister()
         {
-			heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
         }
 
 		public override IList<Enum> ListNotificationInterests ()

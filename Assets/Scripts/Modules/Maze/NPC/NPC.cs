@@ -36,7 +36,7 @@ namespace GameLogic
 			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.NPC_DIALOG_SHOW, this);
 		}
 
-        public NPCRecord ToRecord()
+        public new NPCRecord ToRecord()
         {
             NPCRecord record = new NPCRecord();
             record.Uid = Uid;

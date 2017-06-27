@@ -40,7 +40,6 @@ public class MazeMain : MonoBehaviour
 
         Seed = seed;
         RandomUtils.Seed = seed;
-        Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
 
         blockProxy.Init();
         ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_INIT);

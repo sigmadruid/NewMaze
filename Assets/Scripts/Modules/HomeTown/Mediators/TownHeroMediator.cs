@@ -14,13 +14,11 @@ namespace GameLogic
 	{
         private Adam adam;
 
-        private HeroProxy heroProxy;
 		private InputManager inputManager;
 
 		public override void OnRegister ()
 		{
 			inputManager = InputManager.Instance;
-            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
 		}
 
 		public override IList<Enum> ListNotificationInterests ()

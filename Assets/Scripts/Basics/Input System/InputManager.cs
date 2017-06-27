@@ -23,6 +23,7 @@ namespace Base
 	{
         private GraphicRaycaster[] uiRaycasters;
         private Dictionary<int, KeyboardAction> keyboardActionDic = new Dictionary<int, KeyboardAction>();
+        private Plane hitPlane = new Plane();
 
         private EventSystem eventSystem;
         public EventSystem InputSystem
@@ -38,12 +39,19 @@ namespace Base
         #region Properties
 
         public bool IsPause { get; set; }
+
         public Vector3 DirectionVector { get; private set; }
+
         public MouseHitType HitType { get; private set; }
+
         public Vector3 MouseHitPosition { get; private set; }
         public GameObject MouseHitObject { get; private set; }
+
         public Vector3 MouseHoverPosition { get; private set; }
         public GameObject MouseHoverObject { get; private set; }
+
+        public Vector3 PlaneHitPosition { get; private set; }
+
 
         private bool enable = true;
         public bool Enable
@@ -95,6 +103,7 @@ namespace Base
 			if (!Enable) return;
 
             MouseHitObject = null;
+            PlaneHitPosition = Vector3.zero;
             MouseHitPosition = Vector3.zero;
             if(!IsPause)
             {
@@ -127,6 +136,15 @@ namespace Base
                     if(raycastList.Count == 0)
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                        Adam adam = Adam.Instance;
+                        hitPlane.SetNormalAndPosition(Vector3.up, adam.WorldPosition + adam.Script.EmitPosition);
+                        float distance = 0;
+                        if(hitPlane.Raycast(ray, out distance))
+                        {
+                            PlaneHitPosition = ray.GetPoint(distance);
+                        }
+
                         RaycastHit hitinfo;
                         if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHitMask))
                         {

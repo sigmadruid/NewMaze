@@ -93,7 +93,7 @@ namespace Base
                     }
                 }
             }
-            else if (moveDirection != Vector3.zero)
+            else if (controller.enabled)
             {
                 controller.Move((moveDirection * speed + Vector3.down * Gravity) * Time.deltaTime);
             }

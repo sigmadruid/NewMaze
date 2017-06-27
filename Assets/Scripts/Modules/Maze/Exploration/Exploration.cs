@@ -47,7 +47,7 @@ namespace GameLogic
             Script.HighlightOff();
         }
 
-        public ExplorationRecord ToRecord()
+        public new ExplorationRecord ToRecord()
         {
             ExplorationRecord record = new ExplorationRecord();
             record.Uid = Uid;

@@ -23,7 +23,6 @@ namespace GameLogic
 
         public static void PostCreate(Exploration expl)
         {
-            ExplorationProxy proxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
 
         }
     }
