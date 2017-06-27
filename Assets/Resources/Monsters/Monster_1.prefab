@@ -240,6 +240,7 @@ MonoBehaviour:
   TopPosTransform: {fileID: 492800}
   BottomPosTransform: {fileID: 492802}
   EmitTransform: {fileID: 0}
+  UseMouse: 0
   LifeBar: {fileID: 0}
 --- !u!137 &13738498
 SkinnedMeshRenderer:
@@ -376,6 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsControllable: 1
   LerpRotation: 1
+  Gravity: 3
   AngularSpeed: 15
   StopDistance: 0.1
   EnableLog: 0

@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsControllable: 1
   LerpRotation: 0
-  Gravity: 1
+  Gravity: 3
   AngularSpeed: 5
   StopDistance: 0.1
   EnableLog: 0
