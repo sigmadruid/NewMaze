@@ -63,6 +63,8 @@ namespace GameLogic
         //Input
         MOUSE_HIT_OBJECT,
         KEY_DOWN,
+        DRAG_START,
+        DRAG_END,
 
         #region Pack
         PACK_SHOW,

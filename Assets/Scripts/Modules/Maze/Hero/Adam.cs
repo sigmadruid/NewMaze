@@ -202,12 +202,19 @@ namespace GameLogic
 
         private void AxisControl()
         {
-            if(inputManager.PlaneHitPosition != Vector3.zero)
+            if(inputManager.DragStart)
+            {
+                Vector2 dir = inputManager.DraggingPosition - inputManager.MouseDownPosition;
+                Vector3 direction = new Vector3(dir.x, 0, dir.y);
+                direction = GlobalConfig.InputConfig.DirectionAngleOffset * direction;
+                Script.Roll(direction);
+            }
+            else if(inputManager.PlaneHitPosition != Vector3.zero)
             {
                 RefreshTarget();
 
                 Idle();
-                LookAt(TargetPosition);
+//                LookAt(TargetPosition);
 
                 if(Game.Instance.CurrentStageType == StageEnum.HomeTown)
                     return;

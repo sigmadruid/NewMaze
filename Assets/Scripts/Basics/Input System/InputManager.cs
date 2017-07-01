@@ -43,15 +43,18 @@ namespace Base
         public Vector3 DirectionVector { get; private set; }
 
         public MouseHitType HitType { get; private set; }
-
         public Vector3 MouseHitPosition { get; private set; }
         public GameObject MouseHitObject { get; private set; }
+        public Vector3 PlaneHitPosition { get; private set; }
 
         public Vector3 MouseHoverPosition { get; private set; }
         public GameObject MouseHoverObject { get; private set; }
 
-        public Vector3 PlaneHitPosition { get; private set; }
-
+        public bool IsDragging { get; private set; }
+        public bool DragStart { get; private set; }
+        public bool DragEnd { get; private set; }
+        public Vector2 DraggingPosition { get; private set; }
+        public Vector2 MouseDownPosition { get; private set; }
 
         private bool enable = true;
         public bool Enable
@@ -105,20 +108,31 @@ namespace Base
             MouseHitObject = null;
             PlaneHitPosition = Vector3.zero;
             MouseHitPosition = Vector3.zero;
+            MouseHoverPosition = Vector3.zero;
+            MouseHoverObject = null;
+
             if(!IsPause)
             {
+                //Joystick
                 float xOffset = Input.GetAxisRaw("Horizontal");
                 float zOffset = Input.GetAxisRaw("Vertical");
-                DirectionVector = Quaternion.Euler(Vector3.up * (-45f)) * new Vector3(xOffset, 0, zOffset);
+                DirectionVector = GlobalConfig.InputConfig.DirectionAngleOffset * new Vector3(xOffset, 0, zOffset);
                 DirectionVector.Normalize();
-//                if(DirectionVector != Vector3.zero)
 
                 if(Input.GetMouseButtonDown(0))
+                {
+                    MouseDownPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                     HitType = MouseHitType.Left;
+                }
                 else if(Input.GetMouseButtonDown(1))
+                {
+                    MouseDownPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
                     HitType = MouseHitType.Right;
+                }
                 else
+                {
                     HitType = MouseHitType.None;
+                }
 
                 if(HitType != MouseHitType.None)
                 {
@@ -133,6 +147,7 @@ namespace Base
                         raycaster.Raycast(eventData, raycastList);
                     }
 
+                    //None-UI Click
                     if(raycastList.Count == 0)
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -156,8 +171,7 @@ namespace Base
                 }
                 else
                 {
-                    MouseHoverPosition = Vector3.zero;
-                    MouseHoverObject = null;
+                    //Hover
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hitinfo;
                     if(Physics.Raycast(ray, out hitinfo, 9999f, GlobalConfig.InputConfig.MouseHoverMask))
@@ -167,8 +181,36 @@ namespace Base
                     }
                 }
 
+                //Drag
+                DragStart = false;
+                DragEnd = false;
+                if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                {
+                    if (MouseDownPosition == Vector2.zero)
+                        MouseDownPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                    DraggingPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                    bool isDragging = Vector2.SqrMagnitude(MouseDownPosition - DraggingPosition) > GlobalConfig.InputConfig.DragThreshold;
+                    if(IsDragging != isDragging)
+                    {
+                        if(isDragging)
+                            DragStart = true;
+                        else
+                            DragEnd = true;
+                        IsDragging = isDragging;
+                    }
+                }
+                else
+                {
+                    if (IsDragging)
+                        DragEnd = true;
+                    
+                    IsDragging = false;
+                    MouseDownPosition = Vector2.zero;
+                    DraggingPosition = Vector2.zero;
+                }
             }
 
+            //Keyboard
             if(Input.anyKeyDown)
             {
                 Dictionary<int, KeyboardAction>.Enumerator enumerator = keyboardActionDic.GetEnumerator();

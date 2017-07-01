@@ -17,6 +17,7 @@ namespace GameLogic
 
         HIT,
         DIE,
+        ROLL,
     }
     public class AnimatorStateScript : StateMachineBehaviour
     {

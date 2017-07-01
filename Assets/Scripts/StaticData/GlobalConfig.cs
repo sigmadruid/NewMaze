@@ -103,9 +103,11 @@ namespace StaticData
 
     public class InputConfig
     {
+        public readonly Quaternion DirectionAngleOffset = Quaternion.Euler(Vector3.up * (-45f));
         public readonly float NearSqrDistance = 0.1f;
         public readonly int MouseHitMask = Layers.LayerWalkSurface | Layers.LayerMonster | Layers.LayerItem;
         public readonly int MouseHoverMask = Layers.LayerBlock | Layers.LayerMonster | Layers.LayerNPC | Layers.LayerItem;
+        public readonly float DragThreshold = 100f;
     }
 
 	public class CameraConfig

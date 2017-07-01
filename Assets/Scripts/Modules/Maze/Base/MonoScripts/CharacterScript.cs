@@ -159,6 +159,39 @@ namespace GameLogic
             movementScript.SetDestination(Vector3.zero, 0f);
             animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
     	}
+        public virtual void Roll(Vector3 direction)
+        {
+            if(direction == Vector3.zero)
+                return;
+
+            direction = direction.normalized;
+            Vector3 forward = MathUtils.XZDirection(transform.forward).normalized;
+            float crossY = Vector3.Cross(direction, forward).y;
+            float dot = Vector3.Dot(direction, forward);
+            if(0.707f < dot && dot <= 1)
+            {
+                animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 1);
+                Debug.LogError("forward");
+            }
+            else if(-1 <= dot && dot < -0.707f)
+            {
+                animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 2);
+                Debug.LogError("backward");
+            }
+            else
+            {
+                if(crossY >= 0)
+                {
+                    animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 3);
+                    Debug.LogError("left");
+                }
+                else
+                {
+                    animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 4);
+                    Debug.LogError("right");
+                }
+            }
+        }
         public virtual void Die()
     	{
     		if (Game.Instance.IsPause) { return; }
@@ -235,6 +268,9 @@ namespace GameLogic
                 case AnimatorEventType.DIE:
                     OnDieEnd();
                     break;
+                case AnimatorEventType.ROLL:
+                    OnRollEnd();
+                    break;
             }
         }
 
@@ -272,6 +308,10 @@ namespace GameLogic
         protected virtual void OnDieEnd()
         {
             if (CallbackDieEnd != null) CallbackDieEnd();
+        }
+        protected virtual void OnRollEnd()
+        {
+            animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 0);
         }
 
         #endregion

@@ -14,13 +14,11 @@ namespace GameLogic
 	{
         private BlockProxy blockProxy;
 		private MonsterProxy monsterProxy;
-		private BattleProxy battleProxy;
 
 		public MonsterMediator () : base()
 		{
             blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 			monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
-			battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
 		}
 
 		public override IList<Enum> ListNotificationInterests ()
