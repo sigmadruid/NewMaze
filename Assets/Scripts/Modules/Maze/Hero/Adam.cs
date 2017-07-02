@@ -209,6 +209,8 @@ namespace GameLogic
             }
             else if(inputManager.DragStart)
             {
+                if(Info.CurrentSkill != null)
+                    return;
                 Vector2 dir = inputManager.DraggingPosition - inputManager.MouseDownPosition;
                 RollDirection = new Vector3(dir.x, 0, dir.y);
                 RollDirection = GlobalConfig.InputConfig.DirectionAngleOffset * RollDirection;
