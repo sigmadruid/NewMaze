@@ -108,6 +108,7 @@ namespace Base
         }
 
         public bool IsMoving { get; private set; }
+        public bool IsRolling { get; private set; }
 
         public Vector3 Destination { get; private set; }
 
@@ -150,7 +151,7 @@ namespace Base
             {
                 this.speed = speed;
                 rollDirection = direction;
-                IsMoving = direction != Vector3.zero;
+                IsRolling = direction != Vector3.zero;
             }
         }
 

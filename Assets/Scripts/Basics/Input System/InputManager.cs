@@ -119,19 +119,28 @@ namespace Base
                 DirectionVector = GlobalConfig.InputConfig.DirectionAngleOffset * new Vector3(xOffset, 0, zOffset);
                 DirectionVector.Normalize();
 
+                //MouseDown
                 if(Input.GetMouseButtonDown(0))
                 {
                     MouseDownPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                    HitType = MouseHitType.Left;
                 }
                 else if(Input.GetMouseButtonDown(1))
                 {
                     MouseDownPosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                    HitType = MouseHitType.Right;
                 }
-                else
+
+                //MouseUp
+                HitType = MouseHitType.None;
+                if(!IsDragging)
                 {
-                    HitType = MouseHitType.None;
+                    if(Input.GetMouseButtonUp(0))
+                    {
+                        HitType = MouseHitType.Left;
+                    }
+                    else if(Input.GetMouseButtonUp(1))
+                    {
+                        HitType = MouseHitType.Right;
+                    }
                 }
 
                 if(HitType != MouseHitType.None)

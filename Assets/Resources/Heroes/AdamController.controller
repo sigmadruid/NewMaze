@@ -114,10 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartEvent: 7
-  EndEvent: 0
-  EventTimes:
-  - 0.55
-  MiddleEvents: 07000000
+  EndEvent: 7
+  EventTimes: []
+  MiddleEvents: 
 --- !u!114 &114131999042747360
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,10 +129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartEvent: 7
-  EndEvent: 0
-  EventTimes:
-  - 0.55
-  MiddleEvents: 07000000
+  EndEvent: 7
+  EventTimes: []
+  MiddleEvents: 
 --- !u!114 &114145282022124876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,10 +382,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartEvent: 7
-  EndEvent: 0
-  EventTimes:
-  - 0.55
-  MiddleEvents: 07000000
+  EndEvent: 7
+  EventTimes: []
+  MiddleEvents: 
 --- !u!114 &114510315983907480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,10 +412,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartEvent: 7
-  EndEvent: 0
-  EventTimes:
-  - 0.55
-  MiddleEvents: 07000000
+  EndEvent: 7
+  EventTimes: []
+  MiddleEvents: 
 --- !u!114 &114552253846995762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2042,7 +2038,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.10429847
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.6875
   m_HasExitTime: 0
@@ -2267,7 +2263,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.043043137
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.87500006
   m_HasExitTime: 0

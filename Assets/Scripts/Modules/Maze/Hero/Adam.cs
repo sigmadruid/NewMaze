@@ -212,6 +212,7 @@ namespace GameLogic
                 Vector2 dir = inputManager.DraggingPosition - inputManager.MouseDownPosition;
                 RollDirection = new Vector3(dir.x, 0, dir.y);
                 RollDirection = GlobalConfig.InputConfig.DirectionAngleOffset * RollDirection;
+                Info.IsRolling = true;
                 Roll(RollDirection, Data.RollSpeed);
             }
             else if(inputManager.PlaneHitPosition != Vector3.zero)

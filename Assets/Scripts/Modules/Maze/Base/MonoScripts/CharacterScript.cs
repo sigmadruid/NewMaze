@@ -260,9 +260,6 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.DIE:
                     break;
-                case AnimatorEventType.ROLL:
-                    OnRollEnd();
-                    break;
             }
         }
         public void OnAnimatorEnd(AnimatorEventType type)
@@ -282,6 +279,9 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.DIE:
                     OnDieEnd();
+                    break;
+                case AnimatorEventType.ROLL:
+                    OnRollEnd();
                     break;
             }
         }
@@ -327,6 +327,7 @@ namespace GameLogic
         }
         protected virtual void OnRollEnd()
         {
+            movementScript.SetRoll(Vector3.zero, 0);
             animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 0);
             if (CallbackRollEnd != null) CallbackRollEnd();
         }

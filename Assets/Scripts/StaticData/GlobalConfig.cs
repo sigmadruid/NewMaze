@@ -107,7 +107,7 @@ namespace StaticData
         public readonly float NearSqrDistance = 0.1f;
         public readonly int MouseHitMask = Layers.LayerWalkSurface | Layers.LayerMonster | Layers.LayerItem;
         public readonly int MouseHoverMask = Layers.LayerBlock | Layers.LayerMonster | Layers.LayerNPC | Layers.LayerItem;
-        public readonly float DragThreshold = 100f;
+        public readonly float DragThreshold = 1000f;
     }
 
 	public class CameraConfig
