@@ -40,6 +40,7 @@ namespace GameLogic
         public int SkillIndex { get; private set; }
         public Monster TargetMonster { get; private set; }
         public Vector3 TargetPosition { get; private set; }
+        public Vector3 RollDirection { get; private set; }
 
         private InputManager inputManager;
         private BattleProxy battleProxy;
@@ -202,12 +203,16 @@ namespace GameLogic
 
         private void AxisControl()
         {
-            if(inputManager.DragStart)
+            if(Info.IsRolling)
+            {
+                Roll(RollDirection, Data.RollSpeed);
+            }
+            else if(inputManager.DragStart)
             {
                 Vector2 dir = inputManager.DraggingPosition - inputManager.MouseDownPosition;
-                Vector3 direction = new Vector3(dir.x, 0, dir.y);
-                direction = GlobalConfig.InputConfig.DirectionAngleOffset * direction;
-                Script.Roll(direction);
+                RollDirection = new Vector3(dir.x, 0, dir.y);
+                RollDirection = GlobalConfig.InputConfig.DirectionAngleOffset * RollDirection;
+                Roll(RollDirection, Data.RollSpeed);
             }
             else if(inputManager.PlaneHitPosition != Vector3.zero)
             {
@@ -273,7 +278,7 @@ namespace GameLogic
                 }
                 else
                 {
-                    TargetPosition = inputManager.MouseHitPosition + Script.EmitPosition;
+                    TargetPosition = inputManager.PlaneHitPosition + Script.EmitPosition;
                     TargetMonster = null;
                 }
             }
@@ -327,6 +332,10 @@ namespace GameLogic
         public void Die()
         {
             Script.Die();
+        }
+        public void Roll(Vector3 direction, float speed)
+        {
+            Script.Roll(direction, speed);
         }
         public void PlayAnimation(string trigger)
         {
@@ -387,6 +396,14 @@ namespace GameLogic
         {
             CallbackDie();
         }
+        private void OnRollStart()
+        {
+            Info.IsRolling = true;
+        }
+        private void OnRollEnd()
+        {
+            Info.IsRolling = false;
+        }
         private void OnTrapAttack(int trapKid)
         {
             TrapData data = TrapDataManager.Instance.GetData(trapKid) as TrapData;
@@ -414,6 +431,8 @@ namespace GameLogic
             adam.Script.CallbackHitStart = adam.OnHitStart;
             adam.Script.CallbackHitEnd = adam.OnHitEnd;
             adam.Script.CallbackDieEnd = adam.OnDieEnd;
+            adam.Script.CallbackRollStart = adam.OnRollStart;
+            adam.Script.CallbackRollEnd = adam.OnRollEnd;
             adam.Script.CallbackSkillMiddle = adam.OnSkillMiddle;
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackUnsheath = adam.OnUnsheath;

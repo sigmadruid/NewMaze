@@ -32,6 +32,7 @@ namespace StaticData
                     data.Dodge = StaticReader.ReadInt(GetContent(col++));
                     data.MoveSpeed = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackSpeed = StaticReader.ReadFloat(GetContent(col++));
+                    data.RollSpeed = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackType = StaticReader.ReadEnum<AttackType>(GetContent(col++));
                     data.SkillList = StaticReader.ReadIntList(GetContent(col++));
 

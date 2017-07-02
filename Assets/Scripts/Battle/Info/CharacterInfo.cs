@@ -64,6 +64,7 @@ namespace Battle
         #region State
 
         public bool IsStunned;
+        public bool IsRolling;
 
         #endregion
 

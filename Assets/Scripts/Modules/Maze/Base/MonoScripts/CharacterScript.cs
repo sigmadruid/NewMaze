@@ -23,6 +23,8 @@ namespace GameLogic
         public Action CallbackHitStart;
         public Action CallbackHitEnd;
         public Action CallbackDieEnd;
+        public Action CallbackRollStart;
+        public Action CallbackRollEnd;
 
     	public Transform TopPosTransform;
     	public Transform BottomPosTransform;
@@ -131,7 +133,7 @@ namespace GameLogic
         {
             if (Game.Instance.IsPause) { return; }
 
-            movementScript.SetDirection(direction, speed);
+            movementScript.SetMove(direction, speed);
             animator.SetBool(AnimatorDataManager.Instance.ParamIsMoving, movementScript.IsMoving);
         }
         public virtual void LookAt(Vector3 direction)
@@ -148,6 +150,7 @@ namespace GameLogic
             else if (skillID == 2)
                 skillTrigger = AnimatorDataManager.Instance.ParamDoSkill_2;
 
+            movementScript.SetMove(Vector3.zero, 0);
             movementScript.SetDestination(Vector3.zero, 0);
             animator.speed = attackSpeed;
             animator.SetTrigger(skillTrigger);
@@ -156,15 +159,21 @@ namespace GameLogic
     	{
             if (Game.Instance.IsPause) { return; }
 
+            movementScript.SetMove(Vector3.zero, 0);
             movementScript.SetDestination(Vector3.zero, 0f);
             animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
     	}
-        public virtual void Roll(Vector3 direction)
+        public virtual void Roll(Vector3 direction, float speed)
         {
             if(direction == Vector3.zero)
+            {
+                movementScript.SetRoll(Vector3.zero, 0);
                 return;
+            }
 
             direction = direction.normalized;
+            movementScript.SetRoll(direction, speed);
+
             Vector3 forward = MathUtils.XZDirection(transform.forward).normalized;
             float crossY = Vector3.Cross(direction, forward).y;
             float dot = Vector3.Dot(direction, forward);
@@ -228,6 +237,9 @@ namespace GameLogic
                 case AnimatorEventType.DIE:
                     OnDieStart();
                     break;
+                case AnimatorEventType.ROLL:
+                    OnRollStart();
+                    break;
             }
         }
         public void OnAnimatorMiddle(AnimatorEventType type)
@@ -248,6 +260,9 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.DIE:
                     break;
+                case AnimatorEventType.ROLL:
+                    OnRollEnd();
+                    break;
             }
         }
         public void OnAnimatorEnd(AnimatorEventType type)
@@ -267,9 +282,6 @@ namespace GameLogic
                     break;
                 case AnimatorEventType.DIE:
                     OnDieEnd();
-                    break;
-                case AnimatorEventType.ROLL:
-                    OnRollEnd();
                     break;
             }
         }
@@ -309,9 +321,14 @@ namespace GameLogic
         {
             if (CallbackDieEnd != null) CallbackDieEnd();
         }
+        protected virtual void OnRollStart()
+        {
+            if (CallbackRollStart != null) CallbackRollStart();
+        }
         protected virtual void OnRollEnd()
         {
             animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 0);
+            if (CallbackRollEnd != null) CallbackRollEnd();
         }
 
         #endregion

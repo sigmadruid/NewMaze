@@ -22,7 +22,8 @@ namespace StaticData
 		public int Critical;
 		public int Dodge;
         public float MoveSpeed;
-		public float AttackSpeed;
+        public float AttackSpeed;
+		public float RollSpeed;
 
 		//Melee or shoot
 		public AttackType AttackType;

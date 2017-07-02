@@ -36,6 +36,7 @@ namespace Base
         private Vector3 desiredDirection;
 
         private Vector3 moveDirection;
+        private Vector3 rollDirection;
 
         private Seeker seeker;
         private CharacterController controller;
@@ -95,7 +96,14 @@ namespace Base
             }
             else if (controller.enabled)
             {
-                controller.Move((moveDirection * speed + Vector3.down * Gravity) * Time.deltaTime);
+                if(rollDirection != Vector3.zero)
+                {
+                    controller.Move((rollDirection * speed + Vector3.down * Gravity) * Time.deltaTime);
+                }
+                else if(moveDirection != Vector3.zero)
+                {
+                    controller.Move((moveDirection * speed + Vector3.down * Gravity) * Time.deltaTime);
+                }
             }
         }
 
@@ -123,7 +131,7 @@ namespace Base
             }
         }
 
-        public void SetDirection(Vector3 direction, float speed)
+        public void SetMove(Vector3 direction, float speed)
         {
             if(Destination == Vector3.zero)
             {
@@ -134,6 +142,15 @@ namespace Base
                 {
                     LookAt(direction);
                 }
+            }
+        }
+        public void SetRoll(Vector3 direction, float speed)
+        {
+            if(Destination == Vector3.zero)
+            {
+                this.speed = speed;
+                rollDirection = direction;
+                IsMoving = direction != Vector3.zero;
             }
         }
 
