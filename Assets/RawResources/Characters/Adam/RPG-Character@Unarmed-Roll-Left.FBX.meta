@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a34ca3f7a1f5a6d468d6a9dc3f8db3f7
-timeCreated: 1458307840
+guid: 7a4cfa3380fcb524c9233ff11170833e
+timeCreated: 1458307819
 licenseType: Store
 ModelImporter:
   serializedVersion: 19
@@ -230,7 +230,7 @@ ModelImporter:
     4300008: Chaingun
     4300010: Soldier_Mesh
     4300012: RPG-Character-Mesh
-    7400000: Unarmed-Roll-Right
+    7400000: Unarmed-Roll-Left
     7400002: Unarmed-Land
     9500000: //RootNode
     11100000: //RootNode
@@ -252,21 +252,22 @@ ModelImporter:
       improve retargeting quality.\n\t'B_Spine' has translation animation that will
       be discarded.\n\t'B_Spine2' is inbetween humanoid transforms and has rotation
       animation that will be discarded.\n"
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftUpperArm
-      average position error 19.1 mm and maximum position error 41.2 mm at time 0:
-      8 (30.8%) Frame 8\n\tLeftLowerArm average position error 18.6 mm and maximum
-      position error 42.8 mm at time 0: 9 (34.6%) Frame 9\n\tLeftHand average position
-      error 18.8 mm and maximum position error 44.6 mm at time 0: 9 (34.6%) Frame
-      9\n\tRightUpperArm average position error 21.5 mm and maximum position error
-      41.0 mm at time 0: 8 (30.8%) Frame 8\n\tRightLowerArm average position error
-      19.8 mm and maximum position error 42.3 mm at time 0: 8 (30.8%) Frame 8\n\tRightHand
-      average position error 19.9 mm and maximum position error 43.8 mm at time 0:
-      8 (30.8%) Frame 8\n\tHead average position error 26.0 mm and maximum position
-      error 43.9 mm at time 0:13 (50.0%) Frame 13\n\tRightFoot average orientation
-      error 0.1 deg and maximum orientation error 0.8 deg at time 0:15 (57.7%) Frame
-      15\n"
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftLowerLeg
+      average position error 0.5 mm and maximum position error 10.8 mm at time 0:12
+      (46.2%) Frame 12\n\tLeftUpperArm average position error 24.3 mm and maximum
+      position error 41.2 mm at time 0:11 (42.3%) Frame 11\n\tLeftLowerArm average
+      position error 24.8 mm and maximum position error 43.0 mm at time 0:11 (42.3%)
+      Frame 11\n\tLeftHand average position error 24.0 mm and maximum position error
+      44.7 mm at time 0:11 (42.3%) Frame 11\n\tRightUpperArm average position error
+      24.4 mm and maximum position error 41.0 mm at time 0:11 (42.3%) Frame 11\n\tRightLowerArm
+      average position error 20.4 mm and maximum position error 41.8 mm at time 0:12
+      (46.2%) Frame 12\n\tRightHand average position error 21.9 mm and maximum position
+      error 42.9 mm at time 0:12 (46.2%) Frame 12\n\tHead average position error 36.9
+      mm and maximum position error 50.2 mm at time 0: 2 (7.7%) Frame 2\n\tRightFoot
+      average orientation error 0.1 deg and maximum orientation error 1.5 deg at time
+      0: 5 (19.2%) Frame 5\n"
     animationDoRetargetingWarnings: 1
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -274,7 +275,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed-Roll-Right
+      name: Unarmed-Roll-Left
       takeName: Take 001
       firstFrame: 2
       lastFrame: 15

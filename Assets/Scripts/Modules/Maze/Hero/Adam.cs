@@ -220,7 +220,7 @@ namespace GameLogic
                 RefreshTarget();
 
                 Idle();
-//                LookAt(TargetPosition);
+                LookAt(TargetPosition);
 
                 if(Game.Instance.CurrentStageType == StageEnum.HomeTown)
                     return;
