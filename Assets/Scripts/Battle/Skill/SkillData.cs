@@ -19,6 +19,8 @@ namespace StaticData
 
         public List<int> EffectList;
 
+        public int CostSP;
+
     }
 }
 

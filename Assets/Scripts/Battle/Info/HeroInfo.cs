@@ -21,7 +21,6 @@ namespace Battle
         public bool IsConverting;
         public bool IsInHall;
         public bool IsVisible;
-        public float LastHitTime;
 
         protected static Dictionary<int, Buff> heroBuffDic = new Dictionary<int, Buff>();
         protected override Dictionary<int, Buff> buffDic
@@ -89,6 +88,7 @@ namespace Battle
         private void InitRaise()
         {
             attrRaiseDic[(int)BattleAttribute.HP] = Data.HPRaise;
+            attrRaiseDic[(int)BattleAttribute.SP] = 0;
             attrRaiseDic[(int)BattleAttribute.Attack] = Data.AttackRaise;
             attrRaiseDic[(int)BattleAttribute.Defense] = Data.DefenseRaise;
             attrRaiseDic[(int)BattleAttribute.Critical] = Data.CriticalRaise;
@@ -115,6 +115,9 @@ namespace Battle
         public override bool CanCastSkill(int index)
         {
             if (IsConverting)
+                return false;
+            Skill skill = SkillList[index - 1];
+            if(SP < skill.Data.CostSP)
                 return false;
             return base.CanCastSkill(index);
         }

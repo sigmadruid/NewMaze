@@ -25,7 +25,6 @@ namespace GameLogic
 			{
 				NotificationEnum.BATTLE_UI_INIT,
 				NotificationEnum.BATTLE_UI_UPDATE_HP,
-				NotificationEnum.BATTLE_UI_UPDATE_MP,
                 NotificationEnum.BATTLE_PAUSE,
 			};
 		}
@@ -43,12 +42,6 @@ namespace GameLogic
 				{
 					AttackResult ar = (AttackResult)notification.Body;
 					HandleUpdateHP(ar);
-					break;
-				}
-				case NotificationEnum.BATTLE_UI_UPDATE_MP:
-				{
-					int value = (int)notification.Body;
-					HandleUpdateMP(value);
 					break;
 				}
                 case NotificationEnum.BATTLE_PAUSE:
@@ -70,16 +63,12 @@ namespace GameLogic
             ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
             ClickEventTrigger.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
-            panel.UpdateLifeBar(Adam.Instance.Info.HPRatio, false);
+            panel.UpdateHPBar(Adam.Instance.Info.HPRatio, false);
 		}
 		private void HandleUpdateHP(AttackResult ar)
 		{
 			panel.UpdateHPNumber(ar);
-            panel.UpdateLifeBar(Adam.Instance.Info.HPRatio, true);
-		}
-		private void HandleUpdateMP(int value)
-		{
-            panel.UpdateMagicBar(value);
+            panel.UpdateHPBar(Adam.Instance.Info.HPRatio, true);
 		}
         private void HandlePause()
         {

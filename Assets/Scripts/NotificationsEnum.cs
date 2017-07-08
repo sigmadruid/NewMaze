@@ -52,7 +52,6 @@ namespace GameLogic
 
 		BATTLE_UI_INIT,
 		BATTLE_UI_UPDATE_HP,
-		BATTLE_UI_UPDATE_MP,
 
 		BATTLE_PAUSE,
 

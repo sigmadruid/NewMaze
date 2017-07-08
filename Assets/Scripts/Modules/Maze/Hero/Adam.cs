@@ -71,6 +71,7 @@ namespace GameLogic
 
             Info.UpdateBuff(deltaTime);
             Info.UpdateSkill(deltaTime);
+            Info.UpdateSP(deltaTime);
         }
         protected override void SlowUpdate()
         {

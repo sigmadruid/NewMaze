@@ -41,6 +41,7 @@ namespace Battle
 			Data = data;
 
             attrDic[(int)BattleAttribute.HP] = Data.HP;
+            attrDic[(int)BattleAttribute.SP] = Data.SP;
             attrDic[(int)BattleAttribute.Attack] = Data.Attack;
             attrDic[(int)BattleAttribute.Defense] = Data.Defense;
             attrDic[(int)BattleAttribute.Critical] = Data.Critical;
@@ -49,6 +50,7 @@ namespace Battle
             attrDic[(int)BattleAttribute.AttackSpeed] = Data.AttackSpeed;
 
             HP = Data.HP;
+            SP = Data.SP;
 		}
 		
         public virtual void Init()
@@ -71,6 +73,7 @@ namespace Battle
         #region Attribute
 
         public int HP { get; protected set; }
+        public int SP { get; protected set; }
 
         public float HPRatio { get { return HP * 1f / GetAttribute(BattleAttribute.HP); } }
 
@@ -111,6 +114,11 @@ namespace Battle
             int maxHP = (int)GetAttribute(BattleAttribute.HP);
             HP = Mathf.Clamp(HP + value, 0, maxHP);
 		}
+        public void AddSP(int value)
+        {
+            int maxSP = (int)GetAttribute(BattleAttribute.SP);
+            SP = Mathf.Clamp(SP + value, 0, maxSP);
+        }
 
         public AttackResult HurtBy(SkillEffect skillEffect)
 		{
@@ -173,6 +181,16 @@ namespace Battle
                 resultVal += attrVal;
             }
             return resultVal;
+        }
+
+        public void UpdateSP(float deltaTime)
+        {
+            int maxSP = (int)GetAttribute(BattleAttribute.SP);
+            if(SP < maxSP)
+            {
+                int deltaSP = (int)(maxSP * GlobalConfig.BattleConfig.SPRecoverRatioPerSecond * deltaTime);
+                AddSP(deltaSP);
+            }
         }
 
         #endregion

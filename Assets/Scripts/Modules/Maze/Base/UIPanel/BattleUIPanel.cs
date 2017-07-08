@@ -42,6 +42,14 @@ namespace GameUI
             base.OnDispose();
         }
 
+        void Update()
+        {
+            HeroInfo info = Adam.Instance.Info;
+            int currentSP = info.SP;
+            float maxSP = info.GetBaseAttribute(BattleAttribute.SP);
+            UpdateSPBar(currentSP / maxSP);
+        }
+
         public void SetData(List<int> kidList)
     	{
     		PanelUtils.ClearChildren(LayoutHeroes.transform);
@@ -70,13 +78,13 @@ namespace GameUI
     			item.gameObject.SetActive(isShow);
     		}
     	}
-        public void UpdateLifeBar(float hpVal, bool isAnim)
+        public void UpdateHPBar(float hpRatio, bool isAnim)
     	{
-            HPBar.SetValue(hpVal, isAnim);
+            HPBar.SetValue(hpRatio, isAnim);
     	}
-        public void UpdateMagicBar(float mpVal)
+        public void UpdateSPBar(float spRatio)
         {
-            MPBar.value = mpVal;
+            MPBar.value = spRatio;
         }
     	public void UpdateHPNumber(AttackResult ar)
     	{

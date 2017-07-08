@@ -121,6 +121,7 @@ namespace GameLogic
 				return;
             Info.UpdateBuff(deltaTime);
             Info.UpdateSkill(deltaTime);
+            Info.UpdateSP(deltaTime);
 		}
 
         public void AddBuff(int kid, float remainTime = 0f)

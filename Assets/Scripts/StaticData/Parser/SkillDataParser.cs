@@ -28,6 +28,7 @@ namespace StaticData
                     data.CanMove = StaticReader.ReadBool(GetContent(col++));
                     data.Range = StaticReader.ReadFloat(GetContent(col++));
                     data.EffectList = StaticReader.ReadIntList(GetContent(col++));
+                    data.CostSP = StaticReader.ReadInt(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
 

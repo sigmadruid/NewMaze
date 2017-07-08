@@ -1,5 +1,5 @@
-Kid,Name,Res2D,Res3D,HP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,AttackType,SkillList,Exp,Size,DetectRange,AttackDelay,AttackRange,DodgeDelay,DodgeRange,AppearWeight,DropKid
-int,string,string,string,int,int,int,int,int,float,float,AttackType,List<int>,,MonsterSize,float,float,float,float,float,int,int
-40001,monster.name.moying,,Monster_1,600,100,10,0,0,3,1,Melee,155001,500,Small,12,1,1.7,0,0,500,100001
-40002,monster.name.yuanling,,Monster_2,500,150,5,10,10,2.5,1.2,Range,155002,700,Small,12,2,6,3,3,300,100002
-40003,monster.name.jushenbing,,Monster_3,1000,250,20,20,0,1.5,0.9,Melee,155003,1200,Big,10,1.2,2.5,0,0,100,100003
+Kid,Name,Res2D,Res3D,HP,SP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,AttackType,SkillList,Exp,Size,DetectRange,AttackDelay,AttackRange,DodgeDelay,DodgeRange,AppearWeight,DropKid
+int,string,string,string,int,int,int,int,int,int,float,float,AttackType,List<int>,,MonsterSize,float,float,float,float,float,int,int
+40001,monster.name.moying,,Monster_1,600,1000,100,10,0,0,3,1,Melee,155001,500,Small,12,1,1.7,0,0,500,100001
+40002,monster.name.yuanling,,Monster_2,500,1000,150,5,10,10,2.5,1.2,Range,155002,700,Small,12,2,6,3,3,300,100002
+40003,monster.name.jushenbing,,Monster_3,1000,1000,250,20,20,0,1.5,0.9,Melee,155003,1200,Big,10,1.2,2.5,0,0,100,100003

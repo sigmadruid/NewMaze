@@ -21,6 +21,7 @@ namespace Battle
         {
             CD = Data.CD;
             EffectList.Clear();
+            infoAgent.AddSP(-Data.CostSP);
             for(int i = 0; i < Data.EffectList.Count; ++i)
             {
                 SkillEffect effect = SkillEffect.Create(Data.EffectList[i], infoAgent);

@@ -180,24 +180,20 @@ namespace GameLogic
             if(0.707f < dot && dot <= 1)
             {
                 animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 1);
-                Debug.LogError("forward");
             }
             else if(-1 <= dot && dot < -0.707f)
             {
                 animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 2);
-                Debug.LogError("backward");
             }
             else
             {
                 if(crossY >= 0)
                 {
                     animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 3);
-                    Debug.LogError("left");
                 }
                 else
                 {
                     animator.SetInteger(AnimatorDataManager.Instance.ParamRoll, 4);
-                    Debug.LogError("right");
                 }
             }
         }

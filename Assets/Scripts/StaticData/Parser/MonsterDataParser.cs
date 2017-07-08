@@ -27,6 +27,7 @@ namespace StaticData
                     data.Res2D = StaticReader.ReadString(GetContent(col++));
                     data.Res3D = StaticReader.ReadString(GetContent(col++));
                     data.HP = StaticReader.ReadInt(GetContent(col++));
+                    data.SP = StaticReader.ReadInt(GetContent(col++));
                     data.Attack = StaticReader.ReadInt(GetContent(col++));
                     data.Defense = StaticReader.ReadInt(GetContent(col++));
                     data.Critical = StaticReader.ReadInt(GetContent(col++));

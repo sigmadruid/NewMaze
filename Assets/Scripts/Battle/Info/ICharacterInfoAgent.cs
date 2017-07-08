@@ -8,6 +8,7 @@ namespace Battle
     {
         Side GetSide();
         float GetAttribute(BattleAttribute attribute);
+        void AddSP(int value);
     }
 }
 

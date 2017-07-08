@@ -16,7 +16,8 @@ namespace StaticData
         public string Res2D;
 		public string Res3D;
 		
-		public int HP;
+        public int HP;
+		public int SP;
 		public int Attack;
 		public int Defense;
 		public int Critical;

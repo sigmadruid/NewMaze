@@ -11,12 +11,13 @@ namespace StaticData
     public enum BattleAttribute
     {
         HP = 1,
-        Attack = 2,
-        Defense = 3,
-        Critical = 4,
-        Dodge = 5,
-        MoveSpeed = 6,
-        AttackSpeed = 7,
+        SP,
+        Attack,
+        Defense,
+        Critical,
+        Dodge,
+        MoveSpeed,
+        AttackSpeed,
     }
     public enum Side
     {
@@ -61,6 +62,7 @@ namespace StaticData
 	{
 		public readonly float OutBattleDelay = 5f;
         public readonly float BuffTransitionDuration = 3f;
+        public readonly float SPRecoverRatioPerSecond = 0.3f;
 	}
 
     public class BlockConfig
