@@ -1,6 +1,6 @@
 Kid,Name,Res2D,Res3D,HP,SP,Attack,Defense,Critical,Dodge,MoveSpeed,AttackSpeed,RollSpeed,AttackType,SkillList,HPRaise,AttackRaise,DefenseRaise,CriticalRaise,DodgeRaise,MoveSpeedRaise,AttackSpeedRaise,Trigger,LeftWeapon,RightWeapon
 int,string,string,string,int,int,int,int,int,int,float,float,float,AttackType,List<int>,float,float,float,float,float,float,float,string,int,int
-30000,hero.name.Edward,portrait_1,Adam,100,1000,10,1,100,10,3.5,1,5,Melee,,0,0,0,0,0,0,0,DoUnarmed,0,0
-30001,hero.name.Edward,portrait_1,Adam,100,1000,10,1,100,10,3.5,1,5,Melee,150001#150002,202,20,2,8,2,0,0.004,DoSword,170004,170001
-30002,hero.name.Thomas,portrait_2,Adam,2000,1000,150,15,100,5,3,0.8,4,Melee,150011#150012,204,13,1.3,8,2,0,0.002,DoAxe,0,170002
-30003,hero.name.Sally,portrait_3,Adam,1500,1000,100,5,200,20,4,1.2,6,Range,150021#150022,133,16,1.1,8,2,0,0.006,DoBow,170003,0
+30000,hero.name.Edward,portrait_1,Adam,100,1000,10,1,100,10,3.5,1,7,Melee,,0,0,0,0,0,0,0,DoUnarmed,0,0
+30001,hero.name.Edward,portrait_1,Adam,100,1000,10,1,100,10,3.5,1,7,Melee,150001#150002,202,20,2,8,2,0,0.004,DoSword,170004,170001
+30002,hero.name.Thomas,portrait_2,Adam,2000,1000,150,15,100,5,3,0.8,6,Melee,150011#150012,204,13,1.3,8,2,0,0.002,DoAxe,0,170002
+30003,hero.name.Sally,portrait_3,Adam,1500,1000,100,5,200,20,4,1.2,8,Range,150021#150022,133,16,1.1,8,2,0,0.006,DoBow,170003,0
