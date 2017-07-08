@@ -197,6 +197,8 @@ namespace Battle
 
         #region Buff
 
+        private List<Buff> toRemoveBuffList = new List<Buff>();
+
         public Buff GetBuff(int kid)
         {
             if(buffDic.ContainsKey(kid))
@@ -207,6 +209,9 @@ namespace Battle
         }
         public void UpdateBuff(float deltaTime)
         {
+            if(toRemoveBuffList.Count > 0)
+                toRemoveBuffList.Clear();
+            
             var enumerator = buffDic.GetEnumerator();
             while (enumerator.MoveNext())
             {
@@ -216,14 +221,23 @@ namespace Battle
                     buff.Update(deltaTime);
                     if(buff.RemainTime <= 0)
                     {
+                        toRemoveBuffList.Add(buff);
                         buff.End();
                     }
                 }
             }
+
+            for(int i = 0; i < toRemoveBuffList.Count; ++i)
+            {
+                buffDic.Remove(toRemoveBuffList[i].Data.Kid);
+            }
         }
         public void AddBuff(Buff buff)
         {
-            buffDic[buff.Data.Kid] = buff;
+            if(buff != null)
+            {
+                buffDic[buff.Data.Kid] = buff;
+            }
         }
         public void RemoveBuff(int kid)
         {

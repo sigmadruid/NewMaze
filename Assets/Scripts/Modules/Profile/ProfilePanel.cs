@@ -63,7 +63,7 @@ namespace GameUI
             foreach(var obj in attrs)
             {
                 BattleAttribute attr = (BattleAttribute)obj;
-                itemPool.AddItem().SetData(attr, info.GetBaseAttribute(attr));
+                itemPool.AddItem().SetData(attr, info.GetAttribute(attr));
             }
         }
 

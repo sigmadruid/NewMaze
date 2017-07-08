@@ -56,7 +56,7 @@ namespace Battle
             return 0;
         }
 
-        public static Buff Create(int kid, float remainTime)
+        public static Buff Create(int kid, float remainTime = 0)
         {
             BuffData data = BuffDataManager.Instance.GetData(kid);
             Buff buff = null;

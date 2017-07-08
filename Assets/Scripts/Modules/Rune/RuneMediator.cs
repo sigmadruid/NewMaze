@@ -10,11 +10,7 @@ namespace GameLogic
     public enum RuneType
     {
         Life,
-        Attack,
-        Defense,
-        Dexterity,
-        Evasion,
-        Speed,
+        Buff,
         Invisible,
     }
     public class RuneMediator : Mediator
@@ -58,13 +54,18 @@ namespace GameLogic
             }
 
             RuneType type = (RuneType)Enum.Parse(typeof(RuneType), itemData.Param1);
-            float param2 = !string.IsNullOrEmpty(itemData.Param2) ? float.Parse(itemData.Param2) : 0;
-            float param3 = !string.IsNullOrEmpty(itemData.Param3) ? float.Parse(itemData.Param3) : 0;
             switch(type)
             {
                 case RuneType.Life:
                     {
+                        float param2 = !string.IsNullOrEmpty(itemData.Param2) ? float.Parse(itemData.Param2) : 0;
                         battleProxy.DoHealHero((int)param2);
+                        break;
+                    }
+                case RuneType.Buff:
+                    {
+                        int buffKid = int.Parse(itemData.Param2);
+                        Adam.Instance.AddBuff(buffKid);
                         break;
                     }
             }

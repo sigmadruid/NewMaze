@@ -28,6 +28,9 @@ public class AttributeItem : MonoBehaviour
             case BattleAttribute.HP:
                 spriteName = "hp_icon";
                 break;
+            case BattleAttribute.SP:
+                spriteName = "sp_icon";
+                break;
             case BattleAttribute.Attack:
                 spriteName = "attack_icon";
                 break;

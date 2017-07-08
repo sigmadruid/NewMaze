@@ -420,6 +420,27 @@ namespace GameLogic
 
         #endregion
 
+        #region Buff
+
+        public void AddBuff(int kid, float remainTime = 0f)
+        {
+            Buff buff = Buff.Create(kid, remainTime);
+            Info.AddBuff(buff);
+            buff.Start(Script);
+        }
+
+        public void RemoveBuff(int kid)
+        {
+            Buff buff = Info.GetBuff(kid);
+            if(buff != null)
+            {
+                Info.RemoveBuff(kid);
+                buff.End();
+            }
+        }
+
+        #endregion
+
         public static Adam Create(HeroInfo info)
         {
             Adam adam = new Adam();
