@@ -30,7 +30,8 @@ namespace GameLogic
 		MAZE_MAP_RESET,
 		
 		HERO_INIT,
-		HERO_CONVERT,
+        HERO_CONVERT_START,
+		HERO_CONVERT_END,
 		HERO_TRANSPORT,
 
         MONSTER_INIT,

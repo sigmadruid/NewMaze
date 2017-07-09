@@ -7,6 +7,8 @@ namespace StaticData
     {
         public int Kid;
 
+        public string Res2D;
+
         public float CD;
 
         public bool IsDamage;

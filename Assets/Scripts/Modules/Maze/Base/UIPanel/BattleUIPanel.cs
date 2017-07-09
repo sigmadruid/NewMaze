@@ -26,6 +26,8 @@ namespace GameUI
     	public NumberItem HPNumber;
     	public NumberItem MPNumber;
 
+        public SkillItem[] SkillItemList;
+
     	[HideInInspector]
     	public HeroItem CurrentItem;
 
@@ -50,7 +52,7 @@ namespace GameUI
             UpdateSPBar(currentSP / maxSP);
         }
 
-        public void SetData(List<int> kidList)
+        public void SetHeroListData(List<int> kidList)
     	{
     		PanelUtils.ClearChildren(LayoutHeroes.transform);
 
@@ -68,16 +70,20 @@ namespace GameUI
 
     			heroItemList.Add(item);
     		}
-    	}
 
-    	public void ShowHeroItems(bool isShow)
-    	{
-    		for (int i = 0; i < heroItemList.Count; ++i)
-    		{
-    			HeroItem item = heroItemList[i];
-    			item.gameObject.SetActive(isShow);
-    		}
+            SetHeroData();
     	}
+        public void SetHeroData()
+        {
+            ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, Adam.Instance.Data.Res2D);
+            for(int i = 0; i < SkillItemList.Length; ++i)
+            {
+                SkillItem item = SkillItemList[i];
+                Skill skill = Adam.Instance.Info.GetSkill(i + 1);
+                item.SetData(skill);
+            }
+        }
+
         public void UpdateHPBar(float hpRatio, bool isAnim)
     	{
             HPBar.SetValue(hpRatio, isAnim);
@@ -98,7 +104,6 @@ namespace GameUI
     	private void OnHeroItemClick(GameObject go)
     	{
     		CurrentItem = go.GetComponent<HeroItem>();
-            ImageHero.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_PORTRAIT, CurrentItem.Data.Res2D);
 
             CallbackHeroItemClick();
     	}

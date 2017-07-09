@@ -26,6 +26,7 @@ namespace GameLogic
 				NotificationEnum.BATTLE_UI_INIT,
 				NotificationEnum.BATTLE_UI_UPDATE_HP,
                 NotificationEnum.BATTLE_PAUSE,
+                NotificationEnum.HERO_CONVERT_END,
 			};
 		}
 
@@ -34,21 +35,26 @@ namespace GameLogic
             switch((NotificationEnum)notification.NotifyEnum)
 			{
 				case NotificationEnum.BATTLE_UI_INIT:
-				{
-                    HandleUIInit();
-                    break;
-                }
+    				{
+                        HandleUIInit();
+                        break;
+                    }
 				case NotificationEnum.BATTLE_UI_UPDATE_HP:
-				{
-					AttackResult ar = (AttackResult)notification.Body;
-					HandleUpdateHP(ar);
-					break;
-				}
+    				{
+    					AttackResult ar = (AttackResult)notification.Body;
+    					HandleUpdateHP(ar);
+    					break;
+    				}
                 case NotificationEnum.BATTLE_PAUSE:
-                {
-                    HandlePause();
-                    break;
-                }
+                    {
+                        HandlePause();
+                        break;
+                    }
+                case NotificationEnum.HERO_CONVERT_END:
+                    {
+                        HandleHeroConvertEnd();
+                        break;
+                    }
 			}
 		}
 
@@ -57,7 +63,7 @@ namespace GameLogic
             List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
-            panel.SetData(kidList);
+            panel.SetHeroListData(kidList);
             panel.CallbackHeroItemClick = OnHeroItemClick;
             panel.CallbackProfileClick = OnProfileClicked;
             ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
@@ -72,13 +78,16 @@ namespace GameLogic
 		}
         private void HandlePause()
         {
-            panel.ShowHeroItems(!Game.Instance.IsPause);
+        }
+        private void HandleHeroConvertEnd()
+        {
+            panel.SetHeroData();   
         }
 
 		private void OnHeroItemClick()
 		{
 			HeroData data = panel.CurrentItem.Data;
-			DispatchNotification(NotificationEnum.HERO_CONVERT, data.Kid);
+			DispatchNotification(NotificationEnum.HERO_CONVERT_START, data.Kid);
 		}
         private void OnProfileClicked()
         {

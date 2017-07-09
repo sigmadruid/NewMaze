@@ -31,7 +31,7 @@ namespace GameLogic
 			{
 				NotificationEnum.HERO_INIT,
                 NotificationEnum.MOUSE_HIT_OBJECT,
-                NotificationEnum.HERO_CONVERT,
+                NotificationEnum.HERO_CONVERT_START,
 				NotificationEnum.BATTLE_PAUSE,
 				NotificationEnum.HERO_TRANSPORT,
 			};
@@ -51,7 +51,7 @@ namespace GameLogic
                     HandleHeroClick();
                     break;
                 }
-				case NotificationEnum.HERO_CONVERT:
+				case NotificationEnum.HERO_CONVERT_START:
 				{
 					int heroKid = (int)notification.Body;
 					HandleHeroConvert(heroKid);
@@ -176,6 +176,7 @@ namespace GameLogic
 			convertEffect.Deactive();
 			
             adam.Info.IsConverting = false;
+            DispatchNotification(NotificationEnum.HERO_CONVERT_END);
 		}
 
 		#endregion

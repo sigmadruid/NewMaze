@@ -9,6 +9,7 @@ namespace Base
         public const string ATLAS_NEWCOMMON = "Atlas/NewCommon/";
         public const string ATLAS_PORTRAIT = "Atlas/Portrait/";
         public const string ATLAS_ITEM = "Atlas/Item/";
+        public const string ATLAS_SKILLS = "Atlas/Skills/";
 
         public static void ClearChildren(Transform root)
         {

@@ -22,6 +22,7 @@ namespace StaticData
 
                     SkillData data = new SkillData();
                     data.Kid = StaticReader.ReadInt(GetContent(col++));
+                    data.Res2D = StaticReader.ReadString(GetContent(col++));
                     data.CD = StaticReader.ReadFloat(GetContent(col++));
                     data.IsDamage = StaticReader.ReadBool(GetContent(col++));
                     data.NeedTarget = StaticReader.ReadBool(GetContent(col++));
