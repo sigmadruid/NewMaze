@@ -85,6 +85,10 @@ namespace GameLogic
                 }
             }
 			
+            if(Data.AddToTarget)
+            {
+                Script.transform.SetParent(other.transform);
+            }
 		}
 		private void OnDestroy()
 		{

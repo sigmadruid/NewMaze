@@ -277,12 +277,12 @@ namespace GameLogic
 
                 if(target.Info.IsAlive)
                 {
-                    TargetPosition = target.WorldPosition + target.Script.CenterPosition;
+                    TargetPosition = target.Script.CenterPosition;
                     TargetMonster = target;
                 }
                 else
                 {
-                    TargetPosition = inputManager.PlaneHitPosition + Script.EmitPosition;
+                    TargetPosition = inputManager.PlaneHitPosition;
                     TargetMonster = null;
                 }
             }

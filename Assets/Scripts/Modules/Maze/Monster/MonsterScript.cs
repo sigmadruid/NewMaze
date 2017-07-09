@@ -50,7 +50,7 @@ public class MonsterScript : CharacterScript
     {
         base.LateUpdate();
         if (LifeBar != null)
-            LifeBar.UpdatePosition(transform.position + TopPosition);
+            LifeBar.UpdatePosition(TopPosition);
     }
 
     protected override void OnTriggerEnter(Collider other)

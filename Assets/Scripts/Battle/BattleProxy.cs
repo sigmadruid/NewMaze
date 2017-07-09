@@ -39,7 +39,7 @@ namespace Battle
 //                    return;
                 Bullet bullet = Bullet.Create(effect.Data.BulletKid);
                 bullet.SkillEffect = effect;
-                bullet.Start(adam.WorldPosition + adam.Script.EmitPosition, adam.TargetPosition);
+                bullet.Start(adam.Script.EmitPosition, adam.TargetPosition);
             }
             else if (adam.Data.AttackType == AttackType.Melee)
             {
@@ -64,7 +64,7 @@ namespace Battle
 			{
                 Bullet bullet = Bullet.Create(effect.Data.BulletKid);
                 bullet.SkillEffect = effect;
-                bullet.Start(monster.WorldPosition + monster.Script.EmitPosition, adam.WorldPosition + adam.Script.CenterPosition);
+                bullet.Start(monster.Script.EmitPosition, adam.Script.CenterPosition);
 			}
 			else if (monster.Data.AttackType == AttackType.Melee)
 			{
@@ -101,7 +101,7 @@ namespace Battle
                 return;
             }
             AttackResult result = monster.Info.HurtBy(attackContext);
-            NumberItem.Create(monster.WorldPosition + monster.Script.TopPosition, result);
+            NumberItem.Create(monster.Script.TopPosition, result);
             if (monster.Info.HP > 0)
             {
                 monster.Hit();

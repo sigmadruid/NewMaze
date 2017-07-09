@@ -41,19 +41,19 @@ namespace GameLogic
     	
         public Vector3 TopPosition
         {
-            get { return TopPosTransform.localPosition; }
+            get { return TopPosTransform.position; }
         }
         public Vector3 BottomPosition
         {
-            get { return BottomPosTransform.localPosition; }
+            get { return BottomPosTransform.position; }
         }
         public Vector3 CenterPosition
         {
-            get { return (TopPosTransform.localPosition + BottomPosTransform.localPosition) * 0.5f; }
+            get { return (TopPosTransform.position + BottomPosTransform.position) * 0.5f; }
         }
         public Vector3 EmitPosition
         {
-            get { return EmitTransform.localPosition; }
+            get { return EmitTransform.position; }
         }
 
         #endregion

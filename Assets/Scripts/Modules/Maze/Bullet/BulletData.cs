@@ -14,6 +14,8 @@ namespace StaticData
 
 		public float EndDuration;
 
+        public bool AddToTarget;
+
 		public override string GetResPath ()
 		{
 			if (resPath == null)

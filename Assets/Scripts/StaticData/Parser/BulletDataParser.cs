@@ -27,6 +27,7 @@ namespace StaticData
                     data.Speed = StaticReader.ReadFloat(GetContent(col++));
                     data.Radius = StaticReader.ReadFloat(GetContent(col++));
                     data.EndDuration = StaticReader.ReadFloat(GetContent(col++));
+                    data.AddToTarget = StaticReader.ReadBool(GetContent(col++));
                     
                     kvDic.Add(data.Kid, data);
                     NextLine();
