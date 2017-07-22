@@ -12,8 +12,6 @@ namespace Base
 	{
 	    private static PopupManager instance;
 
-		private BasePopupView currentQueuePopup;
-
         private Dictionary<string, BasePopupView> popupDic = new Dictionary<string, BasePopupView>();
         private List<BasePopupView> popupList = new List<BasePopupView>();
 		private BasePopupAction[] actionList;
@@ -166,6 +164,15 @@ namespace Base
                     scaler = GameObject.FindObjectOfType<CanvasScaler>();
                 }            
                 return scaler;
+            }
+        }
+
+        private BasePopupView currentQueuePopup;
+        public BasePopupView CurrentQueuePopup
+        {
+            get
+            {
+                return currentQueuePopup;
             }
         }
 
