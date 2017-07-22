@@ -18,6 +18,14 @@ namespace GameLogic
             Col = col;
             Row = row;
         }
+        public static bool operator == (MazePosition x, MazePosition y)
+        {
+            return x.Col == y.Col && x.Row == y.Row;
+        }
+        public static bool operator != (MazePosition x, MazePosition y)
+        {
+            return x.Col != y.Col || x.Row != y.Row;
+        }
     }
     public class Maze
     {

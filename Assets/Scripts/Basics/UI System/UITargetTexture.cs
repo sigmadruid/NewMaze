@@ -54,8 +54,6 @@ namespace Base
             model.transform.localEulerAngles = new Vector3(0, -180, 0);
 
             targetCamera.orthographicSize = height;
-
-//            model.layer = Layers.LayerRenderTexture;
         }
 
     }

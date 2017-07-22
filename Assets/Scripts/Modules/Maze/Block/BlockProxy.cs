@@ -89,7 +89,6 @@ namespace GameLogic
 			}
 			blockDic.Add(key, block);
 			node.AboveBlock = block;
-            AddMockNode(node);
 
 			return block;
 		}
@@ -223,8 +222,9 @@ namespace GameLogic
         private HashSet<MazeNode> mockNodeSet = new HashSet<MazeNode>();
         public HashSet<MazeNode> MockNodeSet { get{ return mockNodeSet; } }
 
-        private void AddMockNode(MazeNode node)
+        public void AddMockNode(MazePosition pos)
 		{
+            MazeNode node = GetNode(pos.Col, pos.Row);
             if (!mockNodeSet.Contains(node))
 				mockNodeSet.Add(node);
 		}
@@ -264,7 +264,7 @@ namespace GameLogic
                     int nodeIndex = nodeIndexList[j];
                     MazeNode node = mazeTable.GetNode(nodeIndex);
                     node.ExplorationKid = data.Kid;
-                    AddMockNode(node);
+                    AddMockNode(new MazePosition(node.Col, node.Row));
                     j++;
                 }
 

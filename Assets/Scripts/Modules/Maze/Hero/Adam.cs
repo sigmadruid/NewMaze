@@ -13,6 +13,7 @@ namespace GameLogic
     public class Adam : Entity, GamePlot.IActor
     {
         public Action CallbackDie;
+        public Action CallbackHeartBeat;
 
         public new AdamScript Script
         {
@@ -77,6 +78,7 @@ namespace GameLogic
         {
             if (!IsSlowUpdating)
                 return;
+            CallbackHeartBeat();
         }
 
         #region Interfaces

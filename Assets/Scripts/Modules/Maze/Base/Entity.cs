@@ -43,12 +43,9 @@ namespace GameLogic
             get { return Script.transform.localEulerAngles.y; }
         }
 
-        public MazePosition MazePosition
+        public MazePosition GetMazePosition()
         {
-            get
-            {
-                return Maze.Instance.GetMazePosition(Script.transform.position);
-            }
+            return Maze.Instance.GetMazePosition(Script.transform.position);
         }
 
 		public virtual void SetPosition(Vector3 position)

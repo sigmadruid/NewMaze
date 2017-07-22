@@ -13,16 +13,16 @@ namespace GameLogic
 	public class HeroMediator : Mediator
 	{
         private Adam adam;
-
-		private bool isConverting;
-
+        private MazePosition currentMazePos;
         private ParticleScript convertEffect;
 
-		private HeroProxy heroProxy;
+        private HeroProxy heroProxy;
+        private BlockProxy blockProxy;
 		
 		public override void OnRegister ()
 		{
-			heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
+            heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
+            blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 		}
 
 		public override IList<Enum> ListNotificationInterests ()
@@ -102,6 +102,7 @@ namespace GameLogic
                 adam.SetRotation(0);
             }
 			adam.CallbackDie = OnHeroDie;
+            adam.CallbackHeartBeat = OnHeartBeat;
 
 			//Battle
 			BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
@@ -169,7 +170,15 @@ namespace GameLogic
             RecordMediator.DeleteRecord();
 			Game.Instance.SwitchStage(StageEnum.HomeTown);
 		}
-
+        private void OnHeartBeat()
+        {
+            MazePosition pos = adam.GetMazePosition();
+            if(currentMazePos != pos)
+            {
+                currentMazePos = pos;
+                blockProxy.AddMockNode(currentMazePos);
+            }
+        }
 		private void OnConversionFinished(object param)
 		{
 			InputManager.Instance.Enable = true;

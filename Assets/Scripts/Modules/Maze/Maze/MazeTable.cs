@@ -43,6 +43,10 @@ namespace GameLogic
 			return string.Format("(col:{0}, row:{1}, searchIndex:{2})", Col, Row, SearchIndex);
 		}
 
+        public override int GetHashCode()
+        {
+            return Block.GetBlockKey(Col, Row);
+        }
 	}
 
 	public class MazeRoom : MazeNode
