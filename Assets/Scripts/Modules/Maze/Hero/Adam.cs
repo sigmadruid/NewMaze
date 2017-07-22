@@ -78,7 +78,8 @@ namespace GameLogic
         {
             if (!IsSlowUpdating)
                 return;
-            CallbackHeartBeat();
+            if (CallbackHeartBeat != null)
+                CallbackHeartBeat();
         }
 
         #region Interfaces

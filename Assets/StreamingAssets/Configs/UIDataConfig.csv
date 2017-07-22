@@ -1,0 +1,11 @@
+UIName,PrefabPath,QueueMode
+string,string,PopupQueueMode
+BattleUIPanel,BattleUIPanel,NoQueue
+ConfirmPanel,ConfirmPanel,QueueBack
+MazeMapPanel,MazeMapPanel,QueueBack
+PackPanel,PackPanel,QueueBack
+PausePanel,PausePanel,QueueBack
+ProfilePanel,ProfilePanel,QueueBack
+TalkPanel,TalkPanel,QueueBack
+TitlePanel,TitlePanel,NoQueue
+TransitionPanel,TransitionPanel,QueueBack

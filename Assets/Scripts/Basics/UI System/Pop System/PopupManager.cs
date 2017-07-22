@@ -1,41 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 using System.Collections;
 using System.Collections.Generic;
 
+using StaticData;
+
 namespace Base
 {
-    public class UIAnimationParam
-    {
-        public BasePopupView View;
-
-        public bool Cleanup;
-
-        public UIAnimationParam(BasePopupView view, bool cleanup)
-        {
-            View = view;
-            Cleanup = cleanup;
-        }
-    }
 	public class PopupManager : IPopupManagerDelegate
 	{
 	    private static PopupManager instance;
 
-        private BasePopupView mask;
 		private BasePopupView currentQueuePopup;
 
         private Dictionary<string, BasePopupView> popupDic = new Dictionary<string, BasePopupView>();
-        private PopupQueue popupQueue = new PopupQueue();
+        private List<BasePopupView> popupList = new List<BasePopupView>();
 		private BasePopupAction[] actionList;
 
 	    public static PopupManager Instance
 	    {
 	        get
 	        {
-	            if (instance == null)
-	            {
-	                instance = new PopupManager();
-	            }
+	            if (instance == null) instance = new PopupManager();
 	            return instance;
 	        }
 	    }
@@ -46,9 +33,9 @@ namespace Base
             InputManager.Instance.UpdateRaycasters();
             actionList = new BasePopupAction[]
                 {
-                    new AddMaskPopupAction(this),
-                    new HideCameraPopupAction(this),
-                    new AutoHidePopupAction(this),
+//                    new AddMaskPopupAction(this),
+//                    new HideCameraPopupAction(this),
+//                    new AutoHidePopupAction(this),
                 };
         }
 
@@ -56,7 +43,7 @@ namespace Base
 		{
 			currentQueuePopup = null;
 			popupDic.Clear();
-			popupQueue = new PopupQueue();
+            popupList = new List<BasePopupView>();
 		}
 
         public T CreateItem<T>(Transform parentTrans) where T : MonoBehaviour
@@ -73,210 +60,101 @@ namespace Base
             ResourceManager.Instance.RecycleAsset(item);
         }
 
-		public T CreateAndAddPopup<T>(uint popupMode = PopupMode.DEFAULT, 
-		                              PopupQueueMode queueMode = PopupQueueMode.QueueBack, 
-		                              Dictionary<uint, object> paramDic = null) where T : BasePopupView
+		public T CreateAndAddPopup<T>() where T : BasePopupView
 	    {
-			bool show = checkMode(popupMode, PopupMode.SHOW);
-            string path = string.Format(PopupConst.UI_PANEL_PATH, typeof(T).Name);
+            string panelName = typeof(T).Name;
+            UIData data = UIDataManager.Instance.GetData(panelName);
+            string path = string.Format(PopupConst.UI_PANEL_PATH, panelName);
 
 			T view = null;
-			if (!popupDic.ContainsKey(path))
+            if (!popupDic.ContainsKey(data.PrefabPath))
 			{
-				view = ResourceManager.Instance.CreateAsset<T>(path);
+                view = ResourceManager.Instance.CreateAsset<T>(path);
                 view.gameObject.SetActive(false);
                 view.transform.SetParent(RootTransform.Instance.UIPanelRoot);
                 view.transform.localPosition = Vector3.zero;
                 view.transform.localScale = Vector3.one;
                 view.RectTransform.offsetMin = Vector2.zero;
                 view.RectTransform.offsetMax = Vector2.zero;
-				view.PrefabPath = path;
+                view.PrefabPath = path;
 				view.OnInitialize();
-				popupDic[path] = view;
+                popupDic[path] = view;
 			}
 			else
 			{
-				view = popupDic[path] as T;
+                view = popupDic[path] as T;
 			}
 
-	        if (show)
-	        {
-				view.popupMode = popupMode;
-				view.paramDic = paramDic;
 
-                if(queueMode == PopupQueueMode.NoQueue)
+            if(data.QueueMode == PopupQueueMode.NoQueue)
+            {
+                ShowPopup(view);
+            }
+            else
+            {
+                if (currentQueuePopup == null)
                 {
-                    showPopup(view);
+                    currentQueuePopup = view;
+                    ShowPopup(currentQueuePopup);
                 }
-                else
+                else if (data.QueueMode == PopupQueueMode.QueueBack)
                 {
-                    if (currentQueuePopup == null)
-                    {
-                        currentQueuePopup = view;
-                        showPopup(currentQueuePopup);
-                    }
-                    else if (queueMode == PopupQueueMode.QueueBack)
-                    {
-                        popupQueue.AddToBack(view);
-                    }
-                    else if (queueMode == PopupQueueMode.QueueFront)
-                    {
-                        popupQueue.AddToFront(view);
-                    }
+                    popupList.Add(view);
                 }
-	        }
+                else if (data.QueueMode == PopupQueueMode.QueueFront)
+                {
+                    popupList.Insert(0, view);
+                }
+            }
             InputManager.Instance.UpdateRaycasters();
 
 	        return view;
 	    }
 
-		/// <summary>
-		/// 移除一个已知面板。
-		/// </summary>
-		/// <param name="view">面板.</param>
-		/// <param name="cleanup">是否析构该面板。</param>
 	    public void RemovePopup(BasePopupView view, bool cleanup = false)
 	    {
 			if (view == null)	return;
 
-            if (!view.IsAnimationPlaying)
-				hidePopup(view, cleanup);
+			HidePopup(view, cleanup);
 	    }
 
-		private void showPopup (BasePopupView view)
+		private void ShowPopup (BasePopupView view)
 		{
             int index = GetMaxViewIndex();
             view.transform.SetSiblingIndex(index);
 			view.gameObject.SetActive(true);
-			executeAction(view, true);
-			view.BeforeEnter();
-
-			bool isAnimated = checkMode(view.popupMode, PopupMode.ANIMATED);
-            UIAnimationParam param = new UIAnimationParam(view, false);
-			if (isAnimated)
-			{
-				view.StartAnimation(showPopupCallback, param);
-			}
-			else
-			{
-				showPopupCallback(param);
-			}
-		}
-
-        private void showPopupCallback (UIAnimationParam param)
-		{
-            BasePopupView view = param.View;
-            view.transform.localScale = Vector3.one;
-			
             view.OnEnter();
-            if (view.UpdateShowDelegate != null)
-                view.UpdateShowDelegate.Invoke();
 		}
 
-        private void hidePopup (BasePopupView view, bool cleanup)
+        private void HidePopup (BasePopupView view, bool cleanup)
 		{
-			view.BeforeExit();
-			if (view.UpdateHideDelegate != null)
-				view.UpdateHideDelegate.Invoke();
-
-			bool isAnimated = checkMode(view.popupMode, PopupMode.ANIMATED);
-            UIAnimationParam param = new UIAnimationParam(view, cleanup);
-			if (isAnimated)
-			{
-                view.StartAnimation(hidePopupCallback, param);
-			}
-			else
-			{
-				hidePopupCallback(param);
-			}
-		}
-
-        private void hidePopupCallback (UIAnimationParam param)
-		{
-            BasePopupView view = param.View;
             view.OnExit ();
-            executeAction(view, false);
             view.gameObject.SetActive(false);
 
-            if (param.Cleanup)
-			{
+            if (cleanup)
+            {
                 popupDic.Remove(view.PrefabPath);
                 view.OnDispose();
                 ResourceManager.Instance.DestroyAsset(view.gameObject);
-			}
+            }
 
             if(view == currentQueuePopup)
             {
-                currentQueuePopup = popupQueue.Unshift();
+                if(popupList.Count > 0)
+                {
+                    currentQueuePopup = popupList[0];
+                    popupList.RemoveAt(0);
+                }
+                else
+                {
+                    currentQueuePopup = null;
+                }
                 if (currentQueuePopup != null)
                 {
-                    showPopup(currentQueuePopup);
+                    ShowPopup(currentQueuePopup);
                 }
             }
 		}
-
-		private void executeAction(BasePopupView view, bool show)
-		{
-			for (int i = 0, imax = actionList.Length; i < imax; ++i)
-			{
-				BasePopupAction action = actionList[i];
-
-				if (checkMode(view.popupMode, action.Mode))
-				{
-					object param = generateParam(action, view.paramDic);
-					if (show)
-	                	action.ExecuteShow(view, param);
-					else
-						action.ExecuteHide(view, param);
-	            }
-	        }
-	    }
-
-		/// <summary>
-		/// 根据行为类型和参数字典，生成面板行为所需的特殊参数。
-		/// </summary>
-		private object generateParam(BasePopupAction action, Dictionary<uint, object> paramDic)
-		{
-			object resultParam = null;
-			object param;
-
-			if (paramDic == null || !paramDic.ContainsKey(action.Mode))
-			{
-				param = action.DefaultParam;
-			}
-			else
-			{
-				param = paramDic[action.Mode];
-			}
-
-			switch (action.Mode)
-			{
-				case PopupMode.ADD_MASK:
-				{
-					AddMaskParam dto = new AddMaskParam();
-					dto.clickHide = (bool)param;
-					resultParam = dto;
-					break;
-				}
-				default:
-				{
-					resultParam = param;
-					break;
-				}
-			}
-	//		Debug.Log(action.ToString() + ": " + param);
-			return resultParam;
-		}
-
-		private void setPanelDepths(BasePopupView view, int depth)
-		{
-		}
-
-		private bool checkMode (uint popupMode, uint mode)
-		{
-			return (popupMode & mode) > 0;
-		}
-
 
         private CanvasScaler scaler;
         public CanvasScaler Scaler

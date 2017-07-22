@@ -39,7 +39,7 @@ namespace GameLogic
         {
             List<HeroInfo> infoList = heroProxy.GetProfileHeroInfoList();
 
-            profilePanel = PopupManager.Instance.CreateAndAddPopup<ProfilePanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
+            profilePanel = PopupManager.Instance.CreateAndAddPopup<ProfilePanel>();
             profilePanel.SetData(infoList);
         }
     }

@@ -62,7 +62,7 @@ namespace GameLogic
         {
             List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
 
-            panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
+            panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>();
             panel.SetHeroListData(kidList);
             panel.CallbackHeroItemClick = OnHeroItemClick;
             panel.CallbackProfileClick = OnProfileClicked;

@@ -22,10 +22,12 @@ namespace StaticData
 
             KeyboardDataManager.Instance.Init();
 			AnimatorDataManager.Instance.Init();
+            ResourceDataManager.Instance.Init();
+            UIDataManager.Instance.Init();
+
 			HeroDataManager.Instance.Init();
 			ExplorationDataManager.Instance.Init();
 			BlockDataManager.Instance.Init();
-			ResourceDataManager.Instance.Init();
 			NPCDataManager.Instance.Init();
 			BulletDataManager.Instance.Init();
 			MonsterDataManager.Instance.Init();

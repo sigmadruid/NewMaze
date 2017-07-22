@@ -34,7 +34,7 @@ public class TitlePanel : BasePopupView
 
 	public static void Show(string title, float duration = 3f)
 	{
-        TitlePanel panel = PopupManager.Instance.CreateAndAddPopup<TitlePanel>(PopupMode.SHOW, PopupQueueMode.NoQueue);
+        TitlePanel panel = PopupManager.Instance.CreateAndAddPopup<TitlePanel>();
 		panel.Init(title, duration);
 	}
 }

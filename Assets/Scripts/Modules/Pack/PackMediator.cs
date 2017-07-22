@@ -45,7 +45,7 @@ namespace GameLogic
         }
         private void HandlePackShow(bool show)
         {
-            packPanel = PopupManager.Instance.CreateAndAddPopup<PackPanel>(PopupMode.SHOW | PopupMode.ADD_MASK);
+            packPanel = PopupManager.Instance.CreateAndAddPopup<PackPanel>();
             packPanel.CallbackSwitchType = OnSwitch;
             packPanel.CallbackUseItem = OnUse;
             packPanel.CallbackDiscardItem = OnDiscard;
