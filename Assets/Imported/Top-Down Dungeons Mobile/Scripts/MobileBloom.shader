@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 
 Shader "Hidden/MobileBloom" {
 	Properties {
@@ -60,7 +62,7 @@ Shader "Hidden/MobileBloom" {
 		{
 			v2f_simple o;
 			
-			o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos (v.vertex);
 			
         	o.uv = v.texcoord;		
         	
@@ -79,7 +81,7 @@ Shader "Hidden/MobileBloom" {
 		v2f_withMaxCoords vertMax (appdata_img v)
 		{
 			v2f_withMaxCoords o;
-			o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos (v.vertex);
         	o.uv20 = v.texcoord + _OffsetsA.xy;					
 			o.uv21 = v.texcoord + _OffsetsA.zw;		
 			o.uv22 = v.texcoord + _OffsetsB.xy;		
@@ -91,7 +93,7 @@ Shader "Hidden/MobileBloom" {
 		v2f_withBlurCoords vertBlur (appdata_img v)
 		{
 			v2f_withBlurCoords o;
-			o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+			o.pos = UnityObjectToClipPos (v.vertex);
         	o.uv20 = v.texcoord + _OffsetsA.xy;					
 			o.uv21 = v.texcoord + _OffsetsA.zw;		
 			o.uv22 = v.texcoord + _OffsetsB.xy;		

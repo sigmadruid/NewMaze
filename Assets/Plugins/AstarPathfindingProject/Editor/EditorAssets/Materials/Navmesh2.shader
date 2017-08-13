@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Transparent/Navmesh/TransparentAlwaysShow" {
@@ -56,7 +58,7 @@ SubShader {
 		v2f vert (appdata_color v)
 		{
 		    v2f o;
-		    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+		    o.pos = UnityObjectToClipPos (v.vertex);
 		    
 		    float4 worldSpace = mul (unity_ObjectToWorld, v.vertex);
 		    o.uv = float2 (worldSpace.x*_Scale,worldSpace.z*_Scale);
@@ -107,7 +109,7 @@ SubShader {
 		v2f vert (appdata_color v)
 		{
 		    v2f o;
-		    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+		    o.pos = UnityObjectToClipPos (v.vertex);
 		    
 		    float4 worldSpace = mul (unity_ObjectToWorld, v.vertex);
 		    o.uv = float2 (worldSpace.x*_Scale,worldSpace.z*_Scale);
