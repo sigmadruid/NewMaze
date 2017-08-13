@@ -17,6 +17,7 @@ namespace GameLogic
         private MonsterProxy monsterProxy;
         private ExplorationProxy explorationProxy;
         private DropProxy dropProxy;
+        private PackProxy packProxy;
 
         private GameRecord gameRecord;
 
@@ -27,6 +28,7 @@ namespace GameLogic
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
             dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
+            packProxy = ApplicationFacade.Instance.RetrieveProxy<PackProxy>();
         }
         public override IList<Enum> ListNotificationInterests ()
         {
@@ -106,29 +108,34 @@ namespace GameLogic
         {
             var facade = ApplicationFacade.Instance;
 
+            gameRecord = new GameRecord();
+
+            gameRecord.Items = packProxy.GetRecord();
+
             heroProxy.SaveRecord();
             monsterProxy.SaveRecord();
             explorationProxy.SaveRecord();
             dropProxy.SaveRecord();
             facade.RetrieveProxy<HallProxy>().CreateRecord();
 
-            gameRecord = new GameRecord();
             gameRecord.RandomSeed = Maze.Instance.Seed;
             gameRecord.Hero = heroProxy.Record;
             gameRecord.Monsters = monsterProxy.RecordDic;
             gameRecord.Hall = facade.RetrieveProxy<HallProxy>().Record;
-            gameRecord.Items = dropProxy.RecordDic;
+            gameRecord.Drops = dropProxy.RecordDic;
             gameRecord.Explorations = explorationProxy.RecordDic;
         }
         private void DeserializeGame()
         {
             var facade = ApplicationFacade.Instance;
 
+            packProxy.SetRecord(gameRecord.Items);
+
             Maze.Instance.Seed = gameRecord.RandomSeed;
             heroProxy.Record = gameRecord.Hero;
             monsterProxy.RecordDic = gameRecord.Monsters;
             facade.RetrieveProxy<HallProxy>().Record = gameRecord.Hall;
-            dropProxy.RecordDic = gameRecord.Items;
+            dropProxy.RecordDic = gameRecord.Drops;
             explorationProxy.RecordDic = gameRecord.Explorations;
         }
     }

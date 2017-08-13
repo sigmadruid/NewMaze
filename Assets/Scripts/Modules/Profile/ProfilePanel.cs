@@ -26,6 +26,7 @@ namespace GameUI
 
         private int index;
         private List<HeroInfo> infoList;
+        private GameObject hero;
 
         public override void OnInitialize()
         {

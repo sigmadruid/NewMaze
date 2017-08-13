@@ -1,13 +1,12 @@
-using UnityEngine;
-
-using System;
+﻿using System;
 
 namespace GameLogic
 {
     [Serializable]
-    public class ItemRecord : EntityRecord
+    public class ItemRecord
     {
-		public int Count;
+        public int Count;
+        public float UseInterval;
     }
 }
 

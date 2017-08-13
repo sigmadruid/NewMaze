@@ -11,21 +11,22 @@ public class SkillItem : MonoBehaviour
     public Image imageIcon;
     public Image imageMask;
 
-    private Skill skill;
+    public Skill Skill;
 
     void Update()
     {
-        if(skill != null && skill.CD > 0)
+        if(Skill != null && Skill.CD > 0)
         {
-            imageMask.fillAmount = skill.CD / skill.Data.CD;
+            imageMask.fillAmount = Skill.CD / Skill.Data.CD;
         }
     }
 
     public void SetData(Skill skill)
     {
-        this.skill = skill;
-        imageIcon.gameObject.SetActive(skill != null);
-        if(skill != null)
+        this.Skill = skill;
+        bool hasSkill = skill != null;
+        imageIcon.gameObject.SetActive(hasSkill);
+        if(hasSkill)
         {
             imageIcon.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_SKILLS, skill.Data.Res2D);
         }

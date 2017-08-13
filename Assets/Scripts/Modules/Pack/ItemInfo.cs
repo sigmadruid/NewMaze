@@ -13,11 +13,29 @@ namespace GameLogic
         }
 
         public int Count;
+        public float UseInterval;
 
         public ItemInfo(ItemData data, int count)
         {
             Data = data;
             Count = count;
+            UseInterval = 0;
+        }
+
+        public ItemRecord ToRecord()
+        {
+            ItemRecord record = new ItemRecord();
+            record.Count = Count;
+            record.UseInterval = UseInterval;
+            return record;
+        }
+
+        public bool CanUse
+        {
+            get
+            {
+                return UseInterval <= 0;
+            }
         }
 
         //TODO: Factory Method

@@ -395,6 +395,8 @@ namespace GameLogic
         }
         private void OnHitStart()
         {
+            if (Info.CurrentSkill != null)
+                Info.CurrentSkill = null;
             Info.IsStunned = true;
         }
         private void OnHitEnd()

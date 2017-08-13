@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 223745908472240750}
   - component: {fileID: 114967167074316476}
   m_Layer: 5
-  m_Name: TitlePanel
+  m_Name: ItemToasterPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21cf432673fc4579aff685b41eadb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupMode: 0
   IsAnimationPlaying: 0
+  Duration: 1
   LabelTitle: {fileID: 11432072}
   ImageDeco: {fileID: 11456970}
 --- !u!222 &22246712

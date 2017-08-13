@@ -109,11 +109,12 @@ namespace Base
 	        return view;
 	    }
 
-	    public void RemovePopup(BasePopupView view, bool cleanup = false)
+        public void RemovePopup(BasePopupView view, bool cleanup = true)
 	    {
 			if (view == null)	return;
 
-			HidePopup(view, cleanup);
+            HidePopup(view, cleanup);
+            InputManager.Instance.UpdateRaycasters();
 	    }
 
 		private void ShowPopup (BasePopupView view)

@@ -14,7 +14,7 @@ namespace GameLogic
         private Dictionary<string, Item> itemBlockDic = new Dictionary<string, Item>();
         private Dictionary<string, Item> itemHallDic = new Dictionary<string, Item>();
 
-        public Dictionary<int, List<ItemRecord>> RecordDic = new Dictionary<int, List<ItemRecord>>();
+        public Dictionary<int, List<DropRecord>> RecordDic = new Dictionary<int, List<DropRecord>>();
 
         public void Init()
         {
@@ -34,7 +34,7 @@ namespace GameLogic
             int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
             Dictionary<string, Item> itemDic = GetCurrentDic();
 
-            List<ItemRecord> recordList = null;
+            List<DropRecord> recordList = null;
             if(RecordDic.ContainsKey(hallKid))
             {
                 recordList = RecordDic[hallKid];
@@ -42,7 +42,7 @@ namespace GameLogic
             }
             else
             {
-                recordList = new List<ItemRecord>();
+                recordList = new List<DropRecord>();
                 RecordDic[hallKid] = recordList;
             }
             foreach(Item item in itemDic.Values)

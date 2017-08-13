@@ -7,5 +7,5 @@ PackPanel,PackPanel,QueueBack
 PausePanel,PausePanel,QueueBack
 ProfilePanel,ProfilePanel,QueueBack
 TalkPanel,TalkPanel,QueueBack
-TitlePanel,TitlePanel,NoQueue
+ItemToasterPanel,ItemToasterPanel,NoQueue
 TransitionPanel,TransitionPanel,QueueBack

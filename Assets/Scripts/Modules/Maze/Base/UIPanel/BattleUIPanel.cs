@@ -14,7 +14,8 @@ namespace GameUI
 {
     public class BattleUIPanel : BasePopupView 
     {
-        public Action CallbackHeroItemClick;
+        public Action<int> CallbackHeroItemClick;
+        public Action<int> CallbackRuneItemClick;
     	public Action CallbackProfileClick;
 
         public Image ImageHero;
@@ -27,9 +28,7 @@ namespace GameUI
     	public NumberItem MPNumber;
 
         public SkillItem[] SkillItemList;
-
-    	[HideInInspector]
-    	public HeroItem CurrentItem;
+        public RuneItem[] RuneItemList;
 
         private List<HeroItem> heroItemList = new List<HeroItem>();
 
@@ -52,7 +51,7 @@ namespace GameUI
             UpdateSPBar(currentSP / maxSP);
         }
 
-        public void SetHeroListData(List<int> kidList)
+        public void SetHeroListData(List<int> kidList, List<ItemInfo> runeInfoList)
     	{
     		PanelUtils.ClearChildren(LayoutHeroes.transform);
 
@@ -72,6 +71,7 @@ namespace GameUI
     		}
 
             SetHeroData();
+            SetRuneData(runeInfoList);
     	}
         public void SetHeroData()
         {
@@ -81,6 +81,16 @@ namespace GameUI
                 SkillItem item = SkillItemList[i];
                 Skill skill = Adam.Instance.Info.GetSkill(i + 1);
                 item.SetData(skill);
+            }
+        }
+        public void SetRuneData(List<ItemInfo> runeInfoList)
+        {
+            for(int i = 0; i < RuneItemList.Length; ++i)
+            {
+                RuneItem item = RuneItemList[i];
+                ItemInfo info = i < runeInfoList.Count ? runeInfoList[i] : null;
+                item.SetData(info);
+                ClickEventTrigger.Get(item.gameObject).onClick = OnRuneItemClick;
             }
         }
 
@@ -103,10 +113,18 @@ namespace GameUI
 
     	private void OnHeroItemClick(GameObject go)
     	{
-    		CurrentItem = go.GetComponent<HeroItem>();
-
-            CallbackHeroItemClick();
+            HeroItem item = go.GetComponent<HeroItem>();
+            CallbackHeroItemClick(item.Data.Kid);
     	}
+        private void OnRuneItemClick(GameObject go)
+        {
+            RuneItem item = go.GetComponent<RuneItem>();
+            if(item.Info != null && item.Info.CanUse)
+            {
+                item.Use();
+                CallbackRuneItemClick(item.Info.Data.Kid);
+            }
+        }
         private void OnProfileClicked(GameObject go)
         {
             CallbackProfileClick();

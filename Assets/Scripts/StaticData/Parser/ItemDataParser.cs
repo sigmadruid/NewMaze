@@ -27,6 +27,7 @@ namespace StaticData
                     data.Type = StaticReader.ReadEnum<ItemType>(GetContent(col++));
                     data.Res2D = StaticReader.ReadString(GetContent(col++));
                     data.Res3D = StaticReader.ReadString(GetContent(col++));
+                    data.UseInterval = StaticReader.ReadFloat(GetContent(col++));
                     data.Param1 = StaticReader.ReadString(GetContent(col++));
                     data.Param2 = StaticReader.ReadString(GetContent(col++));
                     data.Param3 = StaticReader.ReadString(GetContent(col++));

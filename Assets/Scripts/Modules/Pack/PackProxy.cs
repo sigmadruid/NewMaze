@@ -14,30 +14,30 @@ namespace GameLogic
 
         public void Init()
         {
-            
         }
 
         public void Dispose()
         {
         }
 
-        public Dictionary<int, int> GetRecord()
+        public Dictionary<int, ItemRecord> GetRecord()
         {
-            Dictionary<int, int> recordDic = new Dictionary<int, int>();
+            Dictionary<int, ItemRecord> recordDic = new Dictionary<int, ItemRecord>();
             foreach(int kid in itemInfoDic.Keys)
             {
                 ItemInfo info = itemInfoDic[kid];
-                recordDic.Add(kid, info.Count);
+                ItemRecord record = info.ToRecord();
+                recordDic.Add(kid, record);
             }
             return recordDic;
         }
-        public void SetRecord(Dictionary<int, int> recordDic)
+        public void SetRecord(Dictionary<int, ItemRecord> recordDic)
         {
             itemInfoDic.Clear();
             foreach(int kid in recordDic.Keys)
             {
-                int count = recordDic[kid];
-                ChangeCount(kid, count);
+                ItemRecord record = recordDic[kid];
+                ChangeCount(kid, record.Count);
             }
         }
 
@@ -83,6 +83,7 @@ namespace GameLogic
             {
                 BaseLogger.LogFormat("Illegal item count manuplation: kid={0}, count={1}", kid, count);
             }
+            DispatchNotification(NotificationEnum.PACK_CHANGE_ITEM_COUNT, kid);
         }
 
         public List<ItemInfo> GetItemInfosByType(ItemType type)
@@ -105,14 +106,13 @@ namespace GameLogic
             if(HasCount(kid, 1))
             {
                 ChangeCount(kid, -1);
-                DispatchNotification(NotificationEnum.USE_ITEM, kid);
+                DispatchNotification(NotificationEnum.PACK_USE_ITEM, kid);
             }
             else
             {
                 BaseLogger.LogFormat("No item to use: kid={0}", kid);
             }
         }
-
 
     }
 }

@@ -1,10 +1,10 @@
-Kid,Name,Description,Type,Res2D,Res3D,Param1,Param2,Param3
-int,string,string,ItemType,string,string,string,string,string
-140001,gold_small,gold_small,Resource,coin_small,Coin_1,,,
-140002,gold_medium,gold_medium,Resource,coin_medium,Coin_2,,,
-140003,gold_large,gold_large,Resource,coin_large,Coin_3,,,
-//Rune,,,,,,,,
-//1.Rune type; 2.ElapseTime; 3.Percentage to raise in attribute,,,,,,,,
-141001,item.rune_life.name,item.rune_life.desc,Rune,rune_1,Rune_1,Life,500,
-141002,item.rune_attack.name,item.rune_attack.desc,Rune,rune_2,Rune_2,Buff,120003,
-141003,item.rune_defense.name,item.rune_defense.desc,Rune,rune_3,Rune_3,Buff,120004,
+Kid,Name,Description,Type,Res2D,Res3D,UseInterval,Param1,Param2,Param3
+int,string,string,ItemType,string,string,float,string,string,string
+140001,gold_small,gold_small,Resource,coin_small,Coin_1,0,,,
+140002,gold_medium,gold_medium,Resource,coin_medium,Coin_2,0,,,
+140003,gold_large,gold_large,Resource,coin_large,Coin_3,0,,,
+//Rune,,,,,,0,,,
+//1.Rune type; 2.Value or KID,,,,,,0,,,
+141001,item.rune_life.name,item.rune_life.desc,Rune,rune_1,Rune_1,1,Life,500,
+141002,item.rune_attack.name,item.rune_attack.desc,Rune,rune_2,Rune_2,30,Buff,120003,
+141003,item.rune_defense.name,item.rune_defense.desc,Rune,rune_3,Rune_3,30,Buff,120004,

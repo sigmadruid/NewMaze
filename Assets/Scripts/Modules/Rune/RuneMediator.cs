@@ -9,6 +9,7 @@ namespace GameLogic
 {
     public enum RuneType
     {
+        None,
         Life,
         Buff,
         Invisible,
@@ -26,15 +27,16 @@ namespace GameLogic
         {
             return new Enum[]
             {
-                NotificationEnum.USE_ITEM,
+                NotificationEnum.PACK_USE_ITEM,
             };
         }
         public override void HandleNotification(INotification notification)
         {
             switch((NotificationEnum)notification.NotifyEnum)
             {
-                case NotificationEnum.USE_ITEM:
-                    HandleUseRune((int)notification.Body);
+                case NotificationEnum.PACK_USE_ITEM:
+                    int kid = (int)notification.Body;
+                    HandleUseRune(kid);
                     break;
             }
         }
@@ -53,7 +55,7 @@ namespace GameLogic
                 return;
             }
 
-            RuneType type = (RuneType)Enum.Parse(typeof(RuneType), itemData.Param1);
+            RuneType type = RuneProxy.GetRuneType(itemData);
             switch(type)
             {
                 case RuneType.Life:

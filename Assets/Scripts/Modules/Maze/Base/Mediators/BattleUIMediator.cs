@@ -15,8 +15,11 @@ namespace GameLogic
     {
 		private BattleUIPanel panel;
 
+        private PackProxy packProxy;
+
         public override void OnRegister()
         {
+            packProxy = ApplicationFacade.Instance.RetrieveProxy<PackProxy>();
         }
 
 		public override IList<Enum> ListNotificationInterests ()
@@ -27,6 +30,8 @@ namespace GameLogic
 				NotificationEnum.BATTLE_UI_UPDATE_HP,
                 NotificationEnum.BATTLE_PAUSE,
                 NotificationEnum.HERO_CONVERT_END,
+                NotificationEnum.PACK_USE_ITEM,
+                NotificationEnum.PACK_CHANGE_ITEM_COUNT,
 			};
 		}
 
@@ -55,20 +60,36 @@ namespace GameLogic
                         HandleHeroConvertEnd();
                         break;
                     }
+                case NotificationEnum.PACK_USE_ITEM:
+                    {
+                        int kid = (int)notification.Body;
+                        HandleUpdateItem(kid);
+                        break;
+                    }
+                case NotificationEnum.PACK_CHANGE_ITEM_COUNT:
+                    {
+                        int kid = (int)notification.Body;
+                        HandleUpdateItem(kid);
+                        break;
+                    }
 			}
 		}
 
+        #region Event Handlers
+
 		private void HandleUIInit()
         {
-            List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
 
             panel = PopupManager.Instance.CreateAndAddPopup<BattleUIPanel>();
-            panel.SetHeroListData(kidList);
             panel.CallbackHeroItemClick = OnHeroItemClick;
+            panel.CallbackRuneItemClick = OnRuneItemClick;
             panel.CallbackProfileClick = OnProfileClicked;
             ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
             ClickEventTrigger.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
+            List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
+            List<ItemInfo> runeInfoList = packProxy.GetItemInfosByType(ItemType.Rune);
+            panel.SetHeroListData(kidList, runeInfoList);
             panel.UpdateHPBar(Adam.Instance.Info.HPRatio, false);
 		}
 		private void HandleUpdateHP(AttackResult ar)
@@ -78,17 +99,36 @@ namespace GameLogic
 		}
         private void HandlePause()
         {
+            
         }
         private void HandleHeroConvertEnd()
         {
             panel.SetHeroData();   
         }
+        private void HandleUpdateItem(int kid)
+        {
+            if(panel == null)
+                return;
+            ItemData data = ItemDataManager.Instance.GetData(kid) as ItemData;
+            if(data.Type != ItemType.Rune)
+                return;
+            List<ItemInfo> runeInfoList = packProxy.GetItemInfosByType(ItemType.Rune);
+            panel.SetRuneData(runeInfoList);
+        }
 
-		private void OnHeroItemClick()
+        #endregion
+
+        #region UI Event Listeners
+
+        private void OnHeroItemClick(int kid)
 		{
-			HeroData data = panel.CurrentItem.Data;
+            HeroData data = HeroDataManager.Instance.GetData(kid) as HeroData;
 			DispatchNotification(NotificationEnum.HERO_CONVERT_START, data.Kid);
 		}
+        private void OnRuneItemClick(int kid)
+        {
+            packProxy.Use(kid);
+        }
         private void OnProfileClicked()
         {
             DispatchNotification(NotificationEnum.PROFILE_SHOW);
@@ -102,6 +142,8 @@ namespace GameLogic
         {
             DispatchNotification(NotificationEnum.PACK_SHOW, true);
         }
+
+        #endregion
     }
 }
 

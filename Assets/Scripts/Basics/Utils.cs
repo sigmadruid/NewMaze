@@ -139,12 +139,15 @@ namespace Base
 
         #endregion
 
-        public bool RayCast(Vector3 from, Vector3 to, int layer)
+        #region Time
+
+        public static void SetActive(GameObject go, bool active)
         {
-            Ray ray = new Ray(from, to - from);
-            float distance = Vector3.Distance(from, to);
-            return Physics.Raycast(ray, distance, layer);
+            if(go.activeSelf != active)
+                go.SetActive(active);
         }
+
+        #endregion
 	}
 }
 

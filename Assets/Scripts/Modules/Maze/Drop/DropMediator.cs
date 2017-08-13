@@ -76,10 +76,10 @@ namespace GameLogic
 		{
             if(dropProxy.RecordDic.ContainsKey(0))
             {
-                List<ItemRecord> recordList = dropProxy.RecordDic[0];
+                List<DropRecord> recordList = dropProxy.RecordDic[0];
                 for (int i = 0; i < recordList.Count; ++i)
                 {
-                    ItemRecord record = recordList[i];
+                    DropRecord record = recordList[i];
                     Item item = Item.Create(record);
                     dropProxy.AddItem(item);
                 }
@@ -95,10 +95,10 @@ namespace GameLogic
             int hallKid = Hall.Instance.Data.Kid;
             if(dropProxy.RecordDic.ContainsKey(hallKid))
             {
-                List<ItemRecord> recordList = dropProxy.RecordDic[hallKid];
+                List<DropRecord> recordList = dropProxy.RecordDic[hallKid];
                 for (int i = 0; i < recordList.Count; ++i)
                 {
-                    ItemRecord record = recordList[i];
+                    DropRecord record = recordList[i];
                     Item item = Item.Create(record);
                     dropProxy.AddItem(item);
                 }

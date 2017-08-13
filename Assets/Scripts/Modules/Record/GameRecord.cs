@@ -14,7 +14,9 @@ namespace GameLogic
 
         public HallRecord Hall;
 
-        public Dictionary<int, List<ItemRecord>> Items = new Dictionary<int, List<ItemRecord>>();
+        public Dictionary<int, List<DropRecord>> Drops = new Dictionary<int, List<DropRecord>>();
+
+        public Dictionary<int, ItemRecord> Items = new Dictionary<int, ItemRecord>();
 
         public Dictionary<int, List<ExplorationRecord>> Explorations = new Dictionary<int, List<ExplorationRecord>>();
 

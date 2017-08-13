@@ -31,8 +31,8 @@ namespace GameLogic
 
         public void PickedUp()
         {
-            string title = TextDataManager.Instance.GetData(Data.Name);
-            TitlePanel.Show(title);
+            string title = TextDataManager.Instance.GetData(Data.Name) + " × " + Info.Count.ToString();
+            ItemToasterPanel.Show(title);
         }
 
         public void StartFlying(Vector3 position)
@@ -40,9 +40,9 @@ namespace GameLogic
             Script.Fly(position);
         }
 
-        public new ItemRecord ToRecord()
+        public new DropRecord ToRecord()
         {
-            ItemRecord record = new ItemRecord();
+            DropRecord record = new DropRecord();
             record.Uid = Uid;
             record.Kid = Data.Kid;
             record.Count = Info.Count;
@@ -50,7 +50,7 @@ namespace GameLogic
             return record;
         }
 
-        public static Item Create(ItemRecord record)
+        public static Item Create(DropRecord record)
         {
             Item item = new Item();
             item.Uid = record.Uid;

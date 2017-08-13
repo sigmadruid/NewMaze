@@ -20,6 +20,8 @@ namespace StaticData
         public string Res2D;
         public string Res3D;
 
+        public float UseInterval;
+
         public string Param1;
         public string Param2;
         public string Param3;
