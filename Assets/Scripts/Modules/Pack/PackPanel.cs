@@ -41,8 +41,23 @@ public class PackPanel : BasePopupView
     {
         base.OnInitialize();
 
+        UILocalizer.LocalizeByName(transform);
+
         togglePool.Init(ToggleItemTypeTemplate.gameObject, GridItemType.transform);
         itemPool.Init(ItemTemplate.gameObject, GridItems.transform);
+
+        ImageItemIcon.gameObject.SetActive(false);
+        TextItemName.text = "";
+        TextItemDesc.text = "";
+        Array typeArr = Enum.GetValues(typeof(ItemType));
+        foreach(var type in typeArr)
+        {
+            if((ItemType)type == ItemType.None)
+                continue;
+            Toggle toggle = togglePool.AddItem();
+            toggle.name = TextDataManager.Instance.GetData("item.type." + type.ToString().ToLower());
+            toggle.GetComponentInChildren<Text>().text = toggle.name;
+        }
 
         ClickEventTrigger.Get(ButtonClose.gameObject).onClick = OnClose;
         ClickEventTrigger.Get(ButtonUse.gameObject).onClick = OnUse;
@@ -52,6 +67,10 @@ public class PackPanel : BasePopupView
     public override void OnDispose()
     {
         base.OnDispose();
+
+        ClickEventTrigger.Get(ButtonClose.gameObject).onClick = null;
+        ClickEventTrigger.Get(ButtonUse.gameObject).onClick = null;
+        ClickEventTrigger.Get(ButtonDiscard.gameObject).onClick = null;
     }
 
     public void SetInfo(ItemType itemType, List<ItemInfo> infoList)
@@ -79,6 +98,7 @@ public class PackPanel : BasePopupView
     private void OnSelect(GameObject go)
     {
         selectedInfo =  go.GetComponent<PackItem>().ItemInfo;
+        Utils.SetActive(ImageItemIcon.gameObject, true);
         ImageItemIcon.sprite = PanelUtils.CreateSprite(PanelUtils.ATLAS_ITEM, selectedInfo.Data.Res2D);
         TextItemName.text = TextDataManager.Instance.GetData(selectedInfo.Data.Name);
         TextItemDesc.text = TextDataManager.Instance.GetData(selectedInfo.Data.Description);

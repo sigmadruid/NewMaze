@@ -3,6 +3,9 @@ int,string
 ,Common
 common.confirm,确认
 common.cancel,取消
+common.use,使用
+common.discard,丢弃
+common.attach_soul,附魂
 common.transporter,传送法阵
 common.daytitle,光明降临
 common.nighttitle,黑暗蔓延
@@ -29,6 +32,8 @@ monster.name.moying,魔婴
 monster.name.yuanling,怨灵
 monster.name.jushenbing,巨神兵
 ,Item
+item.type.rune,符文
+item.type.resource,资源
 item.rune_life.name,生之符文
 item.rune_life.desc,使用后，立即回复500点生命
 item.rune_attack.name,灭之符文
