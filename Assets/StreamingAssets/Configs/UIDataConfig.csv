@@ -3,9 +3,10 @@ string,string,PopupQueueMode
 BattleUIPanel,BattleUIPanel,NoQueue
 ConfirmPanel,ConfirmPanel,QueueBack
 MazeMapPanel,MazeMapPanel,QueueBack
-PackPanel,PackPanel,QueueBack
+PackPanel,PackPanel,NoQueue
 PausePanel,PausePanel,QueueBack
 ProfilePanel,ProfilePanel,QueueBack
 TalkPanel,TalkPanel,QueueBack
 ItemToasterPanel,ItemToasterPanel,NoQueue
 TransitionPanel,TransitionPanel,QueueBack
+SoulAttachPanel,SoulAttachPanel,NoQueue

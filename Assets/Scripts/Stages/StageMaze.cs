@@ -23,6 +23,7 @@ namespace GameLogic
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.MazeMap, true);
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Function, true);
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Talk, true);
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Pause, true);
             yield return Loading.Instance.SetProgress(LoadingState.StartStage, 10);
 
             //Logic

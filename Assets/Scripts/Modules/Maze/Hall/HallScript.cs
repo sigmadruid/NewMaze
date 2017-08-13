@@ -23,7 +23,7 @@ public class HallScript : EntityScript
 
     private void InitPositionList(PositionType type)
     {
-        Transform posRoot = transform.FindChild(string.Format(POSITION_ROOT_NAME, type));
+        Transform posRoot = transform.Find(string.Format(POSITION_ROOT_NAME, type));
         if (posRoot != null)
         {
             PositionScript[] positionArray = posRoot.GetComponentsInChildren<PositionScript>();

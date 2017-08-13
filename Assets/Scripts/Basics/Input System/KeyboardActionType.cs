@@ -8,6 +8,7 @@ namespace Base
         Function,
         MazeMap,
         Talk,
+        Pause,
     }
 }
 

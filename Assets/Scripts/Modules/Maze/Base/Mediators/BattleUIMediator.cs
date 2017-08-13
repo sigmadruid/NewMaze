@@ -84,8 +84,6 @@ namespace GameLogic
             panel.CallbackHeroItemClick = OnHeroItemClick;
             panel.CallbackRuneItemClick = OnRuneItemClick;
             panel.CallbackProfileClick = OnProfileClicked;
-            ClickEventTrigger.Get(panel.ButtonPause.gameObject).onClick = OnPauseGame;
-            ClickEventTrigger.Get(panel.ButtonPack.gameObject).onClick = OnShowPack;
 
             List<int> kidList = GlobalConfig.DemoConfig.InitialHeroKids;
             List<ItemInfo> runeInfoList = packProxy.GetItemInfosByType(ItemType.Rune);
@@ -132,15 +130,6 @@ namespace GameLogic
         private void OnProfileClicked()
         {
             DispatchNotification(NotificationEnum.PROFILE_SHOW);
-        }
-        private void OnPauseGame(GameObject go)
-		{
-            PopupManager.Instance.CreateAndAddPopup<PausePanel>();
-            Game.Instance.SetPause(true);
-		}
-        private void OnShowPack(GameObject go)
-        {
-            DispatchNotification(NotificationEnum.PACK_SHOW, true);
         }
 
         #endregion

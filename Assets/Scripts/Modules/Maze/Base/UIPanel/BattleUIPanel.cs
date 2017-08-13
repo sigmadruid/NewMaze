@@ -19,8 +19,6 @@ namespace GameUI
     	public Action CallbackProfileClick;
 
         public Image ImageHero;
-        public Button ButtonPause;
-        public Button ButtonPack;
         public VerticalLayoutGroup LayoutHeroes;
         public TransitionProgressBar HPBar;
         public Slider MPBar;

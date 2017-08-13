@@ -4,3 +4,4 @@ Attack,J,,FALSE
 Function,E,,FALSE
 MazeMap,Tab,,TRUE
 Talk,Space,,FALSE
+Pause,Escape,,TRUE

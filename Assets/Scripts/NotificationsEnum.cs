@@ -81,5 +81,9 @@ namespace GameLogic
         PATHFINDING_INIT,
         PATHFINDING_DISPOSE,
         #endregion
+
+        #region Soul Attach
+        SOUL_ATTACH_SHOW,
+        #endregion
 	}
 }

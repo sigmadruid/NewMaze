@@ -186,6 +186,7 @@ namespace DG.Tweening
                 else if (t.IsSameOrSubclassOf(typeof(Renderer))) tween = ((Renderer)target).material.DOFade(endValueFloat, duration);
                 else if (t.IsSameOrSubclassOf(typeof(Image))) tween = ((Image)target).DOFade(endValueFloat, duration);
                 else if (t.IsSameOrSubclassOf(typeof(Text))) tween = ((Text)target).DOFade(endValueFloat, duration);
+                else if (t.IsSameOrSubclassOf(typeof(CanvasGroup))) tween = ((CanvasGroup)target).DOFade(endValueFloat, duration);
 #if DOTWEEN_TK2D
                 else if (t.IsSameOrSubclassOf(typeof(tk2dTextMesh))) tween = ((tk2dTextMesh)target).DOFade(endValueFloat, duration);
                 else if (t.IsSameOrSubclassOf(typeof(tk2dBaseSprite))) tween = ((tk2dBaseSprite)target).DOFade(endValueFloat, duration);

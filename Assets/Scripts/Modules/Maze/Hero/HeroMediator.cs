@@ -149,6 +149,8 @@ namespace GameLogic
 
 		private void HandleBattlePause(bool isPause)
 		{
+            if(Game.Instance.CurrentStageType == StageEnum.HomeTown)
+                return;
 			if (convertEffect != null)
 			{
 				convertEffect.IsEnabled = !isPause;

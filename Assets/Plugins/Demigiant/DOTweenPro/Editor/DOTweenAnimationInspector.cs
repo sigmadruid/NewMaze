@@ -28,7 +28,7 @@ namespace DG.DOTweenEditor
             { DOTweenAnimationType.LocalRotate, new[] { typeof(Transform) } },
             { DOTweenAnimationType.Scale, new[] { typeof(Transform) } },
             { DOTweenAnimationType.Color, new[] { typeof(SpriteRenderer), typeof(Renderer), typeof(Image), typeof(Text) } },
-            { DOTweenAnimationType.Fade, new[] { typeof(SpriteRenderer), typeof(Renderer), typeof(Image), typeof(Text) } },
+            { DOTweenAnimationType.Fade, new[] { typeof(SpriteRenderer), typeof(Renderer), typeof(Image), typeof(Text), typeof(CanvasGroup) } },
             { DOTweenAnimationType.Text, new[] { typeof(Text) } },
             { DOTweenAnimationType.PunchPosition, new[] { typeof(RectTransform), typeof(Transform) } },
             { DOTweenAnimationType.PunchRotation, new[] { typeof(Transform) } },

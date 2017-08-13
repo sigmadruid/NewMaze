@@ -22,6 +22,7 @@ namespace GameLogic
             InputManager.Instance.Init();
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.MazeMap, false);
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Function, true);
+            InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Pause, true);
             //Logic
             facade.RetrieveProxy<HeroProxy>().Init();
             facade.RetrieveProxy<PackProxy>().Init();

@@ -215,7 +215,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimationPlaying: 0
-  imageBackground: {fileID: 11433970}
+  TweenRadius: 250
+  TweenDuration: 0.3
+  buttonPack: {fileID: 114577398805245334}
+  buttonSoulAttach: {fileID: 114476100924585410}
+  buttonSettings: {fileID: 114300663140274020}
+  groupButtonRoot: {fileID: 225663116355087282}
 --- !u!222 &22229820
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -243,7 +248,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 133}
+  m_AnchoredPosition: {x: 0, y: 497}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22417100
@@ -315,7 +320,7 @@ GameObject:
   - component: {fileID: 222338047171750872}
   - component: {fileID: 114763231274789700}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: '&common.attach_soul'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,7 +337,7 @@ GameObject:
   - component: {fileID: 222701902745412506}
   - component: {fileID: 114860898415705682}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: '&common.settings'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +371,7 @@ GameObject:
   - component: {fileID: 222160076805948360}
   - component: {fileID: 114816030292351086}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: '&common.pack'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,9 +402,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224005844761860076}
-  - component: {fileID: 114630524541013078}
+  - component: {fileID: 225663116355087282}
   m_Layer: 5
-  m_Name: layout
+  m_Name: group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -415,7 +420,7 @@ GameObject:
   - component: {fileID: 224139788025432886}
   - component: {fileID: 114300663140274020}
   m_Layer: 5
-  m_Name: setting
+  m_Name: buttonSetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -448,7 +453,7 @@ GameObject:
   - component: {fileID: 224403826465488612}
   - component: {fileID: 114476100924585410}
   m_Layer: 5
-  m_Name: soul
+  m_Name: buttonSoulAttach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -465,7 +470,7 @@ GameObject:
   - component: {fileID: 114577398805245334}
   - component: {fileID: 222688662923102204}
   m_Layer: 5
-  m_Name: pack
+  m_Name: buttonPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -594,28 +599,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114630524541013078
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1616163757835302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 5
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
 --- !u!114 &114707968058693096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -861,7 +844,7 @@ Canvas:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127648}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
@@ -870,6 +853,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -892,7 +876,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 145}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224017152508247948
 RectTransform:
@@ -938,15 +922,15 @@ RectTransform:
   m_GameObject: {fileID: 1637549507196662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224136940568064168}
   - {fileID: 224471653129498134}
   m_Father: {fileID: 224005844761860076}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 115, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -965,8 +949,8 @@ RectTransform:
   m_Father: {fileID: 224005844761860076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 115, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -978,15 +962,15 @@ RectTransform:
   m_GameObject: {fileID: 1910798283855028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.00008, y: 1.00008, z: 1.00008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224017152508247948}
   - {fileID: 224811658373435928}
   m_Father: {fileID: 224005844761860076}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 115, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1062,3 +1046,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -115.00001}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225663116355087282
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1616163757835302}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

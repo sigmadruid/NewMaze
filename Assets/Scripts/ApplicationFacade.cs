@@ -51,6 +51,7 @@ namespace GameLogic
             RegisterMediator(new PathfindingMediator());
             RegisterMediator(new ProfileMediator());
             RegisterMediator(new RuneMediator());
+            RegisterMediator(new PauseMediator());
 		}
 	}
 }
