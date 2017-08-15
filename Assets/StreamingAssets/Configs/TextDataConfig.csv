@@ -14,6 +14,7 @@ common.nighttitle,黑暗蔓延
 common.transporter.to,确认传送到未知的区域？
 common.transporter.from,确认回到迷宫？
 common.talk.continue_tip,点击空格键继续...
+common.pause_panel.title,稍事休整...
 ,NPC
 npc.name.sage,贤者
 npc.name.wizard,巫师
@@ -36,6 +37,7 @@ monster.name.jushenbing,巨神兵
 ,Item
 item.type.rune,符文
 item.type.resource,资源
+item.type.soul,灵魂
 item.rune_life.name,生之符文
 item.rune_life.desc,使用后，立即回复500点生命
 item.rune_attack.name,灭之符文
@@ -50,3 +52,9 @@ item.rune_speed.name,疾之符文
 item.rune_speed.desc,使用后，30秒内提升20%移动速度
 item.rune_invisible.name,隐之符文
 item.rune_invisible.desc,使用后，30秒内保持隐身状态。但攻击会立即现身。
+item.soul_moying.name,魔婴的灵魂
+item.soul_moying.desc,魔婴的灵魂
+item.soul_yuanling.name,怨灵的灵魂
+item.soul_yuanling.desc,怨灵的灵魂
+item.soul_jushen.name,巨神的灵魂
+item.soul_jushen.desc,巨神的灵魂

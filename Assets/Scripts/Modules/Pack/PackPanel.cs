@@ -37,9 +37,13 @@ public class PackPanel : BasePopupView
     private UIItemPool<Toggle> togglePool = new UIItemPool<Toggle>();
     private UIItemPool<PackItem> itemPool = new UIItemPool<PackItem>();
 
+    private PackProxy proxy;
+
     public override void OnInitialize()
     {
         base.OnInitialize();
+
+        proxy = ApplicationFacade.Instance.RetrieveProxy<PackProxy>();
 
         UILocalizer.LocalizeByName(transform);
 
@@ -55,8 +59,9 @@ public class PackPanel : BasePopupView
             if((ItemType)type == ItemType.None)
                 continue;
             Toggle toggle = togglePool.AddItem();
-            toggle.name = TextDataManager.Instance.GetData("item.type." + type.ToString().ToLower());
-            toggle.GetComponentInChildren<Text>().text = toggle.name;
+            toggle.name = type.ToString();
+            toggle.GetComponentInChildren<Text>().text = TextDataManager.Instance.GetData("item.type." + type.ToString().ToLower());
+            ClickEventTrigger.Get(toggle.gameObject).onClick = OnSwitchType;
         }
 
         ClickEventTrigger.Get(ButtonClose.gameObject).onClick = OnClose;
@@ -73,8 +78,10 @@ public class PackPanel : BasePopupView
         ClickEventTrigger.Get(ButtonDiscard.gameObject).onClick = null;
     }
 
-    public void SetInfo(ItemType itemType, List<ItemInfo> infoList)
+    private void SetInfo(ItemType itemType)
     {
+        List<ItemInfo> infoList = proxy.GetItemInfosByType(itemType);
+
         itemPool.RemoveAll();
         for (int i = 0; i < infoList.Count; ++i)
         {
@@ -86,7 +93,16 @@ public class PackPanel : BasePopupView
         }
     }
 
-    public ItemType CurrentItemType { get; private set; }
+    private ItemType currentItemType;
+    public ItemType CurrentItemType 
+    {
+        get { return currentItemType; }
+        set
+        {
+            currentItemType = value;
+            SetInfo(value);
+        }
+    }
 
     private void OnClose(GameObject go)
     {
@@ -94,6 +110,7 @@ public class PackPanel : BasePopupView
     }
     private void OnSwitchType(GameObject go)
     {
+        CurrentItemType = (ItemType)Enum.Parse(typeof(ItemType), go.name);
     }
     private void OnSelect(GameObject go)
     {

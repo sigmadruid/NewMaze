@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 11444632}
   - component: {fileID: 11469128}
   m_Layer: 5
-  m_Name: Text
+  m_Name: '&common.pause_panel.title'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,6 +8,7 @@ namespace StaticData
     {
         Resource = 0,
         Rune = 1,
+        Soul = 2,
         None,
     }
 

@@ -1,8 +1,8 @@
 Kid,MaxNum,ItemKidList,MinCountList,MaxCountList,WeightList
 int ,int,List<int>,List<int>,List<int>,List<int>
 //Monster coins,,,,,
-100001,1,140001,1,1,100
-100002,1,140002,1,1,100
-100003,1,140003,1,1,100
+100001,1,142001,1,1,90
+100002,1,142002,1,1,90
+100003,1,142003,1,1,90
 //Exploration chests,,,,,
 101001,3,141001#141002#141003,1#1#1,3#3#3,50#25#25

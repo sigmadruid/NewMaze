@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2334178}
   - component: {fileID: 114000011954944126}
   - component: {fileID: 135000011264200698}
+  - component: {fileID: 114888121505845826}
   m_Layer: 17
   m_Name: Coin_3
   m_TagString: Untagged
@@ -151,6 +152,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!26 &2634178
 ParticleRenderer:
@@ -182,6 +184,7 @@ ParticleRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_CameraVelocityScale: 0
@@ -223,6 +226,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Uid: 
+--- !u!114 &114888121505845826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d4de287b46eb34e83a61e4f9115070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135000011264200698
 SphereCollider:
   m_ObjectHideFlags: 1

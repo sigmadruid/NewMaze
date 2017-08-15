@@ -49,8 +49,6 @@ namespace GameLogic
             packPanel.CallbackSwitchType = OnSwitch;
             packPanel.CallbackUseItem = OnUse;
             packPanel.CallbackDiscardItem = OnDiscard;
-            List<ItemInfo> itemInfoList = packProxy.GetItemInfosByType(ItemType.Rune);
-            packPanel.SetInfo(ItemType.Resource, itemInfoList);
         }
         private void HandlePackRefresh(ItemType type)
         {
@@ -58,8 +56,7 @@ namespace GameLogic
             {
                 type = packPanel.CurrentItemType;
             }
-            List<ItemInfo> itemInfoList = packProxy.GetItemInfosByType(type);
-            packPanel.SetInfo(type, itemInfoList);
+            packPanel.CurrentItemType = type;
         }
 
         private void OnSwitch(ItemType itemType)

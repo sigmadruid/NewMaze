@@ -60,7 +60,11 @@ namespace GameLogic
 		{
 			Script.Die();
             SetAtNight(false);
-//			ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, this);
+
+            Tupple<int, Vector3> tupple = new Tupple<int, Vector3>();
+            tupple.Item1 = Data.DropKid;
+            tupple.Item2 = WorldPosition;
+            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DROP_CREATED, tupple);
 		}
         public void PlayAnimation(string trigger)
         {
