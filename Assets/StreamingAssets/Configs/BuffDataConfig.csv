@@ -1,7 +1,11 @@
 Kid,Type,SpecialType,Duration,AttributeRatioDic,AttributeRaiseDic,EmissionColor,Param1
 int,BuffType,BuffSpecialType,float,Dictionary<int#float>,Dictionary<int#int>,Color,string
-120001,Attribute,None,-1,HP:2#Attack:2#Defense:2#Critical:2#MoveSpeed:1.5,,0.4666667#0.01568628#0.01568628,
+120001,Attribute,None,-1,HP:1#Attack:1#Defense:1#Critical:1#MoveSpeed:0.5,,0.4666667#0.01568628#0.01568628,
 120002,Special,HitBack,0.2,,,,10
 //Rune Buffs,,,,,,,
-120003,Attribute,None,30,Attack:1.2,,,
-120004,Attribute,None,30,Defense:1.2,,,
+120003,Attribute,None,30,Attack:0.2,,,
+120004,Attribute,None,30,Defense:0.2,,,
+//Soul Buffs,,,,,,,
+120101,Attribute,None,-1,HP:0.05,,,
+120102,Attribute,None,-1,Attack:0.05,,,
+120103,Attribute,None,-1,Attack:0.05#Defense:0.05,,,

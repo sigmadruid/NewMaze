@@ -167,7 +167,7 @@ namespace Battle
             while(attrEnum.MoveNext())
             {
                 float attrVal = attrEnum.Current.Value.GetAttributeRatio(attribute);
-                resultVal *= attrVal;
+                resultVal += attrVal;
             }
             return resultVal;
         }
