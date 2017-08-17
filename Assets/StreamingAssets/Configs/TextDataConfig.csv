@@ -15,6 +15,14 @@ common.transporter.to,确认传送到未知的区域？
 common.transporter.from,确认回到迷宫？
 common.talk.continue_tip,点击空格键继续...
 common.pause_panel.title,稍事休整...
+common.HP,生命
+common.SP,体力
+common.Attack,攻击
+common.Defense,防御
+common.Critical,暴击
+common.Dodge,闪避
+common.MoveSpeed,移动速度
+common.AttackSpeed,攻击速度
 ,NPC
 npc.name.sage,贤者
 npc.name.wizard,巫师

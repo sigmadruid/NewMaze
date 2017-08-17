@@ -52,6 +52,7 @@ namespace GameLogic
             RegisterMediator(new ProfileMediator());
             RegisterMediator(new RuneMediator());
             RegisterMediator(new PauseMediator());
+            RegisterMediator(new SoulAttachMediator());
 		}
 	}
 }
