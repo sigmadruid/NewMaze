@@ -15,6 +15,8 @@ namespace GameLogic
     	public float distance = 6f;
         public float vibrationScope = 0.15f;
         public float vibrationDuration = 0.15f;
+        public float zoomDistance = 3f;
+        public float zoomDuration = 0.3f;
 
     	public Transform playerTransofrm;
 
@@ -31,7 +33,7 @@ namespace GameLogic
 
         private RaycastHit[] prevHitInfos;
 
-        private bool isVibrating;
+        private bool isFollowing = true;
 
     	public static Camera3DScript Instance { get; private set; }
 
@@ -52,7 +54,7 @@ namespace GameLogic
     	}
     	void LateUpdate () 
     	{
-            if (playerTransofrm != null && !isVibrating)
+            if (playerTransofrm != null && isFollowing)
     		{
                 transform.position = playerTransofrm.position + Vector3.forward * (-distance) + Vector3.up * height + Vector3.right * distance;
                 transform.LookAt(playerTransofrm.position);
@@ -70,15 +72,27 @@ namespace GameLogic
 
         public void Vibrate(CameraVibration.Type type)
         {
-            isVibrating = true;
+            isFollowing = false;
             var vibration = vibrationDic[(int)type];
             if(vibration != null)
             {
                 transform.DOShakePosition(vibration.duration, Vector3.up * vibration.scope).OnComplete(() =>
                     {
-                        isVibrating = false;
+                        isFollowing = true;
                     });
             }
+        }
+
+        public void Zoom(bool zoomIn)
+        {
+            isFollowing = false;
+            Vector3 forward = zoomIn ? Adam.Instance.WorldPosition - transform.position : transform.position - Adam.Instance.WorldPosition;
+            forward = forward.normalized;
+            transform.DOMove(transform.position + forward * zoomDistance, zoomDuration).OnComplete(() =>
+                {
+                    if (!zoomIn)
+                        isFollowing = true;
+                });
         }
 
     	#region Check Obstacle

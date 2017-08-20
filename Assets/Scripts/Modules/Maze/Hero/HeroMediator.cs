@@ -137,14 +137,14 @@ namespace GameLogic
 			}
 
 			convertEffect.ResetTask();
+            convertEffect.AddTask(1f, OnConversionMiddle, heroKid);
 			convertEffect.AddTask(2f, OnConversionFinished);
             convertEffect.Active(adam.WorldPosition);
 
 			InputManager.Instance.Enable = false;
 
             adam.Info.IsConverting = true;
-            HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-            adam.Convert(data);
+            adam.Exit();
 		}
 
 		private void HandleBattlePause(bool isPause)
@@ -180,6 +180,29 @@ namespace GameLogic
                 currentMazePos = pos;
                 blockProxy.AddMockNode(currentMazePos);
             }
+        }
+        private void OnConversionMiddle(object param)
+        {
+            int heroKid = (int)param;
+
+            HeroInfo info = adam.Info;
+            Vector3 position = adam.WorldPosition;
+            float angle = adam.WorldAngle;
+
+            Adam.Recycle();
+
+            HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
+            info.Convert(data);
+
+            Adam newHero = Adam.Create(info);
+            newHero.SetPosition(position);
+            newHero.SetRotation(angle);
+            adam = newHero;
+            adam.CallbackDie = OnHeroDie;
+            adam.CallbackHeartBeat = OnHeartBeat;
+
+            BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            battleProxy.SetAdam(newHero);
         }
 		private void OnConversionFinished(object param)
 		{

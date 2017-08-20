@@ -88,7 +88,7 @@ namespace GameLogic
         {
             base.Hit();
             animator.speed = 1f;
-            animator.SetTrigger(currentEliteHash);
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoHit);
         }
         public override void Die()
         {
@@ -100,13 +100,14 @@ namespace GameLogic
             animator.speed = 1f;
             animator.SetTrigger(AnimatorDataManager.Instance.ParamDoDie);
         }
-        public void Switch(int eliteHash, bool first = false)
+        public void Exit()
         {
             animator.speed = 1f;
-            if (!first)
-                animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
-            currentEliteHash = eliteHash;
-            animator.SetTrigger(eliteHash);
+            animator.SetTrigger(AnimatorDataManager.Instance.ParamDoExit);
+        }
+        public void Sit(bool state)
+        {
+            animator.SetBool(AnimatorDataManager.Instance.ParamSit, state);
         }
         public override void PlayAnimation(int hash)
         {
@@ -126,10 +127,6 @@ namespace GameLogic
         protected override void OnSheath()
         {
             base.OnSheath();
-            if (LeftWeapon != null)
-                ResourceManager.Instance.RecycleAsset(LeftWeapon.gameObject);
-            if (RightWeapon != null)
-                ResourceManager.Instance.RecycleAsset(RightWeapon.gameObject);
         }
         protected override void OnSkillStart()
         {

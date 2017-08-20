@@ -25,6 +25,7 @@ namespace GameLogic
         public ItemRecord ToRecord()
         {
             ItemRecord record = new ItemRecord();
+            record.Kid = data.Kid;
             record.Count = Count;
             record.UseInterval = UseInterval;
             return record;

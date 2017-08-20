@@ -19,12 +19,7 @@ namespace Battle
     public class CharacterInfo : EntityInfo, ICharacterInfoAgent
 	{
         protected Dictionary<int, float> attrDic = new Dictionary<int, float>();
-        protected Dictionary<int, Buff> selfBuffDic = new Dictionary<int, Buff>();
-        protected virtual Dictionary<int, Buff> buffDic
-        {
-            get { return selfBuffDic; }
-            set { selfBuffDic = value; }
-        }
+        protected Dictionary<int, Buff> buffDic = new Dictionary<int, Buff>();
 
         public Side Side;
         public List<Skill> SkillList = new List<Skill>();

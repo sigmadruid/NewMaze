@@ -88,9 +88,6 @@ namespace GameLogic
         {
             Data = data;
             Info.Convert(data);
-
-            int hash = Animator.StringToHash(data.Trigger);
-            Switch(hash);
         }
 
         public void ClearTarget()
@@ -351,9 +348,13 @@ namespace GameLogic
             int hash = Animator.StringToHash(trigger);
             Script.PlayAnimation(hash);
         }
-        public void Switch(int eliteHash)
+        public void Exit()
         {
-            Script.Switch(eliteHash);
+            Script.Exit();
+        }
+        public void Sit(bool state)
+        {
+            Script.Sit(state);
         }
 
         #endregion
@@ -377,21 +378,6 @@ namespace GameLogic
         {
             ClearTarget();
             Info.CurrentSkill = null;
-        }
-        private void OnUnsheath()
-        {
-            if (Data.LeftWeapon != 0)
-            {
-                LeftWeaponData = WeaponDataManager.Instance.GetData(Data.LeftWeapon) as WeaponData;
-                Script.LeftWeapon = ResourceManager.Instance.LoadAsset<WeaponScript>(ObjectType.GameObject, LeftWeaponData.GetResPath());
-                Script.LeftWeapon.Attach(Script.LeftHandPosTransform);
-            }
-            if (Data.RightWeapon != 0)
-            {
-                RightWeaponData = WeaponDataManager.Instance.GetData(Data.RightWeapon) as WeaponData;
-                Script.RightWeapon = ResourceManager.Instance.LoadAsset<WeaponScript>(ObjectType.GameObject, RightWeaponData.GetResPath());
-                Script.RightWeapon.Attach(Script.RightHandPosTransform);
-            }
         }
         private void OnHitStart()
         {
@@ -467,9 +453,7 @@ namespace GameLogic
             adam.Script.CallbackRollEnd = adam.OnRollEnd;
             adam.Script.CallbackSkillMiddle = adam.OnSkillMiddle;
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
-            adam.Script.CallbackUnsheath = adam.OnUnsheath;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
-            adam.Script.Switch(Animator.StringToHash(adam.Data.Trigger), true);
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
             adam.inputManager = InputManager.Instance;
 

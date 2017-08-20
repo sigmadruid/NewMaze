@@ -45,14 +45,13 @@ namespace GameLogic
 
 		private void HandleTownHeroInit()
 		{
-            int heroKid = IDManager.Instance.GetKid(IDType.Hero, 0);
+            int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
             HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
             HeroInfo info = new HeroInfo(data);
             info.Init();
 
             adam = Adam.Create(info);
             adam.SetPosition(new Vector3(-1.77f, 0, 13.02f));
-            adam.Switch(AnimatorDataManager.Instance.ParamDoUnarmed);
 		}
 		private void HandleTownHeroDispose()
 		{

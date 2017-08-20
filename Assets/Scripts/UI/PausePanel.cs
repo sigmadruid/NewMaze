@@ -54,6 +54,9 @@ namespace GameUI
         {
             base.OnEnter();
 
+            Adam.Instance.Sit(true);
+            Camera3DScript.Instance.Zoom(true);
+
             for(int i = 0; i < buttonList.Count; ++i)
             {
                 Button button = buttonList[i];
@@ -68,6 +71,14 @@ namespace GameUI
                 button.transform.DOLocalMove(new Vector3(x, y, 0), TweenDuration);
             }
             groupButtonRoot.DOFade(1, TweenDuration);
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            Adam.Instance.Sit(false);
+            Camera3DScript.Instance.Zoom(false);
         }
 
         private void OnPackClick(GameObject go)

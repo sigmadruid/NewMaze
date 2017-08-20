@@ -9,16 +9,6 @@ namespace StaticData
 {
 	public class AnimatorDataManager
 	{
-        public int NullHash;
-		public int IdleHash;
-		public int MoveHash;
-        public int SkillHash_1;
-        public int SkillHash_2;
-		public int Attack1Hash;
-		public int Attack2Hash;
-		public int HitHash;
-        public int DieHash;
-
 		public int ParamIsMoving;
         public int ParamDoSkill_1;
         public int ParamDoSkill_2;
@@ -27,11 +17,8 @@ namespace StaticData
 		public int ParamDoHit;
         public int ParamDoDie;
         public int ParamDoExit;
-        public int ParamDoUnarmed;
-        public int ParamDoSword;
-        public int ParamDoAxe;
-        public int ParamDoBow;
         public int ParamRoll;
+        public int ParamSit;
 
 		private Dictionary<int, Dictionary<int, AnimatorData>> kvDic;
 
@@ -47,16 +34,6 @@ namespace StaticData
 
 		public AnimatorDataManager ()
 		{
-            NullHash = Animator.StringToHash("Base.null");
-			IdleHash = Animator.StringToHash("Base.idle");
-			MoveHash = Animator.StringToHash("Base.move");
-            SkillHash_1 = Animator.StringToHash("Base.skill_1");
-            SkillHash_2 = Animator.StringToHash("Base.skill_2");
-			Attack1Hash = Animator.StringToHash("Base.attack01");
-			Attack2Hash = Animator.StringToHash("Base.attack02");
-			HitHash = Animator.StringToHash("Base.hit");
-			DieHash = Animator.StringToHash("Base.die");
-
 			ParamIsMoving = Animator.StringToHash("IsMoving");
             ParamDoSkill_1 = Animator.StringToHash("DoSkill_1");
             ParamDoSkill_2 = Animator.StringToHash("DoSkill_2");
@@ -65,11 +42,8 @@ namespace StaticData
 			ParamDoHit = Animator.StringToHash("DoHit");
             ParamDoDie = Animator.StringToHash("DoDie");
             ParamDoExit = Animator.StringToHash("DoExit");
-            ParamDoUnarmed = Animator.StringToHash("DoUnarmed");
-            ParamDoSword = Animator.StringToHash("DoSword");
-            ParamDoAxe = Animator.StringToHash("DoAxe");
-            ParamDoBow = Animator.StringToHash("DoBow");
             ParamRoll = Animator.StringToHash("Roll");
+            ParamSit = Animator.StringToHash("IsSit");
 		}
 
 		public void Init()

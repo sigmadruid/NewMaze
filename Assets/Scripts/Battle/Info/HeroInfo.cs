@@ -16,24 +16,14 @@ namespace Battle
             set { data = value; }
         }
 
+        public WeaponInfo WeaponInfo;
+
         public int Level;
         public int Exp;
         public bool IsConverting;
         public bool IsInHall;
         public bool IsVisible;
 
-        protected static Dictionary<int, Buff> heroBuffDic = new Dictionary<int, Buff>();
-        protected override Dictionary<int, Buff> buffDic
-        {
-            get
-            {
-                return heroBuffDic;
-            }
-            set
-            {
-                heroBuffDic = value;
-            }
-        }
         private Dictionary<int, float> attrRaiseDic = new Dictionary<int, float>();
 
         public HeroInfo (HeroData data) : base(data)
