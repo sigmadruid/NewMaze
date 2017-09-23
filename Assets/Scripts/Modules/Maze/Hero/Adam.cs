@@ -32,9 +32,6 @@ namespace GameLogic
             protected set { info = value; }
         }
 
-        public WeaponData LeftWeaponData { get; protected set; }
-        public WeaponData RightWeaponData { get; protected set; }
-
         public bool IsUpdating = true;
         public bool IsSlowUpdating = true;
 
@@ -45,6 +42,8 @@ namespace GameLogic
 
         private InputManager inputManager;
         private BattleProxy battleProxy;
+        private PlayerProxy playerProxy;
+        private HeroProxy heroProxy;
 
         private static Adam instance;
         public static Adam Instance
@@ -86,8 +85,8 @@ namespace GameLogic
 
         public void Convert(HeroData data)
         {
-            Data = data;
-            Info.Convert(data);
+            Info = heroProxy.GetInfoByKid(data.Kid);
+            Data = Info.Data;
         }
 
         public void ClearTarget()
@@ -104,12 +103,12 @@ namespace GameLogic
         {
             get
             {
-                return Info.IsVisible;
+                return playerProxy.CurrentInfo.IsVisible;
             }
             set
             {
-                Info.IsVisible = value;
-                Script.SetTransparent(!Info.IsVisible);
+                playerProxy.CurrentInfo.IsVisible = value;
+                Script.SetTransparent(!playerProxy.CurrentInfo.IsVisible);
             }
         }
 
@@ -455,6 +454,8 @@ namespace GameLogic
             adam.Script.CallbackSkillEnd = adam.OnSkillEnd;
             adam.Script.CallbackTrapAttack = adam.OnTrapAttack;
             adam.battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
+            adam.playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
+            adam.heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             adam.inputManager = InputManager.Instance;
 
             instance = adam;
@@ -481,19 +482,6 @@ namespace GameLogic
             }
         }
 
-        public new HeroRecord ToRecord()
-        {
-            HeroRecord record = new HeroRecord();
-            record.Kid = Data.Kid;
-            record.HP = Info.HP;
-            record.Level = Info.Level;
-            record.Exp = Info.Exp;
-            record.IsInHall = Info.IsInHall;
-            record.IsVisible = Info.IsVisible;
-            record.WorldPosition = new Vector3Record(WorldPosition);
-            record.WorldAngle = WorldAngle;
-            return record;
-        }
     }
     
 }

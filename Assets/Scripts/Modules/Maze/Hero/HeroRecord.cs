@@ -10,11 +10,5 @@ namespace GameLogic
         public int HP;
         public int Level;
         public int Exp;
-
-        public bool IsInHall;
-        public bool IsVisible;
-
-        public Vector3Record WorldPosition;
-        public float WorldAngle;
     }
 }

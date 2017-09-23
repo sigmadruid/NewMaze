@@ -48,9 +48,6 @@ namespace Battle
             SP = Data.SP;
 		}
 		
-        public virtual void Init()
-		{
-		}
         public virtual void Dispose()
 		{
             attrDic.Clear();

@@ -63,8 +63,4 @@ int,int,string,int
 10001,0,MazeBlocks/Room/Room_1_Walk,3
 10001,0,MazeBlocks/Room/Room_2_Walk,3
 10001,0,MazeBlocks/Room/Room_3_Walk,3
-10001,170001,,1
-10001,170002,,1
-10001,170003,,1
-10001,170004,,1
 10001,0,Effects/ConversionEffect,1

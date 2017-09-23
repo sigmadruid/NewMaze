@@ -135,7 +135,7 @@ namespace StaticData
     public class DemoConfig
     {
         public int InitLevel = 10;
-        public List<int> InitialHeroKids = new List<int>(){30000, 30001, 30002, 30003};
+        public List<int> InitialHeroKids = new List<int>(){30001, 30002, 30003};
     }
 
     public class GlobalConfig

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 using System;
 using System.Collections.Generic;
 
@@ -8,25 +10,54 @@ namespace GameLogic
 		public string Uid;
 
 		public string Name;
+        public int HeroKid;
+        public Vector3 StartPosition;
+        public float StartAngle;
 
-		public int Level;
+        public bool IsConverting;
+        public bool IsInHall;
+        public bool IsVisible;
 
-		public int Exp;
+        public int HallKid;
+        public Vector3 LeavePosition;
 
-		public int Gold;
-
-		public List<int> EmbattleHeroIDList = new List<int>();
-
-		public PlayerInfo(PlayerRecord record)
+        public void Init()
+        {
+        }
+        public void Init(PlayerRecord record)
 		{
-			this.Uid = record.Uid;
-			this.Name = record.Name;
-			this.Level = record.Level;
-			this.Exp = record.Exp;
-			this.Gold = record.Gold;
-			this.Gold = record.Gold;
+			Uid = record.Uid;
+			Name = record.Name;
+
+            HeroKid = record.HeroKid;
+            StartPosition = record.StartPosition.ToVector3();
+            StartAngle = record.StartAngle;
+
+            IsConverting = record.IsConverting;
+            IsInHall = record.IsInHall;
+            IsVisible = record.IsVisible;
+
+            HallKid = record.HallKid;
+            LeavePosition = record.LeavePosition.ToVector3();
 		}
 
+        public PlayerRecord ToRecord()
+        {
+            PlayerRecord record = new PlayerRecord();
+            record.Uid = Uid;
+            record.Name = Name;
+            record.HeroKid = HeroKid;
+            record.StartPosition = new Vector3Record(Adam.Instance.WorldPosition);
+            record.StartAngle = Adam.Instance.WorldAngle;
+
+            record.IsConverting = IsConverting;
+            record.IsInHall = IsInHall;
+            record.IsVisible = IsVisible;
+
+            record.HallKid = HallKid;
+            record.LeavePosition = new Vector3Record(LeavePosition);
+            return record;
+        }
     }
 }
 

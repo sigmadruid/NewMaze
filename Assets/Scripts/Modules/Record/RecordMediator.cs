@@ -13,6 +13,8 @@ namespace GameLogic
     {
         private static readonly string RECORD_PATH = Application.persistentDataPath + "/GameData.bin";
 
+        private PlayerProxy playerProxy;
+        private WeaponProxy weaponProxy;
         private HeroProxy heroProxy;
         private MonsterProxy monsterProxy;
         private ExplorationProxy explorationProxy;
@@ -24,7 +26,9 @@ namespace GameLogic
         public override void OnRegister()
         {
             base.OnRegister();
+            playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
+            weaponProxy = ApplicationFacade.Instance.RetrieveProxy<WeaponProxy>();
             monsterProxy = ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>();
             explorationProxy = ApplicationFacade.Instance.RetrieveProxy<ExplorationProxy>();
             dropProxy = ApplicationFacade.Instance.RetrieveProxy<DropProxy>();
@@ -81,19 +85,20 @@ namespace GameLogic
         private void HandleDeserializeGame()
         {
             string persistPath = Application.persistentDataPath + "/GameData.bin";
-            if(!File.Exists(persistPath))
+            if(File.Exists(persistPath))
             {
-                Game.Instance.IsNewGame = true;
-                return;
+                gameRecord = null;
+                using(Stream stream = new FileStream(persistPath, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    gameRecord = (GameRecord)formatter.Deserialize(stream);
+                }
             }
-            gameRecord = null;
-            using(Stream stream = new FileStream(persistPath, FileMode.Open, FileAccess.ReadWrite))
+            else
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                gameRecord = (GameRecord)formatter.Deserialize(stream);
+                gameRecord = new GameRecord();
             }
 
-            Game.Instance.IsNewGame = gameRecord != null;
             if(gameRecord != null)
             {
                 DeserializeGame();
@@ -110,18 +115,17 @@ namespace GameLogic
 
             gameRecord = new GameRecord();
 
-            gameRecord.Items = packProxy.GetRecord();
 
-            heroProxy.SaveRecord();
-            monsterProxy.SaveRecord();
+            monsterProxy.Save();
             explorationProxy.SaveRecord();
             dropProxy.SaveRecord();
-            facade.RetrieveProxy<HallProxy>().CreateRecord();
 
             gameRecord.RandomSeed = Maze.Instance.Seed;
-            gameRecord.Hero = heroProxy.Record;
+            gameRecord.Player = playerProxy.Save();
+            gameRecord.Heroes = heroProxy.Save();
+            gameRecord.Weapons = weaponProxy.Save();
             gameRecord.Monsters = monsterProxy.RecordDic;
-            gameRecord.Hall = facade.RetrieveProxy<HallProxy>().Record;
+            gameRecord.Items = packProxy.Save();
             gameRecord.Drops = dropProxy.RecordDic;
             gameRecord.Explorations = explorationProxy.RecordDic;
         }
@@ -129,12 +133,13 @@ namespace GameLogic
         {
             var facade = ApplicationFacade.Instance;
 
-            packProxy.SetRecord(gameRecord.Items);
-
             Maze.Instance.Seed = gameRecord.RandomSeed;
-            heroProxy.Record = gameRecord.Hero;
-            monsterProxy.RecordDic = gameRecord.Monsters;
-            facade.RetrieveProxy<HallProxy>().Record = gameRecord.Hall;
+
+            playerProxy.Init(gameRecord.Player);
+            weaponProxy.Init(gameRecord.Weapons);
+            heroProxy.Init(gameRecord.Heroes);
+            monsterProxy.Init(gameRecord.Monsters);
+            packProxy.Init(gameRecord.Items);
             dropProxy.RecordDic = gameRecord.Drops;
             explorationProxy.RecordDic = gameRecord.Explorations;
         }

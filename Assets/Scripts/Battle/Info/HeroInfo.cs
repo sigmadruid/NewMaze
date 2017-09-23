@@ -20,39 +20,40 @@ namespace Battle
 
         public int Level;
         public int Exp;
-        public bool IsConverting;
-        public bool IsInHall;
-        public bool IsVisible;
 
         private Dictionary<int, float> attrRaiseDic = new Dictionary<int, float>();
 
+        private PlayerProxy playerProxy;
+        private WeaponProxy weaponProxy;
+
         public HeroInfo (HeroData data) : base(data)
         {
-            Side = Side.Hero;
-            Convert(data);
-        }
-
-        public override void Init()
-        {
-            base.Init();
+            Init();
 
             Level = GlobalConfig.DemoConfig.InitLevel;
             Exp = 0;
             HP = (int)(GetBaseAttribute(BattleAttribute.HP));
-            IsConverting = false;
-            IsInHall = false;
-            IsVisible = true;
+            WeaponInfo = weaponProxy.GetInfoByKid(Data.WeaponKid);
         }
-        public void Init(HeroRecord record)
-        {
-            base.Init();
 
-            HP = record.HP;
+        public HeroInfo(HeroData data, HeroRecord record) : base(data)
+        {
+            Init();
+
             Level = record.Level;
             Exp = record.Exp;
-            IsConverting = false;
-            IsInHall = record.IsInHall;
-            IsVisible = record.IsVisible;
+            HP = record.HP;
+            WeaponInfo = weaponProxy.GetInfoByKid(Data.WeaponKid);
+        }
+        private void Init()
+        {
+            playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
+            weaponProxy = ApplicationFacade.Instance.RetrieveProxy<WeaponProxy>();
+
+            InitRaise();
+            InitSkillList();
+
+            Side = Side.Hero;
         }
 
         public HeroRecord ToRecord()
@@ -60,19 +61,9 @@ namespace Battle
             HeroRecord record = new HeroRecord();
             record.Kid = Data.Kid;
             record.HP = HP;
-            record.IsInHall = IsInHall;
-            record.IsVisible = IsVisible;
+            record.Level = Level;
+            record.Exp = Exp;
             return record;
-        }
-
-        public void Convert(HeroData data)
-        {
-            Data = data;
-
-            InitRaise();
-            InitSkillList();
-
-            HP = (int)(GetAttribute(BattleAttribute.HP) * HPRatio);
         }
 
         private void InitRaise()
@@ -104,7 +95,7 @@ namespace Battle
 
         public override bool CanCastSkill(int index)
         {
-            if (IsConverting)
+            if (playerProxy.CurrentInfo.IsConverting)
                 return false;
             Skill skill = SkillList[index - 1];
             if(SP < skill.Data.CostSP)
@@ -116,7 +107,7 @@ namespace Battle
 
         public override bool CanMove()
         {
-            return base.CanMove() && !IsConverting;
+            return base.CanMove() && !playerProxy.CurrentInfo.IsConverting;
         }
 
         public void AddExp(int exp)

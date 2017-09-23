@@ -105,7 +105,7 @@ namespace GameLogic
 		}
 		private void HandleBlockDispose()
 		{
-            monsterProxy.SaveRecord();
+            monsterProxy.Save();
             monsterProxy.Dispose();
 		}
         private void HandleHallInit()
@@ -134,7 +134,7 @@ namespace GameLogic
         }
         private void HandleHallDispose()
         {
-            monsterProxy.SaveRecord();
+            monsterProxy.Save();
             monsterProxy.Dispose();
         }
         private void InitMonster(Monster monster, Vector3 position)

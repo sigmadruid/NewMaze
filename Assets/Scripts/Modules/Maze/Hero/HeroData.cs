@@ -15,10 +15,7 @@ namespace StaticData
         public float MoveSpeedRaise;
         public float AttackSpeedRaise;
 
-        public string Trigger;
-
-        public int LeftWeapon;
-        public int RightWeapon;
+        public int WeaponKid;
 
 		public override string GetResPath ()
 		{

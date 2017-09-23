@@ -24,8 +24,6 @@ namespace GameLogic
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Function, true);
             InputManager.Instance.EnableKeyboardAction(KeyboardActionType.Pause, true);
             //Logic
-            facade.RetrieveProxy<HeroProxy>().Init();
-            facade.RetrieveProxy<PackProxy>().Init();
             facade.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.HomeTown);
 			facade.DispatchNotification(NotificationEnum.TOWN_HERO_INIT);
 			facade.DispatchNotification(NotificationEnum.NPC_INIT);

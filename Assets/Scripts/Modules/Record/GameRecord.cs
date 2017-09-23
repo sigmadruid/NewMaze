@@ -6,13 +6,14 @@ namespace GameLogic
     [Serializable]
     public class GameRecord
     {
-        public int RandomSeed;
+        public int RandomSeed = 0;
 
-        public HeroRecord Hero;
+        public PlayerRecord Player;
+
+        public Dictionary<int, HeroRecord> Heroes;
+        public Dictionary<int, WeaponRecord> Weapons;
 
         public Dictionary<int, List<MonsterRecord>> Monsters = new Dictionary<int, List<MonsterRecord>>();
-
-        public HallRecord Hall;
 
         public Dictionary<int, List<DropRecord>> Drops = new Dictionary<int, List<DropRecord>>();
 

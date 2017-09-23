@@ -48,7 +48,6 @@ namespace GameLogic
             int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
             HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
             HeroInfo info = new HeroInfo(data);
-            info.Init();
 
             adam = Adam.Create(info);
             adam.SetPosition(new Vector3(-1.77f, 0, 13.02f));

@@ -6,8 +6,6 @@ namespace GameLogic
     public class HallRecord
     {
         public int Kid;
-
-        public Vector3Record LeavePosition;
     }
 }
 

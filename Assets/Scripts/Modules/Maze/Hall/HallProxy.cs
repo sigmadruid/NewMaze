@@ -11,21 +11,13 @@ namespace GameLogic
 {
     public class HallProxy : Proxy
     {
-        public HallRecord Record;
-
         public void Init()
         {
         }
         public void Dispose()
         {
-            Record = null;
         }
 
-        public void CreateRecord()
-        {
-            if(Hall.Instance != null)
-                Record = Hall.Instance.ToRecord();
-        }
     }
 }
 

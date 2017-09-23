@@ -16,11 +16,13 @@ namespace GameLogic
         private MazePosition currentMazePos;
         private ParticleScript convertEffect;
 
+        private PlayerProxy playerProxy;
         private HeroProxy heroProxy;
         private BlockProxy blockProxy;
 		
 		public override void OnRegister ()
 		{
+            playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
             heroProxy = ApplicationFacade.Instance.RetrieveProxy<HeroProxy>();
             blockProxy = ApplicationFacade.Instance.RetrieveProxy<BlockProxy>();
 		}
@@ -77,30 +79,12 @@ namespace GameLogic
         private void HandleHeroInit()
 		{
 			//Init
-            HeroRecord record = heroProxy.Record;
-            if(record != null)
-            {
-                HeroData data = HeroDataManager.Instance.GetData(record.Kid) as HeroData;
-                HeroInfo info = new HeroInfo(data);
-                info.Init(record);
+            PlayerInfo playerInfo = playerProxy.CurrentInfo;
+            HeroInfo info = heroProxy.GetInfoByKid(playerInfo.HeroKid);
 
-                adam = Adam.Create(info);
-                adam.SetPosition(record.WorldPosition.ToVector3());
-                adam.SetRotation(record.WorldAngle);
-            }
-            else
-            {
-                int heroKid = IDManager.Instance.GetKid(IDType.Hero, 1);
-                HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-                HeroInfo info = new HeroInfo(data);
-                info.Init();
-
-                adam = Adam.Create(info);
-                MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
-                Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
-                adam.SetPosition(startPosition);
-                adam.SetRotation(0);
-            }
+            adam = Adam.Create(info);
+            adam.SetPosition(playerInfo.StartPosition);
+            adam.SetRotation(playerInfo.StartAngle);
 			adam.CallbackDie = OnHeroDie;
             adam.CallbackHeartBeat = OnHeartBeat;
 
@@ -131,7 +115,7 @@ namespace GameLogic
 
 		private void HandleHeroConvert(int heroKid)
 		{
-            if (!adam.Info.IsAlive || adam.Info.IsConverting)
+            if (!adam.Info.IsAlive || playerProxy.CurrentInfo.IsConverting)
 			{
 				return;
 			}
@@ -143,7 +127,7 @@ namespace GameLogic
 
 			InputManager.Instance.Enable = false;
 
-            adam.Info.IsConverting = true;
+            playerProxy.CurrentInfo.IsConverting = true;
             adam.Exit();
 		}
 
@@ -174,6 +158,9 @@ namespace GameLogic
 		}
         private void OnHeartBeat()
         {
+            if(playerProxy.CurrentInfo.IsInHall)
+                return;
+                
             MazePosition pos = adam.GetMazePosition();
             if(currentMazePos != pos)
             {
@@ -185,31 +172,26 @@ namespace GameLogic
         {
             int heroKid = (int)param;
 
-            HeroInfo info = adam.Info;
             Vector3 position = adam.WorldPosition;
             float angle = adam.WorldAngle;
 
             Adam.Recycle();
-
-            HeroData data = HeroDataManager.Instance.GetData(heroKid) as HeroData;
-            info.Convert(data);
-
-            Adam newHero = Adam.Create(info);
-            newHero.SetPosition(position);
-            newHero.SetRotation(angle);
-            adam = newHero;
+            HeroInfo info = heroProxy.GetInfoByKid(heroKid);
+            adam = Adam.Create(info);
+            adam.SetPosition(position);
+            adam.SetRotation(angle);
             adam.CallbackDie = OnHeroDie;
             adam.CallbackHeartBeat = OnHeartBeat;
 
             BattleProxy battleProxy = ApplicationFacade.Instance.RetrieveProxy<BattleProxy>();
-            battleProxy.SetAdam(newHero);
+            battleProxy.SetAdam(adam);
         }
 		private void OnConversionFinished(object param)
 		{
 			InputManager.Instance.Enable = true;
 			convertEffect.Deactive();
 			
-            adam.Info.IsConverting = false;
+            playerProxy.CurrentInfo.IsConverting = false;
             DispatchNotification(NotificationEnum.HERO_CONVERT_END);
 		}
 

@@ -1,44 +1,52 @@
 using UnityEngine;
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 using Base;
+using StaticData;
 
 namespace GameLogic
 {
+    //Singlton??
     public class PlayerProxy : Proxy
     {
-		private PlayerInfo currentInfo;
+        public PlayerInfo CurrentInfo;
 
-		private Dictionary<string, PlayerInfo> playerInfoDic = new Dictionary<string, PlayerInfo>();
-
-		public void Init(int currentIndex, List<PlayerRecord> recordList)
+        public void Init(PlayerRecord record)
 		{
-			for (int i = 0; i < recordList.Count; ++i)
-			{
-				PlayerInfo info = new PlayerInfo(recordList[i]);
-				playerInfoDic.Add(info.Uid, info);
+            if(record != null)
+            {
+                CurrentInfo = new PlayerInfo();
+                CurrentInfo.Init(record);
+            }
+            else
+            {
+                CurrentInfo = new PlayerInfo();
+                CurrentInfo.Uid = Guid.NewGuid().ToString();
+                CurrentInfo.Name = "Demo Adam";
+                CurrentInfo.HeroKid = 30001;
+                MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+                Vector3 startPosition = MazeUtil.GetWorldPosition(mazeData.StartCol, mazeData.StartRow, mazeData.BlockSize);
+                CurrentInfo.StartPosition = startPosition;
+                CurrentInfo.StartAngle = 0f;
 
-				if (i == currentIndex)
-				{
-					currentInfo = info;
-				}
-			}
+                CurrentInfo.IsConverting = false;
+                CurrentInfo.IsInHall = false;
+                CurrentInfo.IsVisible = true;
+
+                CurrentInfo.HallKid = 0;
+                CurrentInfo.LeavePosition = Vector3.zero;
+            }
 		}
 
-		public void ChangeGold(int gold)
-		{
-		}
+        public PlayerRecord Save()
+        {
+            PlayerRecord record = CurrentInfo.ToRecord();
+            return record;
+        }
 
-		public void AddExp(int exp)
-		{
-		}
-
-		public int MyLevel { get { return currentInfo.Level; }}
-		public int MyExp { get { return currentInfo.Exp; }}
-		public int MyGold { get { return currentInfo.Gold; }}
-		
     }
 }
 

@@ -7,16 +7,9 @@ namespace StaticData
     {
         public string Name;
 
-        public string Res3D;
-
-
         public override string GetResPath ()
         {
-            if (resPath == null)
-            {
-                resPath = Utils.CombinePath("Weapons", Res3D);
-            }
-            return resPath;
+            return string.Empty;
         }
     }
 }

@@ -12,15 +12,21 @@ namespace GameLogic
     {
         private Dictionary<int, ItemInfo> itemInfoDic = new Dictionary<int, ItemInfo>();
 
-        public void Init()
+        public void Init(Dictionary<int, ItemRecord> recordDic)
         {
+            itemInfoDic.Clear();
+            foreach(int kid in recordDic.Keys)
+            {
+                ItemRecord record = recordDic[kid];
+                ChangeCount(kid, record.Count);
+            }
         }
 
         public void Dispose()
         {
         }
 
-        public Dictionary<int, ItemRecord> GetRecord()
+        public Dictionary<int, ItemRecord> Save()
         {
             Dictionary<int, ItemRecord> recordDic = new Dictionary<int, ItemRecord>();
             foreach(int kid in itemInfoDic.Keys)
@@ -30,15 +36,6 @@ namespace GameLogic
                 recordDic.Add(kid, record);
             }
             return recordDic;
-        }
-        public void SetRecord(Dictionary<int, ItemRecord> recordDic)
-        {
-            itemInfoDic.Clear();
-            foreach(int kid in recordDic.Keys)
-            {
-                ItemRecord record = recordDic[kid];
-                ChangeCount(kid, record.Count);
-            }
         }
 
         public ItemInfo GetItemInfo(int kid)

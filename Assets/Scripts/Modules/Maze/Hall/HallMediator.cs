@@ -48,16 +48,9 @@ namespace GameLogic
 
         private void HandleHallInit(object param)
 		{
-            if(param == null)
-            {
-                Hall.Create(hallProxy.Record);
-                Hall.Instance.LeavePosition = hallProxy.Record.LeavePosition.ToVector3();
-            }
-            else
-            {
-                int hallKid = (int)param;
-                Hall.Create(hallKid);
-            }
+            int hallKid = (int)param;
+            Hall.Create(hallKid);
+            ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>().CurrentInfo.HallKid = hallKid;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.PATHFINDING_INIT, PathfindingType.Hall);
 		}
 		

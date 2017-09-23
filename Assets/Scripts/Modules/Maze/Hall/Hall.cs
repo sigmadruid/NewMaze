@@ -30,14 +30,6 @@ namespace GameLogic
 		private static Hall instance;
 		public static Hall Instance { get { return instance; } }
 
-        public new HallRecord ToRecord()
-        {
-            HallRecord record = new HallRecord();
-            record.Kid = Data.Kid;
-            record.LeavePosition = new Vector3Record(LeavePosition);
-            return record;
-        }
-
         public static Hall Create(HallRecord record)
         {
             return Create(record.Kid);

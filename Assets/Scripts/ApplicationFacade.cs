@@ -32,6 +32,8 @@ namespace GameLogic
 			RegisterProxy(new EnvironmentProxy());
             RegisterProxy(new PackProxy());
             RegisterProxy(new RuneProxy());
+            RegisterProxy(new PlayerProxy());
+            RegisterProxy(new WeaponProxy());
             RegisterProxy(new GamePlot.ActorProxy());
 
             RegisterMediator(new TownHeroMediator());

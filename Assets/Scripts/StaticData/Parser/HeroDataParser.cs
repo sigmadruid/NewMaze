@@ -44,10 +44,7 @@ namespace StaticData
                     data.DodgeRaise = StaticReader.ReadFloat(GetContent(col++));
                     data.MoveSpeedRaise = StaticReader.ReadFloat(GetContent(col++));
                     data.AttackSpeedRaise = StaticReader.ReadFloat(GetContent(col++));
-
-                    data.Trigger = StaticReader.ReadString(GetContent(col++));
-                    data.LeftWeapon = StaticReader.ReadInt(GetContent(col++));
-                    data.RightWeapon = StaticReader.ReadInt(GetContent(col++));
+                    data.WeaponKid = StaticReader.ReadInt(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
                     NextLine();

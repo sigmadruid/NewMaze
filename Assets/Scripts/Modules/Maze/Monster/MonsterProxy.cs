@@ -19,8 +19,9 @@ namespace GameLogic
 		//Inactive monsters. Record them.
         public Dictionary<int, List<MonsterRecord>> RecordDic = new Dictionary<int, List<MonsterRecord>>();
 
-        public void Init()
+        public void Init(Dictionary<int, List<MonsterRecord>> recordDic)
         {
+            RecordDic = recordDic;
         }
 		public void Dispose()
 		{
@@ -33,7 +34,7 @@ namespace GameLogic
             monsterDic.Clear();
             Adam.Instance.ClearTarget();
 		}
-        public void SaveRecord()
+        public void Save()
         {
             int hallKid = Hall.IsActive ? Hall.Instance.Data.Kid : 0;
             Dictionary<string, Monster> monsterDic = GetCurrentDic();

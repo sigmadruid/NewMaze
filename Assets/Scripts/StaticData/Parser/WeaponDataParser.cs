@@ -24,7 +24,6 @@ namespace StaticData
                     WeaponData data = new WeaponData();
                     data.Kid = StaticReader.ReadInt(GetContent(col++));
                     data.Name = StaticReader.ReadString(GetContent(col++));
-                    data.Res3D = StaticReader.ReadString(GetContent(col++));
 
                     kvDic.Add(data.Kid, data);
 
