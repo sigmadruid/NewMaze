@@ -11,8 +11,6 @@ namespace GameLogic
 {
     public class Hall : Entity
     {
-        public Vector3 LeavePosition;
-
         public new HallData Data
         {
             get { return data as HallData; }

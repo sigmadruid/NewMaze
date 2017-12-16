@@ -55,18 +55,24 @@ namespace GameLogic
 
         private void OnTransportForward()
         {
-            ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>().CurrentInfo.IsInHall = true;
+            var facade = ApplicationFacade.Instance;
+            var playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
+
+            playerProxy.CurrentInfo.IsInHall = true;
             int hallKid = int.Parse(Data.Param1);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_DESPAWN);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_SPAWN);
-            Hall.Instance.LeavePosition = Adam.Instance.WorldPosition;
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
+            facade.DispatchNotification(NotificationEnum.BLOCK_DESPAWN);
+            facade.DispatchNotification(NotificationEnum.HALL_INIT, hallKid);
+            facade.DispatchNotification(NotificationEnum.HALL_SPAWN);
+            playerProxy.CurrentInfo.LeavePosition = Adam.Instance.WorldPosition;
+            facade.DispatchNotification(NotificationEnum.HERO_TRANSPORT, Hall.Instance.Script.EntryPos.position);
             AfterTransport();
         }
         private void OnTransportBack()
         {
-            Vector3 leavePosition = Hall.Instance.LeavePosition;
+            var facade = ApplicationFacade.Instance;
+            var playerProxy = ApplicationFacade.Instance.RetrieveProxy<PlayerProxy>();
+
+            Vector3 leavePosition = playerProxy.CurrentInfo.LeavePosition;
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DESPAWN);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.HALL_DISPOSE);
             ApplicationFacade.Instance.DispatchNotification(NotificationEnum.BLOCK_SPAWN);

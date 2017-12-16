@@ -71,7 +71,7 @@ namespace GameLogic
 		}
 		private void HandleBlockDispose()
 		{
-            DispatchNotification(NotificationEnum.PATHFINDING_DISPOSE, false);
+            DispatchNotification(NotificationEnum.PATHFINDING_DISPOSE, true);
             blockProxy.ClearBlocks();
 		}
         private void HandleBlockSpawn()

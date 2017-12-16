@@ -57,6 +57,7 @@ namespace GameLogic
                 case NotificationEnum.PATHFINDING_DISPOSE:
                 {
                     bool clearData = (bool)notification.Body;
+                    HandlePathfindingDispose(clearData);
                     break;
                 }
             }
@@ -96,28 +97,29 @@ namespace GameLogic
         private void InitMaze()
         {
             MazeData mazeData = MazeDataManager.Instance.CurrentMazeData;
+
+            blockProxy.ForeachBlockNodes((MazeNode node) =>
+                {
+                    if(node.Data.BlockType == BlockType.Room)
+                    {
+                        GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
+                        surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                        surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                        surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                    }
+                    else if(node.Data.BlockType == BlockType.Passage)
+                    {
+                        PassageType type = MazeUtil.GetPassageType(node);
+                        GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
+                        surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
+                        surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
+                        surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
+                    }
+                });
+            
             byte[] graphData = graphDataDic[PathfindingType.Maze];
             if(graphData == null)
             {
-                blockProxy.ForeachBlockNodes((MazeNode node) =>
-                    {
-                        if(node.Data.BlockType == BlockType.Room)
-                        {
-                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
-                            surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                            surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
-                            surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
-                        }
-                        else if(node.Data.BlockType == BlockType.Passage)
-                        {
-                            PassageType type = MazeUtil.GetPassageType(node);
-                            GameObject surface = ResourceManager.Instance.LoadGameObject(ObjectType.GameObject, node.Data.GetResPath() + GlobalConfig.PathfindingConfig.WalkSuffix);
-                            surface.transform.SetParent(RootTransform.Instance.WalkSurfaceRoot);
-                            surface.transform.position = MazeUtil.GetWorldPosition(node.Col, node.Row, mazeData.BlockSize);
-                            surface.transform.localEulerAngles = Vector3.up * node.Direction * 90f;
-                        }
-                    });
-                
                 RecastGraph graph = AstarPath.active.graphs[0] as RecastGraph;
                 graph.useTiles = true;
                 graph.editorTileSize = 10;
