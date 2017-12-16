@@ -16,6 +16,7 @@ namespace GameLogic
 
         public void Init(PlayerRecord record)
 		{
+            CurrentInfo = null;
             if(record != null)
             {
                 CurrentInfo = new PlayerInfo();

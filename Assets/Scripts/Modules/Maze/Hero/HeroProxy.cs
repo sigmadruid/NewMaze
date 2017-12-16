@@ -16,6 +16,7 @@ namespace GameLogic
 
         public void Init(Dictionary<int, HeroRecord> recordDic)
         {
+            infoDic.Clear();
             if(recordDic != null)
             {
                 var enumerator = recordDic.GetEnumerator();

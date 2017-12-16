@@ -59,7 +59,6 @@ namespace GameLogic
 			ConfigManager.InitAllData();
 
 			ApplicationFacade.Instance.Startup();
-            ApplicationFacade.Instance.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
 
             AICore.Init();
             PlotRunner.Init();

@@ -15,6 +15,8 @@ namespace GameLogic
 		{
             ApplicationFacade facade = ApplicationFacade.Instance;
 
+            facade.DispatchNotification(NotificationEnum.DESERIALIZE_GAME);
+
             //Resources
             yield return PreloadAssets(IDManager.Instance.GetKid(IDType.Maze, 0));
 

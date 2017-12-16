@@ -59,6 +59,7 @@ namespace GameLogic
             yield return Loading.Instance.SetProgress(LoadingState.EndStage, 0);
 
             //Logic
+            RecordMediator.DeleteRecord();
 			Game.Instance.TaskManager.SetAllActive(false);
             TriggerEntityScript.ClearTriggers();
 

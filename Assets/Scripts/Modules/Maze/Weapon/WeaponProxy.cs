@@ -13,6 +13,7 @@ namespace GameLogic
 
         public void Init(Dictionary<int, WeaponRecord> recordDic)
         {
+            infoDic.Clear();
             if(recordDic != null)
             {
                 foreach(WeaponRecord record in recordDic.Values)

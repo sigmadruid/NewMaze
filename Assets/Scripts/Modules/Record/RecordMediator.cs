@@ -75,7 +75,7 @@ namespace GameLogic
                     formatter.Serialize(stream, gameRecord);
                 }
                 string json = JsonUtility.ToJson(gameRecord);
-                Debug.Log(json);
+                Debug.LogError(json);
             }
             else//If dead, delete the record.
             {
