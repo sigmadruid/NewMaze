@@ -167,7 +167,7 @@ namespace Base
             {
                 path = p;
                 nextPathIndex = 1;
-                transform.position = path.vectorPath[0];
+//                transform.position = path.vectorPath[0];
                 if (CallbackMoveStart != null) CallbackMoveStart();
             }
         }
