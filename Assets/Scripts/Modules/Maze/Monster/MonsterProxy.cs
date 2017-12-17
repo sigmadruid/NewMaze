@@ -131,6 +131,17 @@ namespace GameLogic
 			}
 		}
 
+        public void UpdateVisibleMonster(MazePosition adamMazePos)
+        {
+            ForeachInBlock((Monster monster) =>
+                {
+                    MazePosition monsterMazePos = monster.GetMazePosition();
+                    bool visible = MazePosition.SqrDistance(adamMazePos, monsterMazePos) < 
+                        GlobalConfig.BlockConfig.MonsterVisibleMazeDistance * GlobalConfig.BlockConfig.MonsterVisibleMazeDistance;
+                    monster.IsActive = visible;
+                });
+        }
+
         #endregion
 
         public static float GetMonsterRadius(MonsterSize size)

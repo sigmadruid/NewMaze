@@ -139,7 +139,7 @@ namespace Base
 
         #endregion
 
-        #region Time
+        #region GameObject
 
         public static void SetActive(GameObject go, bool active)
         {

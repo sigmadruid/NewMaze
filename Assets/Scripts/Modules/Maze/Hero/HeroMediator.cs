@@ -166,6 +166,8 @@ namespace GameLogic
                 currentMazePos = pos;
                 blockProxy.AddMockNode(currentMazePos);
             }
+
+            ApplicationFacade.Instance.RetrieveProxy<MonsterProxy>().UpdateVisibleMonster(pos);
         }
         private void OnConversionMiddle(object param)
         {

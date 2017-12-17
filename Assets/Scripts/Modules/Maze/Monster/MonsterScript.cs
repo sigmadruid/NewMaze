@@ -24,7 +24,6 @@ public class MonsterScript : CharacterScript
 	protected override void OnEnable () 
 	{
 		base.OnEnable();
-        Debug.LogError(transform.position);
 	}
 
 	protected override void OnDisable()

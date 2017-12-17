@@ -21,6 +21,8 @@ namespace Battle
 		{
 			base.SlowUpdate();
 
+            if(!currentMonster.IsActive)
+                return;
             if(!currentMonster.Info.IsAlive)
                 return;
             if(currentMonster.Info.IsStunned)

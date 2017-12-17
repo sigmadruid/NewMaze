@@ -11,8 +11,6 @@ namespace GameLogic
 {
     public class Monster : Entity, GamePlot.IActor
 	{
-        public bool InHall;
-
         public new MonsterScript Script
         {
             get { return script as MonsterScript; }
@@ -118,6 +116,20 @@ namespace GameLogic
         }
 
 		#endregion
+
+        private bool isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return isActive;
+            }
+            set
+            {            
+                Utils.SetActive(Script.gameObject, value);
+                isActive = value;
+            }
+        }
 
         protected override void Update(float deltaTime)
 		{

@@ -79,6 +79,8 @@ namespace StaticData
 		public readonly float MockCubeSize = 3f;
 		public readonly float MockLinkSize = 2f;
 		public readonly float MockBlockPosY = -10000f;
+
+        public readonly int MonsterVisibleMazeDistance = 3;
     }
 
 	public class HallConfig

@@ -26,6 +26,14 @@ namespace GameLogic
         {
             return x.Col != y.Col || x.Row != y.Row;
         }
+        public static bool IsNeighbor(MazePosition x, MazePosition y)
+        {
+            return Mathf.Abs(x.Col - y.Col) <= 1 && Mathf.Abs(x.Row - y.Row) <= 1 && x != y;
+        }
+        public static int SqrDistance(MazePosition x, MazePosition y)
+        {
+            return (x.Col - y.Col) * (x.Col - y.Col) + (x.Row - y.Row) * (x.Row - y.Row);
+        }
     }
     public class Maze
     {
