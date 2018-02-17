@@ -37,7 +37,7 @@ public static class AssetBundleTool
             string folderTag = GetFolderTag(folderPath);
             List<string> filePathList = new List<string>();
             depPathDic.Add(folderTag, filePathList);
-            Debug.LogError(folderTag);
+//            Debug.LogError(folderTag);
 
             string[] allFilePathList = Directory.GetFiles(folderPath);
             for(int j = 0; j < allFilePathList.Length; ++j)
@@ -97,19 +97,29 @@ public static class AssetBundleTool
         for(int i = 0; i < uniqueDependencies.Count; ++i)
         {
             string dependency = uniqueDependencies[i];
-            Debug.Log(dependency);
-
-//            var importer = AssetImporter.GetAtPath(dependency);
-//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
 
             FileInfo fi = new FileInfo(dependency);
             size += fi.Length;
-            if(size >= AssetBundleConst.MAX_AB_SIZE)
+            if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
             {
-                Debug.LogErrorFormat("{0}, {1}KB", tagIndex, size / 1000);
                 tagIndex++;
-                size = 0;
             }
+            else
+            {
+                if(size >= AssetBundleConst.MAX_AB_SIZE)
+                {
+                    tagIndex++;
+                    size = 0;
+                }
+            }
+//            Debug.LogErrorFormat("{0}, {1}KB", tagIndex, size / 1000);
+
+
+            Debug.LogFormat("{0}, {1}", dependency, tagIndex.ToString());
+//            var importer = AssetImporter.GetAtPath(dependency);
+//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
+
+
         }
     }
 
