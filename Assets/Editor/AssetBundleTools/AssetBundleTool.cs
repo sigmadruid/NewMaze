@@ -8,40 +8,55 @@ using System.Linq;
 
 public static class AssetBundleTool
 {
-    private static Dictionary<string, List<string>> filePathDic = new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> depPathDic = new Dictionary<string, List<string>>();
+
 
     [MenuItem("Tools/Mark AssetBundle Tags")]
     public static void MarkABTags()
     {
+        DateTime dt = DateTime.Now;
+
         ClearAll();
 
         MarkPrefabTags();
-        MarkAssetsTags();
+//        MarkAssetsTags();
+
+        Debug.Log((DateTime.Now - dt).Ticks / 10000000f + "s");
 
         AssetDatabase.Refresh();
     }
 
     private static void MarkPrefabTags()
     {
-        string[] folderPathList = Directory.GetDirectories(AssetBundleConst.PREFABS_PATH);
-        for (int i = 0; i < folderPathList.Length; ++i)
+        List<string> folderPathList = new List<string>();
+        GetAllFolderPaths(AssetBundleConst.PREFABS_PATH, folderPathList);
+
+        for (int i = 0; i < folderPathList.Count; ++i)
         {
             string folderPath = folderPathList[i];
-            string folderName = Path.GetFileName(folderPath);
+            string folderTag = GetFolderTag(folderPath);
             List<string> filePathList = new List<string>();
-            filePathDic.Add(folderName, filePathList);
-            GetAllFilePaths(folderPath, filePathList);
+            depPathDic.Add(folderTag, filePathList);
+            Debug.LogError(folderTag);
+
+            string[] allFilePathList = Directory.GetFiles(folderPath);
+            for(int j = 0; j < allFilePathList.Length; ++j)
+            {
+                string filePath = allFilePathList[j];
+                if(IsFileIllegal(filePath))
+                {
+                    continue;
+                }
+
+                filePathList.Add(filePath);
+                var importer = AssetImporter.GetAtPath(filePath);
+                importer.SetAssetBundleNameAndVariant(folderTag, string.Empty);
+            }
 
             for(int j = 0; j < filePathList.Count; ++j)
             {
                 string filePath = filePathList[j];
-                if(filePath.Contains(".meta"))
-                {
-                    continue;
-                }
-                var importer = AssetImporter.GetAtPath(filePath);
-                importer.SetAssetBundleNameAndVariant(folderName, string.Empty);
-                Debug.LogErrorFormat("{0}, tag={1}", filePath, folderName);
+                Debug.Log(filePath);
             }
         }
     }
@@ -49,23 +64,53 @@ public static class AssetBundleTool
     private static void MarkAssetsTags()
     {
         List<string> allDependencies = new List<string>();
-        foreach(string fileName in filePathDic.Keys)
+        foreach(string fileName in depPathDic.Keys)
         {
-            List<string> filePathList = filePathDic[fileName];
-//            List<string> fileNameList = new List<string>();
-//            for(int j = 0; j < filePathList.Count; ++j)
-//            {
-//                string filePath = filePathList[j];
-//                fileNameList.Add(filePath);
-//            }
+            List<string> filePathList = depPathDic[fileName];
             string[] dependencies = AssetDatabase.GetDependencies(filePathList.ToArray());
-            allDependencies.AddRange(dependencies);
+            for(int i = 0; i < dependencies.Length; ++i)
+            {
+                string dependency = dependencies[i];
+                if(IsFileIllegal(dependency))
+                {
+                    continue;
+                }
+                allDependencies.Add(dependency);
+            }
         }
 
+        HashSet<string> tempHashSet = new HashSet<string>();
+        List<string> uniqueDependencies = new List<string>();
         for(int i = 0; i < allDependencies.Count; ++i)
         {
             string dependency = allDependencies[i];
-            Debug.LogError(dependency);
+            if(tempHashSet.Contains(dependency))
+            {
+                continue;
+            }
+            tempHashSet.Add(dependency);
+            uniqueDependencies.Add(dependency);
+        }
+
+        int tagIndex = 1;
+        long size = 0;
+        Debug.LogError(tagIndex);
+        for(int i = 0; i < uniqueDependencies.Count; ++i)
+        {
+            string dependency = uniqueDependencies[i];
+            Debug.Log(dependency);
+
+//            var importer = AssetImporter.GetAtPath(dependency);
+//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
+
+            FileInfo fi = new FileInfo(dependency);
+            size += fi.Length;
+            if(size >= AssetBundleConst.MAX_AB_SIZE)
+            {
+                tagIndex++;
+                Debug.LogErrorFormat("{0}, {1}", tagIndex, size);
+                size = 0;
+            }
         }
     }
 
@@ -75,14 +120,27 @@ public static class AssetBundleTool
 
     public static void ClearAll()
     {
-        foreach(var list in filePathDic.Values)
+        foreach(var list in depPathDic.Values)
         {
             list.Clear();
         }
-        filePathDic.Clear();
+        depPathDic.Clear();
+
+        GC.Collect();
     }
 
     #region Helper Functions
+
+    private static bool IsFileIllegal(string filePath)
+    {
+        for(int i = 0; i < AssetBundleConst.IgnoreExtension.Length; ++i)
+        {
+            string extension = AssetBundleConst.IgnoreExtension[i];
+            if(filePath.Contains(extension))
+                return true;
+        }
+        return false;
+    }
 
     private static void GetAllFilePaths(string rootFolder, List<string> paths)
     {
@@ -90,10 +148,11 @@ public static class AssetBundleTool
         for(int i = 0; i < files.Length; ++i)
         {
             string file = files[i];
-            if(file.Contains(".prefab"))
+            if(IsFileIllegal(file))
             {
-                paths.Add(file);
+                continue;
             }
+            paths.Add(file);
         }
 
         string[] folders = Directory.GetDirectories(rootFolder);
@@ -105,6 +164,29 @@ public static class AssetBundleTool
                 GetAllFilePaths(folder, paths);
             }
         }
+    }
+
+    private static void GetAllFolderPaths(string rootFolder, List<string> paths)
+    {
+        string[] folders = Directory.GetDirectories(rootFolder);
+        if(folders.Length > 0)
+        {
+            for(int i = 0; i < folders.Length; ++i)
+            {
+                string folder = folders[i];
+                paths.Add(folder);
+                GetAllFolderPaths(folder, paths);
+            }
+        }
+    }
+
+    private static string GetFolderTag(string path)
+    {
+        int index = path.IndexOf(AssetBundleConst.PREFABS_PATH) + AssetBundleConst.PREFABS_PATH.Length + 1;
+        string subPath = path.Substring(index);
+        subPath = subPath.Replace(Path.DirectorySeparatorChar, '+');
+        subPath = subPath.Replace(Path.AltDirectorySeparatorChar, '+');
+        return subPath.ToLower();
     }
 
     #endregion
