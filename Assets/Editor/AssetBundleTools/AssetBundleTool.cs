@@ -19,7 +19,7 @@ public static class AssetBundleTool
         ClearAll();
 
         MarkPrefabTags();
-//        MarkAssetsTags();
+        MarkAssetsTags();
 
         Debug.Log((DateTime.Now - dt).Ticks / 10000000f + "s");
 
@@ -53,11 +53,11 @@ public static class AssetBundleTool
                 importer.SetAssetBundleNameAndVariant(folderTag, string.Empty);
             }
 
-            for(int j = 0; j < filePathList.Count; ++j)
-            {
-                string filePath = filePathList[j];
-                Debug.Log(filePath);
-            }
+//            for(int j = 0; j < filePathList.Count; ++j)
+//            {
+//                string filePath = filePathList[j];
+//                Debug.Log(filePath);
+//            }
         }
     }
 
@@ -94,7 +94,6 @@ public static class AssetBundleTool
 
         int tagIndex = 1;
         long size = 0;
-        Debug.LogError(tagIndex);
         for(int i = 0; i < uniqueDependencies.Count; ++i)
         {
             string dependency = uniqueDependencies[i];
@@ -107,8 +106,8 @@ public static class AssetBundleTool
             size += fi.Length;
             if(size >= AssetBundleConst.MAX_AB_SIZE)
             {
+                Debug.LogErrorFormat("{0}, {1}KB", tagIndex, size / 1000);
                 tagIndex++;
-                Debug.LogErrorFormat("{0}, {1}", tagIndex, size);
                 size = 0;
             }
         }
