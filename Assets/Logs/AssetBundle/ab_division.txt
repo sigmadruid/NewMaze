@@ -1,491 +1,491 @@
-Assets/RawResources/Effects/Models/tongyong/BingZhu02.FBX, 1
-Assets/RawResources/Effects/Textures/WuTi/wuti_00019.png, 1
-Assets/RawResources/Effects/Models/tongyong/Materials/01 - Default.mat, 1
-Assets/RawResources/Effects/Textures/WuTi/Materials/wuti_00019.mat, 1
-Assets/RawResources/Effects/Textures/YuanHuanGuang/yuanhuanguang_00010.png, 1
-Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00002_3.mat, 1
-Assets/RawResources/Effects/Textures/Glow/glow_00175.png, 1
-Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00107.mat, 1
-Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00067.mat, 1
-Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00067.png, 1
-Assets/RawResources/Effects/Textures/LiZi/Materials/lizi_00015.mat, 1
-Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00002.png, 1
-Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01_D.mat, 1
-Assets/RawResources/Effects/Textures/WuTi/Materials/wuti_00055.mat, 1
-Assets/RawResources/Effects/Bullets/Arrow/Materials/gongjian_1.mat, 1
-Assets/RawResources/Effects/Textures/XuLie/xulie_baozha006_6x6.png, 1
-Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00002.mat, 1
-Assets/RawResources/Effects/Textures/WenLi/wenli_00107.png, 1
-Assets/RawResources/Effects/Textures/WenLi/wenli_00366.png, 1
-Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00147.mat, 1
-Assets/RawResources/Effects/Textures/WenLi/wenli_00422.png, 1
-Assets/RawResources/Effects/Textures/Glow/Materials/glow_00175.mat, 1
-Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00147_3.mat, 1
-Assets/RawResources/Effects/Textures/LiZi/Materials/lizi_00016.mat, 1
-Assets/RawResources/Effects/Textures/XuLie/Materials/xulie_baozha006_6x6_ 3.mat, 1
-Assets/RawResources/Effects/Models/tongyong/plane01.FBX, 1
-Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00100.mat, 1
-Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01.FBX, 1
-Assets/RawResources/Effects/Bullets/Arrow/gongjian_1.tga, 1
-Assets/RawResources/Effects/Models/tongyong/Materials/No Name.mat, 1
-Assets/RawResources/Effects/Textures/LiZi/lizi_00016.png, 1
-Assets/RawResources/Effects/Textures/WuTi/wuti_00055.png, 1
-Assets/RawResources/Effects/Bullets/Arrow/gongjian_1.FBX, 1
-Assets/RawResources/Effects/Bullets/Arrow_1/Materials/Arrow01_D.mat, 1
-Assets/RawResources/Effects/Textures/LiZi/lizi_00015.png, 1
-Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00422.mat, 1
-Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01_D.tga, 1
-Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00100.png, 1
-Assets/RawResources/Effects/Textures/WenLi/wenli_00147.png, 1
-Assets/RawResources/Effects/Textures/XuLie/Materials/xulie_baozha006_6x6.mat, 1
-Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00366.mat, 1
-Assets/RawResources/Effects/GuideEffect/Materials/05 - Default.mat, 1
-Assets/RawResources/Effects/ConversionEffect/Lightbeam.png, 1
-Assets/RawResources/Effects/GuideEffect/Textures/wenli_00406.png, 1
-Assets/RawResources/Effects/GoldEffect/LargeStar.mat, 1
-Assets/RawResources/Effects/ConversionEffect/AnimatedLineBlue.mat, 1
-Assets/RawResources/Effects/ConversionEffect/AnimatedLineBlue.png, 1
-Assets/RawResources/Effects/ConversionEffect/tribal_runes_circle_blue.png, 1
-Assets/RawResources/Effects/ConversionEffect/TribalRunesCircleBlue.mat, 1
-Assets/RawResources/Effects/ConversionEffect/BPFlash.png, 1
-Assets/RawResources/Effects/ConversionEffect/BPFlash.mat, 1
-Assets/RawResources/Effects/ConversionEffect/runes_halfcircle.png, 1
-Assets/RawResources/Textures/BottomShadow.tga, 1
-Assets/RawResources/Effects/GuideEffect/Textures/Materials/glow_00105.mat, 1
-Assets/RawResources/Effects/GuideEffect/Textures/glow_00105.png, 1
-Assets/RawResources/Effects/GuideEffect/BingZhu05.FBX, 1
-Assets/RawResources/Effects/GuideEffect/Animation/Shuijing_shangxia.anim, 1
-Assets/RawResources/Textures/BottomShadow.mat, 1
-Assets/RawResources/Effects/ConversionEffect/Lightbeam.mat, 1
-Assets/RawResources/Effects/GuideEffect/Textures/Materials/wenli_00406_H_3x2.mat, 1
-Assets/RawResources/Effects/GuideEffect/Animation/shuijing.controller, 1
-Assets/RawResources/Effects/GoldEffect/LargeStar.png, 1
-Assets/RawResources/Effects/ConversionEffect/HalfCircle.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest02_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest01_b.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest04_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest03_b.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest01_a.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest03_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest02.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest04.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest02_b.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest03.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest01_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest02_a.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest03_a.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest04_a.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest04_b.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Skeleton01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_e.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Blood02.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Corpse01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_f.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Skeleton01_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Blood01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_b.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Blacksmith01_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_g.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Shield01.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Blood01.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Axe01.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Blood01_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_d.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_a.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Blacksmith01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_c.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Sword01.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Sword02.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Corpse01_D.tga, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Arrow02.FBX, 1
-Assets/Imported/DynamicElements_Effects/materials/MagicRuneCircle.png, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_a_M.FBX, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Materials/FG_Assets01.mat, 1
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_b_M.FBX, 1
+bullets, Assets/RawResources/Effects/Models/tongyong/BingZhu02.FBX, 1
+bullets, Assets/RawResources/Effects/Textures/WuTi/wuti_00019.png, 1
+bullets, Assets/RawResources/Effects/Models/tongyong/Materials/01 - Default.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WuTi/Materials/wuti_00019.mat, 1
+bullets, Assets/RawResources/Effects/Textures/YuanHuanGuang/yuanhuanguang_00010.png, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00002_3.mat, 1
+bullets, Assets/RawResources/Effects/Textures/Glow/glow_00175.png, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00107.mat, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00067.mat, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00067.png, 1
+bullets, Assets/RawResources/Effects/Textures/LiZi/Materials/lizi_00015.mat, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00002.png, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01_D.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WuTi/Materials/wuti_00055.mat, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow/Materials/gongjian_1.mat, 1
+bullets, Assets/RawResources/Effects/Textures/XuLie/xulie_baozha006_6x6.png, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00002.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/wenli_00107.png, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/wenli_00366.png, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00147.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/wenli_00422.png, 1
+bullets, Assets/RawResources/Effects/Textures/Glow/Materials/glow_00175.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00147_3.mat, 1
+bullets, Assets/RawResources/Effects/Textures/LiZi/Materials/lizi_00016.mat, 1
+bullets, Assets/RawResources/Effects/Textures/XuLie/Materials/xulie_baozha006_6x6_ 3.mat, 1
+bullets, Assets/RawResources/Effects/Models/tongyong/plane01.FBX, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/Materials/yanhuo_00100.mat, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01.FBX, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow/gongjian_1.tga, 1
+bullets, Assets/RawResources/Effects/Models/tongyong/Materials/No Name.mat, 1
+bullets, Assets/RawResources/Effects/Textures/LiZi/lizi_00016.png, 1
+bullets, Assets/RawResources/Effects/Textures/WuTi/wuti_00055.png, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow/gongjian_1.FBX, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow_1/Materials/Arrow01_D.mat, 1
+bullets, Assets/RawResources/Effects/Textures/LiZi/lizi_00015.png, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00422.mat, 1
+bullets, Assets/RawResources/Effects/Bullets/Arrow_1/Arrow01_D.tga, 1
+bullets, Assets/RawResources/Effects/Textures/YanHuo/yanhuo_00100.png, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/wenli_00147.png, 1
+bullets, Assets/RawResources/Effects/Textures/XuLie/Materials/xulie_baozha006_6x6.mat, 1
+bullets, Assets/RawResources/Effects/Textures/WenLi/Materials/wenli_00366.mat, 1
+effects, Assets/RawResources/Effects/GuideEffect/Materials/05 - Default.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/Lightbeam.png, 1
+effects, Assets/RawResources/Effects/GuideEffect/Textures/wenli_00406.png, 1
+effects, Assets/RawResources/Effects/GoldEffect/LargeStar.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/AnimatedLineBlue.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/AnimatedLineBlue.png, 1
+effects, Assets/RawResources/Effects/ConversionEffect/tribal_runes_circle_blue.png, 1
+effects, Assets/RawResources/Effects/ConversionEffect/TribalRunesCircleBlue.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/BPFlash.png, 1
+effects, Assets/RawResources/Effects/ConversionEffect/BPFlash.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/runes_halfcircle.png, 1
+effects, Assets/RawResources/Textures/BottomShadow.tga, 1
+effects, Assets/RawResources/Effects/GuideEffect/Textures/Materials/glow_00105.mat, 1
+effects, Assets/RawResources/Effects/GuideEffect/Textures/glow_00105.png, 1
+effects, Assets/RawResources/Effects/GuideEffect/BingZhu05.FBX, 1
+effects, Assets/RawResources/Effects/GuideEffect/Animation/Shuijing_shangxia.anim, 1
+effects, Assets/RawResources/Textures/BottomShadow.mat, 1
+effects, Assets/RawResources/Effects/ConversionEffect/Lightbeam.mat, 1
+effects, Assets/RawResources/Effects/GuideEffect/Textures/Materials/wenli_00406_H_3x2.mat, 1
+effects, Assets/RawResources/Effects/GuideEffect/Animation/shuijing.controller, 1
+effects, Assets/RawResources/Effects/GoldEffect/LargeStar.png, 1
+effects, Assets/RawResources/Effects/ConversionEffect/HalfCircle.mat, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest02_D.tga, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest01_b.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest04_D.tga, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest03_b.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest01_a.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest03_D.tga, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest02.mat, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest04.mat, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest02_b.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest03.mat, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest01_D.tga, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest02_a.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Chest01.mat, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest03_a.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest04_a.FBX, 1
+exploration+chest, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest04_b.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Skeleton01.mat, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_e.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Blood02.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Corpse01.mat, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_f.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Skeleton01_D.tga, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Blood01.mat, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_b.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Blacksmith01_D.tga, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_g.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Shield01.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Blood01.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Axe01.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Blood01_D.tga, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_d.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_a.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Blacksmith01.mat, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Corpse01_c.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Sword01.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Sword02.FBX, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Corpse01_D.tga, 1
+exploration+corpse, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Arrow02.FBX, 1
+exploration+transporter, Assets/Imported/DynamicElements_Effects/materials/MagicRuneCircle.png, 1
+exploration+transporter, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_a_M.FBX, 1
+exploration+transporter, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Materials/FG_Assets01.mat, 1
+exploration+transporter, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_b_M.FBX, 1
 8360KB
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/FG_Assets01_Low_D.tga, 2
+exploration+transporter, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/FG_Assets01_Low_D.tga, 2
 16777KB
-Assets/Imported/DynamicElements_Effects/materials/MagicCircle.mat, 3
-Assets/RawResources/MazeBlocks/Models/Catacomb1.fbx, 3
-Assets/RawResources/MazeBlocks/Models/Sack1.fbx, 3
-Assets/RawResources/Traps/Animation/stake1a.anim, 3
-Assets/RawResources/MazeBlocks/Models/Base_el15.fbx, 3
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_i_M.FBX, 3
-Assets/RawResources/MazeBlocks/Models/Wall1A_3M.fbx, 3
+exploration+transporter, Assets/Imported/DynamicElements_Effects/materials/MagicCircle.mat, 3
+halls, Assets/RawResources/MazeBlocks/Models/Catacomb1.fbx, 3
+halls, Assets/RawResources/MazeBlocks/Models/Sack1.fbx, 3
+halls, Assets/RawResources/Traps/Animation/stake1a.anim, 3
+halls, Assets/RawResources/MazeBlocks/Models/Base_el15.fbx, 3
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_i_M.FBX, 3
+halls, Assets/RawResources/MazeBlocks/Models/Wall1A_3M.fbx, 3
 241KB
-Assets/RawResources/MazeBlocks/Textures/Atlas2_nmp.tif, 4
+halls, Assets/RawResources/MazeBlocks/Textures/Atlas2_nmp.tif, 4
 12612KB
-Assets/RawResources/MazeBlocks/Models/King_obelisk.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Pav_debris2.fbx, 5
-Assets/RawResources/MazeBlocks/Models/UP2B.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Ground3_el3.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Enter.fbx, 5
-Assets/RawResources/Traps/Materials/death traps_DF.mat, 5
-Assets/RawResources/MazeBlocks/Models/Deco4.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Wall1_Courner2.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Sewers_crate2.fbx, 5
-Assets/RawResources/MazeBlocks/Models/Ground4_el4.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/King_obelisk.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Pav_debris2.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/UP2B.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Ground3_el3.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Enter.fbx, 5
+halls, Assets/RawResources/Traps/Materials/death traps_DF.mat, 5
+halls, Assets/RawResources/MazeBlocks/Models/Deco4.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Wall1_Courner2.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Sewers_crate2.fbx, 5
+halls, Assets/RawResources/MazeBlocks/Models/Ground4_el4.fbx, 5
 329KB
-Assets/RawResources/MazeBlocks/Textures/Atlas1_nmp.tif, 6
+halls, Assets/RawResources/MazeBlocks/Textures/Atlas1_nmp.tif, 6
 28341KB
-Assets/RawResources/MazeBlocks/Models/Wall1A.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Wood_el3B.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Wood_board5.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Ground4_el5.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Furnace_ring1.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Blocker_wall5.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Enter2.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Wood_el8.fbx, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/Flame_M.tga, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_j_M.FBX, 7
-Assets/RawResources/MazeBlocks/Models/Furnace2A.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Rock1.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Ground4_el2.fbx, 7
-Assets/RawResources/MazeBlocks/Models/UP2A.fbx, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue02_a_M.FBX, 7
-Assets/RawResources/MazeBlocks/Models/Base_el34.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Sewers_crate3.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Catacomb3.fbx, 7
-Assets/RawResources/Traps/Animation/trunk.anim, 7
-Assets/RawResources/MazeBlocks/Models/Ground3_el6.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Pav_debris3.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Base_el35.fbx, 7
-Assets/RawResources/Traps/Animation/stake1b.anim, 7
-Assets/RawResources/MazeBlocks/Models/Base_el2.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Wood_el2A.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Wood_el3A.fbx, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Candle05_M.FBX, 7
-Assets/RawResources/MazeBlocks/Models/Ground1A.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Blocker_wall2_5x.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Ground4_el3.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Pav_debris6.fbx, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Sword01_M.FBX, 7
-Assets/RawResources/MazeBlocks/Models/Well1.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Furnace3.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Furnace2_ring.fbx, 7
-Assets/RawResources/MazeBlocks/Models/Pav_debris4.fbx, 7
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Shield03_M.FBX, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wall1A.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wood_el3B.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wood_board5.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Ground4_el5.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Furnace_ring1.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Blocker_wall5.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Enter2.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wood_el8.fbx, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/Flame_M.tga, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_j_M.FBX, 7
+halls, Assets/RawResources/MazeBlocks/Models/Furnace2A.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Rock1.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Ground4_el2.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/UP2A.fbx, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue02_a_M.FBX, 7
+halls, Assets/RawResources/MazeBlocks/Models/Base_el34.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Sewers_crate3.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Catacomb3.fbx, 7
+halls, Assets/RawResources/Traps/Animation/trunk.anim, 7
+halls, Assets/RawResources/MazeBlocks/Models/Ground3_el6.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Pav_debris3.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Base_el35.fbx, 7
+halls, Assets/RawResources/Traps/Animation/stake1b.anim, 7
+halls, Assets/RawResources/MazeBlocks/Models/Base_el2.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wood_el2A.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Wood_el3A.fbx, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Candle05_M.FBX, 7
+halls, Assets/RawResources/MazeBlocks/Models/Ground1A.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Blocker_wall2_5x.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Ground4_el3.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Pav_debris6.fbx, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Sword01_M.FBX, 7
+halls, Assets/RawResources/MazeBlocks/Models/Well1.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Furnace3.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Furnace2_ring.fbx, 7
+halls, Assets/RawResources/MazeBlocks/Models/Pav_debris4.fbx, 7
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Shield03_M.FBX, 7
 1275KB
-Assets/RawResources/MazeBlocks/Textures/Atlas1.tif, 8
+halls, Assets/RawResources/MazeBlocks/Textures/Atlas1.tif, 8
 28340KB
-Assets/RawResources/MazeBlocks/Materials/Atlas1.mat, 9
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Arrow02_M.FBX, 9
-Assets/RawResources/MazeBlocks/Models/Furnace1.fbx, 9
-Assets/RawResources/Traps/Textures/death traps_NM.png, 9
-Assets/RawResources/MazeBlocks/Models/Down1.fbx, 9
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_f_M.FBX, 9
-Assets/RawResources/MazeBlocks/Models/UP5.fbx, 9
-Assets/RawResources/MazeBlocks/Models/Roots4.fbx, 9
+halls, Assets/RawResources/MazeBlocks/Materials/Atlas1.mat, 9
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Arrow02_M.FBX, 9
+halls, Assets/RawResources/MazeBlocks/Models/Furnace1.fbx, 9
+halls, Assets/RawResources/Traps/Textures/death traps_NM.png, 9
+halls, Assets/RawResources/MazeBlocks/Models/Down1.fbx, 9
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_f_M.FBX, 9
+halls, Assets/RawResources/MazeBlocks/Models/UP5.fbx, 9
+halls, Assets/RawResources/MazeBlocks/Models/Roots4.fbx, 9
 1657KB
-Assets/RawResources/MazeBlocks/Textures/Rock1.tif, 10
+halls, Assets/RawResources/MazeBlocks/Textures/Rock1.tif, 10
 12601KB
-Assets/RawResources/MazeBlocks/Models/Courner4.fbx, 11
-Assets/RawResources/MazeBlocks/Models/Column1.fbx, 11
-Assets/RawResources/MazeBlocks/Models/Ground3_el1.fbx, 11
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Sword02_M.FBX, 11
-Assets/RawResources/MazeBlocks/Models/Wood_el2B.fbx, 11
+halls, Assets/RawResources/MazeBlocks/Models/Courner4.fbx, 11
+halls, Assets/RawResources/MazeBlocks/Models/Column1.fbx, 11
+halls, Assets/RawResources/MazeBlocks/Models/Ground3_el1.fbx, 11
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Sword02_M.FBX, 11
+halls, Assets/RawResources/MazeBlocks/Models/Wood_el2B.fbx, 11
 136KB
-Assets/RawResources/MazeBlocks/Textures/Atlas2.tif, 12
+halls, Assets/RawResources/MazeBlocks/Textures/Atlas2.tif, 12
 12611KB
-Assets/RawResources/MazeBlocks/Models/Sack3B.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Roots2.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Sack2.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Deco1_skull.fbx, 13
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Blood03_M.FBX, 13
-Assets/RawResources/MazeBlocks/Models/Base_el31.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Catacomb2.fbx, 13
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_k_M.FBX, 13
-Assets/RawResources/Traps/Models/deathtrap_02.fbx, 13
-Assets/RawResources/Traps/Materials/No Name.mat, 13
-Assets/RawResources/MazeBlocks/Models/Ground3_el2.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Ground4_el1.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Wood_board6.fbx, 13
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_d_M.FBX, 13
-Assets/RawResources/MazeBlocks/Models/Wall2_Courner1.fbx, 13
-Assets/RawResources/MazeBlocks/Models/UP6.fbx, 13
-Assets/RawResources/Traps/Models/deathtrap_01.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Blocker_wall5x.fbx, 13
-Assets/RawResources/MazeBlocks/Models/Rock3.fbx, 13
-Assets/RawResources/Traps/Textures/death traps_DF.psd, 13
+halls, Assets/RawResources/MazeBlocks/Models/Sack3B.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Roots2.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Sack2.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Deco1_skull.fbx, 13
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Blood03_M.FBX, 13
+halls, Assets/RawResources/MazeBlocks/Models/Base_el31.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Catacomb2.fbx, 13
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_k_M.FBX, 13
+halls, Assets/RawResources/Traps/Models/deathtrap_02.fbx, 13
+halls, Assets/RawResources/Traps/Materials/No Name.mat, 13
+halls, Assets/RawResources/MazeBlocks/Models/Ground3_el2.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Ground4_el1.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Wood_board6.fbx, 13
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_d_M.FBX, 13
+halls, Assets/RawResources/MazeBlocks/Models/Wall2_Courner1.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/UP6.fbx, 13
+halls, Assets/RawResources/Traps/Models/deathtrap_01.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Blocker_wall5x.fbx, 13
+halls, Assets/RawResources/MazeBlocks/Models/Rock3.fbx, 13
+halls, Assets/RawResources/Traps/Textures/death traps_DF.psd, 13
 6543KB
-Assets/RawResources/MazeBlocks/Textures/Rock1_nmp.tif, 14
+halls, Assets/RawResources/MazeBlocks/Textures/Rock1_nmp.tif, 14
 12604KB
-Assets/RawResources/MazeBlocks/Models/Ground2A.fbx, 15
-Assets/RawResources/MazeBlocks/Models/Base_el3.fbx, 15
-Assets/RawResources/MazeBlocks/Models/Base_el28.fbx, 15
-Assets/RawResources/MazeBlocks/Materials/Rocks.mat, 15
-Assets/RawResources/MazeBlocks/Models/Blocker_wall3.fbx, 15
-Assets/RawResources/MazeBlocks/Materials/Physxmaterial1.mat, 15
-Assets/RawResources/Traps/Animation/arm.anim, 15
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue01_a_M.FBX, 15
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_e_M.FBX, 15
-Assets/RawResources/MazeBlocks/Models/Ground1B.fbx, 15
-Assets/RawResources/MazeBlocks/Models/Courner1.fbx, 15
-Assets/Imported/Top-Down Dungeons Mobile/Particles/Textures/Fire1.tif, 15
-Assets/RawResources/MazeBlocks/Models/Stairs1.fbx, 15
-Assets/Imported/Top-Down Dungeons Mobile/Particles/Materials/Fire1.mat, 15
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Blood01_M.FBX, 15
-Assets/RawResources/MazeBlocks/Materials/Atlas2.mat, 15
-Assets/RawResources/MazeBlocks/Textures/skybox1.tif, 15
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Materials/Flame01_M.mat, 15
-Assets/RawResources/MazeBlocks/Models/Rock2.fbx, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Left.FBX, 15
-Assets/RawResources/Weapons/Bow/Bow02_a.FBX, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Sheath.FBX, 15
-Assets/RawResources/Weapons/Shield/Shield06_D.tga, 15
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Walk.FBX, 15
-Assets/RawResources/Characters/Adam/Materials/clothColor.mat, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Death1.FBX, 15
-Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Left.FBX, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Run.FBX, 15
-Assets/RawResources/Weapons/Axe/TH_Axe01_D.tga, 15
-Assets/RawResources/Characters/Adam/HeroController_2.controller, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Idle.FBX, 15
+halls, Assets/RawResources/MazeBlocks/Models/Ground2A.fbx, 15
+halls, Assets/RawResources/MazeBlocks/Models/Base_el3.fbx, 15
+halls, Assets/RawResources/MazeBlocks/Models/Base_el28.fbx, 15
+halls, Assets/RawResources/MazeBlocks/Materials/Rocks.mat, 15
+halls, Assets/RawResources/MazeBlocks/Models/Blocker_wall3.fbx, 15
+halls, Assets/RawResources/MazeBlocks/Materials/Physxmaterial1.mat, 15
+halls, Assets/RawResources/Traps/Animation/arm.anim, 15
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue01_a_M.FBX, 15
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_e_M.FBX, 15
+halls, Assets/RawResources/MazeBlocks/Models/Ground1B.fbx, 15
+halls, Assets/RawResources/MazeBlocks/Models/Courner1.fbx, 15
+halls, Assets/Imported/Top-Down Dungeons Mobile/Particles/Textures/Fire1.tif, 15
+halls, Assets/RawResources/MazeBlocks/Models/Stairs1.fbx, 15
+halls, Assets/Imported/Top-Down Dungeons Mobile/Particles/Materials/Fire1.mat, 15
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Blood01_M.FBX, 15
+halls, Assets/RawResources/MazeBlocks/Materials/Atlas2.mat, 15
+halls, Assets/RawResources/MazeBlocks/Textures/skybox1.tif, 15
+halls, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Materials/Flame01_M.mat, 15
+halls, Assets/RawResources/MazeBlocks/Models/Rock2.fbx, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Left.FBX, 15
+heroes, Assets/RawResources/Weapons/Bow/Bow02_a.FBX, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Sheath.FBX, 15
+heroes, Assets/RawResources/Weapons/Shield/Shield06_D.tga, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Walk.FBX, 15
+heroes, Assets/RawResources/Characters/Adam/Materials/clothColor.mat, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Death1.FBX, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Left.FBX, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Run.FBX, 15
+heroes, Assets/RawResources/Weapons/Axe/TH_Axe01_D.tga, 15
+heroes, Assets/RawResources/Characters/Adam/HeroController_2.controller, 15
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Idle.FBX, 15
 11062KB
-Assets/RawResources/Characters/Adam/knight1Normal.png, 16
-Assets/RawResources/Weapons/Shield/Materials/Shield06_D.mat, 16
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Idle.FBX, 16
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Sitdown.FBX, 16
-Assets/RawResources/Characters/Adam/RPG-Character@Shield-Block-GetHit2.FBX, 16
-Assets/Standard Assets/XWeaponTrail/Textures/slash01.png, 16
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Standup.FBX, 16
-Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Forward.FBX, 16
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Backward.FBX, 16
-Assets/RawResources/Weapons/Bow/Bow02_D.mat, 16
-Assets/RawResources/Characters/Adam/weaponsNormal.png, 16
+heroes, Assets/RawResources/Characters/Adam/knight1Normal.png, 16
+heroes, Assets/RawResources/Weapons/Shield/Materials/Shield06_D.mat, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Idle.FBX, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Sitdown.FBX, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Shield-Block-GetHit2.FBX, 16
+heroes, Assets/Standard Assets/XWeaponTrail/Textures/slash01.png, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Standup.FBX, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Forward.FBX, 16
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Backward.FBX, 16
+heroes, Assets/RawResources/Weapons/Bow/Bow02_D.mat, 16
+heroes, Assets/RawResources/Characters/Adam/weaponsNormal.png, 16
 12811KB
-Assets/RawResources/Characters/X_JianShi_1/Materials/盾剑骑士.mat, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Left.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R1.FBX, 17
-Assets/RawResources/Characters/X_JianShi_1/X_JianShi_1.tga, 17
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Unsheath.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Idle.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R2.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Shield-Idle.fbx, 17
-Assets/Plugins/MeleeWeaponTrail/Example/Textures/Swoosh01.mat, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Backward.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R3.FBX, 17
+heroes, Assets/RawResources/Characters/X_JianShi_1/Materials/盾剑骑士.mat, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Left.FBX, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R1.FBX, 17
+heroes, Assets/RawResources/Characters/X_JianShi_1/X_JianShi_1.tga, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Unsheath.FBX, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Idle.FBX, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R2.FBX, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Shield-Idle.fbx, 17
+heroes, Assets/Plugins/MeleeWeaponTrail/Example/Textures/Swoosh01.mat, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Backward.FBX, 17
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R3.FBX, 17
 10705KB
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack1.FBX, 18
-Assets/Imported/fantasy horde_vilagers/Materials/fantasy horde-vilager_child_02.mat, 18
-Assets/RawResources/Weapons/Sword/Sword01.FBX, 18
-Assets/RawResources/Weapons/Sword/Materials/Sword01_D.mat, 18
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Run.FBX, 18
-Assets/RawResources/Characters/Adam/clothColor.mat, 18
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-GetHit-B1.FBX, 18
-Assets/RawResources/Characters/Adam/AdamController.controller, 18
-Assets/RawResources/Characters/X_JianShi_1/X_JianShi_1.FBX, 18
-Assets/RawResources/Weapons/Axe/TH_Axe01_D.mat, 18
-Assets/RawResources/Characters/Adam/RPG-Character@Shield-Run.fbx, 18
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack4.FBX, 18
-Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Right.FBX, 18
-Assets/Imported/Knight/models/textures/knight1Color.png, 18
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Unsheath.FBX, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack1.FBX, 18
+heroes, Assets/Imported/fantasy horde_vilagers/Materials/fantasy horde-vilager_child_02.mat, 18
+heroes, Assets/RawResources/Weapons/Sword/Sword01.FBX, 18
+heroes, Assets/RawResources/Weapons/Sword/Materials/Sword01_D.mat, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Run.FBX, 18
+heroes, Assets/RawResources/Characters/Adam/clothColor.mat, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-GetHit-B1.FBX, 18
+heroes, Assets/RawResources/Characters/Adam/AdamController.controller, 18
+heroes, Assets/RawResources/Characters/X_JianShi_1/X_JianShi_1.FBX, 18
+heroes, Assets/RawResources/Weapons/Axe/TH_Axe01_D.mat, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Shield-Run.fbx, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack4.FBX, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Right.FBX, 18
+heroes, Assets/Imported/Knight/models/textures/knight1Color.png, 18
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Unsheath.FBX, 18
 10938KB
-Assets/RawResources/Characters/Adam/detail1color.png, 19
-Assets/RawResources/Characters/Adam/clothSpecular.png, 19
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Right.FBX, 19
-Assets/RawResources/Characters/Adam/HeroController_3.controller, 19
-Assets/RawResources/Characters/Adam/HeroController_1.controller, 19
-Assets/RawResources/Characters/Adam/detailNormal.png, 19
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Attack1.FBX, 19
-Assets/RawResources/Weapons/Shield/Shield06.FBX, 19
-Assets/Standard Assets/XWeaponTrail/Textures/slash01.mat, 19
-Assets/Imported/Knight/models/textures/environmentmap1.png, 19
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Right.FBX, 19
-Assets/Imported/RPG Character Animation Pack/Models/Characters/RPG-Character.FBX, 19
+heroes, Assets/RawResources/Characters/Adam/detail1color.png, 19
+heroes, Assets/RawResources/Characters/Adam/clothSpecular.png, 19
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Right.FBX, 19
+heroes, Assets/RawResources/Characters/Adam/HeroController_3.controller, 19
+heroes, Assets/RawResources/Characters/Adam/HeroController_1.controller, 19
+heroes, Assets/RawResources/Characters/Adam/detailNormal.png, 19
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Attack1.FBX, 19
+heroes, Assets/RawResources/Weapons/Shield/Shield06.FBX, 19
+heroes, Assets/Standard Assets/XWeaponTrail/Textures/slash01.mat, 19
+heroes, Assets/Imported/Knight/models/textures/environmentmap1.png, 19
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Right.FBX, 19
+heroes, Assets/Imported/RPG Character Animation Pack/Models/Characters/RPG-Character.FBX, 19
 11485KB
-Assets/Imported/Knight/models/textures/clothColor.png, 20
-Assets/RawResources/Characters/Adam/knight1Color.mat, 20
-Assets/RawResources/Weapons/Bow/Materials/Bow02_D.mat, 20
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Backward.FBX, 20
-Assets/RawResources/Characters/Adam/RPG-Character@Shield-Death1.FBX, 20
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Backward.FBX, 20
-Assets/RawResources/Weapons/Axe/TH_Axe01.FBX, 20
-Assets/RawResources/Characters/Adam/knight.fbx, 20
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Attack4.FBX, 20
-Assets/RawResources/Weapons/Sword/Sword01_D.tga, 20
-Assets/RawResources/Characters/Adam/weaponsColor.png, 20
-Assets/RawResources/Characters/Adam/clothNormal.png, 20
+heroes, Assets/Imported/Knight/models/textures/clothColor.png, 20
+heroes, Assets/RawResources/Characters/Adam/knight1Color.mat, 20
+heroes, Assets/RawResources/Weapons/Bow/Materials/Bow02_D.mat, 20
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Backward.FBX, 20
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Shield-Death1.FBX, 20
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Backward.FBX, 20
+heroes, Assets/RawResources/Weapons/Axe/TH_Axe01.FBX, 20
+heroes, Assets/RawResources/Characters/Adam/knight.fbx, 20
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Attack4.FBX, 20
+heroes, Assets/RawResources/Weapons/Sword/Sword01_D.tga, 20
+heroes, Assets/RawResources/Characters/Adam/weaponsColor.png, 20
+heroes, Assets/RawResources/Characters/Adam/clothNormal.png, 20
 14154KB
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Forward.FBX, 21
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-GetHit-B1.FBX, 21
-Assets/RawResources/Characters/X_JianShi_1/Materials/No Name.mat, 21
-Assets/RawResources/Characters/Adam/Materials/knight1Color.mat, 21
-Assets/RawResources/Weapons/Bow/Bow02_D.tga, 21
-Assets/RawResources/Characters/Adam/knight1Specular.png, 21
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Forward.FBX, 21
-Assets/Imported/fantasy horde_vilagers/assets/child.FBX, 21
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Forward.FBX, 21
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-GetHit-B1.FBX, 21
+heroes, Assets/RawResources/Characters/X_JianShi_1/Materials/No Name.mat, 21
+heroes, Assets/RawResources/Characters/Adam/Materials/knight1Color.mat, 21
+heroes, Assets/RawResources/Weapons/Bow/Bow02_D.tga, 21
+heroes, Assets/RawResources/Characters/Adam/knight1Specular.png, 21
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Forward.FBX, 21
+heroes, Assets/Imported/fantasy horde_vilagers/assets/child.FBX, 21
 10830KB
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Left.FBX, 22
-Assets/RawResources/Weapons/Shield/Shield06_D.mat, 22
-Assets/Imported/fantasy horde_vilagers/Textures/child_02.png, 22
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Block-GetHit1.FBX, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Right.FBX, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Sheath.FBX, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Death1.FBX, 22
-Assets/RawResources/Characters/Adam/Materials/weaponsColor.mat, 22
-Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Idle.FBX, 22
-Assets/Imported/fantasy horde_vilagers/Textures/child_mask.png, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Unsheath.FBX, 22
-Assets/RawResources/Weapons/Sword/Sword01_D.mat, 22
-Assets/RawResources/Weapons/Axe/Materials/TH_Axe01_D.mat, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Sheath.FBX, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Left.FBX, 22
+heroes, Assets/RawResources/Weapons/Shield/Shield06_D.mat, 22
+heroes, Assets/Imported/fantasy horde_vilagers/Textures/child_02.png, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Block-GetHit1.FBX, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Right.FBX, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Sheath.FBX, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Death1.FBX, 22
+heroes, Assets/RawResources/Characters/Adam/Materials/weaponsColor.mat, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Idle.FBX, 22
+heroes, Assets/Imported/fantasy horde_vilagers/Textures/child_mask.png, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Unsheath.FBX, 22
+heroes, Assets/RawResources/Weapons/Sword/Sword01_D.mat, 22
+heroes, Assets/RawResources/Weapons/Axe/Materials/TH_Axe01_D.mat, 22
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Sheath.FBX, 22
 10499KB
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Forward.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins03.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine02_b_M.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Coins01_D.tga, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins04.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Coins01.mat, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins05.FBX, 23
-Assets/RawResources/Fonts/TrajanPro-Bold.otf, 23
-Assets/Imported/RPG UI/Sliced/Window/Overlay.png, 23
-Assets/RawResources/Textures/MagicSign/Angel_specability-Angel_symbol.png, 23
-Assets/RawResources/Fonts/TrajanPro-Regular.otf, 23
-Assets/RawResources/MazeBlocks/Models/Down3.fbx, 23
-Assets/RawResources/MazeBlocks/Textures/nature.tif, 23
-Assets/RawResources/MazeBlocks/Materials/Spiderweb.mat, 23
-Assets/RawResources/MazeBlocks/Models/Wood_el10.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Roots_el3.fbx, 23
-Assets/RawResources/MazeBlocks/Materials/Nature.mat, 23
-Assets/RawResources/MazeBlocks/Models/Pipe7.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Roots_el1.fbx, 23
-Assets/RawResources/MazeBlocks/Models/plant1.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Pipe5.fbx, 23
-Assets/RawResources/MazeBlocks/Textures/spiderweb.tif, 23
-Assets/RawResources/MazeBlocks/Models/Roots_el6.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Pipe2A.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Roots1.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Spiderweb.fbx, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine02_a_M.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine04_a_M.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine03_a_M.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground04_D.tga, 23
-Assets/RawResources/Materials/MockRoomMaterial.mat, 23
-Assets/RawResources/Materials/MapNodeMat.mat, 23
-Assets/RawResources/MazeBlocks/Models/Pipe4A.fbx, 23
-Assets/RawResources/MazeBlocks/Models/ivy1.fbx, 23
-Assets/RawResources/MazeBlocks/Models/Wood_el1B.fbx, 23
-Assets/RawResources/MazeBlocks/Models/ivy_roots1.fbx, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Statue12_a.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Coffin03_a_M.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall02_b.FBX, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue01.mat, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Pillar01_D.tga, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue04.mat, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue01_D.tga, 23
+heroes, Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Forward.FBX, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins03.FBX, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine02_b_M.FBX, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Coins01_D.tga, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins04.FBX, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Coins01.mat, 23
+items, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins05.FBX, 23
+main, Assets/RawResources/Fonts/TrajanPro-Bold.otf, 23
+main, Assets/Imported/RPG UI/Sliced/Window/Overlay.png, 23
+main, Assets/RawResources/Textures/MagicSign/Angel_specability-Angel_symbol.png, 23
+main, Assets/RawResources/Fonts/TrajanPro-Regular.otf, 23
+mazeblocks, Assets/RawResources/MazeBlocks/Models/Down3.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Textures/nature.tif, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Materials/Spiderweb.mat, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Wood_el10.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Roots_el3.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Materials/Nature.mat, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Pipe7.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Roots_el1.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/plant1.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Pipe5.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Textures/spiderweb.tif, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Roots_el6.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Pipe2A.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Roots1.fbx, 23
+mazeblocks+four, Assets/RawResources/MazeBlocks/Models/Spiderweb.fbx, 23
+mazeblocks+indicator, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine02_a_M.FBX, 23
+mazeblocks+indicator, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine04_a_M.FBX, 23
+mazeblocks+indicator, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine03_a_M.FBX, 23
+mazeblocks+mock, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground04_D.tga, 23
+mazeblocks+mock, Assets/RawResources/Materials/MockRoomMaterial.mat, 23
+mazeblocks+mock, Assets/RawResources/Materials/MapNodeMat.mat, 23
+mazeblocks+one, Assets/RawResources/MazeBlocks/Models/Pipe4A.fbx, 23
+mazeblocks+one, Assets/RawResources/MazeBlocks/Models/ivy1.fbx, 23
+mazeblocks+one, Assets/RawResources/MazeBlocks/Models/Wood_el1B.fbx, 23
+mazeblocks+one, Assets/RawResources/MazeBlocks/Models/ivy_roots1.fbx, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Statue12_a.FBX, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Coffin03_a_M.FBX, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall02_b.FBX, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue01.mat, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Pillar01_D.tga, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue04.mat, 23
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue01_D.tga, 23
 11180KB
-Assets/RawResources/MazeBlocks/Models/Jar2.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground08_D.tga, 24
-Assets/RawResources/MazeBlocks/Models/Box1.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue07_c_M.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue08_a_M.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Pillar06.FBX, 24
-Assets/RawResources/MazeBlocks/Models/Box2.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Bucket1.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Jar1.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall05.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Wall02.mat, 24
-Assets/RawResources/MazeBlocks/Models/Wood_board2.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Barrel2.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Ground08.mat, 24
-Assets/RawResources/MazeBlocks/Models/Cloth1.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Deco3.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Wood_board1.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Barrel1.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Ground01.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Collision/Wall05_col.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Pillar01.mat, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Materials/Ground01.mat, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Statue10_b.FBX, 24
-Assets/RawResources/MazeBlocks/Models/Wood_beam5.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue07_d_M.FBX, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue04_D.tga, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground01_D.tga, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Wall02_D.tga, 24
-Assets/RawResources/MazeBlocks/Models/ivy4.fbx, 24
-Assets/RawResources/MazeBlocks/Models/ivy_roots2.fbx, 24
-Assets/RawResources/MazeBlocks/Models/ivy_roots3.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Roots_el2.fbx, 24
-Assets/RawResources/MazeBlocks/Models/ivy3.fbx, 24
-Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall02_a.FBX, 24
-Assets/RawResources/MazeBlocks/Models/Wall1_Debris2.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Pav_debris7.fbx, 24
-Assets/RawResources/MazeBlocks/Models/Wood_el4.fbx, 24
-Assets/RawResources/MazeBlocks/Models/ivy2.fbx, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@idle.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@die.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@run.FBX, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@die.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/Materials/D_JuShen_1.mat, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1.tga, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@hit.FBX, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1.FBX, 24
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@die.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@attack01.FBX, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1.tga, 24
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@run.FBX, 24
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@attack01.FBX, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@attack01.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@idle.FBX, 24
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@hit.FBX, 24
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@hit.FBX, 24
-Assets/RawResources/Characters/MonsterController.controller, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@run.FBX, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Jar2.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground08_D.tga, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Box1.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue07_c_M.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue08_a_M.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Pillar06.FBX, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Box2.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Bucket1.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Jar1.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall05.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Wall02.mat, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Wood_board2.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Barrel2.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Ground08.mat, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Cloth1.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Deco3.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Wood_board1.fbx, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Barrel1.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Ground01.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Collision/Wall05_col.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Pillar01.mat, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Materials/Ground01.mat, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Statue10_b.FBX, 24
+mazeblocks+room, Assets/RawResources/MazeBlocks/Models/Wood_beam5.fbx, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Statue07_d_M.FBX, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue04_D.tga, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground01_D.tga, 24
+mazeblocks+room, Assets/Imported/L_FG_Assets_Pack1.0/Textures/Wall02_D.tga, 24
+mazeblocks+three, Assets/RawResources/MazeBlocks/Models/ivy4.fbx, 24
+mazeblocks+three, Assets/RawResources/MazeBlocks/Models/ivy_roots2.fbx, 24
+mazeblocks+three, Assets/RawResources/MazeBlocks/Models/ivy_roots3.fbx, 24
+mazeblocks+three, Assets/RawResources/MazeBlocks/Models/Roots_el2.fbx, 24
+mazeblocks+twoturn, Assets/RawResources/MazeBlocks/Models/ivy3.fbx, 24
+mazeblocks+twoturn, Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall02_a.FBX, 24
+mazeblocks+twoturn, Assets/RawResources/MazeBlocks/Models/Wall1_Debris2.fbx, 24
+mazeblocks+twoturn, Assets/RawResources/MazeBlocks/Models/Pav_debris7.fbx, 24
+mazeblocks+twoturn, Assets/RawResources/MazeBlocks/Models/Wood_el4.fbx, 24
+mazeblocks+twoturn, Assets/RawResources/MazeBlocks/Models/ivy2.fbx, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@idle.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@die.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@run.FBX, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@die.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/Materials/D_JuShen_1.mat, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1.tga, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@hit.FBX, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1.FBX, 24
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@die.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@attack01.FBX, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1.tga, 24
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@run.FBX, 24
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@attack01.FBX, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@attack01.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@idle.FBX, 24
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@hit.FBX, 24
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@hit.FBX, 24
+monsters, Assets/RawResources/Characters/MonsterController.controller, 24
+monsters, Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@run.FBX, 24
 10766KB
-Assets/RawResources/Characters/MonsterController_2.overrideController, 25
-Assets/RawResources/Characters/MonsterController_3.overrideController, 25
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1.FBX, 25
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@idle.FBX, 25
-Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1.FBX, 25
-Assets/RawResources/Characters/X_MoYing_1/Materials/X_MoYing_1.mat, 25
-Assets/RawResources/Characters/MonsterController_1.overrideController, 25
-Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1.tga, 25
-Assets/RawResources/Characters/X_YuanLing_1/Materials/F_YuanLing_1.mat, 25
-Assets/Imported/RPG UI/Sliced/Paperdoll/MagicCircle.png, 25
-Assets/Imported/RPG UI/Sliced/Window/Box Dark 2.png, 25
-Assets/Imported/RPG UI/Sliced/Status/Level.png, 25
-Assets/Imported/RPG UI/Sliced/Window/Window 2.png, 25
-Assets/Imported/RPG UI/Sliced/Paperdoll/ArrowRight.png, 25
-Assets/Imported/RPG UI/Sliced/Window/Seperator.png, 25
-Assets/Imported/RPG UI/Sliced/Paperdoll/ArrowLeft.png, 25
-Assets/Imported/RPG UI/Sliced/Paperdoll/Overlay.png, 25
-Assets/RawResources/NPCs/X_MiShuShi_1/Materials/X_MiShuShi_1.mat, 25
-Assets/RawResources/NPCs/X_SengLv_1/X_SengLv_1@idle.FBX, 25
-Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1.tga, 25
-Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1@idle.FBX, 25
-Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1.FBX, 25
-Assets/RawResources/Characters/NPCController_2.overrideController, 25
-Assets/RawResources/NPCs/X_SengLv_1/X_Senglv_1.tga, 25
-Assets/RawResources/Characters/NPCController.controller, 25
-Assets/RawResources/NPCs/X_SengLv_1/Materials/X_Senglv_1.mat, 25
-Assets/RawResources/Characters/NPCController_1.overrideController, 25
-Assets/RawResources/NPCs/X_SengLv_1/X_SengLv_1.FBX, 25
-Assets/RawResources/Traps/Animation/spikes.anim, 25
-Assets/RawResources/Traps/Textures/death traps2_DF.psd, 25
-Assets/RawResources/Traps/Animation/blade1.anim, 25
-Assets/RawResources/Traps/Animation/trunk3.anim, 25
-Assets/RawResources/Traps/Models/deathtrap_03.fbx, 25
-Assets/RawResources/Traps/Models/deathtrap_07.fbx, 25
-Assets/RawResources/Traps/Models/deathtrap_04.fbx, 25
-Assets/RawResources/Traps/Models/deathtrap_05.fbx, 25
-Assets/RawResources/Traps/Materials/floor.mat, 25
-Assets/RawResources/Traps/Materials/death traps2_DF.mat, 25
-Assets/RawResources/Traps/Models/deathtrap_06.fbx, 25
-Assets/RawResources/Traps/Animation/trunk_col2.anim, 25
-Assets/RawResources/Traps/Textures/2Traps_NM.png, 25
-Assets/RawResources/Traps/Animation/trunk2.anim, 25
-Assets/RawResources/Traps/Materials/collider.mat, 25
-Assets/RawResources/Traps/Animation/blade_col3.anim, 25
-Assets/RawResources/Traps/Animation/blade2.anim, 25
-Assets/RawResources/Traps/Animation/blade_col1.anim, 25
-Assets/RawResources/Traps/Models/deathtrap_08.fbx, 25
-Assets/RawResources/Traps/Textures/floor.png, 25
-Assets/RawResources/Traps/Animation/trunk_col3.anim, 25
-Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Bow.FBX, 25
-Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Sword.FBX, 25
-Assets/Imported/RPG Character Animation Pack/Models/Weapons/Shield-NoOutline.FBX, 25
-Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Axe.FBX, 25
+monsters, Assets/RawResources/Characters/MonsterController_2.overrideController, 25
+monsters, Assets/RawResources/Characters/MonsterController_3.overrideController, 25
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1.FBX, 25
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@idle.FBX, 25
+monsters, Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1.FBX, 25
+monsters, Assets/RawResources/Characters/X_MoYing_1/Materials/X_MoYing_1.mat, 25
+monsters, Assets/RawResources/Characters/MonsterController_1.overrideController, 25
+monsters, Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1.tga, 25
+monsters, Assets/RawResources/Characters/X_YuanLing_1/Materials/F_YuanLing_1.mat, 25
+newui, Assets/Imported/RPG UI/Sliced/Paperdoll/MagicCircle.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Window/Box Dark 2.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Status/Level.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Window/Window 2.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Paperdoll/ArrowRight.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Window/Seperator.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Paperdoll/ArrowLeft.png, 25
+newui, Assets/Imported/RPG UI/Sliced/Paperdoll/Overlay.png, 25
+npcs, Assets/RawResources/NPCs/X_MiShuShi_1/Materials/X_MiShuShi_1.mat, 25
+npcs, Assets/RawResources/NPCs/X_SengLv_1/X_SengLv_1@idle.FBX, 25
+npcs, Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1.tga, 25
+npcs, Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1@idle.FBX, 25
+npcs, Assets/RawResources/NPCs/X_MiShuShi_1/X_MiShuShi_1.FBX, 25
+npcs, Assets/RawResources/Characters/NPCController_2.overrideController, 25
+npcs, Assets/RawResources/NPCs/X_SengLv_1/X_Senglv_1.tga, 25
+npcs, Assets/RawResources/Characters/NPCController.controller, 25
+npcs, Assets/RawResources/NPCs/X_SengLv_1/Materials/X_Senglv_1.mat, 25
+npcs, Assets/RawResources/Characters/NPCController_1.overrideController, 25
+npcs, Assets/RawResources/NPCs/X_SengLv_1/X_SengLv_1.FBX, 25
+traps, Assets/RawResources/Traps/Animation/spikes.anim, 25
+traps, Assets/RawResources/Traps/Textures/death traps2_DF.psd, 25
+traps, Assets/RawResources/Traps/Animation/blade1.anim, 25
+traps, Assets/RawResources/Traps/Animation/trunk3.anim, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_03.fbx, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_07.fbx, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_04.fbx, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_05.fbx, 25
+traps, Assets/RawResources/Traps/Materials/floor.mat, 25
+traps, Assets/RawResources/Traps/Materials/death traps2_DF.mat, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_06.fbx, 25
+traps, Assets/RawResources/Traps/Animation/trunk_col2.anim, 25
+traps, Assets/RawResources/Traps/Textures/2Traps_NM.png, 25
+traps, Assets/RawResources/Traps/Animation/trunk2.anim, 25
+traps, Assets/RawResources/Traps/Materials/collider.mat, 25
+traps, Assets/RawResources/Traps/Animation/blade_col3.anim, 25
+traps, Assets/RawResources/Traps/Animation/blade2.anim, 25
+traps, Assets/RawResources/Traps/Animation/blade_col1.anim, 25
+traps, Assets/RawResources/Traps/Models/deathtrap_08.fbx, 25
+traps, Assets/RawResources/Traps/Textures/floor.png, 25
+traps, Assets/RawResources/Traps/Animation/trunk_col3.anim, 25
+weapons, Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Bow.FBX, 25
+weapons, Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Sword.FBX, 25
+weapons, Assets/Imported/RPG Character Animation Pack/Models/Weapons/Shield-NoOutline.FBX, 25
+weapons, Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Axe.FBX, 25
 5549KB

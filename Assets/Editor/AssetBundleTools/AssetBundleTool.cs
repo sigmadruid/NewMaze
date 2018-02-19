@@ -8,8 +8,14 @@ using System.Linq;
 
 public static class AssetBundleTool
 {
-    private static Dictionary<string, List<string>> depPathDic = new Dictionary<string, List<string>>();
+    private class Dependency
+    {
+        public string PrefabName;
 
+        public string AssetPath;
+    }
+
+    private static Dictionary<string, List<string>> depPathDic = new Dictionary<string, List<string>>();
 
     [MenuItem("Tools/Mark AssetBundle Tags")]
     public static void MarkABTags()
@@ -64,7 +70,7 @@ public static class AssetBundleTool
     private static void MarkAssetsTags()
     {
         FileLogger.Init("ab_dependencies");
-        List<string> allDependencies = new List<string>();
+        List<Dependency> allDependencies = new List<Dependency>();
         foreach(string fileName in depPathDic.Keys)
         {
             List<string> filePathList = depPathDic[fileName];
@@ -72,27 +78,32 @@ public static class AssetBundleTool
             FileLogger.AddLog(fileName + "\r\n");
             for(int i = 0; i < dependencies.Length; ++i)
             {
-                string dependency = dependencies[i];
-                if(IsFileIllegal(dependency) || dependency.Contains(AssetBundleConst.PREFABS_PATH))
+                string path = dependencies[i];
+                if(IsFileIllegal(path) || path.Contains(AssetBundleConst.PREFABS_PATH))
                 {
                     continue;
                 }
+
+                Dependency dependency = new Dependency();
+                dependency.PrefabName = fileName;
+                dependency.AssetPath = path;
+                    
                 allDependencies.Add(dependency);
-                FileLogger.AddLog(string.Format("\t{0}\r\n", dependency));
+                FileLogger.AddLog(string.Format("\t{0}\r\n", dependency.AssetPath));
             }
         }
         FileLogger.Flush();
 
         HashSet<string> tempHashSet = new HashSet<string>();
-        List<string> uniqueDependencies = new List<string>();
+        List<Dependency> uniqueDependencies = new List<Dependency>();
         for(int i = 0; i < allDependencies.Count; ++i)
         {
-            string dependency = allDependencies[i];
-            if(tempHashSet.Contains(dependency))
+            Dependency dependency = allDependencies[i];
+            if(tempHashSet.Contains(dependency.AssetPath))
             {
                 continue;
             }
-            tempHashSet.Add(dependency);
+            tempHashSet.Add(dependency.AssetPath);
             uniqueDependencies.Add(dependency);
         }
 
@@ -106,8 +117,8 @@ public static class AssetBundleTool
             {
                 tagIndex++;
             }
-            string dependency = uniqueDependencies[i];
-            FileInfo fi = new FileInfo(dependency);
+            Dependency dependency = uniqueDependencies[i];
+            FileInfo fi = new FileInfo(dependency.AssetPath);
             logSize = 0;
             if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
             {
@@ -130,12 +141,12 @@ public static class AssetBundleTool
                 logSize = size;
 
 
-            string log = string.Format("{0}, {1}\r\n", dependency, tagIndex.ToString());
+            string log = string.Format("{0}, {1}, {2}\r\n", dependency.PrefabName, dependency.AssetPath, tagIndex.ToString());
             FileLogger.AddLog(log);
             if (logSize > 0)
                 FileLogger.AddLog(logSize / 1000 + "KB\r\n");
-//            var importer = AssetImporter.GetAtPath(dependency);
-//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
+            var importer = AssetImporter.GetAtPath(dependency.AssetPath);
+            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }
         FileLogger.Flush();
 
