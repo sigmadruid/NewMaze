@@ -68,6 +68,7 @@ public static class AssetBundleTool
         {
             List<string> filePathList = depPathDic[fileName];
             string[] dependencies = AssetDatabase.GetDependencies(filePathList.ToArray());
+            FileLogger.AddLog(fileName + "\r\n");
             for(int i = 0; i < dependencies.Length; ++i)
             {
                 string dependency = dependencies[i];
@@ -76,6 +77,7 @@ public static class AssetBundleTool
                     continue;
                 }
                 allDependencies.Add(dependency);
+                FileLogger.AddLog(dependency + "\r\n");
             }
         }
 
@@ -112,15 +114,17 @@ public static class AssetBundleTool
                     size = 0;
                 }
             }
-//            Debug.LogErrorFormat("{0}, {1}KB", tagIndex, size / 1000);
 
 
-            Debug.LogFormat("{0}, {1}", dependency, tagIndex.ToString());
-            var importer = AssetImporter.GetAtPath(dependency);
-            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
-
-
+//            string log = string.Format("{0}, {1}\r\n", dependency, tagIndex.ToString());
+//            FileLogger.AddLog(log);
+//            var importer = AssetImporter.GetAtPath(dependency);
+//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }
+
+        FileLogger.LogToFile();
+
+        Debug.LogError("mark asset tags completed!");
     }
 
     public static void BuildAllAB()
@@ -129,6 +133,8 @@ public static class AssetBundleTool
 
     public static void ClearAll()
     {
+        FileLogger.Init();
+
         foreach(var list in depPathDic.Values)
         {
             list.Clear();
