@@ -13,6 +13,7 @@ public static class AssetBundleConst
     {
             ".meta",
             ".cs",
+            ".js",
     };
 }
 

@@ -71,7 +71,7 @@ public static class AssetBundleTool
             for(int i = 0; i < dependencies.Length; ++i)
             {
                 string dependency = dependencies[i];
-                if(IsFileIllegal(dependency))
+                if(IsFileIllegal(dependency) || dependency.Contains(AssetBundleConst.PREFABS_PATH))
                 {
                     continue;
                 }
@@ -116,8 +116,8 @@ public static class AssetBundleTool
 
 
             Debug.LogFormat("{0}, {1}", dependency, tagIndex.ToString());
-//            var importer = AssetImporter.GetAtPath(dependency);
-//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
+            var importer = AssetImporter.GetAtPath(dependency);
+            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
 
 
         }
