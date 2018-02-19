@@ -12,10 +12,11 @@ TrueTypeFontImporter:
   fontName: Trajan Pro
   fontNames:
   - Trajan Pro
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5911825f1e4ba204e914ed63c4616025, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
   userData: 
-  assetBundleName: 
+  assetBundleName: asset_23
   assetBundleVariant: 
