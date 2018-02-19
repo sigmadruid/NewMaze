@@ -153,8 +153,11 @@ public static class AssetBundleTool
         Debug.LogError("mark asset tags completed!");
     }
 
+    [MenuItem("Tools/Build AssetBundles")]
     public static void BuildAllAB()
     {
+        BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
+        BuildPipeline.BuildAssetBundles(AssetBundleConst.OUTPUT_PATH, options, BuildTarget.StandaloneWindows64);
     }
 
     public static void ClearAll()

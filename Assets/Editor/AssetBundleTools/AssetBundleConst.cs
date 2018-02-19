@@ -1,7 +1,11 @@
-﻿using System;
+﻿using UnityEngine;
+
+using System;
 
 public static class AssetBundleConst
 {
+    public static readonly string OUTPUT_PATH = Application.dataPath + "/AssetBundles/";
+
     public const string PREFABS_PATH = "Assets/PrefabResources";
     public const string ASSETS_PATH = "Assets/RawResources";
 
