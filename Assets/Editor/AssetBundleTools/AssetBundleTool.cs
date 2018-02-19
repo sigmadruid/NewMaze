@@ -97,30 +97,43 @@ public static class AssetBundleTool
         }
 
         FileLogger.Init("ab_division");
-        int tagIndex = 1;
+        int tagIndex = 0;
         long size = 0;
+        long logSize = 0;
         for(int i = 0; i < uniqueDependencies.Count; ++i)
         {
-            string dependency = uniqueDependencies[i];
-
-            FileInfo fi = new FileInfo(dependency);
-            size += fi.Length;
-            if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
+            if(size == 0)
             {
                 tagIndex++;
             }
+            string dependency = uniqueDependencies[i];
+            FileInfo fi = new FileInfo(dependency);
+            logSize = 0;
+            if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
+            {
+                FileLogger.AddLog(size / 1000 + "KB\r\n");
+                tagIndex++;
+                logSize = fi.Length;
+                size = 0;
+            }
             else
             {
+                size += fi.Length;
                 if(size >= AssetBundleConst.MAX_AB_SIZE)
                 {
-                    tagIndex++;
+                    logSize = size;
                     size = 0;
                 }
             }
 
+            if(i == uniqueDependencies.Count - 1)
+                logSize = size;
+
 
             string log = string.Format("{0}, {1}\r\n", dependency, tagIndex.ToString());
             FileLogger.AddLog(log);
+            if (logSize > 0)
+                FileLogger.AddLog(logSize / 1000 + "KB\r\n");
 //            var importer = AssetImporter.GetAtPath(dependency);
 //            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }

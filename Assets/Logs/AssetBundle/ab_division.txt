@@ -103,7 +103,9 @@ Assets/Imported/DynamicElements_Effects/materials/MagicRuneCircle.png, 1
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_a_M.FBX, 1
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Materials/FG_Assets01.mat, 1
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Dungeon05_b_M.FBX, 1
+8360KB
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/FG_Assets01_Low_D.tga, 2
+16777KB
 Assets/Imported/DynamicElements_Effects/materials/MagicCircle.mat, 3
 Assets/RawResources/MazeBlocks/Models/Catacomb1.fbx, 3
 Assets/RawResources/MazeBlocks/Models/Sack1.fbx, 3
@@ -111,7 +113,9 @@ Assets/RawResources/Traps/Animation/stake1a.anim, 3
 Assets/RawResources/MazeBlocks/Models/Base_el15.fbx, 3
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_i_M.FBX, 3
 Assets/RawResources/MazeBlocks/Models/Wall1A_3M.fbx, 3
+241KB
 Assets/RawResources/MazeBlocks/Textures/Atlas2_nmp.tif, 4
+12612KB
 Assets/RawResources/MazeBlocks/Models/King_obelisk.fbx, 5
 Assets/RawResources/MazeBlocks/Models/Pav_debris2.fbx, 5
 Assets/RawResources/MazeBlocks/Models/UP2B.fbx, 5
@@ -122,7 +126,9 @@ Assets/RawResources/MazeBlocks/Models/Deco4.fbx, 5
 Assets/RawResources/MazeBlocks/Models/Wall1_Courner2.fbx, 5
 Assets/RawResources/MazeBlocks/Models/Sewers_crate2.fbx, 5
 Assets/RawResources/MazeBlocks/Models/Ground4_el4.fbx, 5
+329KB
 Assets/RawResources/MazeBlocks/Textures/Atlas1_nmp.tif, 6
+28341KB
 Assets/RawResources/MazeBlocks/Models/Wall1A.fbx, 7
 Assets/RawResources/MazeBlocks/Models/Wood_el3B.fbx, 7
 Assets/RawResources/MazeBlocks/Models/Wood_board5.fbx, 7
@@ -160,7 +166,9 @@ Assets/RawResources/MazeBlocks/Models/Furnace3.fbx, 7
 Assets/RawResources/MazeBlocks/Models/Furnace2_ring.fbx, 7
 Assets/RawResources/MazeBlocks/Models/Pav_debris4.fbx, 7
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Shield03_M.FBX, 7
+1275KB
 Assets/RawResources/MazeBlocks/Textures/Atlas1.tif, 8
+28340KB
 Assets/RawResources/MazeBlocks/Materials/Atlas1.mat, 9
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Arrow02_M.FBX, 9
 Assets/RawResources/MazeBlocks/Models/Furnace1.fbx, 9
@@ -169,13 +177,17 @@ Assets/RawResources/MazeBlocks/Models/Down1.fbx, 9
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Skeleton01_f_M.FBX, 9
 Assets/RawResources/MazeBlocks/Models/UP5.fbx, 9
 Assets/RawResources/MazeBlocks/Models/Roots4.fbx, 9
+1657KB
 Assets/RawResources/MazeBlocks/Textures/Rock1.tif, 10
+12601KB
 Assets/RawResources/MazeBlocks/Models/Courner4.fbx, 11
 Assets/RawResources/MazeBlocks/Models/Column1.fbx, 11
 Assets/RawResources/MazeBlocks/Models/Ground3_el1.fbx, 11
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Sword02_M.FBX, 11
 Assets/RawResources/MazeBlocks/Models/Wood_el2B.fbx, 11
+136KB
 Assets/RawResources/MazeBlocks/Textures/Atlas2.tif, 12
+12611KB
 Assets/RawResources/MazeBlocks/Models/Sack3B.fbx, 13
 Assets/RawResources/MazeBlocks/Models/Roots2.fbx, 13
 Assets/RawResources/MazeBlocks/Models/Sack2.fbx, 13
@@ -196,7 +208,9 @@ Assets/RawResources/Traps/Models/deathtrap_01.fbx, 13
 Assets/RawResources/MazeBlocks/Models/Blocker_wall5x.fbx, 13
 Assets/RawResources/MazeBlocks/Models/Rock3.fbx, 13
 Assets/RawResources/Traps/Textures/death traps_DF.psd, 13
+6543KB
 Assets/RawResources/MazeBlocks/Textures/Rock1_nmp.tif, 14
+12604KB
 Assets/RawResources/MazeBlocks/Models/Ground2A.fbx, 15
 Assets/RawResources/MazeBlocks/Models/Base_el3.fbx, 15
 Assets/RawResources/MazeBlocks/Models/Base_el28.fbx, 15
@@ -227,7 +241,8 @@ Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Left.FBX, 15
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Run.FBX, 15
 Assets/RawResources/Weapons/Axe/TH_Axe01_D.tga, 15
 Assets/RawResources/Characters/Adam/HeroController_2.controller, 15
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Idle.FBX, 16
+Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Idle.FBX, 15
+11062KB
 Assets/RawResources/Characters/Adam/knight1Normal.png, 16
 Assets/RawResources/Weapons/Shield/Materials/Shield06_D.mat, 16
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Idle.FBX, 16
@@ -238,7 +253,8 @@ Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Sit-Standup.FBX, 16
 Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Forward.FBX, 16
 Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Backward.FBX, 16
 Assets/RawResources/Weapons/Bow/Bow02_D.mat, 16
-Assets/RawResources/Characters/Adam/weaponsNormal.png, 17
+Assets/RawResources/Characters/Adam/weaponsNormal.png, 16
+12811KB
 Assets/RawResources/Characters/X_JianShi_1/Materials/盾剑骑士.mat, 17
 Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Left.FBX, 17
 Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R1.FBX, 17
@@ -249,7 +265,8 @@ Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R2.FBX, 17
 Assets/RawResources/Characters/Adam/RPG-Character@Shield-Idle.fbx, 17
 Assets/Plugins/MeleeWeaponTrail/Example/Textures/Swoosh01.mat, 17
 Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Backward.FBX, 17
-Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R3.FBX, 18
+Assets/RawResources/Characters/Adam/RPG-Character@Sword-Attack-R3.FBX, 17
+10705KB
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack1.FBX, 18
 Assets/Imported/fantasy horde_vilagers/Materials/fantasy horde-vilager_child_02.mat, 18
 Assets/RawResources/Weapons/Sword/Sword01.FBX, 18
@@ -264,7 +281,8 @@ Assets/RawResources/Characters/Adam/RPG-Character@Shield-Run.fbx, 18
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Attack4.FBX, 18
 Assets/RawResources/Characters/Adam/RPG-Character@Armed-Roll-Right.FBX, 18
 Assets/Imported/Knight/models/textures/knight1Color.png, 18
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Unsheath.FBX, 19
+Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Unsheath.FBX, 18
+10938KB
 Assets/RawResources/Characters/Adam/detail1color.png, 19
 Assets/RawResources/Characters/Adam/clothSpecular.png, 19
 Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Right.FBX, 19
@@ -276,7 +294,8 @@ Assets/RawResources/Weapons/Shield/Shield06.FBX, 19
 Assets/Standard Assets/XWeaponTrail/Textures/slash01.mat, 19
 Assets/Imported/Knight/models/textures/environmentmap1.png, 19
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Right.FBX, 19
-Assets/Imported/RPG Character Animation Pack/Models/Characters/RPG-Character.FBX, 20
+Assets/Imported/RPG Character Animation Pack/Models/Characters/RPG-Character.FBX, 19
+11485KB
 Assets/Imported/Knight/models/textures/clothColor.png, 20
 Assets/RawResources/Characters/Adam/knight1Color.mat, 20
 Assets/RawResources/Weapons/Bow/Materials/Bow02_D.mat, 20
@@ -288,7 +307,8 @@ Assets/RawResources/Characters/Adam/knight.fbx, 20
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Attack4.FBX, 20
 Assets/RawResources/Weapons/Sword/Sword01_D.tga, 20
 Assets/RawResources/Characters/Adam/weaponsColor.png, 20
-Assets/RawResources/Characters/Adam/clothNormal.png, 21
+Assets/RawResources/Characters/Adam/clothNormal.png, 20
+14154KB
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Roll-Forward.FBX, 21
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-GetHit-B1.FBX, 21
 Assets/RawResources/Characters/X_JianShi_1/Materials/No Name.mat, 21
@@ -296,7 +316,8 @@ Assets/RawResources/Characters/Adam/Materials/knight1Color.mat, 21
 Assets/RawResources/Weapons/Bow/Bow02_D.tga, 21
 Assets/RawResources/Characters/Adam/knight1Specular.png, 21
 Assets/RawResources/Characters/Adam/RPG-Character@Unarmed-Roll-Forward.FBX, 21
-Assets/Imported/fantasy horde_vilagers/assets/child.FBX, 22
+Assets/Imported/fantasy horde_vilagers/assets/child.FBX, 21
+10830KB
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Left.FBX, 22
 Assets/RawResources/Weapons/Shield/Shield06_D.mat, 22
 Assets/Imported/fantasy horde_vilagers/Textures/child_02.png, 22
@@ -310,7 +331,8 @@ Assets/Imported/fantasy horde_vilagers/Textures/child_mask.png, 22
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Axe-Unsheath.FBX, 22
 Assets/RawResources/Weapons/Sword/Sword01_D.mat, 22
 Assets/RawResources/Weapons/Axe/Materials/TH_Axe01_D.mat, 22
-Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Sheath.FBX, 23
+Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Sword-Sheath.FBX, 22
+10499KB
 Assets/RawResources/Characters/Adam/RPG-Character@2Hand-Bow-Roll-Forward.FBX, 23
 Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Coins03.FBX, 23
 Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Meshes/Mine02_b_M.FBX, 23
@@ -353,7 +375,8 @@ Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Wall02_b.FBX, 23
 Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue01.mat, 23
 Assets/Imported/L_FG_Assets_Pack1.0/Textures/Pillar01_D.tga, 23
 Assets/Imported/L_FG_Assets_Pack1.0/Materials/Statue04.mat, 23
-Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue01_D.tga, 24
+Assets/Imported/L_FG_Assets_Pack1.0/Textures/Statue01_D.tga, 23
+11180KB
 Assets/RawResources/MazeBlocks/Models/Jar2.fbx, 24
 Assets/Imported/L_FG_Assets_Pack1.0/Textures/Ground08_D.tga, 24
 Assets/RawResources/MazeBlocks/Models/Box1.fbx, 24
@@ -410,7 +433,8 @@ Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@idle.FBX, 24
 Assets/RawResources/Characters/D_JuShen_1/D_JuShen_1@hit.FBX, 24
 Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1@hit.FBX, 24
 Assets/RawResources/Characters/MonsterController.controller, 24
-Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@run.FBX, 25
+Assets/RawResources/Characters/X_YuanLing_1/X_YuanLing_1@run.FBX, 24
+10766KB
 Assets/RawResources/Characters/MonsterController_2.overrideController, 25
 Assets/RawResources/Characters/MonsterController_3.overrideController, 25
 Assets/RawResources/Characters/X_MoYing_1/X_MoYing_1.FBX, 25
@@ -464,3 +488,4 @@ Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Bow.FBX, 25
 Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Sword.FBX, 25
 Assets/Imported/RPG Character Animation Pack/Models/Weapons/Shield-NoOutline.FBX, 25
 Assets/Imported/RPG Character Animation Pack/Models/Weapons/2Hand-Axe.FBX, 25
+5549KB
