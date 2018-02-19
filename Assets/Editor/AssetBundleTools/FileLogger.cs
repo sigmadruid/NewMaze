@@ -6,12 +6,14 @@ using System.IO;
 
 public static class FileLogger
 {
-    private static readonly string OUTPUT_PATH = Application.dataPath + "/Logs/AssetBundle/mark_tags.txt";
+    private static readonly string OUTPUT_PATH = Application.dataPath + "/Logs/AssetBundle/";
 
+    private static string logName = string.Empty;
     private static StringBuilder sb = new StringBuilder();
 
-    public static void Init()
+    public static void Init(string name)
     {
+        logName = name;
         sb = new StringBuilder();
     }
 
@@ -20,9 +22,10 @@ public static class FileLogger
         sb.Append(str);
     }
 
-    public static void LogToFile()
+    public static void Flush()
     {
-        using(FileStream fs = new FileStream(OUTPUT_PATH, FileMode.Create))
+        string path = OUTPUT_PATH + logName + ".txt";
+        using(FileStream fs = new FileStream(path, FileMode.Create))
         {
             StreamWriter sw = new StreamWriter(fs);
             sw.Write(sb.ToString());

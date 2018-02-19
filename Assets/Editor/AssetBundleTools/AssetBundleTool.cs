@@ -63,6 +63,7 @@ public static class AssetBundleTool
 
     private static void MarkAssetsTags()
     {
+        FileLogger.Init("ab_dependencies");
         List<string> allDependencies = new List<string>();
         foreach(string fileName in depPathDic.Keys)
         {
@@ -77,9 +78,10 @@ public static class AssetBundleTool
                     continue;
                 }
                 allDependencies.Add(dependency);
-                FileLogger.AddLog(dependency + "\r\n");
+                FileLogger.AddLog(string.Format("\t{0}\r\n", dependency));
             }
         }
+        FileLogger.Flush();
 
         HashSet<string> tempHashSet = new HashSet<string>();
         List<string> uniqueDependencies = new List<string>();
@@ -94,6 +96,7 @@ public static class AssetBundleTool
             uniqueDependencies.Add(dependency);
         }
 
+        FileLogger.Init("ab_division");
         int tagIndex = 1;
         long size = 0;
         for(int i = 0; i < uniqueDependencies.Count; ++i)
@@ -116,13 +119,12 @@ public static class AssetBundleTool
             }
 
 
-//            string log = string.Format("{0}, {1}\r\n", dependency, tagIndex.ToString());
-//            FileLogger.AddLog(log);
+            string log = string.Format("{0}, {1}\r\n", dependency, tagIndex.ToString());
+            FileLogger.AddLog(log);
 //            var importer = AssetImporter.GetAtPath(dependency);
 //            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }
-
-        FileLogger.LogToFile();
+        FileLogger.Flush();
 
         Debug.LogError("mark asset tags completed!");
     }
@@ -133,8 +135,6 @@ public static class AssetBundleTool
 
     public static void ClearAll()
     {
-        FileLogger.Init();
-
         foreach(var list in depPathDic.Values)
         {
             list.Clear();
