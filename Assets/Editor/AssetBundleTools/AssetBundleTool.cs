@@ -17,7 +17,7 @@ public static class AssetBundleTool
 
     private static Dictionary<string, List<string>> depPathDic = new Dictionary<string, List<string>>();
 
-    [MenuItem("Tools/Mark AssetBundle Tags")]
+    [MenuItem("AssetBundle/Mark AssetBundle Tags")]
     public static void MarkABTags()
     {
         DateTime dt = DateTime.Now;
@@ -40,12 +40,10 @@ public static class AssetBundleTool
         for (int i = 0; i < folderPathList.Count; ++i)
         {
             string folderPath = folderPathList[i];
+            string[] allFilePathList = Directory.GetFiles(folderPath);
+            
             string folderTag = GetFolderTag(folderPath);
             List<string> filePathList = new List<string>();
-            depPathDic.Add(folderTag, filePathList);
-//            Debug.LogError(folderTag);
-
-            string[] allFilePathList = Directory.GetFiles(folderPath);
             for(int j = 0; j < allFilePathList.Length; ++j)
             {
                 string filePath = allFilePathList[j];
@@ -53,17 +51,17 @@ public static class AssetBundleTool
                 {
                     continue;
                 }
-
+                
                 filePathList.Add(filePath);
                 var importer = AssetImporter.GetAtPath(filePath);
                 importer.SetAssetBundleNameAndVariant(folderTag, string.Empty);
             }
 
-//            for(int j = 0; j < filePathList.Count; ++j)
-//            {
-//                string filePath = filePathList[j];
-//                Debug.Log(filePath);
-//            }
+            if(filePathList.Count > 0)
+            {
+                depPathDic.Add(folderTag, filePathList);
+            }
+
         }
     }
 
@@ -75,7 +73,7 @@ public static class AssetBundleTool
         {
             List<string> filePathList = depPathDic[fileName];
             string[] dependencies = AssetDatabase.GetDependencies(filePathList.ToArray());
-            FileLogger.AddLog(fileName + "\r\n");
+            FileLogger.AddLog(fileName);
             for(int i = 0; i < dependencies.Length; ++i)
             {
                 string path = dependencies[i];
@@ -89,7 +87,7 @@ public static class AssetBundleTool
                 dependency.AssetPath = path;
                     
                 allDependencies.Add(dependency);
-                FileLogger.AddLog(string.Format("\t{0}\r\n", dependency.AssetPath));
+                FileLogger.AddLog(string.Format("\t{0}", dependency.AssetPath));
             }
         }
         FileLogger.Flush();
@@ -122,7 +120,7 @@ public static class AssetBundleTool
             logSize = 0;
             if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
             {
-                FileLogger.AddLog(size / 1000 + "KB\r\n");
+                FileLogger.AddLog(size / 1000 + "KB");
                 tagIndex++;
                 logSize = fi.Length;
                 size = 0;
@@ -141,10 +139,10 @@ public static class AssetBundleTool
                 logSize = size;
 
 
-            string log = string.Format("{0}, {1}, {2}\r\n", dependency.PrefabName, dependency.AssetPath, tagIndex.ToString());
+            string log = string.Format("{0}, {1}, {2}", dependency.PrefabName, dependency.AssetPath, tagIndex.ToString());
             FileLogger.AddLog(log);
             if (logSize > 0)
-                FileLogger.AddLog(logSize / 1000 + "KB\r\n");
+                FileLogger.AddLog(logSize / 1000 + "KB");
             var importer = AssetImporter.GetAtPath(dependency.AssetPath);
             importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }
@@ -153,15 +151,24 @@ public static class AssetBundleTool
         Debug.LogError("mark asset tags completed!");
     }
 
-    [MenuItem("Tools/Build AssetBundles")]
+    [MenuItem("AssetBundle/Build AssetBundles")]
     public static void BuildAllAB()
     {
-        BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle;
+        BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle |
+                                        BuildAssetBundleOptions.UncompressedAssetBundle;
         BuildPipeline.BuildAssetBundles(AssetBundleConst.OUTPUT_PATH, options, BuildTarget.StandaloneWindows64);
+
+        Debug.LogError("build all asset bundles completed!");
     }
 
+    [MenuItem("AssetBundle/Clear All")]
     public static void ClearAll()
     {
+        string[] abFiles = Directory.GetFiles(AssetBundleConst.OUTPUT_PATH);
+        foreach(string file in abFiles)
+        {
+            File.Delete(file);
+        }
         foreach(var list in depPathDic.Values)
         {
             list.Clear();
@@ -169,6 +176,8 @@ public static class AssetBundleTool
         depPathDic.Clear();
 
         GC.Collect();
+
+        Debug.LogError("clear all completed!");
     }
 
     #region Helper Functions

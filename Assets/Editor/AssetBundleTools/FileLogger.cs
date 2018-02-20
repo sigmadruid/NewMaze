@@ -20,6 +20,7 @@ public static class FileLogger
     public static void AddLog(string str)
     {
         sb.Append(str);
+        sb.Append("\r\n");
     }
 
     public static void Flush()

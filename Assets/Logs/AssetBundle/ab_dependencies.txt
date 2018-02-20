@@ -1,5 +1,4 @@
 astardata
-atlas
 atlas+common
 atlas+item
 atlas+newcommon
@@ -74,7 +73,6 @@ effects
 	Assets/RawResources/Effects/GuideEffect/Animation/shuijing.controller
 	Assets/RawResources/Effects/GoldEffect/LargeStar.png
 	Assets/RawResources/Effects/ConversionEffect/HalfCircle.mat
-exploration
 exploration+chest
 	Assets/Imported/L_FG_Assets_Pack1.0/Textures/Chest02_D.tga
 	Assets/Imported/L_FG_Assets_Pack1.0/Meshes/Chest01_b.FBX
@@ -126,7 +124,6 @@ exploration+transporter
 	Assets/Imported/L_FG_Assets_Pack1.0/Mobile/Textures/FG_Assets01_Low_D.tga
 	Assets/Imported/DynamicElements_Effects/materials/MagicCircle.mat
 	Assets/RawResources/Effects/ConversionEffect/Lightbeam.mat
-fonts
 halls
 	Assets/RawResources/MazeBlocks/Models/Catacomb1.fbx
 	Assets/RawResources/MazeBlocks/Models/Sack1.fbx
@@ -670,8 +667,6 @@ newui
 newui+items
 	Assets/RawResources/Fonts/TrajanPro-Bold.otf
 	Assets/RawResources/Fonts/TrajanPro-Regular.otf
-newui+pack
-newui+profile
 npcs
 	Assets/RawResources/NPCs/X_MiShuShi_1/Materials/X_MiShuShi_1.mat
 	Assets/RawResources/NPCs/X_SengLv_1/X_SengLv_1@idle.FBX
