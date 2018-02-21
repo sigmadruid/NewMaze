@@ -164,6 +164,13 @@ public static class AssetBundleTool
     [MenuItem("AssetBundle/Clear All")]
     public static void ClearAll()
     {
+        string[] allAssets = AssetDatabase.GetAllAssetPaths();
+        for(int i = 0; i < allAssets.Length; ++i)
+        {
+            string path = allAssets[i];
+            AssetImporter.GetAtPath(path).SetAssetBundleNameAndVariant(string.Empty, string.Empty);
+        }
+
         string[] abFiles = Directory.GetFiles(AssetBundleConst.OUTPUT_PATH);
         foreach(string file in abFiles)
         {
