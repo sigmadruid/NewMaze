@@ -19,7 +19,13 @@ public class DependencyChecker
             string[] dependencies = AssetDatabase.GetDependencies(path, true);
             for (int i = 0; i < dependencies.Length; ++i)
             {
-                Debug.LogError(dependencies[i]);
+                string dependency = dependencies[i];
+                if (dependency.EndsWith(".cs"))
+                {
+                    continue;
+                }
+                    
+                Debug.LogError(dependency);
             }
         }
         else
@@ -28,7 +34,13 @@ public class DependencyChecker
             string[] dependencies = AssetDatabase.GetDependencies(subPaths, true);
             for (int i = 0; i < dependencies.Length; ++i)
             {
-                Debug.LogError(dependencies[i]);
+                string dependency = dependencies[i];
+                if (dependency.EndsWith(".cs"))
+                {
+                    continue;
+                }
+
+                Debug.LogError(dependency);
             }
         }
     }
