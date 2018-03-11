@@ -21,11 +21,13 @@ public static class AssetBundleTool
     {
         DateTime dt = DateTime.Now;
 
-        ClearAll();
+        ClearTags();
 
         FileLogger.Init("ab_size_log");
+
         MarkPrefabTags();
         MarkAssetsTags();
+
         FileLogger.Flush();
 
         Debug.Log((DateTime.Now - dt).Ticks / 10000000f + "s");
@@ -35,14 +37,20 @@ public static class AssetBundleTool
 
     private static void MarkPrefabTags()
     {
-        string[] prefabFolderPathList = Directory.GetDirectories(AssetBundleConst.PREFABS_PATH);
-        foreach(string prefabFolderPath in prefabFolderPathList)
+        string[] prefabFolderPathArray = Directory.GetDirectories(AssetBundleConst.PREFABS_PATH);
+        List<string> prefabFolderPathList = new List<string>(prefabFolderPathArray);
+        prefabFolderPathList.Sort();
+        for (int i = 0; i < prefabFolderPathList.Count; ++i)
         {
+            string prefabFolderPath = prefabFolderPathList[i];
             List<string> prefabPathList = new List<string>();
             ResourceUtils.GetAllFilePaths(prefabFolderPath, prefabPathList);
+            prefabPathList.Sort();
+
             string abName = GetABName(prefabFolderPath);
-            foreach(string prefabPath in prefabPathList)
+            for (int j = 0; j < prefabPathList.Count; ++j)
             {
+                string prefabPath = prefabPathList[j];
                 if (ResourceUtils.IsFileIllegal(prefabPath))
                     continue;
                 SetAssetBundleTag(AssetBundleConst.PREFAB_TAG, abName, prefabPath);
@@ -52,14 +60,20 @@ public static class AssetBundleTool
 
     private static void MarkAssetsTags()
     {
-        string[] assetFolderPathList = Directory.GetDirectories(AssetBundleConst.ASSETS_PATH);
-        foreach(string assetFolderPath in assetFolderPathList)
+        string[] assetFolderPathArray = Directory.GetDirectories(AssetBundleConst.ASSETS_PATH);
+        List<string> assetFolderPathList = new List<string>(assetFolderPathArray);
+        assetFolderPathList.Sort();
+        for (int i = 0; i < assetFolderPathList.Count; ++i)
         {
+            string assetFolderPath = assetFolderPathList[i];
             List<string> assetPathList = new List<string>();
             ResourceUtils.GetAllFilePaths(assetFolderPath, assetPathList);
+            assetPathList.Sort();
+
             string abName = GetABName(assetFolderPath);
-            foreach(string assetPath in assetPathList)
+            for (int j = 0; j < assetPathList.Count; ++j)
             {
+                string assetPath = assetPathList[j];
                 if (ResourceUtils.IsFileIllegal(assetPath))
                     continue;
                 SetAssetBundleTag(AssetBundleConst.ASSET_TAG, abName, assetPath);
@@ -126,6 +140,8 @@ public static class AssetBundleTool
     [MenuItem("AssetBundle/Build AssetBundles")]
     public static void BuildAllAB()
     {
+        ClearAssetBundles();
+
         BuildAssetBundleOptions options = BuildAssetBundleOptions.DeterministicAssetBundle |
                                         BuildAssetBundleOptions.UncompressedAssetBundle;
         BuildPipeline.BuildAssetBundles(AssetBundleConst.OUTPUT_PATH, options, BuildTarget.StandaloneOSXUniversal);
@@ -138,6 +154,16 @@ public static class AssetBundleTool
     {
         ResourceUtils.ClearConsole();
 
+        ClearTags();
+        ClearAssetBundles();
+
+        GC.Collect();
+
+        Debug.LogError("clear all completed!");
+    }
+
+    private static void ClearTags()
+    {
         string[] allAssets = AssetDatabase.GetAllAssetPaths();
         for(int i = 0; i < allAssets.Length; ++i)
         {
@@ -146,16 +172,14 @@ public static class AssetBundleTool
                 continue;
             AssetImporter.GetAtPath(path).SetAssetBundleNameAndVariant(string.Empty, string.Empty);
         }
-
+    }
+    private static void ClearAssetBundles()
+    {
         string[] abFiles = Directory.GetFiles(AssetBundleConst.OUTPUT_PATH);
         foreach(string file in abFiles)
         {
             File.Delete(file);
         }
-
-        GC.Collect();
-
-        Debug.LogError("clear all completed!");
     }
 
     #region Helper Functions
