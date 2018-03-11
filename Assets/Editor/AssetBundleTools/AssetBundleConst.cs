@@ -15,9 +15,10 @@ public static class AssetBundleConst
 
     public static readonly string[] IgnoreExtension = new string[]
     {
-            ".meta",
-            ".cs",
-            ".js",
+        ".meta",
+        ".cs",
+        ".js",
+        ".boo",
     };
 
     public static readonly string[] DependentFolders = new string[]

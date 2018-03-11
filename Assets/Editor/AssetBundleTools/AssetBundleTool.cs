@@ -41,6 +41,8 @@ public static class AssetBundleTool
             string abName = GetABName(prefabFolderPath);
             foreach(string prefabPath in prefabPathList)
             {
+                if (ResourceUtils.IsFileIllegal(prefabPath))
+                    continue;
                 SetAssetBundleTag(abName, prefabPath);
             }
         }
@@ -145,17 +147,16 @@ public static class AssetBundleTool
         }
 
         FileInfo fi = new FileInfo(path);
-        AssetImporter importer = null;
+        AssetImporter importer = AssetImporter.GetAtPath(path);
         if (fi.Length >= AssetBundleConst.MAX_AB_SIZE)
         {
             currentABIndex++;
-            importer = AssetImporter.GetAtPath(path);
-            importer.SetAssetBundleNameAndVariant(currentABName + currentABIndex.ToString(), string.Empty);
+            importer.SetAssetBundleNameAndVariant(currentABName + "_" + currentABIndex.ToString(), string.Empty);
             currentABIndex++;
             currentABSize = 0;
             return;
         }
-        importer.SetAssetBundleNameAndVariant(currentABName + currentABIndex.ToString(), string.Empty);
+        importer.SetAssetBundleNameAndVariant(currentABName + "_" + currentABIndex.ToString(), string.Empty);
         currentABSize += fi.Length;
         if (currentABSize >= AssetBundleConst.MAX_AB_SIZE)
         {
@@ -188,7 +189,10 @@ public static class AssetBundleTool
         }
         index = index + length + 1;
         int lastIndex = path.IndexOf(Path.DirectorySeparatorChar, index);
-        return path.Substring(index, lastIndex - index);
+        if (lastIndex == -1)
+            return path.Substring(index);
+        else
+            return path.Substring(index, lastIndex - index);
     }
 
     [MenuItem("AssetBundle/Build AssetBundles")]
@@ -208,6 +212,8 @@ public static class AssetBundleTool
         for(int i = 0; i < allAssets.Length; ++i)
         {
             string path = allAssets[i];
+            if (ResourceUtils.IsFileIllegal(path))
+                continue;
             AssetImporter.GetAtPath(path).SetAssetBundleNameAndVariant(string.Empty, string.Empty);
         }
 
