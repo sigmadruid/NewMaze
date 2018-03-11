@@ -17,6 +17,17 @@ public class ResourceUtils : MonoBehaviour
         return false;
     }
 
+    public static bool InDependentFolder(string filePath)
+    {
+        for(int i = 0; i < AssetBundleConst.DependentFolders.Length; ++i)
+        {
+            string folderName = AssetBundleConst.DependentFolders[i];
+            if(filePath.Contains(folderName))
+                return true;
+        }
+        return false;
+    }
+
     public static void GetAllFilePaths(string rootFolder, List<string> paths)
     {
         string[] files = Directory.GetFiles(rootFolder);

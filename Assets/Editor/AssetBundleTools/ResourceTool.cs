@@ -27,7 +27,7 @@ public static class ResourceTool
                 string dependency = dependencies[j];
                 if (dependency.Contains(AssetBundleConst.PREFABS_PATH))
                     continue;
-                if (dependency.Contains(AssetBundleConst.COMMON_ASSETS_PATH))
+                if (ResourceUtils.InDependentFolder(dependency))
                     continue;
                 if (ResourceUtils.IsFileIllegal(dependency))
                     continue;
