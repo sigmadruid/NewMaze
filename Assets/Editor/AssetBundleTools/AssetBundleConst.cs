@@ -7,7 +7,8 @@ public static class AssetBundleConst
     public static readonly string OUTPUT_PATH = Application.dataPath + "/AssetBundles/";
 
     public const string PREFABS_PATH = "Assets/PrefabResources";
-    public const string ASSETS_PATH = "Assets/RawResources";
+    public const string ASSETS_PATH = "Assets/DependentResources";
+    public const string COMMON_ASSETS_PATH = "Assets/DependentResources/Common";
 
     public const string PREFAB_EXTENSION = ".prefab";
     public const string ASSET_TAG = "asset_";

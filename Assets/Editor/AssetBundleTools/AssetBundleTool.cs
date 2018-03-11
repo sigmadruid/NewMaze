@@ -35,7 +35,7 @@ public static class AssetBundleTool
     private static void MarkPrefabTags()
     {
         List<string> folderPathList = new List<string>();
-        GetAllFolderPaths(AssetBundleConst.PREFABS_PATH, folderPathList);
+        ResourceUtils.GetAllFolderPaths(AssetBundleConst.PREFABS_PATH, folderPathList);
 
         for (int i = 0; i < folderPathList.Count; ++i)
         {
@@ -47,7 +47,7 @@ public static class AssetBundleTool
             for(int j = 0; j < allFilePathList.Length; ++j)
             {
                 string filePath = allFilePathList[j];
-                if(IsFileIllegal(filePath))
+                if(ResourceUtils.IsFileIllegal(filePath))
                 {
                     continue;
                 }
@@ -77,7 +77,7 @@ public static class AssetBundleTool
             for(int i = 0; i < dependencies.Length; ++i)
             {
                 string path = dependencies[i];
-                if(IsFileIllegal(path) || path.Contains(AssetBundleConst.PREFABS_PATH))
+                if(ResourceUtils.IsFileIllegal(path) || path.Contains(AssetBundleConst.PREFABS_PATH))
                 {
                     continue;
                 }
@@ -188,55 +188,6 @@ public static class AssetBundleTool
     }
 
     #region Helper Functions
-
-    private static bool IsFileIllegal(string filePath)
-    {
-        for(int i = 0; i < AssetBundleConst.IgnoreExtension.Length; ++i)
-        {
-            string extension = AssetBundleConst.IgnoreExtension[i];
-            if(filePath.Contains(extension))
-                return true;
-        }
-        return false;
-    }
-
-    private static void GetAllFilePaths(string rootFolder, List<string> paths)
-    {
-        string[] files = Directory.GetFiles(rootFolder);
-        for(int i = 0; i < files.Length; ++i)
-        {
-            string file = files[i];
-            if(IsFileIllegal(file))
-            {
-                continue;
-            }
-            paths.Add(file);
-        }
-
-        string[] folders = Directory.GetDirectories(rootFolder);
-        if(folders.Length > 0)
-        {
-            for(int i = 0; i < folders.Length; ++i)
-            {
-                string folder = folders[i];
-                GetAllFilePaths(folder, paths);
-            }
-        }
-    }
-
-    private static void GetAllFolderPaths(string rootFolder, List<string> paths)
-    {
-        string[] folders = Directory.GetDirectories(rootFolder);
-        if(folders.Length > 0)
-        {
-            for(int i = 0; i < folders.Length; ++i)
-            {
-                string folder = folders[i];
-                paths.Add(folder);
-                GetAllFolderPaths(folder, paths);
-            }
-        }
-    }
 
     private static string GetFolderTag(string path)
     {
