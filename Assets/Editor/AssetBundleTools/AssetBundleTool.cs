@@ -15,7 +15,6 @@ public static class AssetBundleTool
         public string AssetPath;
     }
 
-    private static Dictionary<string, List<string>> depPathDic = new Dictionary<string, List<string>>();
 
     [MenuItem("AssetBundle/Mark AssetBundle Tags")]
     public static void MarkABTags()
@@ -25,7 +24,7 @@ public static class AssetBundleTool
         ClearAll();
 
         MarkPrefabTags();
-        MarkAssetsTags();
+//        MarkAssetsTags();
 
         Debug.Log((DateTime.Now - dt).Ticks / 10000000f + "s");
 
@@ -34,121 +33,162 @@ public static class AssetBundleTool
 
     private static void MarkPrefabTags()
     {
-        List<string> folderPathList = new List<string>();
-        ResourceUtils.GetAllFolderPaths(AssetBundleConst.PREFABS_PATH, folderPathList);
-
-        for (int i = 0; i < folderPathList.Count; ++i)
+        string[] prefabFolderPathList = Directory.GetDirectories(AssetBundleConst.PREFABS_PATH);
+        foreach(string prefabFolderPath in prefabFolderPathList)
         {
-            string folderPath = folderPathList[i];
-            string[] allFilePathList = Directory.GetFiles(folderPath);
-            
-            string folderTag = GetFolderTag(folderPath);
-            List<string> filePathList = new List<string>();
-            for(int j = 0; j < allFilePathList.Length; ++j)
+            List<string> prefabPathList = new List<string>();
+            ResourceUtils.GetAllFilePaths(prefabFolderPath, prefabPathList);
+            string abName = GetABName(prefabFolderPath);
+            foreach(string prefabPath in prefabPathList)
             {
-                string filePath = allFilePathList[j];
-                if(ResourceUtils.IsFileIllegal(filePath))
-                {
-                    continue;
-                }
-                
-                filePathList.Add(filePath);
-                var importer = AssetImporter.GetAtPath(filePath);
-                importer.SetAssetBundleNameAndVariant(folderTag, string.Empty);
+                SetAssetBundleTag(abName, prefabPath);
             }
-
-            if(filePathList.Count > 0)
-            {
-                depPathDic.Add(folderTag, filePathList);
-            }
-
         }
     }
 
-    private static void MarkAssetsTags()
+//    private static void MarkAssetsTags()
+//    {
+//        FileLogger.Init("ab_dependencies");
+//        List<Dependency> allDependencies = new List<Dependency>();
+//        foreach(string fileName in depPathDic.Keys)
+//        {
+//            List<string> filePathList = depPathDic[fileName];
+//            string[] dependencies = AssetDatabase.GetDependencies(filePathList.ToArray());
+//            FileLogger.AddLog(fileName);
+//            for(int i = 0; i < dependencies.Length; ++i)
+//            {
+//                string path = dependencies[i];
+//                if(ResourceUtils.IsFileIllegal(path) || path.Contains(AssetBundleConst.PREFABS_PATH))
+//                {
+//                    continue;
+//                }
+//
+//                Dependency dependency = new Dependency();
+//                dependency.PrefabName = fileName;
+//                dependency.AssetPath = path;
+//                    
+//                allDependencies.Add(dependency);
+//                FileLogger.AddLog(string.Format("\t{0}", dependency.AssetPath));
+//            }
+//        }
+//        FileLogger.Flush();
+//
+//        HashSet<string> tempHashSet = new HashSet<string>();
+//        List<Dependency> uniqueDependencies = new List<Dependency>();
+//        for(int i = 0; i < allDependencies.Count; ++i)
+//        {
+//            Dependency dependency = allDependencies[i];
+//            if(tempHashSet.Contains(dependency.AssetPath))
+//            {
+//                continue;
+//            }
+//            tempHashSet.Add(dependency.AssetPath);
+//            uniqueDependencies.Add(dependency);
+//        }
+//
+//        FileLogger.Init("ab_division");
+//        int tagIndex = 0;
+//        long size = 0;
+//        long logSize = 0;
+//        for(int i = 0; i < uniqueDependencies.Count; ++i)
+//        {
+//            if(size == 0)
+//            {
+//                tagIndex++;
+//            }
+//            Dependency dependency = uniqueDependencies[i];
+//            FileInfo fi = new FileInfo(dependency.AssetPath);
+//            logSize = 0;
+//            if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
+//            {
+//                FileLogger.AddLog(size / 1000 + "KB");
+//                tagIndex++;
+//                logSize = fi.Length;
+//                size = 0;
+//            }
+//            else
+//            {
+//                size += fi.Length;
+//                if(size >= AssetBundleConst.MAX_AB_SIZE)
+//                {
+//                    logSize = size;
+//                    size = 0;
+//                }
+//            }
+//
+//            if(i == uniqueDependencies.Count - 1)
+//                logSize = size;
+//
+//
+//            string log = string.Format("{0}, {1}, {2}", dependency.PrefabName, dependency.AssetPath, tagIndex.ToString());
+//            FileLogger.AddLog(log);
+//            if (logSize > 0)
+//                FileLogger.AddLog(logSize / 1000 + "KB");
+//            var importer = AssetImporter.GetAtPath(dependency.AssetPath);
+//            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
+//        }
+//        FileLogger.Flush();
+//
+//        Debug.LogError("mark asset tags completed!");
+//    }
+
+    private static string currentABName;
+    private static long currentABSize = 0;
+    private static int currentABIndex = 0;
+    private static void SetAssetBundleTag(string abName, string path)
     {
-        FileLogger.Init("ab_dependencies");
-        List<Dependency> allDependencies = new List<Dependency>();
-        foreach(string fileName in depPathDic.Keys)
+        if (abName != currentABName)
         {
-            List<string> filePathList = depPathDic[fileName];
-            string[] dependencies = AssetDatabase.GetDependencies(filePathList.ToArray());
-            FileLogger.AddLog(fileName);
-            for(int i = 0; i < dependencies.Length; ++i)
-            {
-                string path = dependencies[i];
-                if(ResourceUtils.IsFileIllegal(path) || path.Contains(AssetBundleConst.PREFABS_PATH))
-                {
-                    continue;
-                }
-
-                Dependency dependency = new Dependency();
-                dependency.PrefabName = fileName;
-                dependency.AssetPath = path;
-                    
-                allDependencies.Add(dependency);
-                FileLogger.AddLog(string.Format("\t{0}", dependency.AssetPath));
-            }
-        }
-        FileLogger.Flush();
-
-        HashSet<string> tempHashSet = new HashSet<string>();
-        List<Dependency> uniqueDependencies = new List<Dependency>();
-        for(int i = 0; i < allDependencies.Count; ++i)
-        {
-            Dependency dependency = allDependencies[i];
-            if(tempHashSet.Contains(dependency.AssetPath))
-            {
-                continue;
-            }
-            tempHashSet.Add(dependency.AssetPath);
-            uniqueDependencies.Add(dependency);
+            currentABName = abName;
+            currentABSize = 0;
+            currentABIndex = 0;
         }
 
-        FileLogger.Init("ab_division");
-        int tagIndex = 0;
-        long size = 0;
-        long logSize = 0;
-        for(int i = 0; i < uniqueDependencies.Count; ++i)
+        FileInfo fi = new FileInfo(path);
+        AssetImporter importer = null;
+        if (fi.Length >= AssetBundleConst.MAX_AB_SIZE)
         {
-            if(size == 0)
+            currentABIndex++;
+            importer = AssetImporter.GetAtPath(path);
+            importer.SetAssetBundleNameAndVariant(currentABName + currentABIndex.ToString(), string.Empty);
+            currentABIndex++;
+            currentABSize = 0;
+            return;
+        }
+        importer.SetAssetBundleNameAndVariant(currentABName + currentABIndex.ToString(), string.Empty);
+        currentABSize += fi.Length;
+        if (currentABSize >= AssetBundleConst.MAX_AB_SIZE)
+        {
+            currentABIndex++;
+            currentABSize = 0;
+        }
+
+    }
+
+    private static string GetABName(string path)
+    {
+        int index = -1;
+        int length = 0;
+        index = path.IndexOf(AssetBundleConst.PREFABS_PATH);
+        if (index != -1)
+        {
+            length = AssetBundleConst.PREFABS_PATH.Length;
+        }
+        else
+        {
+            index = path.IndexOf(AssetBundleConst.ASSETS_PATH);
+            if (index != -1)
             {
-                tagIndex++;
-            }
-            Dependency dependency = uniqueDependencies[i];
-            FileInfo fi = new FileInfo(dependency.AssetPath);
-            logSize = 0;
-            if(fi.Length >= AssetBundleConst.MAX_AB_SIZE)
-            {
-                FileLogger.AddLog(size / 1000 + "KB");
-                tagIndex++;
-                logSize = fi.Length;
-                size = 0;
+                length = AssetBundleConst.ASSETS_PATH.Length;
             }
             else
             {
-                size += fi.Length;
-                if(size >= AssetBundleConst.MAX_AB_SIZE)
-                {
-                    logSize = size;
-                    size = 0;
-                }
+                return string.Empty;
             }
-
-            if(i == uniqueDependencies.Count - 1)
-                logSize = size;
-
-
-            string log = string.Format("{0}, {1}, {2}", dependency.PrefabName, dependency.AssetPath, tagIndex.ToString());
-            FileLogger.AddLog(log);
-            if (logSize > 0)
-                FileLogger.AddLog(logSize / 1000 + "KB");
-            var importer = AssetImporter.GetAtPath(dependency.AssetPath);
-            importer.assetBundleName = AssetBundleConst.ASSET_TAG + tagIndex.ToString();
         }
-        FileLogger.Flush();
-
-        Debug.LogError("mark asset tags completed!");
+        index = index + length + 1;
+        int lastIndex = path.IndexOf(Path.DirectorySeparatorChar, index);
+        return path.Substring(index, lastIndex - index);
     }
 
     [MenuItem("AssetBundle/Build AssetBundles")]
@@ -176,11 +216,6 @@ public static class AssetBundleTool
         {
             File.Delete(file);
         }
-        foreach(var list in depPathDic.Values)
-        {
-            list.Clear();
-        }
-        depPathDic.Clear();
 
         GC.Collect();
 
