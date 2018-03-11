@@ -80,7 +80,7 @@ ModelImporter:
     11100000: //RootNode
     13700000: Object004
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -149,5 +149,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_18
+  assetBundleName: 
   assetBundleVariant: 

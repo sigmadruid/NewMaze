@@ -258,11 +258,11 @@ ModelImporter:
       position error 31.6 mm at time 0: 6 (40.0%) Frame 6\n\tLeftHand average position
       error 18.7 mm and maximum position error 23.5 mm at time 0: 5 (33.3%) Frame
       5\n\tRightUpperArm average position error 9.2 mm and maximum position error
-      9.4 mm at time 0:15 (100.0%) Frame 15\n\tRightLowerArm average position error
-      6.8 mm and maximum position error 7.6 mm at time 0:14 (93.3%) Frame 14\n\tRightHand
-      average position error 7.3 mm and maximum position error 7.8 mm at time 0:15
-      (100.0%) Frame 15\n\tHead average position error 44.1 mm and maximum position
-      error 49.7 mm at time 0: 6 (40.0%) Frame 6\n"
+      9.4 mm at time 0: 0 (0.0%) Frame 0\n\tRightLowerArm average position error 6.8
+      mm and maximum position error 7.6 mm at time 0:14 (93.3%) Frame 14\n\tRightHand
+      average position error 7.3 mm and maximum position error 7.8 mm at time 0: 0
+      (0.0%) Frame 0\n\tHead average position error 44.1 mm and maximum position error
+      49.7 mm at time 0: 6 (40.0%) Frame 6\n"
     animationDoRetargetingWarnings: 1
     animationCompression: 0
     animationRotationError: 0.5
@@ -1138,5 +1138,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_22
+  assetBundleName: 
   assetBundleVariant: 

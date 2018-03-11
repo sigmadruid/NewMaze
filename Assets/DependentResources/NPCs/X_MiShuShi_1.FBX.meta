@@ -67,7 +67,7 @@ ModelImporter:
     9500000: //RootNode
     13700000: X_MiShuShi_1
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -134,5 +134,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_25
+  assetBundleName: 
   assetBundleVariant: 

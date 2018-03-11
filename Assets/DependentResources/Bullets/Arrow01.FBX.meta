@@ -11,7 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: Arrow01
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -78,5 +78,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_1
+  assetBundleName: 
   assetBundleVariant: 

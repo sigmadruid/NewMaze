@@ -260,17 +260,17 @@ ModelImporter:
       be discarded.\n\t'B_Spine2' is inbetween humanoid transforms and has rotation
       animation that will be discarded.\n"
     animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tRightLowerLeg
-      average position error 0.4 mm and maximum position error 3.4 mm at time 0: 0
-      (0.0%) Frame 0\n\tLeftUpperArm average position error 26.4 mm and maximum position
-      error 42.0 mm at time 0: 2 (7.7%) Frame 2\n\tLeftLowerArm average position error
-      23.1 mm and maximum position error 43.8 mm at time 0:11 (42.3%) Frame 11\n\tLeftHand
-      average position error 22.3 mm and maximum position error 46.6 mm at time 0:10
-      (38.5%) Frame 10\n\tRightUpperArm average position error 25.9 mm and maximum
-      position error 41.4 mm at time 0: 9 (34.6%) Frame 9\n\tRightLowerArm average
-      position error 22.6 mm and maximum position error 42.8 mm at time 0:10 (38.5%)
-      Frame 10\n\tRightHand average position error 20.6 mm and maximum position error
-      44.6 mm at time 0:10 (38.5%) Frame 10\n\tHead average position error 43.3 mm
-      and maximum position error 82.1 mm at time 0: 2 (7.7%) Frame 2\n"
+      average position error 0.4 mm and maximum position error 3.4 mm at time 0:26
+      (100.0%) Frame 26\n\tLeftUpperArm average position error 26.4 mm and maximum
+      position error 42.0 mm at time 0: 2 (7.7%) Frame 2\n\tLeftLowerArm average position
+      error 23.1 mm and maximum position error 43.8 mm at time 0:11 (42.3%) Frame
+      11\n\tLeftHand average position error 22.3 mm and maximum position error 46.6
+      mm at time 0:10 (38.5%) Frame 10\n\tRightUpperArm average position error 25.9
+      mm and maximum position error 41.4 mm at time 0: 9 (34.6%) Frame 9\n\tRightLowerArm
+      average position error 22.6 mm and maximum position error 42.8 mm at time 0:10
+      (38.5%) Frame 10\n\tRightHand average position error 20.6 mm and maximum position
+      error 44.6 mm at time 0:10 (38.5%) Frame 10\n\tHead average position error 43.3
+      mm and maximum position error 82.1 mm at time 0: 2 (7.7%) Frame 2\n"
     animationDoRetargetingWarnings: 1
     animationCompression: 3
     animationRotationError: 0.5
@@ -1146,5 +1146,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_22
+  assetBundleName: 
   assetBundleVariant: 

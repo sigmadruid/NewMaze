@@ -140,15 +140,15 @@ ModelImporter:
     animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tRightLowerLeg
       average position error 0.3 mm and maximum position error 2.4 mm at time 0:29
       (90.6%) Frame 29\n\tLeftUpperArm average position error 20.0 mm and maximum
-      position error 31.6 mm at time 0:10 (31.3%) Frame 10\n\tLeftLowerArm average
+      position error 31.6 mm at time 0:10 (31.2%) Frame 10\n\tLeftLowerArm average
       position error 14.0 mm and maximum position error 26.9 mm at time 0: 8 (25.0%)
       Frame 8\n\tLeftHand average position error 10.9 mm and maximum position error
       20.1 mm at time 0: 8 (25.0%) Frame 8\n\tRightUpperArm average position error
-      21.2 mm and maximum position error 44.4 mm at time 0:10 (31.3%) Frame 10\n\tRightLowerArm
+      21.2 mm and maximum position error 44.4 mm at time 0:10 (31.2%) Frame 10\n\tRightLowerArm
       average position error 12.5 mm and maximum position error 24.0 mm at time 0:
       9 (28.1%) Frame 9\n\tRightHand average position error 7.4 mm and maximum position
       error 12.0 mm at time 0: 7 (21.9%) Frame 7\n\tHead average position error 53.5
-      mm and maximum position error 95.4 mm at time 0:10 (31.3%) Frame 10\n"
+      mm and maximum position error 95.4 mm at time 0:10 (31.2%) Frame 10\n"
     animationDoRetargetingWarnings: 1
     animationCompression: 3
     animationRotationError: 0.5
@@ -1024,5 +1024,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_16
+  assetBundleName: 
   assetBundleVariant: 

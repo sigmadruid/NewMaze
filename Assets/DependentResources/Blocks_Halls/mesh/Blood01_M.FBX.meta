@@ -10,7 +10,7 @@ ModelImporter:
     4300000: Blood01_M
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 1
     materialSearch: 1
   animations:
@@ -77,5 +77,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 1
   userData: 
-  assetBundleName: asset_15
+  assetBundleName: 
   assetBundleVariant: 

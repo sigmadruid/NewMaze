@@ -194,7 +194,7 @@ ModelImporter:
     13700000: body
     13700002: cloth
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -1499,5 +1499,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: asset_20
+  assetBundleName: 
   assetBundleVariant: 
